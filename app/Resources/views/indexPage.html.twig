@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Портал солнечные продукты{% endblock %}</title>
+    {% block stylesheets %}<link href="{{ asset('/static/css/style.css') }}" type="text/css" rel="stylesheet" />{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+<div id="topMenu">
+{% block topMenu %}
+    <ul class="topnav" id="menu">
+        <li>
+            <a class="active" href="/">Главная</a>
+        </li>
+        <li>
+            <a href="/auction">Торги</a>
+        </li>
+        <li>
+            <a href="/routes">Рейсы</a>
+        </li>
+        <li>
+            <a href="/drivers">Водители</a>
+        </li>
+        <li>
+            <a href="/vehicles">Транспорт</a>
+        </li>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="loggedUser">
+                Здравствуйте, {{ app.user.username }} <a href="{{ logout_path('main') }}">Выход</a>
+            </li>
+        {% endif %}
+
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="showMenuItems()">☰</a>
+        </li>
+    </ul>
+{% endblock %}
+</div>
+
+<div id="content">
+{% block body %}
+    Главная страница портала
+
+    <div class="lotsInfo">
+        <div class="lotsInfoTitle">
+            Общая информация по лотам
+        <div>
+        <ul>
+            <li>
+                <table>
+                    <tr>
+                        <td>Активных лотов</td>
+                        <td>347</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td>Москва - Тюмень</td>
+                        <td>328</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td>Новосибирск - Омск</td>
+                        <td>19</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td>Планируемых лотов</td>
+                        <td>150</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td>Саратов - Рязань</td>
+                        <td>87</td>
+                    </tr>
+                </table>
+            </li>
+            <li>
+                <table>
+                    <tr>
+                        <td>Ижевск - Красноярск</td>
+                        <td>63</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </div>
+
+    <div class="userRoutesInfo">
+
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('/static/js/indexPage.js') }}" />
+{% endblock %}
+</body>
+</html>
