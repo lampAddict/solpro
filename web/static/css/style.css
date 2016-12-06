@@ -60,7 +60,7 @@ ul.topnav li a:hover {background-color: #555;}
 
 ul.topnav li.icon {display: none;}
 
-@media screen and (max-width: 470px) {
+@media screen and (max-width: 704px) {
     ul.topnav li:not(:first-child) {display: none;}
     ul.topnav li.icon {
         float: right;
@@ -68,7 +68,7 @@ ul.topnav li.icon {display: none;}
     }
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (max-width: 704px) {
     ul.topnav.responsive {position: relative;}
     ul.topnav.responsive li.icon {
         position: absolute;
@@ -106,4 +106,31 @@ ul.topnav li.icon {display: none;}
 .loggedUser{
     padding-left: 50px;
     color: #fdfdfe;
+}
+
+.lotsList{
+    width: 50%;
+    border: 1px solid grey;
+    margin-left: 16px;
+    min-width: 320px;
+}
+
+.lotsList ul li div{
+    width: 40%;
+    display: inline-block;
+    margin: 10px;
+}
+
+.pdleft20{
+    padding-left: 20px;
+}
+
+.pdleft11{
+    padding-left: 11px;
+}
+
+.lotsInfoTitle{
+    padding-left: 16px;
+    margin-bottom: 5px;
+    margin-top: 30px;
 }
