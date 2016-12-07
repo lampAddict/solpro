@@ -35,7 +35,10 @@
     right: 0;
 }
 
-body {margin:0;}
+body {
+    margin:0;
+}
+
 ul.topnav {
     list-style-type: none;
     margin: 0;
@@ -58,7 +61,26 @@ ul.topnav li a {
 
 ul.topnav li a:hover {background-color: #555;}
 
+ul.topnav li a.active {background-color: #555; color: whitesmoke}
+
 ul.topnav li.icon {display: none;}
+
+.lotsInfo{
+    float: left;
+    width: 45%;
+    margin-right: 10px;
+}
+
+.userRoutesInfo{
+    float: left;
+    width: 45%;
+    margin-left: 10px;
+}
+
+#content{
+    width: 1000px;
+    margin: 0 auto;
+}
 
 @media screen and (max-width: 704px) {
     ul.topnav li:not(:first-child) {display: none;}
@@ -85,6 +107,26 @@ ul.topnav li.icon {display: none;}
     }
 }
 
+@media screen and (max-width: 920px) {
+    .lotsInfo{
+        width: 50%;
+    }
+
+    .userRoutesInfo{
+        width: 50%;
+        margin-left: 0px;
+    }
+
+    #content{
+        width: 900px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #content{
+        width: 470px;
+    }
+}
 .authError {
     background-color: #c05e5e;
     color: #f5f5f5;
@@ -106,31 +148,202 @@ ul.topnav li.icon {display: none;}
 .loggedUser{
     padding-left: 50px;
     color: #fdfdfe;
+    right: 0;
+    position: absolute;
 }
 
 .lotsList{
-    width: 50%;
+    width: 100%;
     border: 1px solid grey;
     margin-left: 16px;
     min-width: 320px;
 }
 
-.lotsList ul li div{
-    width: 40%;
+.lotsList ul li div:first-child{
+    width: 75%;
     display: inline-block;
     margin: 10px;
+}
+.lotsList ul li div:last-child{
+    text-align: right;
+    width: 10%;
+    display: inline-block;
+    margin: 10px 0 10px 10px;
 }
 
 .pdleft20{
     padding-left: 20px;
 }
 
-.pdleft11{
-    padding-left: 11px;
+.pdleft3{
+    padding-left: 3px;
 }
 
 .lotsInfoTitle{
     padding-left: 16px;
     margin-bottom: 5px;
     margin-top: 30px;
+}
+
+#auctionTable{
+    margin: 15px;
+}
+
+#auctionTable table{
+    border-top: 1px solid dimgrey;
+    border-left: 1px solid dimgrey;
+    border-right: 1px solid dimgrey;
+}
+
+#auctionTable table tr th{
+    border-bottom: 1px solid dimgrey;
+    padding: 5px;
+    margin: 0px;
+}
+
+#auctionTable table tr td{
+    border-bottom: 1px solid dimgrey;
+    padding: 3px 7px;
+}
+
+.lotComment{
+    width: 300px;
+    text-align: right;
+}
+
+.lotStatus{
+    width: 120px;
+    text-align: center;
+}
+
+.lotDirection{
+    width: 250px;
+    text-align: center;
+}
+
+.lotGetInTime{
+    width: 60px;
+    text-align: center;
+}
+
+.lotVehicleType{
+    width: 57px;
+    text-align: right;
+}
+
+input.bid{
+    width: 45%;
+    float: right;
+    margin-right: 5px;
+    height: 18px;
+}
+
+input.doBid{
+    float: right;
+    padding: 3px;
+    margin: 0;
+}
+
+.lotDoBid{
+    width: 320px;
+}
+
+.hide{
+    display: none;
+}
+
+#lotFilter{
+    margin: 15px 0 10px 15px;
+    float: left;
+}
+
+#lotFilter table{
+    border-top: 1px solid dimgrey;
+    border-left: 1px solid dimgrey;
+    border-right: 1px solid dimgrey;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+#lotFilter table tr th{
+    border-bottom: 1px solid dimgrey;
+    padding: 5px;
+    margin: 0px;
+}
+
+#lotFilter table tr td{
+    border-bottom: 1px solid dimgrey;
+    border-right: 1px solid dimgrey;
+    padding: 3px 7px;
+}
+
+.lotFilterStatus{
+    width: 135px;
+}
+
+.lotFilterStatus input{
+    float: right;
+    clear: both;
+}
+
+.lotFilterDirection{
+    width: 180px;
+}
+
+.lotFilterDirection select{
+    float: right;
+    clear: both;
+}
+
+.lotFilterDirection div{
+    padding: 3px 0;
+}
+
+.lotFilterGetInTime{
+    width: 210px;
+}
+
+.lotFilterGetInTime input{
+    float: right;
+    clear: both;
+}
+
+.lotFilterGetInTime div{
+    height: 23px;
+    padding: 3px 0;
+}
+
+.lotFilterVehicleType{
+    width: 105px;
+}
+
+.lotFilterVehicleType input{
+    float: right;
+    clear: both;
+}
+
+.lotFilterBids{
+    width: 150px;
+}
+
+.lotFilterBids input{
+    float: right;
+    clear: both;
+}
+
+.lotSearch{
+     float: left;
+     margin: 4px 0 0 18px;
+}
+
+.lotSearch input[type="text"]{
+    width: 180px;
+}
+
+.half{
+    float: left;
+}
+
+.lotSearchCaption{
+    margin-left: 18px;
 }

@@ -1,0 +1,158 @@
+{% extends 'indexPage.html.twig' %}
+
+{% block body %}
+    <div id="lotFilter">
+        <div class="half">
+            <div>Фильтровать лоты по параметрам:</div>
+            <div style="float: left">
+                <table cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>
+                            Статус лота
+                        </th>
+                        <th>
+                            Направление
+                        </th>
+                        <th>
+                            Вид ТС
+                        </th>
+                        <th>
+                            Дата подачи
+                        </th>
+                        <th>
+                            Ставка
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="lotFilterStatus">
+                            <span>Активные</span><input type="checkbox" id="lotFilterTradeActive">
+                            <span>Планируемые</span><input type="checkbox" id="lotFilterPlanned">
+                        </td>
+                        <td class="lotFilterDirection">
+                            <div>
+                                <span>Откуда</span>
+                                <select id="lotFilterDirFrom">
+                                    <option selected="selected">&mdash;</option>
+                                    <option>Саратов</option>
+                                    <option>Аткарск</option>
+                                </select>
+                            </div>
+                            <div>
+                                <span>Куда</span>
+                                <select id="lotFilterDirTo">
+                                    <option selected="selected">&mdash;</option>
+                                    <option>Павловский Посад</option>
+                                    <option>Тула</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td class="lotFilterVehicleType">
+                            <div><span>Реф</span><input type="checkbox" id="lotFilterVTRef"></div>
+                            <div><span>Тент</span><input type="checkbox" id="lotFilterVTTen"></div>
+                            <div><span>Изотерм</span><input type="checkbox" id="lotFilterVTIso"></div>
+                            <div><span>Цистерна</span><input type="checkbox" id="lotFilterVTCis"></div>
+                        </td>
+                        <td class="lotFilterGetInTime">
+                            <div>
+                                <span>С</span>
+                                <input type="datetime-local" id="lotFilterTimeFrom">
+                            </div>
+                            <div>
+                                <span>По</span>
+                                <input type="datetime-local" id="lotFilterTimeTo">
+                            </div>
+                        </td>
+                        <td class="lotFilterBids">
+                            <div><span>Ставку делал</span><input type="checkbox" id="lotFilterDoBid"></div>
+                            <div><span>Ставку не делал</span><input type="checkbox" id="lotFilterDontBid"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="half">
+            <div class="lotSearchCaption">Поиск:</div>
+            <div class="lotSearch">
+                <input type="text" id="lotSearch" placeholder="Поиск строки в описании лота.."/>
+                <input type="button" value="Найти"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="auctionTable">
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>
+                        Статус лота
+                    </th>
+                    <th>
+                        № Рейса
+                    </th>
+                    <th>
+                        Направление
+                    </th>
+                    <th>
+                        Подача
+                    </th>
+                    <th>
+                        Вид ТС
+                    </th>
+                    <th>
+                        Вес (Объем)
+                    </th>
+                    <th>
+                        Комментарий
+                    </th>
+                    <th>
+                        До конца торгов
+                    </th>
+                    <th>
+                        Текущая цена лота
+                    </th>
+                    <th>
+                        Ставка
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="lotStatus">Торги идут</td>
+                    <td align="center">Р-001354</td>
+                    <td class="lotDirection">Саратов (СЖК) &xrarr;<br />Павловский Посад (Московская обл)</td>
+                    <td class="lotGetInTime">02.12.16 09:00</td>
+                    <td class="lotVehicleType">Изотерм 20т</td>
+                    <td align="right">19200 (24)</td>
+                    <td class="lotComment"></td>
+                    <td align="center">00:49:16</td>
+                    <td align="right">78000</td>
+                    <td class="lotDoBid" align="right">
+                        <form action="" method="POST">
+                            <input class="doBid" type="submit" value="Сделать ставку" />
+                            <input class="bid" type="text" name="bid" value="77000" />
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lotStatus">
+                        Начало торгов<br />03.12.16 в 09:00
+                    </td>
+                    <td align="center">Р-038882</td>
+                    <td class="lotDirection">Аткарск (АМЭЗ) &xrarr;<br />Тула (РЦ Тандер)</td>
+                    <td class="lotGetInTime">02.12.16 09:00</td>
+                    <td class="lotVehicleType">Тент 20т</td>
+                    <td align="right">18000 (32)</td>
+                    <td class="lotComment">№ заказа: YB122325454, выгрузка 05.12.2016. Обязательна регистрация в тайм-слоте.</td>
+                    <td align="center">&mdash;</td>
+                    <td align="right">54000</td>
+                    <td  class="lotDoBid" align="center">&mdash;</td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+{% endblock %}

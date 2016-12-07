@@ -2,22 +2,35 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Портал солнечные продукты{% endblock %}</title>
+    <title>{% block title %}Портал "Солнечные продукты"{% endblock %}</title>
     {% block stylesheets %}<link href="{{ asset('/static/css/style.css') }}" type="text/css" rel="stylesheet" />{% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
+
 <div id="topMenu">
 {% block topMenu %}
     <ul class="topnav" id="menu">
         <li>
-            <a class="active" href="/">Главная</a>
+            {% if app.request.get('_route') == 'mainpage' %}
+                <a class="active" href="{{ app.request.baseUrl }}">Главная</a>
+            {% else %}
+                <a href="{{ app.request.baseUrl }}">Главная</a>
+            {% endif %}
         </li>
         <li>
-            <a href="/auction">Торги</a>
+            {% if app.request.get('_route') == 'auction' %}
+                <a class="active" href="{{ url("auction") }}">Торги</a>
+            {% else %}
+                <a href="{{ url("auction") }}">Торги</a>
+            {% endif %}
         </li>
         <li>
-            <a href="/routes">Рейсы</a>
+            {% if app.request.get('_route') == 'routes' %}
+                <a class="active" href="{{ url("routes") }}">Рейсы</a>
+            {% else %}
+                <a href="{{ url("routes") }}">Рейсы</a>
+            {% endif %}
         </li>
         <li>
             <a href="/drivers">Водители</a>
@@ -39,15 +52,15 @@
 {% endblock %}
 </div>
 
-<div id="content">
 {% block body %}
+<div id="content">
     <div class="lotsInfo">
         <div class="lotsInfoTitle">Общая информация по лотам</div>
         <div class="lotsList">
             <ul>
                 <li>
                     <div>Активных лотов</div>
-                    <div class="pdleft11">347</div>
+                    <div class="pdleft3">518</div>
                 </li>
                 <li class="pdleft20">
                     <div>Москва - Тюмень</div>
@@ -55,11 +68,11 @@
                 </li>
                 <li class="pdleft20">
                     <div>Новосибирск - Омск</div>
-                    <div>19</div>
+                    <div>190</div>
                 </li>
                 <li>
                     <div>Планируемых лотов</div>
-                    <div class="pdleft11">150</div>
+                    <div class="pdleft3">150</div>
                 </li>
                 <li class="pdleft20">
                     <div>Саратов - Рязань</div>
@@ -74,10 +87,26 @@
     </div>
 
     <div class="userRoutesInfo">
-
+        <div class="lotsInfoTitle">Информация по вашим рейсам</div>
+        <div class="lotsList">
+            <ul>
+                <li>
+                    <div>Рейсы требующие назначения</div>
+                    <div>18</div>
+                </li>
+                <li>
+                    <div>Опоздания</div>
+                    <div>6</div>
+                </li>
+                <li>
+                    <div>Всего рейсов</div>
+                    <div>24</div>
+                </li>
+            </ul>
+        </div>
     </div>
+</div>
 {% endblock %}
-
 
 {% block javascripts %}
     <script src="{{ asset('/static/js/indexPage.js') }}" />

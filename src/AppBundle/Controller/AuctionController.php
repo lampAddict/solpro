@@ -6,10 +6,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class AuctionController extends Controller
 {
     /**
-     * @Route("/", name="mainpage")
+     * @Route("/auction", name="auction")
      */
     public function indexAction(Request $request)
     {
@@ -18,10 +18,8 @@ class DefaultController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        // replace this example code with whatever you need
-        return $this->render('indexPage.html.twig', array(
-             'lots' => []
-            ,'routes' => []
+        return $this->render('auctionPage.html.twig', array(
+            'trades' => []
         ));
     }
 }

@@ -1,0 +1,75 @@
+{% extends 'indexPage.html.twig' %}
+
+{% block body %}
+
+
+    <div id="routesTable">
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <th>
+                    Статус рейса
+                </th>
+                <th>
+                    № Рейса
+                </th>
+                <th>
+                    Направление
+                </th>
+                <th>
+                    Подача
+                </th>
+                <th>
+                    Вид ТС
+                </th>
+                <th>
+                    Вес (Объем)
+                </th>
+                <th>
+                    Ставка
+                </th>
+                <th>
+                    Водитель
+                </th>
+                <th>
+                    Марка, гос. номер ТС
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="lotStatus">Торги идут</td>
+                <td align="center">Р-001354</td>
+                <td class="lotDirection">Саратов (СЖК) &xrarr;<br />Павловский Посад (Московская обл)</td>
+                <td class="lotGetInTime">02.12.16 09:00</td>
+                <td class="lotVehicleType">Изотерм 20т</td>
+                <td align="right">19200 (24)</td>
+                <td></td>
+                <td align="center">00:49:16</td>
+                <td align="right">78000</td>
+                <td class="lotDoBid" align="right">
+                    <form action="" method="POST">
+                        <input class="doBid" type="submit" value="Сделать ставку" />
+                        <input class="bid" type="text" name="bid" value="77000" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td class="lotStatus">
+                    Начало торгов<br />03.12.16 в 09:00
+                </td>
+                <td align="center">Р-038882</td>
+                <td class="lotDirection">Аткарск (АМЭЗ) &xrarr;<br />Тула (РЦ Тандер)</td>
+                <td class="lotGetInTime">02.12.16 09:00</td>
+                <td class="lotVehicleType">Тент 20т</td>
+                <td align="right">18000 (32)</td>
+                <td class="lotComment">№ заказа: YB122325454, выгрузка 05.12.2016. Обязательна регистрация в тайм-слоте.</td>
+                <td align="center">&mdash;</td>
+                <td align="right">54000</td>
+                <td  class="lotDoBid" align="center">&mdash;</td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+{% endblock %}
