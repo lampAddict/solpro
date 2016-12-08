@@ -185,23 +185,23 @@ ul.topnav li.icon {display: none;}
     margin-top: 30px;
 }
 
-#auctionTable{
+#auctionTable, #routesTable, #driversTable, #vehicleTable{
     margin: 15px;
 }
 
-#auctionTable table{
+#auctionTable table, #routesTable table, #driversTable table, #vehicleTable table{
     border-top: 1px solid dimgrey;
     border-left: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
 }
 
-#auctionTable table tr th{
+#auctionTable table tr th, #routesTable table tr th, #driversTable table tr th, #vehicleTable table tr th{
     border-bottom: 1px solid dimgrey;
     padding: 5px;
     margin: 0px;
 }
 
-#auctionTable table tr td{
+#auctionTable table tr td, #routesTable table tr td, #driversTable table tr td, #vehicleTable table tr td{
     border-bottom: 1px solid dimgrey;
     padding: 3px 7px;
 }
@@ -252,12 +252,12 @@ input.doBid{
     display: none;
 }
 
-#lotFilter{
+#lotFilter, #routesFilter, #driversFilter{
     margin: 15px 0 10px 15px;
     float: left;
 }
 
-#lotFilter table{
+#lotFilter table, #routesFilter table, #driversFilter table{
     border-top: 1px solid dimgrey;
     border-left: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
@@ -265,13 +265,13 @@ input.doBid{
     margin-top: 5px;
 }
 
-#lotFilter table tr th{
+#lotFilter table tr th, #routesFilter table tr th, #driversFilter table tr th{
     border-bottom: 1px solid dimgrey;
     padding: 5px;
     margin: 0px;
 }
 
-#lotFilter table tr td{
+#lotFilter table tr td, #routesFilter table tr td, #driversFilter table tr td{
     border-bottom: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
     padding: 3px 7px;
@@ -331,19 +331,83 @@ input.doBid{
     clear: both;
 }
 
-.lotSearch{
-     float: left;
-     margin: 4px 0 0 18px;
+.topMenuSearch{
+    margin: 7px 10px 10px 10px;
 }
 
-.lotSearch input[type="text"]{
+.topMenuSearch img{
+    padding-top: 8px;
+    float: left;
+}
+
+.topMenuSearch input[type="text"] {
     width: 180px;
+    margin-left: 5px;
+    margin-top: 7px;
 }
 
 .half{
     float: left;
 }
 
-.lotSearchCaption{
+.routeFilterDirection{
+    width: 180px;
+}
+
+.routeFilterDirection select{
+    float: right;
+    clear: both;
+}
+
+.routeFilterDirection div{
+    padding: 3px 0;
+}
+
+.routeFilterGetInTime{
+    width: 210px;
+}
+
+.routeFilterGetInTime input{
+    float: right;
+    clear: both;
+}
+
+.routeFilterGetInTime div{
+    height: 23px;
+    padding: 3px 0;
+}
+
+.routeFilterDriver{
+    width: 120px;
+}
+
+.routeFilterDriver input{
+    float: right;
+    clear: both;
+}
+
+.routeFilterVehicle{
+    width: 130px;
+}
+
+.routeFilterVehicle input{
+    float: right;
+    clear: both;
+}
+
+.routeSearch{
+    float: left;
+    margin: 4px 0 0 18px;
+}
+
+.routeSearch input[type="text"]{
+    width: 190px;
+}
+
+.routeSearchCaption{
     margin-left: 18px;
+}
+
+#driversFilter{
+    width: 100%;
 }

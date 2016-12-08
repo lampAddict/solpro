@@ -1,9 +1,13 @@
 {% extends 'indexPage.html.twig' %}
 
+{% block topMenuSearch %}
+    {{ include('search/search.html.twig', { 'searchCaption': 'Поиск по лотам..' }) }}
+{% endblock %}
+
 {% block body %}
     <div id="lotFilter">
         <div class="half">
-            <div>Фильтровать лоты по параметрам:</div>
+            <div>Фильтры:</div>
             <div style="float: left">
                 <table cellpadding="0" cellspacing="0">
                     <thead>
@@ -72,13 +76,6 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="half">
-            <div class="lotSearchCaption">Поиск:</div>
-            <div class="lotSearch">
-                <input type="text" id="lotSearch" placeholder="Поиск строки в описании лота.."/>
-                <input type="button" value="Найти"/>
             </div>
         </div>
     </div>

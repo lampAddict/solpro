@@ -1,0 +1,119 @@
+{% extends 'indexPage.html.twig' %}
+
+{% block topMenuSearch %}
+    {{ include('search/search.html.twig', { 'searchCaption': 'Поиск по водителям..' }) }}
+{% endblock %}
+
+{% block body %}
+    <div id="driversFilter">
+        <div class="half">
+            <div>Фильтры:</div>
+            <div style="float: left">
+                <table cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                Статус
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="driversFilterStatus">
+                                <select id="driversFilterStatus">
+                                    <option selected="selected">&mdash;</option>
+                                    <option>Активен</option>
+                                    <option>Без данных</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="driversTable">
+        <table cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th>
+                        Статус
+                    </th>
+                    <th>
+                        ФИО
+                    </th>
+                    <th>
+                        Телефон
+                    </th>
+                    <th>
+                        ТС, гос. номер
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Активен
+                    </td>
+                    <td align="center">
+                        Иванов Иван Иванович
+                    </td>
+                    <td align="right">
+                        8 926 531 1066
+                    </td>
+                    <td align="right">
+                        Газель е001кх77
+                    </td>
+                    <td>
+                        <form action="" method="POST">
+                            <input class="changeDriverInfo" type="button" value="&#9998;">
+                            <input class="deleteDriver" type="button" value="&#10006;">
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Неактивен
+                    </td>
+                    <td align="center">
+                        Петров Петр Петрович
+                    </td>
+                    <td align="right">
+                        8 926 223 9871
+                    </td>
+                    <td align="right">
+                        Скания м328нк24
+                    </td>
+                    <td>
+                        <form action="" method="POST">
+                            <input class="changeDriverInfo" type="button" value="&#9998;">
+                            <input class="deleteDriver" type="button" value="&#10006;">
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Активен
+                    </td>
+                    <td align="center">
+                        Сидоров Сидр Сидорович
+                    </td>
+                    <td align="right">
+                        8 915 710 1019
+                    </td>
+                    <td align="right">
+                        Вольво н888тт08
+                    </td>
+                    <td>
+                        <form action="" method="POST">
+                            <input class="changeDriverInfo" type="button" value="&#9998;">
+                            <input class="deleteDriver" type="button" value="&#10006;">
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

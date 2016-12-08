@@ -33,11 +33,22 @@
             {% endif %}
         </li>
         <li>
-            <a href="/drivers">Водители</a>
+            {% if app.request.get('_route') == 'drivers' %}
+                <a class="active" href="{{ url("drivers") }}">Водители</a>
+            {% else %}
+                <a href="{{ url("drivers") }}">Водители</a>
+            {% endif %}
         </li>
         <li>
-            <a href="/vehicles">Транспорт</a>
+            {% if app.request.get('_route') == 'vehicles' %}
+                <a class="active" href="{{ url("vehicles") }}">Транспорт</a>
+            {% else %}
+                <a href="{{ url("vehicles") }}">Транспорт</a>
+            {% endif %}
         </li>
+
+        {% block topMenuSearch %}
+        {% endblock %}
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="loggedUser">
@@ -109,7 +120,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('/static/js/indexPage.js') }}" />
+    <script src="{{ asset('/static/js/indexPage.js') }}"></script>
 {% endblock %}
 </body>
 </html>
