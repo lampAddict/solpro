@@ -252,12 +252,12 @@ input.doBid{
     display: none;
 }
 
-#lotFilter, #routesFilter, #driversFilter{
+#lotFilter, #routesFilter, #driversFilter, #vehicleFilter{
     margin: 15px 0 10px 15px;
     float: left;
 }
 
-#lotFilter table, #routesFilter table, #driversFilter table{
+#lotFilter table, #routesFilter table, #driversFilter table, #vehicleFilter table{
     border-top: 1px solid dimgrey;
     border-left: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
@@ -265,13 +265,13 @@ input.doBid{
     margin-top: 5px;
 }
 
-#lotFilter table tr th, #routesFilter table tr th, #driversFilter table tr th{
+#lotFilter table tr th, #routesFilter table tr th, #driversFilter table tr th, #vehicleFilter table tr th{
     border-bottom: 1px solid dimgrey;
     padding: 5px;
     margin: 0px;
 }
 
-#lotFilter table tr td, #routesFilter table tr td, #driversFilter table tr td{
+#lotFilter table tr td, #routesFilter table tr td, #driversFilter table tr td, #vehicleFilter table tr td{
     border-bottom: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
     padding: 3px 7px;
@@ -281,18 +281,8 @@ input.doBid{
     width: 135px;
 }
 
-.lotFilterStatus input{
-    float: right;
-    clear: both;
-}
-
 .lotFilterDirection{
     width: 180px;
-}
-
-.lotFilterDirection select{
-    float: right;
-    clear: both;
 }
 
 .lotFilterDirection div{
@@ -303,32 +293,17 @@ input.doBid{
     width: 210px;
 }
 
-.lotFilterGetInTime input{
-    float: right;
-    clear: both;
-}
-
 .lotFilterGetInTime div{
     height: 23px;
     padding: 3px 0;
 }
 
-.lotFilterVehicleType{
+.lotFilterVehicleType, .vehicleFilterType{
     width: 105px;
-}
-
-.lotFilterVehicleType input{
-    float: right;
-    clear: both;
 }
 
 .lotFilterBids{
     width: 150px;
-}
-
-.lotFilterBids input{
-    float: right;
-    clear: both;
 }
 
 .topMenuSearch{
@@ -354,22 +329,12 @@ input.doBid{
     width: 180px;
 }
 
-.routeFilterDirection select{
-    float: right;
-    clear: both;
-}
-
 .routeFilterDirection div{
     padding: 3px 0;
 }
 
 .routeFilterGetInTime{
     width: 210px;
-}
-
-.routeFilterGetInTime input{
-    float: right;
-    clear: both;
 }
 
 .routeFilterGetInTime div{
@@ -381,16 +346,11 @@ input.doBid{
     width: 120px;
 }
 
-.routeFilterDriver input{
-    float: right;
-    clear: both;
-}
-
 .routeFilterVehicle{
     width: 130px;
 }
 
-.routeFilterVehicle input{
+.lotFilterStatus input, .lotFilterDirection select, .lotFilterGetInTime input, .lotFilterVehicleType input, .lotFilterBids input, .routeFilterDirection select, .routeFilterGetInTime input, .routeFilterDriver input, .routeFilterVehicle input, .vehicleFilterType input{
     float: right;
     clear: both;
 }
@@ -408,6 +368,19 @@ input.doBid{
     margin-left: 18px;
 }
 
-#driversFilter{
+#lotFilter, #routesFilter, #driversFilter, #vehicleFilter{
     width: 100%;
+}
+
+.addDriverBtn{
+    padding: 0px 0px 10px 0px;
+}
+
+#filter, .addDriverBtn a{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.addDriverBtn a{
+    padding-right: 20px;
 }

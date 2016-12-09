@@ -5,6 +5,43 @@
 {% endblock %}
 
 {% block body %}
+    <div id="vehicleFilter">
+        <div class="half">
+            <div><a id="filter">Показать фильтры</a></div>
+            <div id="filterBlock" class="half hide">
+                <table cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>
+                            Статус
+                        </th>
+                        <th>
+                            Тип
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="vehicleFilterStatus">
+                            <select id="vehicleFilterStatus">
+                                <option selected="selected">&mdash;</option>
+                                <option>Активен</option>
+                                <option>Сломан</option>
+                                <option>Прикреплён</option>
+                            </select>
+                        </td>
+                        <td class="vehicleFilterType">
+                            <div><span>Реф</span><input type="checkbox" id="lotFilterVTRef"></div>
+                            <div><span>Тент</span><input type="checkbox" id="lotFilterVTTen"></div>
+                            <div><span>Изотерм</span><input type="checkbox" id="lotFilterVTIso"></div>
+                            <div><span>Цистерна</span><input type="checkbox" id="lotFilterVTCis"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <div id="vehicleTable">
         <table cellspacing="0" cellpadding="0">
             <thead>
