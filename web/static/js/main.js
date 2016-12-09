@@ -22,4 +22,28 @@ $( document ).ready(function(){
         }
         return false;
     });
+
+    $('.addDriverBtn').click(function(e){
+        var dWindow = $('#addDriverWindow'),
+            dTable = $('#driversTable'),
+            dFilterBtn = $('#filter'),
+            dWindowShowBtn = $(e.currentTarget),
+            cancelBtn = dWindow.find('#cancelBtn'),
+            addDriverVehicleSelect = dWindow.find('#addDriverVehicle');
+
+        dFilterBtn.hide();
+        dTable.hide();
+        dWindowShowBtn.hide();
+        dWindow.show();
+
+        addDriverVehicleSelect.chosen({no_results_text: "Ничего не найдено."});
+
+        cancelBtn.click(function(e){
+            dFilterBtn.show();
+            dTable.show();
+
+            dWindowShowBtn.show();
+            dWindow.hide();
+        });
+    });
 });

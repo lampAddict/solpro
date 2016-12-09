@@ -1,5 +1,10 @@
 {% extends 'indexPage.html.twig' %}
 
+{% block stylesheets %}
+    <link href="{{ asset('/static/css/style.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('/static/js/plugins/chosen/chosen.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
 {% block topMenuSearch %}
     {{ include('search/search.html.twig', { 'searchCaption': 'Поиск по водителям..' }) }}
 {% endblock %}
@@ -119,5 +124,52 @@
     </div>
 
     <div id="addDriverWindow">
+        <table cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <input id="driverName" type="text" class="addDriverWindowBtn" placeholder="ФИО" style="margin-top: 10px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="driverPhone" type="text" class="addDriverWindowBtn" placeholder="Телефон" >
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea id="driverPassport" type="text" class="addDriverWindowBtn" placeholder="Паспортные данные"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="driverLicense" type="text" class="addDriverWindowBtn" placeholder="Водительское удостоверение" >
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select id="addDriverVehicle" data-placeholder="Выберите ТС.." multiple class="chosen-select">
+                            <option>Газель о323рр47</option>
+                            <option>Вольво к898уу77</option>
+                            <option>Камаз м301тк13</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <input id="addDriverBtn" class="addDriverWindowBtn" type="button" value="Сохранить">
+                    </td>
+                    <td align="right">
+                        <input id="cancelBtn" class="addDriverWindowBtn" type="button" value="Закрыть">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('/static/js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('/static/js/plugins/chosen/chosen.jquery.min.js') }}"></script>
+    <script src="{{ asset('/static/js/main.js') }}"></script>
 {% endblock %}
