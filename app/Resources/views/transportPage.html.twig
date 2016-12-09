@@ -5,9 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    <div id="vehicleFilter">
-        <div class="half">
-            <div><a id="filter">Показать фильтры</a></div>
+    <div id="transportPageContainer">
+        <div id="vehicleFilter">
+            <div style="width:550px; float:left">
+                <div class="addVehicleBtn"><a >Добавить ТС</a></div>
+                <div><a id="filter">Показать фильтры</a></div>
+            </div>
             <div id="filterBlock" class="half hide">
                 <table cellpadding="0" cellspacing="0">
                     <thead>
@@ -41,101 +44,101 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div id="vehicleTable">
-        <table cellspacing="0" cellpadding="0">
-            <thead>
-                <tr>
-                    <th>
-                        Статус
-                    </th>
-                    <th>
-                        ТС
-                    </th>
-                    <th>
-                        Тип
-                    </th>
-                    <th>
-                        Грузоподъёмность, т
-                    </th>
-                    <th>
-                        Гос. номер
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        Активен
-                    </td>
-                    <td align="center">
-                        Газель
-                    </td>
-                    <td align="right">
-                        Тент
-                    </td>
-                    <td align="right">
-                        2
-                    </td>
-                    <td align="center">
-                        о323рр47
-                    </td>
-                    <td>
-                        <form action="" method="POST">
-                            <input class="changeVehicleInfo" type="button" value="&#9998;">
-                            <input class="deleteVehicle" type="button" value="&#10006;">
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Сломан
-                    </td>
-                    <td align="center">
-                        Вольво
-                    </td>
-                    <td align="right">
-                        Реф
-                    </td>
-                    <td align="right">
-                        10
-                    </td>
-                    <td align="center">
-                        к898уу77
-                    </td>
-                    <td>
-                        <form action="" method="POST">
-                            <input class="changeVehicleInfo" type="button" value="&#9998;">
-                            <input class="deleteVehicle" type="button" value="&#10006;">
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Прикреплён
-                    </td>
-                    <td align="center">
-                        Камаз
-                    </td>
-                    <td align="right">
-                        Изотерм
-                    </td>
-                    <td align="right">
-                        8
-                    </td>
-                    <td align="center">
-                        м301тк13
-                    </td>
-                    <td>
-                        <form action="" method="POST">
-                            <input class="changeVehicleInfo" type="button" value="&#9998;">
-                            <input class="deleteVehicle" type="button" value="&#10006;">
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="vehicleTable">
+            <table cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th>
+                            Статус
+                        </th>
+                        <th>
+                            ТС
+                        </th>
+                        <th>
+                            Тип
+                        </th>
+                        <th>
+                            Грузоподъёмность, т
+                        </th>
+                        <th>
+                            Гос. номер
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Активен
+                        </td>
+                        <td align="center">
+                            Газель
+                        </td>
+                        <td align="right">
+                            Тент
+                        </td>
+                        <td align="right">
+                            2
+                        </td>
+                        <td align="center">
+                            о323рр47
+                        </td>
+                        <td>
+                            <form action="" method="POST">
+                                <input class="changeVehicleInfo" type="button" value="&#9998;">
+                                <input class="deleteVehicle" type="button" value="&#10006;">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Сломан
+                        </td>
+                        <td align="center">
+                            Вольво
+                        </td>
+                        <td align="right">
+                            Реф
+                        </td>
+                        <td align="right">
+                            10
+                        </td>
+                        <td align="center">
+                            к898уу77
+                        </td>
+                        <td>
+                            <form action="" method="POST">
+                                <input class="changeVehicleInfo" type="button" value="&#9998;">
+                                <input class="deleteVehicle" type="button" value="&#10006;">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Прикреплён
+                        </td>
+                        <td align="center">
+                            Камаз
+                        </td>
+                        <td align="right">
+                            Изотерм
+                        </td>
+                        <td align="right">
+                            8
+                        </td>
+                        <td align="center">
+                            м301тк13
+                        </td>
+                        <td>
+                            <form action="" method="POST">
+                                <input class="changeVehicleInfo" type="button" value="&#9998;">
+                                <input class="deleteVehicle" type="button" value="&#10006;">
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

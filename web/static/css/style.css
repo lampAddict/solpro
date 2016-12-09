@@ -265,7 +265,14 @@ input.doBid{
     display: none;
 }
 
-#lotFilter, #routesFilter, #driversFilter, #vehicleFilter{
+#driversFilter, #vehicleFilter, #routesFilter{
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    float: left;
+}
+
+#lotFilter{
     margin: 15px 0 10px 15px;
     float: left;
 }
@@ -385,17 +392,17 @@ input.doBid{
     width: 100%;
 }
 
-.addDriverBtn{
-    padding: 0px 0px 10px 0px;
+.addDriverBtn, .addVehicleBtn{
+    float: right;
 }
 
-#filter, .addDriverBtn a{
+#filter, .addDriverBtn a, .addVehicleBtn a{
     cursor: pointer;
     text-decoration: underline;
 }
 
 .addDriverBtn a{
-    padding-right: 20px;
+
 }
 
 #addDriverWindow{
@@ -423,4 +430,24 @@ input.doBid{
 
 ul.chosen-choices{
     padding: 0 !important;
+}
+
+#driverPageContainer{
+    width: 628px;
+    margin: 0 auto;
+}
+
+#transportPageContainer{
+    width: 580px;
+    margin: 0 auto;
+}
+
+#routesPageContainer{
+    width: 1230px;
+    margin: 0 auto;
+}
+
+#auctionPageContainer{
+    width: 1430px;
+    margin: 0 auto;
 }
