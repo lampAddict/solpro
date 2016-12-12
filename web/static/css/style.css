@@ -189,7 +189,7 @@ ul.topnav li.icon {display: none;}
     margin: 15px;
 }
 
-#auctionTable table, #routesTable table, #driversTable table, #vehicleTable table, #addDriverWindow table{
+#auctionTable table, #routesTable table, #driversTable table, #vehicleTable table, #addDriverWindow table, #addVehicleWindow table{
     border-top: 1px solid dimgrey;
     border-left: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
@@ -206,17 +206,28 @@ ul.topnav li.icon {display: none;}
     padding: 3px 7px;
 }
 
-#addDriverWindow table{
+#addDriverWindow table, #addVehicleWindow table{
     border-bottom: 1px solid dimgrey;
 }
 
-#addDriverWindow table tr td{
+#addDriverWindow table tr td, #addVehicleWindow table tr td{
     margin: 0 5px 5px 5px;
 }
 
-#addDriverWindow input[type="text"], #addDriverWindow textarea{
+#addDriverWindow input[type="text"], #addDriverWindow textarea, #addVehicleWindow input[type="text"]{
     padding: 7px;
     width: 480px;
+}
+
+#addVehicleWindow select{
+    padding: 7px 4px;
+    width: 497px;
+    color: #a9a9a9;
+
+}
+
+#addVehicleWindow select.black{
+    color: black;
 }
 
 .lotComment{
@@ -405,17 +416,17 @@ input.doBid{
 
 }
 
-#addDriverWindow{
+#addDriverWindow, #addVehicleWindow{
     display: none;
     width: 500px;
     margin: 100px auto;
 }
 
-#addDriverWindow table{
+#addDriverWindow table, #addVehicleWindow table{
     width: 100%;
 }
 
-#addDriverWindow input[type="button"]{
+#addDriverWindow input[type="button"], #addVehicleWindow input[type="button"]{
     width:50%;
 }
 
@@ -424,7 +435,7 @@ input.doBid{
     margin: 0 10px 10px 10px;
 }
 
-.addDriverWindowBtn{
+.addDriverWindowBtn, .addVehicleWindowBtn{
     margin: 0 10px 10px 10px;
 }
 
@@ -438,7 +449,7 @@ ul.chosen-choices{
 }
 
 #transportPageContainer{
-    width: 580px;
+    width: 664px;
     margin: 0 auto;
 }
 

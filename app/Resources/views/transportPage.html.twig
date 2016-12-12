@@ -7,7 +7,7 @@
 {% block body %}
     <div id="transportPageContainer">
         <div id="vehicleFilter">
-            <div style="width:550px; float:left">
+            <div style="width:634px; float:left">
                 <div class="addVehicleBtn"><a >Добавить ТС</a></div>
                 <div><a id="filter">Показать фильтры</a></div>
             </div>
@@ -15,12 +15,8 @@
                 <table cellpadding="0" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>
-                            Статус
-                        </th>
-                        <th>
-                            Тип
-                        </th>
+                        <th>Статус</th>
+                        <th>Тип</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,42 +44,24 @@
             <table cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
-                        <th>
-                            Статус
-                        </th>
-                        <th>
-                            ТС
-                        </th>
-                        <th>
-                            Тип
-                        </th>
-                        <th>
-                            Грузоподъёмность, т
-                        </th>
-                        <th>
-                            Гос. номер
-                        </th>
+                        <th>Статус</th>
+                        <th>ТС</th>
+                        <th>Тип</th>
+                        <th>Грузоподъёмность, т</th>
+                        <th>Гос. номер</th>
+                        <th>Номер п/п</th>
                         <th>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            Активен
-                        </td>
-                        <td align="center">
-                            Газель
-                        </td>
-                        <td align="right">
-                            Тент
-                        </td>
-                        <td align="right">
-                            2
-                        </td>
-                        <td align="center">
-                            о323рр47
-                        </td>
+                        <td>Активен</td>
+                        <td align="center">Газель</td>
+                        <td align="right">Тент</td>
+                        <td align="right">2</td>
+                        <td align="center">о323рр47</td>
+                        <td align="center">ав7777/31</td>
                         <td>
                             <form action="" method="POST">
                                 <input class="changeVehicleInfo" type="button" value="&#9998;">
@@ -92,21 +70,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Сломан
-                        </td>
-                        <td align="center">
-                            Вольво
-                        </td>
-                        <td align="right">
-                            Реф
-                        </td>
-                        <td align="right">
-                            10
-                        </td>
-                        <td align="center">
-                            к898уу77
-                        </td>
+                        <td>Сломан</td>
+                        <td align="center">Вольво</td>
+                        <td align="right">Реф</td>
+                        <td align="right">10</td>
+                        <td align="center">к898уу77</td>
+                        <td align="center">&mdash;</td>
                         <td>
                             <form action="" method="POST">
                                 <input class="changeVehicleInfo" type="button" value="&#9998;">
@@ -115,21 +84,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            Прикреплён
-                        </td>
-                        <td align="center">
-                            Камаз
-                        </td>
-                        <td align="right">
-                            Изотерм
-                        </td>
-                        <td align="right">
-                            8
-                        </td>
-                        <td align="center">
-                            м301тк13
-                        </td>
+                        <td>Прикреплён</td>
+                        <td align="center">Камаз</td>
+                        <td align="right">Изотерм</td>
+                        <td align="right">8</td>
+                        <td align="center">м301тк13</td>
+                        <td align="center">вв8989/02</td>
                         <td>
                             <form action="" method="POST">
                                 <input class="changeVehicleInfo" type="button" value="&#9998;">
@@ -140,5 +100,50 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div id="addVehicleWindow">
+        <table cellpadding="0" cellspacing="0">
+            <tbody>
+            <tr>
+                <td colspan="2">
+                    <input id="vehicleName" type="text" class="addVehicleWindowBtn" placeholder="ТС" style="margin-top: 10px;">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <select id="vehicleType" class="addVehicleWindowBtn">
+                        <option value="" disabled selected>Тип</option>
+                        <option>Реф</option>
+                        <option>Тент</option>
+                        <option>Изотерм</option>
+                        <option>Цистерна</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="vehiclePayload" type="text" class="addVehicleWindowBtn" placeholder="Грузоподъёмность">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="vehicleRegNumber" type="text" class="addVehicleWindowBtn" placeholder="Гос. номер" >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="vehicleTrailerRegNumber" type="text" class="addVehicleWindowBtn" placeholder="Номер п/п" >
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <input id="addDriverBtn" class="addVehicleWindowBtn" type="button" value="Сохранить">
+                </td>
+                <td align="right">
+                    <input id="cancelBtn" class="addVehicleWindowBtn" type="button" value="Закрыть">
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 {% endblock %}

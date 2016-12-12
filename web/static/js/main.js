@@ -23,27 +23,60 @@ $( document ).ready(function(){
         return false;
     });
 
+    //show add driver window
     $('.addDriverBtn').click(function(e){
         var dWindow = $('#addDriverWindow'),
             dTable = $('#driversTable'),
             dFilterBtn = $('#filter'),
+            dFilterWindow = $('#filterBlock'),
             dWindowShowBtn = $(e.currentTarget),
             cancelBtn = dWindow.find('#cancelBtn'),
             addDriverVehicleSelect = dWindow.find('#addDriverVehicle');
 
-        dFilterBtn.hide();
-        dTable.hide();
-        dWindowShowBtn.hide();
-        dWindow.show();
+            dFilterBtn.hide();
+            dFilterWindow.hide();
+            dTable.hide();
+            dWindowShowBtn.hide();
+            dWindow.show();
 
-        addDriverVehicleSelect.chosen({no_results_text: "Ничего не найдено."});
+            addDriverVehicleSelect.chosen({no_results_text: "Ничего не найдено."});
 
-        cancelBtn.click(function(e){
-            dFilterBtn.show();
-            dTable.show();
+            cancelBtn.click(function(e){
+                dFilterBtn.show();
+                dTable.show();
 
-            dWindowShowBtn.show();
-            dWindow.hide();
-        });
+                dWindowShowBtn.show();
+                dWindow.hide();
+            });
     });
+
+    //show add vehicle window
+    $('.addVehicleBtn').click(function(e){
+        var vWindow = $('#addVehicleWindow'),
+            vTable = $('#vehicleTable'),
+            vFilterBtn = $('#filter'),
+            vFilterWindow = $('#filterBlock'),
+            vWindowShowBtn = $(e.currentTarget),
+            cancelBtn = vWindow.find('#cancelBtn'),
+            vehicleTypeSelect = vWindow.find('#vehicleType');
+
+            vFilterBtn.hide();
+            vFilterWindow.hide();
+            vTable.hide();
+            vWindowShowBtn.hide();
+            vWindow.show();
+
+            cancelBtn.click(function(e){
+                vFilterBtn.show();
+                vTable.show();
+
+                vWindowShowBtn.show();
+                vWindow.hide();
+            });
+
+            vehicleTypeSelect.change(function () {
+                vehicleTypeSelect.addClass('black');
+            });
+    });
+
 });
