@@ -7,11 +7,11 @@
 {% block body %}
     <div id="transportPageContainer">
         <div id="vehicleFilter">
-            <div style="width:634px; float:left">
+            <div style="width:644px; float:left">
                 <div class="addVehicleBtn"><a >Добавить ТС</a></div>
                 <div><a id="filter">Показать фильтры</a></div>
             </div>
-            <div id="filterBlock" class="half hide">
+            <div id="filterBlock" class="half dnone">
                 <table cellpadding="0" cellspacing="0">
                     <thead>
                     <tr>
@@ -57,43 +57,43 @@
                 <tbody>
                     <tr>
                         <td>Активен</td>
-                        <td align="center">Газель</td>
-                        <td align="right">Тент</td>
+                        <td>Газель</td>
+                        <td>Тент</td>
                         <td align="right">2</td>
                         <td align="center">о323рр47</td>
                         <td align="center">ав7777/31</td>
-                        <td>
+                        <td class="actionBtns">
                             <form action="" method="POST">
-                                <input class="changeVehicleInfo" type="button" value="&#9998;">
-                                <input class="deleteVehicle" type="button" value="&#10006;">
+                                <a class="btn btn-default changeVehicleInfo"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-danger deleteVehicle"><i class="fa fa-trash-o"></i></a>
                             </form>
                         </td>
                     </tr>
                     <tr>
                         <td>Сломан</td>
-                        <td align="center">Вольво</td>
-                        <td align="right">Реф</td>
+                        <td>Вольво</td>
+                        <td>Реф</td>
                         <td align="right">10</td>
                         <td align="center">к898уу77</td>
                         <td align="center">&mdash;</td>
-                        <td>
+                        <td class="actionBtns">
                             <form action="" method="POST">
-                                <input class="changeVehicleInfo" type="button" value="&#9998;">
-                                <input class="deleteVehicle" type="button" value="&#10006;">
+                                <a class="btn btn-default changeVehicleInfo"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-danger deleteVehicle"><i class="fa fa-trash-o"></i></a>
                             </form>
                         </td>
                     </tr>
                     <tr>
                         <td>Прикреплён</td>
-                        <td align="center">Камаз</td>
-                        <td align="right">Изотерм</td>
+                        <td>Камаз</td>
+                        <td>Изотерм</td>
                         <td align="right">8</td>
                         <td align="center">м301тк13</td>
                         <td align="center">вв8989/02</td>
-                        <td>
+                        <td class="actionBtns">
                             <form action="" method="POST">
-                                <input class="changeVehicleInfo" type="button" value="&#9998;">
-                                <input class="deleteVehicle" type="button" value="&#10006;">
+                                <a class="btn btn-default changeVehicleInfo"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-danger deleteVehicle"><i class="fa fa-trash-o"></i></a>
                             </form>
                         </td>
                     </tr>
@@ -140,7 +140,7 @@
                     <input id="addDriverBtn" class="addVehicleWindowBtn" type="button" value="Сохранить">
                 </td>
                 <td align="right">
-                    <input id="cancelBtn" class="addVehicleWindowBtn" type="button" value="Закрыть">
+                    <input id="cancelBtn" class="addVehicleWindowBtn" type="button" value="Отменить">
                 </td>
             </tr>
             </tbody>

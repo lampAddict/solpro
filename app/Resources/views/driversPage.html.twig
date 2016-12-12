@@ -3,6 +3,7 @@
 {% block stylesheets %}
     <link href="{{ asset('/static/css/style.css') }}" type="text/css" rel="stylesheet" />
     <link href="{{ asset('/static/js/plugins/chosen/chosen.css') }}" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 {% endblock %}
 
 {% block topMenuSearch %}
@@ -16,7 +17,7 @@
                 <div class="addDriverBtn"><a >Добавить водителя</a></div>
                 <div style=""><a id="filter">Показать фильтры</a></div>
             </div>
-            <div id="filterBlock" class="half hide">
+            <div id="filterBlock" class="half dnone">
                 <table cellpadding="0" cellspacing="0">
                     <thead>
                     <tr>
@@ -55,10 +56,10 @@
                     <td align="center">Иванов Иван Иванович</td>
                     <td align="right">8 926 531 1066</td>
                     <td align="right">Газель е001кх77</td>
-                    <td>
+                    <td class="actionBtns">
                         <form action="" method="POST">
-                            <input class="changeDriverInfo" type="button" value="&#9998;">
-                            <input class="deleteDriver" type="button" value="&#10006;">
+                            <a class="btn btn-default changeDriverInfo"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-danger deleteDriver"><i class="fa fa-trash-o"></i></a>
                         </form>
                     </td>
                 </tr>
@@ -67,10 +68,10 @@
                     <td align="center">Петров Петр Петрович</td>
                     <td align="right">8 926 223 9871</td>
                     <td align="right">Скания м328нк24</td>
-                    <td>
+                    <td class="actionBtns">
                         <form action="" method="POST">
-                            <input class="changeDriverInfo" type="button" value="&#9998;">
-                            <input class="deleteDriver" type="button" value="&#10006;">
+                            <a class="btn btn-default changeDriverInfo"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-danger deleteDriver"><i class="fa fa-trash-o"></i></a>
                         </form>
                     </td>
                 </tr>
@@ -79,10 +80,10 @@
                     <td align="center">Сидоров Сидр Сидорович</td>
                     <td align="right">8 915 710 1019</td>
                     <td align="right">Вольво н888тт08</td>
-                    <td>
+                    <td class="actionBtns">
                         <form action="" method="POST">
-                            <input class="changeDriverInfo" type="button" value="&#9998;">
-                            <input class="deleteDriver" type="button" value="&#10006;">
+                            <a class="btn btn-default changeDriverInfo"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-danger deleteDriver"><i class="fa fa-trash-o"></i></a>
                         </form>
                     </td>
                 </tr>
@@ -128,7 +129,7 @@
                         <input id="addDriverBtn" class="addDriverWindowBtn" type="button" value="Сохранить">
                     </td>
                     <td align="right">
-                        <input id="cancelBtn" class="addDriverWindowBtn" type="button" value="Закрыть">
+                        <input id="cancelBtn" class="addDriverWindowBtn" type="button" value="Отменить">
                     </td>
                 </tr>
             </tbody>
@@ -138,6 +139,7 @@
 
 {% block javascripts %}
     <script src="{{ asset('/static/js/jquery-3.1.1.min.js') }}"></script>
+    <script src="https://use.fontawesome.com/c20bfc2510.js"></script>
     <script src="{{ asset('/static/js/plugins/chosen/chosen.jquery.min.js') }}"></script>
     <script src="{{ asset('/static/js/main.js') }}"></script>
 {% endblock %}

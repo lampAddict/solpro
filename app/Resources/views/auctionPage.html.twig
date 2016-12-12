@@ -9,25 +9,15 @@
         <div id="lotFilter">
             <div class="half">
                 <div><a id="filter">Показать фильтры</a></div>
-                <div id="filterBlock" class="half hide">
+                <div id="filterBlock" class="half dnone">
                     <table cellpadding="0" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>
-                                Статус лота
-                            </th>
-                            <th>
-                                Направление
-                            </th>
-                            <th>
-                                Вид ТС
-                            </th>
-                            <th>
-                                Дата подачи
-                            </th>
-                            <th>
-                                Ставка
-                            </th>
+                            <th>Статус лота</th>
+                            <th>Направление</th>
+                            <th>Вид ТС</th>
+                            <th>Дата подачи</th>
+                            <th>Ставка</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -84,18 +74,10 @@
             <table cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>
-                            Статус лота
-                        </th>
-                        <th>
-                            № Рейса
-                        </th>
-                        <th>
-                            Направление
-                        </th>
-                        <th>
-                            Подача
-                        </th>
+                        <th>Статус лота</th>
+                        <th>№ Рейса</th>
+                        <th>Направление</th>
+                        <th>Подача</th>
                         <th>
                             Вид ТС
                         </th>
@@ -152,5 +134,11 @@
 
             </table>
         </div>
+    </div>
+{% endblock %}
+
+{% block popup %}
+    <div id="lotInfoWindow">
+
     </div>
 {% endblock %}
