@@ -1,48 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Transport</h1>
-
-    <table>
-        <tbody>
+<div id="transportPageContainer">
+    <div id="vehicleTable">
+        <table cellspacing="0" cellpadding="0">
+            <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ transport.id }}</td>
+                <th>Статус</th>
+                <td>{% if transport.status == 1 %}Активен{% endif %}
+                    {% if transport.status == 0 %}Неактивен{% endif %}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>ТС</th>
                 <td>{{ transport.name }}</td>
             </tr>
             <tr>
-                <th>Type</th>
-                <td>{{ transport.type }}</td>
+                <th>Тип</th>
+                <td>{% if transport.type == 0 %}Реф{% endif %}
+                    {% if transport.type == 1 %}Тент{% endif %}
+                    {% if transport.type == 2 %}Изотерм{% endif %}
+                    {% if transport.type == 3 %}Цистерна{% endif %}</td>
             </tr>
             <tr>
-                <th>Payload</th>
+                <th>Грузоподъёмность, т</th>
                 <td>{{ transport.payload }}</td>
             </tr>
             <tr>
-                <th>Regnum</th>
+                <th>Гос. номер</th>
                 <td>{{ transport.regNum }}</td>
             </tr>
             <tr>
-                <th>Trailerregnum</th>
+                <th>Номер п/п</th>
                 <td>{{ transport.trailerRegNum }}</td>
             </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('transport') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('transport_edit', { 'id': transport.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            <tr>
+                <td colspan="2">
+                    <a class="btn btn-default" href="{{ path('transport_edit', { 'id': transport.id }) }}">Изменить</a>
+                    <a class="btn btn-default" href="{{ path('transport') }}" style="float:right">Вернуться к списку ТС</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

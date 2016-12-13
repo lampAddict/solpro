@@ -3,7 +3,7 @@
 {% block body %}
     <div id="confirmDeleteWindow">
         <div class="deleteConfirmationText">
-            Вы действительно хотите удалить запись о ТС ?
+            Вы действительно хотите удалить<br /><strong>{{ transport.name }} {{ transport.regNum }}</strong> ?
         </div>
         <div class="confirmationWindowBtns">
             {{ form_start(delete_form) }}

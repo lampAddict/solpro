@@ -73,8 +73,7 @@ class TransportController extends Controller
      */
     public function showAction(Transport $transport)
     {
-        $this->checkUserAuthentication();
-        $this->checkUserOwner($transport);
+        $this->doChecks($transport);
 
         $deleteForm = $this->createDeleteForm($transport);
 
@@ -92,8 +91,7 @@ class TransportController extends Controller
      */
     public function editAction(Request $request, Transport $transport)
     {
-        $this->checkUserAuthentication();
-        $this->checkUserOwner($transport);
+        $this->doChecks($transport);
 
         $deleteForm = $this->createDeleteForm($transport);
         $editForm = $this->createForm('AppBundle\Form\TransportType', $transport);
@@ -121,8 +119,7 @@ class TransportController extends Controller
      */
     public function confirmDeleteAction(Request $request, Transport $transport)
     {
-        $this->checkUserAuthentication();
-        $this->checkUserOwner($transport);
+        $this->doChecks($transport);
 
         $deleteForm = $this->createDeleteForm($transport);
 
@@ -140,8 +137,7 @@ class TransportController extends Controller
      */
     public function deleteAction(Request $request, Transport $transport)
     {
-        $this->checkUserAuthentication();
-        $this->checkUserOwner($transport);
+        $this->doChecks($transport);
 
         $form = $this->createDeleteForm($transport);
         $form->handleRequest($request);
@@ -182,9 +178,28 @@ class TransportController extends Controller
         ;
     }
 
+    /**
+     * Checks if entity belongs to current user
+     *
+     * @param Transport $transport The transport entity
+     *
+     * @throws AccessDeniedException
+     */
     private function checkUserOwner(Transport $transport){
         if( $transport->getUserId()->getId() != $this->getUser()->getId() ){
             throw $this->createAccessDeniedException();
         }
+    }
+
+    /**
+     * Do various check routines before actual action
+     * - User authentication
+     * - Transport entity owner
+     *
+     * @param Transport $transport The transport entity
+     */
+    private function doChecks($transport){
+        $this->checkUserAuthentication();
+        $this->checkUserOwner($transport);
     }
 }

@@ -45,7 +45,7 @@ class TransportType extends AbstractType
                              'label'=>' '
                             ,'attr'=>[
                                          'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>'Грузоподъёмность'
+                                        ,'placeholder'=>'Грузоподъёмность, т'
                             ]
                         ])
                 ->add(
