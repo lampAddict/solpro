@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block topMenuSearch %}
+    {{ include('search/search.html.twig', { 'searchCaption': 'Поиск по транспорту..' }) }}
+{% endblock %}
+
+{% block body %}
+    <div id="transportPageContainer">
+        <div id="vehicleFilter">
+            <div style="width:770px; float:left">
+                <div class="addVehicleBtn"><a href="{{ path('transport_add') }}">Добавить ТС</a></div>
+                <div><a id="filter">Показать фильтры</a></div>
+            </div>
+            <div id="filterBlock" class="half dnone">
+                <table cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Статус</th>
+                        <th>Тип</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="vehicleFilterStatus">
+                            <select id="vehicleFilterStatus">
+                                <option selected="selected">&mdash;</option>
+                                <option>Активен</option>
+                                <option>Сломан</option>
+                                <option>Прикреплён</option>
+                            </select>
+                        </td>
+                        <td class="vehicleFilterType">
+                            <div><span>Реф</span><input type="checkbox" id="lotFilterVTRef"></div>
+                            <div><span>Тент</span><input type="checkbox" id="lotFilterVTTen"></div>
+                            <div><span>Изотерм</span><input type="checkbox" id="lotFilterVTIso"></div>
+                            <div><span>Цистерна</span><input type="checkbox" id="lotFilterVTCis"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="vehicleTable">
+            <table cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>Статус</th>
+                    <th>ТС</th>
+                    <th>Тип</th>
+                    <th>Грузоподъёмность, т</th>
+                    <th>Гос. номер</th>
+                    <th>Номер п/п</th>
+                    <th>Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for transport in transports %}
+                    <tr>
+                        <td>
+                            {% if transport.status == 1 %}Активен{% endif %}
+                            {% if transport.status == 0 %}Неактивен{% endif %}
+                        </td>
+                        <td><a href="{{ path('transport_show', { 'id': transport.id }) }}">{{ transport.name }}</a></td>
+                        <td>
+                            {% if transport.type == 0 %}Реф{% endif %}
+                            {% if transport.type == 1 %}Тент{% endif %}
+                            {% if transport.type == 2 %}Изотерм{% endif %}
+                            {% if transport.type == 3 %}Цистерна{% endif %}
+                        </td>
+                        <td align="right">{{ transport.payload }}</td>
+                        <td align="center">{{ transport.regNum }}</td>
+                        <td align="center">{{ transport.trailerRegNum }}</td>
+                        <td>
+                            <a class="btn btn-default changeVehicleInfo" href="{{ path('transport_edit', { 'id': transport.id }) }}"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-danger deleteVehicle" href="{{ path('transport_confirmDelete', { 'id': transport.id }) }}"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="confirmDeleteWindow">
+        <div class="deleteConfirmationText">
+            Вы действительно хотите удалить запись о ТС ?
+        </div>
+        <div class="confirmationWindowBtns">
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Удалить">
+                <a class="btn btn-default" href="{{ path('transport') }}">Отменить</a>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+{% endblock %}

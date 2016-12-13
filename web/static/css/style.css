@@ -185,11 +185,20 @@ ul.topnav li.icon {display: none;}
     margin-top: 30px;
 }
 
+#vehicleTable table{
+    width: 100%;
+}
+
+#vehicleTable table tr td:nth-child(2){
+    word-break: break-all;
+    width: 195px;
+}
+
 #auctionTable, #routesTable, #driversTable, #vehicleTable{
     margin: 15px;
 }
 
-#auctionTable table, #routesTable table, #driversTable table, #vehicleTable table, #addDriverWindow table, #addVehicleWindow table{
+#auctionTable table, #routesTable table, #driversTable table, #vehicleTable table, #addDriverWindow table{
     border-top: 1px solid dimgrey;
     border-left: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
@@ -199,22 +208,24 @@ ul.topnav li.icon {display: none;}
     border-bottom: 1px solid dimgrey;
     padding: 5px;
     margin: 0px;
+    border-right: 1px solid #909090;
+    text-align: center;
 }
 
 #auctionTable table tr td, #routesTable table tr td, #driversTable table tr td, #vehicleTable table tr td{
     border-bottom: 1px solid dimgrey;
-    padding: 3px 7px;
+    padding: 5px 7px;
 }
 
-#addDriverWindow table, #addVehicleWindow table{
+#addDriverWindow table{
     border-bottom: 1px solid dimgrey;
 }
 
-#addDriverWindow table tr td, #addVehicleWindow table tr td{
+#addDriverWindow table tr td{
     margin: 0 5px 5px 5px;
 }
 
-#addDriverWindow input[type="text"], #addDriverWindow textarea, #addVehicleWindow input[type="text"]{
+#addDriverWindow input[type="text"], #addDriverWindow textarea{
     padding: 7px;
     width: 480px;
 }
@@ -223,10 +234,6 @@ ul.topnav li.icon {display: none;}
     padding: 7px 4px;
     width: 480px;
     color: #a9a9a9;
-}
-
-#addVehicleWindow select.black{
-    color: black;
 }
 
 .lotComment{
@@ -254,21 +261,20 @@ ul.topnav li.icon {display: none;}
     text-align: right;
 }
 
-input.bid{
-    width: 45%;
-    float: right;
-    margin-right: 5px;
-    height: 18px;
+.bid{
+    width: 70px;
+    margin-right: 0px;
+    height: 27px;
+    text-align: right;
 }
 
-input.doBid{
-    float: right;
-    padding: 3px;
-    margin: 0;
+.doBid{
+    padding: 3px !important;
+    width: 110px;
 }
 
 .lotDoBid{
-    width: 320px;
+    width: 200px;
 }
 
 .dnone{
@@ -311,21 +317,20 @@ input.doBid{
     width: 135px;
 }
 
-.lotFilterDirection{
-    width: 180px;
+.lotFilterDirection, .routeFilterDirection{
+    width: 220px;
 }
 
-.lotFilterDirection div{
+.lotFilterDirection div, .routeFilterDirection div{
     padding: 3px 0;
 }
 
-.lotFilterGetInTime{
-    width: 210px;
+.lotFilterGetInTime, .routeFilterGetInTime{
+    width: 230px;
 }
 
-.lotFilterGetInTime div{
-    height: 23px;
-    padding: 3px 0;
+.lotFilterGetInTime div, .routeFilterGetInTime div{
+    padding: 7px 0;
 }
 
 .lotFilterVehicleType, .vehicleFilterType{
@@ -353,23 +358,6 @@ input.doBid{
 
 .half{
     float: left;
-}
-
-.routeFilterDirection{
-    width: 180px;
-}
-
-.routeFilterDirection div{
-    padding: 3px 0;
-}
-
-.routeFilterGetInTime{
-    width: 210px;
-}
-
-.routeFilterGetInTime div{
-    height: 23px;
-    padding: 3px 0;
 }
 
 .routeFilterDriver{
@@ -451,7 +439,7 @@ ul.chosen-choices{
 }
 
 #transportPageContainer{
-    width: 674px;
+    width: 800px;
     margin: 0 auto;
 }
 
@@ -472,4 +460,68 @@ ul.chosen-choices{
 
 .actionBtns{
     padding: 5px 7px !important;
+}
+
+#lotInfoWindow{
+    display: none;
+}
+
+.txtAlignCenter{
+    text-align: center;
+}
+
+.deleteConfirmationText{
+    padding-top: 200px;
+}
+
+#confirmDeleteWindow{
+    width: 317px;
+    margin: 0 auto;
+}
+
+.deleteBtn{
+    background-color: #c9302c;
+    border-color: #ac2925;
+    color: white;
+}
+
+.confirmationWindowBtns{
+    padding-top: 20px;
+}
+
+.confirmationWindowBtns a.btn{
+    float: right;
+}
+
+form[name="appbundle_transport"]{
+    width: 500px;
+    margin: 100px auto;
+}
+
+form[name="appbundle_transport"] input[type="text"]{
+    padding: 7px;
+    width: 480px;
+}
+
+form[name="appbundle_transport"] select{
+    padding: 7px 4px;
+    width: 480px;
+    color: #a9a9a9;
+}
+
+form[name="appbundle_transport"] select.black{
+    color: black;
+}
+
+form[name="appbundle_transport"] a.btn{
+    float: right;
+    margin-right: 10px;
+}
+
+form[name="appbundle_transport"] input.btn{
+    margin-left: 10px;
+}
+
+#appbundle_transport div{
+    margin: 10px;
 }

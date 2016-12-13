@@ -76,32 +76,20 @@
                     <tr>
                         <th>Статус лота</th>
                         <th>№ Рейса</th>
-                        <th>Направление</th>
+                        <th class="txtAlignCenter">Направление</th>
                         <th>Подача</th>
-                        <th>
-                            Вид ТС
-                        </th>
-                        <th>
-                            Вес (Объем)
-                        </th>
-                        <th>
-                            Комментарий
-                        </th>
-                        <th>
-                            До конца торгов
-                        </th>
-                        <th>
-                            Текущая цена лота
-                        </th>
-                        <th>
-                            Ставка
-                        </th>
+                        <th>Вид ТС</th>
+                        <th>Вес, кг (Объем, плт)</th>
+                        <th class="txtAlignCenter">Комментарий</th>
+                        <th>До конца торгов</th>
+                        <th>Текущая цена лота, &#8381;</th>
+                        <th class="txtAlignCenter">Ставка</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="lotStatus">Торги идут</td>
-                        <td align="center">Р-001354</td>
+                        <td align="center"><a href="/route/info/id" class="showLotRouteInfo">Р-001354</a></td>
                         <td class="lotDirection">Саратов (СЖК) &xrarr;<br />Павловский Посад (Московская обл)</td>
                         <td class="lotGetInTime">02.12.16 09:00</td>
                         <td class="lotVehicleType">Изотерм 20т</td>
@@ -111,8 +99,8 @@
                         <td align="right">78000</td>
                         <td class="lotDoBid" align="right">
                             <form action="" method="POST">
-                                <input class="doBid" type="submit" value="Сделать ставку" />
                                 <input class="bid" type="text" name="bid" value="77000" />
+                                <a class="btn btn-default doBid">Сделать ставку</a>
                             </form>
                         </td>
                     </tr>
@@ -139,6 +127,55 @@
 
 {% block popup %}
     <div id="lotInfoWindow">
+        <div class="routeNumber">
+            Рейс №: <span id="routeNumber"></span>
+        </div>
+        <div class="routeStatus">
+            Статус: <span id="routeStatus"></span>
+        </div>
+        <div class="routeInfo">
+            <table cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td>Дата загрузки:</td><td></td>
+                        <td>Пункт отгрузки:</td><td></td>
+                        <td>Регион доставки:</td><td></td>
+                        <td>Вид ТС:</td><td></td>
+                        <td>Тариф:</td><td></td>
+                        <td>Дата загрузки:</td><td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Комментарий:</td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <span>Информацияпо заказам:</span>
+            <table id="routeOrdersTable" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <td>№ Заказа</td>
+                        <td>Контрагент</td>
+                        <td>Адрес доставки</td>
+                        <td>Дата отгрузки</td>
+                        <td>Вес кг, объём плт</td>
+                        <td>Категория продукции</td>
+                        <td>Условия</td>
+                        <td>Ответственный</td>
+                    </tr>
+                </thead>
+            </table>
+            <tbody>
+                <tr></tr>
+            </tbody>
+            <div>Количество точек выгрузки:<span> </span></div>
+            <div>Общий вес брутто:<span> </span></div>
+            <div>Количество паллет:<span> </span></div>
+        </div>
 
     </div>
 {% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input class="btn btn-success" type="submit" value="Изменить" />
+        <a class="btn btn-default" href="{{ path('transport') }}">Отменить</a>
+    {{ form_end(edit_form) }}
+{% endblock %}

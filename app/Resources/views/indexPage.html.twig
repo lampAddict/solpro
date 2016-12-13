@@ -43,10 +43,10 @@
             {% endif %}
         </li>
         <li>
-            {% if app.request.get('_route') == 'vehicles' %}
-                <a class="active" href="{{ url("vehicles") }}">Транспорт</a>
+            {% if app.request.get('_route') == 'transport' %}
+                <a class="active" href="{{ url("transport") }}">Транспорт</a>
             {% else %}
-                <a href="{{ url("vehicles") }}">Транспорт</a>
+                <a href="{{ url("transport") }}">Транспорт</a>
             {% endif %}
         </li>
 

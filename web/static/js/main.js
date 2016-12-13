@@ -50,7 +50,12 @@ $( document ).ready(function(){
             });
     });
 
+    $('#appbundle_transport_type').change(function (e) {
+        $(e.currentTarget).addClass('black');
+    });
+
     //show add vehicle window
+    /*
     $('.addVehicleBtn').click(function(e){
         var vWindow = $('#addVehicleWindow'),
             vTable = $('#vehicleTable'),
@@ -78,5 +83,6 @@ $( document ).ready(function(){
                 vehicleTypeSelect.addClass('black');
             });
     });
+    */
 
 });
