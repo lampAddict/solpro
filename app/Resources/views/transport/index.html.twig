@@ -71,8 +71,8 @@
                         <td align="center">{{ transport.regNum }}</td>
                         <td align="center">{{ transport.trailerRegNum }}</td>
                         <td>
-                            <a class="btn btn-default changeVehicleInfo" href="{{ path('transport_edit', { 'id': transport.id }) }}"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-danger deleteVehicle" href="{{ path('transport_confirmDelete', { 'id': transport.id }) }}"><i class="fa fa-trash-o"></i></a>
+                            <a class="btn btn-default changeVehicleInfo customtooltip" href="{{ path('transport_edit', { 'id': transport.id }) }}"><i class="fa fa-pencil"></i><span class="tooltiptext">Изменить</span></a>
+                            <a class="btn btn-danger deleteVehicle customtooltip" href="{{ path('transport_confirmDelete', { 'id': transport.id }) }}"><i class="fa fa-trash-o"></i><span class="tooltiptext">Удалить</span></a>
                         </td>
                     </tr>
                 {% endfor %}

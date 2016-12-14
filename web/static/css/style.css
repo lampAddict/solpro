@@ -187,6 +187,7 @@ ul.topnav li.icon {display: none;}
 
 #vehicleTable table{
     width: 100%;
+    border-collapse: collapse;
 }
 
 #vehicleTable table tr td:nth-child(2){
@@ -526,4 +527,50 @@ form[name="appbundle_transport"] input.btn{
 
 #appbundle_transport div{
     margin: 10px;
+}
+
+.loginForm input{
+    margin: 5px 0;
+}
+
+.loginForm label{
+    margin-bottom: 0;
+}
+
+/* Tooltip text */
+.customtooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #f9f9f9;
+    border: 1px solid #adadad;;
+    color: black;
+    text-align: center;
+    padding: 3px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.customtooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.customtooltip .tooltiptext {
+    width: 80px;
+    margin-left: -45px;
+    margin-top: 29px;
+}
+
+.customtooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
 }
