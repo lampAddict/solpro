@@ -194,6 +194,28 @@ ul.topnav li.icon {display: none;}
     width: 188px;
 }
 
+#driverShowTable{
+    margin: 15px;
+}
+
+#driverShowTable table{
+    border: 1px solid dimgrey;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#driverShowTable table tr th{
+    padding: 5px;
+    margin: 0px;
+    border-bottom: 1px solid dimgrey;
+    border-right: 1px solid dimgrey;
+}
+
+#driverShowTable table tr td{
+    border-bottom: 1px solid dimgrey;
+    padding: 5px 7px;
+}
+
 #auctionTable, #routesTable, #driversTable, #vehicleTable{
     margin: 15px;
 }
@@ -202,6 +224,7 @@ ul.topnav li.icon {display: none;}
     border-top: 1px solid dimgrey;
     border-left: 1px solid dimgrey;
     border-right: 1px solid dimgrey;
+    width: 100%;
 }
 
 #auctionTable table tr th, #routesTable table tr th, #driversTable table tr th, #vehicleTable table tr th{
@@ -434,7 +457,7 @@ ul.chosen-choices{
 }
 
 #driverPageContainer{
-    width: 638px;
+    width: 800px;
     margin: 0 auto;
 }
 
@@ -496,36 +519,41 @@ ul.chosen-choices{
     float: right;
 }
 
-form[name="appbundle_transport"]{
+form[name="appbundle_transport"], form[name="appbundle_driver"]{
     width: 500px;
     margin: 100px auto;
 }
 
-form[name="appbundle_transport"] input[type="text"]{
+form[name="appbundle_transport"] input[type="text"], form[name="appbundle_driver"] input[type="text"]{
     padding: 7px;
     width: 480px;
 }
 
-form[name="appbundle_transport"] select{
+form[name="appbundle_driver"] textarea{
+    padding: 7px;
+    width: 480px;
+}
+
+form[name="appbundle_transport"] select, form[name="appbundle_driver"] select{
     padding: 7px 4px;
     width: 480px;
     color: #a9a9a9;
 }
 
-form[name="appbundle_transport"] select.black{
+form[name="appbundle_transport"] select.black, form[name="appbundle_driver"] select.black{
     color: black;
 }
 
-form[name="appbundle_transport"] a.btn{
+form[name="appbundle_transport"] a.btn, form[name="appbundle_driver"] a.btn{
     float: right;
     margin-right: 10px;
 }
 
-form[name="appbundle_transport"] input.btn{
+form[name="appbundle_transport"] input.btn, form[name="appbundle_driver"] input.btn{
     margin-left: 10px;
 }
 
-#appbundle_transport div{
+#appbundle_transport div, #appbundle_driver div{
     margin: 10px;
 }
 

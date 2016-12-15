@@ -1,7 +1,8 @@
 <?php
+
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -22,7 +23,7 @@ class Transport
     protected $name;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="smallint")
      */
     protected $type;
 
@@ -42,7 +43,7 @@ class Transport
     protected $trailerRegNum = null;
 
     /**
-     * @ORM\Column(type="integer", options={"default" = "1"})
+     * @ORM\Column(type="smallint", options={"default" = "1"})
      */
     protected $status;
 
@@ -52,6 +53,17 @@ class Transport
      */
     protected $user_id;
 
+    /**
+     * One Vehicle (Transport) has One Driver.
+     * @ORM\OneToOne(targetEntity="Driver", inversedBy="transport_id")
+     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
+     */
+    protected $driver_id;
+
+    public function __toString() {
+        return $this->name;
+    }
+    
     /**
      * Get id
      *
@@ -221,5 +233,28 @@ class Transport
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Set driver_id
+     *
+     * @param \AppBundle\Entity\Driver $driverId
+     * @return Transport
+     */
+    public function setDriverId(\AppBundle\Entity\Driver $driverId = null)
+    {
+        $this->driver_id = $driverId;
+
+        return $this;
+    }
+
+    /**
+     * Get driver_id
+     *
+     * @return \AppBundle\Entity\Driver 
+     */
+    public function getDriverId()
+    {
+        return $this->driver_id;
     }
 }

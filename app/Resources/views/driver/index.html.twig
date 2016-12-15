@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block topMenuSearch %}
+    {{ include('search/search.html.twig', { 'searchCaption': 'Поиск по транспорту..' }) }}
+{% endblock %}
+
+{% block body %}
+    <div id="driverPageContainer">
+        <div id="driversFilter">
+            <div style="width:769px; float:left">
+                <div class="addDriverBtn"><a href="{{ path('driver_add') }}">Добавить водителя</a></div>
+                <div style=""><a id="filter">Показать фильтры</a></div>
+            </div>
+            <div id="filterBlock" class="half dnone">
+                <table cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Статус</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="driversFilterStatus">
+                            <select id="driversFilterStatus">
+                                <option selected="selected">&mdash;</option>
+                                <option>Активен</option>
+                                <option>Без данных</option>
+                            </select>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="driversTable">
+            <table cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>Статус</th>
+                    <th>ФИО</th>
+                    <th>Телефон</th>
+                    <th>ТС, гос. номер</th>
+                    <th>Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if drivers is empty %}
+                    <tr>
+                        <td colspan="5" align="center">Водители не найдены</td>
+                    </tr>
+                {% endif %}
+                {% for driver in drivers %}
+                    <tr>
+                        <td>
+                            {% if driver.status == 1 %}Активен{% endif %}
+                            {% if driver.status == 0 %}Неактивен{% endif %}
+                        </td>
+                        <td align="center"><a href="{{ path('driver_show', { 'id': driver.id }) }}">{{ driver.fio }}</a></td>
+                        <td align="center">{{ driver.phone }}</td>
+                        <td align="center">{% if driver.getTransportId is not null %}{{ driver.getTransportId.name }} {{ driver.getTransportId.regNum }}{% endif %}</td>
+                        <td>
+                            <a class="btn btn-default changeVehicleInfo customtooltip" href="{{ path('driver_edit', { 'id': driver.id }) }}"><i class="fa fa-pencil"></i><span class="tooltiptext">Изменить</span></a>
+                            <a class="btn btn-danger deleteVehicle customtooltip" href="{{ path('driver_confirmDelete', { 'id': driver.id }) }}"><i class="fa fa-trash-o"></i><span class="tooltiptext">Удалить</span></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

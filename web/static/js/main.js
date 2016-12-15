@@ -24,6 +24,7 @@ $( document ).ready(function(){
     });
 
     //show add driver window
+    /*
     $('.addDriverBtn').click(function(e){
         var dWindow = $('#addDriverWindow'),
             dTable = $('#driversTable'),
@@ -49,7 +50,7 @@ $( document ).ready(function(){
                 dWindow.hide();
             });
     });
-
+    */
     $('#appbundle_transport_type').change(function (e) {
         $(e.currentTarget).addClass('black');
     });

@@ -36,10 +36,10 @@
                 {% endif %}
             </li>
             <li>
-                {% if app.request.get('_route') == 'drivers' %}
-                    <a class="active" href="{{ url("drivers") }}">Водители</a>
+                {% if app.request.get('_route') == 'driver' %}
+                    <a class="active" href="{{ url("driver") }}">Водители</a>
                 {% else %}
-                    <a href="{{ url("drivers") }}">Водители</a>
+                    <a href="{{ url("driver") }}">Водители</a>
                 {% endif %}
             </li>
             <li>

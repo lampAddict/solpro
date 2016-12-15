@@ -100,6 +100,4 @@ class TransportType extends AbstractType
     {
         return 'appbundle_transport';
     }
-
-
 }

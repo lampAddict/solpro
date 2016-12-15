@@ -54,6 +54,11 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% if transports is empty %}
+                    <tr>
+                        <td colspan="7" align="center">Транспортные средства не найдены</td>
+                    </tr>
+                {% endif %}
                 {% for transport in transports %}
                     <tr>
                         <td>

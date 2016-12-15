@@ -28,7 +28,7 @@ class TransportController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $transports = $em->getRepository('AppBundle:Transport')->findBy(['user_id'=>$this->getUser()->getId()],['id'=>'DESC']);//findAll();
+        $transports = $em->getRepository('AppBundle:Transport')->findBy(['user_id'=>$this->getUser()->getId()],['id'=>'DESC']);
         
         return $this->render('transport/index.html.twig', array(
             'transports' => $transports,
@@ -152,17 +152,6 @@ class TransportController extends Controller
     }
 
     /**
-     * Check if user logged in
-     *
-     * @throws AccessDeniedException
-     */
-    private function checkUserAuthentication(){
-        if( !$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') ){
-            throw $this->createAccessDeniedException();
-        }
-    }
-
-    /**
      * Creates a form to delete a transport entity.
      *
      * @param Transport $transport The transport entity
@@ -175,9 +164,20 @@ class TransportController extends Controller
             ->setAction($this->generateUrl('transport_delete', array('id' => $transport->getId())))
             ->setMethod('DELETE')
             ->getForm()
-        ;
+            ;
     }
-
+    
+    /**
+     * Check if user logged in
+     *
+     * @throws AccessDeniedException
+     */
+    private function checkUserAuthentication(){
+        if( !$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY') ){
+            throw $this->createAccessDeniedException();
+        }
+    }
+    
     /**
      * Checks if entity belongs to current user
      *

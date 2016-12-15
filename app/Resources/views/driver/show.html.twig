@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id="driverPageContainer">
+    <div id="driverShowTable">
+        <table cellspacing="0" cellpadding="0">
+            <tbody>
+            <tr>
+                <th align="left">Статус</th>
+                <td>
+                    {% if driver.status == 1 %}Активен{% endif %}
+                    {% if driver.status == 0 %}Неактивен{% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th align="left">ФИО</th>
+                <td>{{ driver.fio }}</td>
+            </tr>
+            <tr>
+                <th align="left">Номер телефона</th>
+                <td>{{ driver.phone }}</td>
+            </tr>
+            <tr>
+                <th align="left">Паспортные данные</th>
+                <td>{{ driver.passport }}</td>
+            </tr>
+            <tr>
+                <th align="left">Водительское удостоверение</th>
+                <td>{{ driver.driverLicense }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a class="btn btn-default" href="{{ path('driver_edit', { 'id': driver.id }) }}">Изменить</a>
+                    <a class="btn btn-default" href="{{ path('driver') }}" style="float:right">Вернуться к списку ТС</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
