@@ -37,6 +37,10 @@ $( document ).ready(function(){
         $vehicleSelect.append('<option val="" selected="selected"> </option>');
     });
 
+    $('.showLotRouteInfo').click(function(e){
+        $('#lotInfoWindow').show();
+        $('#auctionPageContainer').hide();
+    });
     //show add driver window
     /*
     $('.addDriverBtn').click(function(e){

@@ -89,7 +89,7 @@
                 <tbody>
                     <tr>
                         <td class="lotStatus">Торги идут</td>
-                        <td align="center"><a href="/route/info/id" class="showLotRouteInfo">Р-001354</a></td>
+                        <td align="center"><a class="showLotRouteInfo">Р-001354</a></td>
                         <td class="lotDirection">Саратов (СЖК) &xrarr;<br />Павловский Посад (Московская обл)</td>
                         <td class="lotGetInTime">02.12.16 09:00</td>
                         <td class="lotVehicleType">Изотерм 20т</td>
@@ -128,34 +128,41 @@
 {% block popup %}
     <div id="lotInfoWindow">
         <div class="routeNumber">
-            Рейс №: <span id="routeNumber"></span>
+            Рейс №: <span id="routeNumber">Р-001254</span>
         </div>
         <div class="routeStatus">
-            Статус: <span id="routeStatus"></span>
+            Статус: <span id="routeStatus">Утвержден</span>
         </div>
-        <div class="routeInfo">
+        <div class="routeInfoTable">
             <table cellspacing="0" cellpadding="0">
                 <tbody>
                     <tr>
-                        <td>Дата загрузки:</td><td></td>
-                        <td>Пункт отгрузки:</td><td></td>
-                        <td>Регион доставки:</td><td></td>
-                        <td>Вид ТС:</td><td></td>
-                        <td>Тариф:</td><td></td>
-                        <td>Дата загрузки:</td><td></td>
+                        <td>Дата загрузки:</td><td>27.11.2016 в 09:00</td>
+                    </tr>
+                    <tr>
+                        <td>Пункт отгрузки:</td><td>Саратов (СЖК)</td>
+                    </tr>
+                    <tr>
+                        <td>Регион доставки:</td><td>Балашиха (Московская обл)</td>
+                    </tr>
+                    <tr>
+                        <td>Вид ТС:</td><td>20тн Реф</td>
+                    </tr>
+                    <tr>
+                        <td>Тариф:</td><td>123500 руб</td>
                     </tr>
                     <tr>
                         <td></td>
                     </tr>
                     <tr>
-                        <td>Комментарий:</td><td></td>
+                        <td>Комментарий:</td><td>Выгрузка 28.11.2016, обязательно наличие мед.книжки</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div>
+        <div class="routeInfo">
             <span>Информацияпо заказам:</span>
-            <table id="routeOrdersTable" cellpadding="0" cellspacing="0">
+            <table id="routeOrdersTable" cellpadding="0" cellspacing="0" style="border:1px solid gray; border-collapse: collapse">
                 <thead>
                     <tr>
                         <td>№ Заказа</td>
@@ -168,13 +175,32 @@
                         <td>Ответственный</td>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr>
+                        <td>тс-00081587</td>
+                        <td>Тандер АО</td>
+                        <td>РЦ Орел,Орловская обл., Орловский район, д. Хардиково, ул.Совхозная, 10 А, РФ, 302507,</td>
+                        <td>28.11.16 11:00</td>
+                        <td>7000 (14)</td>
+                        <td>масло</td>
+                        <td></td>
+                        <td>Верещак Виктор, тел8 (629) 531-10-66</td>
+                    </tr>
+                    <tr>
+                        <td>тс-00081587</td>
+                        <td>Южная сырная лавка</td>
+                        <td>344065, Ростовская обл, Ростов-на-Дону г, Орская ул, дом № 31Д</td>
+                        <td>30.11.16</td>
+                        <td>2300 (6)</td>
+                        <td>майонез</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
             </table>
-            <tbody>
-                <tr></tr>
-            </tbody>
-            <div>Количество точек выгрузки:<span> </span></div>
-            <div>Общий вес брутто:<span> </span></div>
-            <div>Количество паллет:<span> </span></div>
+            <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> 3</span></div>
+            <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> 17300</span></div>
+            <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> 32</span></div>
         </div>
 
     </div>
