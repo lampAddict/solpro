@@ -23,6 +23,20 @@ $( document ).ready(function(){
         return false;
     });
 
+    $vehicleSelect = $('#appbundle_driver_transport_id');
+    $vehicleSelect.addClass("chosen-select");
+    $vehicleSelect.chosen({no_results_text: "Ничего не найдено"});
+
+    //unlink vehicle from driver routine
+    $('#btnUnlinkVehicle').click(function(e){
+        var  $vehicleSelect = $('#appbundle_driver_transport_id')
+            ,$vehicleSelectLabel = $vehicleSelect.parent().find('label');
+
+        $vehicleSelectLabel.text('Прикреплённое транспортное средство:');
+        $vehicleSelect.find('option:selected').removeAttr('selected');
+        $vehicleSelect.append('<option val="" selected="selected"> </option>');
+    });
+
     //show add driver window
     /*
     $('.addDriverBtn').click(function(e){

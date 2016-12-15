@@ -442,7 +442,7 @@ ul.topnav li.icon {display: none;}
 
 .chosen-container{
     width: 480px !important;
-    margin: 0 10px 10px 10px;
+    margin: 0 10px 10px 0px;
 }
 .chosen-search input[type="text"]{
     width: 470px !important;
@@ -553,8 +553,12 @@ form[name="appbundle_transport"] input.btn, form[name="appbundle_driver"] input.
     margin-left: 10px;
 }
 
-#appbundle_transport div, #appbundle_driver div{
+#appbundle_transport div:not([class*="chosen-"]), #appbundle_driver div:not([class*="chosen-"]){
     margin: 10px;
+}
+
+.chosen-single div{
+    margin: 0 !important;
 }
 
 .loginForm input{

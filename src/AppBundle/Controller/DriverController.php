@@ -125,17 +125,20 @@ class DriverController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
+            //unset driver from previous vehicle
+            $vehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['driver_id'=>$driver->getId()]);
+            if( $vehicle ){
+                $vehicle->setDriverId(null);
+                $em->persist($vehicle);
+
+                $em->flush();
+            }
+
             //var_dump($vehicle->getDriverId()->getId());
             $newVehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['id'=>$request->request->get('appbundle_driver')['transport_id']]);
-            if( $newVehicle->getDriverId() !== intval($request->request->get('appbundle_driver')['transport_id']) ){
-
-                //unset driver from previous vehicle
-                $vehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['driver_id'=>$driver->getId()]);
-                if( $vehicle ){
-                    $vehicle->setDriverId(null);
-                    $em->persist($vehicle);
-                }
-
+            if(    $newVehicle
+                && $newVehicle->getDriverId() !== intval($request->request->get('appbundle_driver')['transport_id'])
+            ){
                 //set driver to new assigned vehicle
                 $newVehicle->setDriverId($driver);
                 $em->persist($newVehicle);
