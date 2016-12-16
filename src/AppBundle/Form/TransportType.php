@@ -14,14 +14,14 @@ class TransportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-                        'status'
+                         'status'
                         ,'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
                         ,[
-                        'label'=>'Статус'
-                        ,'choices'=>[
-                            'Активен'=>1
-                            ,'Неактивен'=>0
-                        ]
+                             'label'=>'Статус'
+                            ,'choices'=>[
+                                             'Активен'=>1
+                                            ,'Неактивен'=>0
+                            ]
                         ,'choices_as_values'=>true
                         ])
                 ->add(
