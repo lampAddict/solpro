@@ -10,7 +10,6 @@ function showMenuItems() {
 $( document ).ready(function(){
 
     $('#filter').click(function(e){
-
         var _filterBlock = $('#filterBlock');
         if( _filterBlock.is(':visible') ){
             _filterBlock.slideUp();
@@ -24,8 +23,22 @@ $( document ).ready(function(){
     });
 
     $vehicleSelect = $('#appbundle_driver_transport_id');
-    $vehicleSelect.addClass("chosen-select");
-    $vehicleSelect.chosen({no_results_text: "Ничего не найдено"});
+    if( $vehicleSelect ){
+        $vehicleSelect.addClass("chosen-select");
+        $vehicleSelect.chosen({no_results_text: "Ничего не найдено"});
+    }
+
+    //masked input for driver add/edit window
+    $driverPhone = $('#appbundle_driver_phone');
+    if( $driverPhone ){
+        $driverPhone.mask("9 (999) 999-99-99", {placeholder:"_"});
+    }
+
+    $driverLicense = $('#appbundle_driver_driverLicense');
+    if( $driverLicense ){
+        $.mask.definitions['~'] = '[а-яА-ЯёЁ0-9]';
+        $driverLicense.mask("~~ ~~ 999999", {placeholder:"_"});
+    }
 
     //unlink vehicle from driver routine
     $('#btnUnlinkVehicle').click(function(e){
@@ -41,6 +54,7 @@ $( document ).ready(function(){
         $('#lotInfoWindow').show();
         $('#auctionPageContainer').hide();
     });
+
     //show add driver window
     /*
     $('.addDriverBtn').click(function(e){

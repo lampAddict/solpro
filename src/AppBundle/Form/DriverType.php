@@ -24,7 +24,7 @@ class DriverType extends AbstractType
                      'status'
                     ,'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
                     ,[
-                         'label'=>' '
+                         'label'=>'Статус'
                         ,'choices'=>[
                              'Активен'=>1
                             ,'Неактивен'=>0
@@ -35,40 +35,39 @@ class DriverType extends AbstractType
                      'fio'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                     ,[
-                         'label'=>' '
+                         'label'=>'Фамилия имя отчество'
                         ,'attr'=>[
                                      'class'=>'"addDriverWindowBtn"'
-                                    ,'placeholder'=>'ФИО'
+                                    ,'placeholder'=>'Иванов Иван Иванович'
                         ]
                     ])
             ->add(
                      'phone'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                     ,[
-                         'label'=>' '
+                         'label'=>'Телефон'
                         ,'attr'=>[
                                      'class'=>'"addDriverWindowBtn"'
-                                    ,'placeholder'=>'Телефон'
                         ]
                     ])
             ->add(
                      'passport'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextareaType'
                     ,[
-                         'label'=>' '
+                         'label'=>'Паспортные данные'
                         ,'attr'=>[
                                      'class'=>'"addDriverWindowBtn"'
-                                    ,'placeholder'=>'Паспортные данные'
+                                    ,'placeholder'=>'Серия, номер, кем и когда выдан'
                         ]
                     ])
             ->add(
                      'driverLicense'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                     ,[
-                         'label'=>' '
+                         'label'=>'Водительское удостоверение'
                         ,'attr'=>[
                                      'class'=>'"addDriverWindowBtn"'
-                                    ,'placeholder'=>'Водительское удостоверение'
+                                    ,'placeholder'=>'01 23 456789'
                         ]
                     ])
             ->add(
