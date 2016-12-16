@@ -14,20 +14,31 @@ class TransportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
+                        'status'
+                        ,'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
+                        ,[
+                        'label'=>'Статус'
+                        ,'choices'=>[
+                            'Активен'=>1
+                            ,'Неактивен'=>0
+                        ]
+                        ,'choices_as_values'=>true
+                        ])
+                ->add(
                          'name'
                         ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                         ,[
-                             'label'=>' '
+                             'label'=>'Марка транспортного средства'
                             ,'attr'=>[
                                          'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>'ТС'
+                                        ,'placeholder'=>''
                             ]
                         ])
                 ->add(
                          'type'
                         ,'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
                         ,[
-                             'label'=>' '
+                             'label'=>'Тип кузова'
                             ,'choices'=>[
                                              'Реф'
                                             ,'Тент'
@@ -42,44 +53,33 @@ class TransportType extends AbstractType
                          'payload'
                         ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                         ,[
-                             'label'=>' '
+                             'label'=>'Грузоподъёмность, т'
                             ,'attr'=>[
                                          'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>'Грузоподъёмность, т'
+                                        ,'placeholder'=>''
                             ]
                         ])
                 ->add(
                          'regNum'
                         ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                         ,[
-                             'label'=>' '
+                             'label'=>'Автомобильный номер'
                             ,'attr'=>[
                                          'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>'Гос. номер'
+                                        ,'placeholder'=>'е097кх 97'
                             ]
                         ])
                 ->add(
                          'trailerRegNum'
                         ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                         ,[
-                             'label'=>' '
+                             'label'=>'Номер полуприцепа (необязательное поле)'
                             ,'required'=>false
                             ,'attr'=>[
                                          'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>'Номер п/п'
+                                        ,'placeholder'=>'аа9797 97'
                             ]
                         ])
-                ->add(
-                         'status'
-                        ,'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
-                        ,[
-                             'label'=>' '
-                            ,'choices'=>[
-                                             'Активен'=>1
-                                            ,'Неактивен'=>0
-                            ]
-                        ,'choices_as_values'=>true
-                ])
         ;
     }
     

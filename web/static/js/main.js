@@ -40,6 +40,19 @@ $( document ).ready(function(){
         $driverLicense.mask("~~ ~~ 999999", {placeholder:"_"});
     }
 
+    //masked input for vehicle add/edit window
+    $vehicleRegNum = $('#appbundle_transport_regNum');
+    if( $vehicleRegNum ){
+        $.mask.definitions['~'] = '[авекмнорстухАВЕКМНОРСТУХ]';//А, В, Е, К, М, Н, О, Р, С, Т, У, Х
+        $vehicleRegNum.mask("~999~~ 99?9", {placeholder:"_"});
+    }
+
+    $vehicleTrailerRegNum = $('#appbundle_transport_trailerRegNum');
+    if( $vehicleTrailerRegNum ){
+        $.mask.definitions['~'] = '[авекмнорстухАВЕКМНОРСТУХ]';//А, В, Е, К, М, Н, О, Р, С, Т, У, Х
+        $vehicleTrailerRegNum.mask("~~9999 99?9", {placeholder:"_"});
+    }
+
     //unlink vehicle from driver routine
     $('#btnUnlinkVehicle').click(function(e){
         var  $vehicleSelect = $('#appbundle_driver_transport_id')
