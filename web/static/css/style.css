@@ -630,3 +630,7 @@ span#routeStatus{
     padding-right: 10px;
     padding-bottom: 2px;
 }
+
+.showLotRouteInfo{
+    cursor: pointer;
+}
