@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MessageFrom1C sendNumber="4" recNumber="5" messageCreationTime="2016-04-15T10:28:23">
+	<references>
+		<lotStatuses>
+			<lotStatus>
+				<id>175d0f31-a9ca-45ba-835e-bae500c8c35c</id>
+				<name>1. Подготовка</name>
+			</lotStatus>
+		</lotStatuses>
+		<routeStatuses>
+			<routeStatuse>
+				<id>a89a43f8-b05e-40b5-8a45-acc63fc6f290</id>
+				<name>2. Запрошен транспорт</name>
+			</routeStatuse>
+			<routeStatuse>
+				<id>08ae86d6-2b8e-4977-a2f3-46cd34db08f1</id>
+				<name>4. В комплектации</name>
+			</routeStatuse>
+		</routeStatuses>
+		<regions>
+			<region>
+				<id>421fd9b4-d871-11e5-9bc2-00155d046c01</id>
+				<name>Москва</name>
+			</region>
+			<region>
+				<id>568eb2c0-d871-11e5-9bc2-00155d046c01</id>
+				<name>Саратов (Межсклад)</name>
+			</region>
+		</regions>
+		<partners>
+			<partner>
+				<id/>
+				<name/>
+				<inn/>
+			</partner>
+			<partner>
+				<id>fef712e7-24a9-11e5-a37b-00155d044117</id>
+				<name>АгроТрансАвто</name>
+				<inn>3662138863</inn>
+			</partner>
+			<partner>
+				<id>e097a0ed-4260-11e5-9ff0-00155d044117</id>
+				<name>DIAMOND EXPORT INVEST ООО</name>
+				<inn>303129397</inn>
+			</partner>
+			<partner>
+				<id>c5c92b67-298e-11e2-a469-00155d028301</id>
+				<name>Кореновский молочно консервный  комбинат</name>
+				<inn>2335013799</inn>
+			</partner>
+			<partner>
+				<id>559a5b74-298f-11e2-a469-00155d028301</id>
+				<name>АШАН ООО</name>
+				<inn>7703270067</inn>
+			</partner>
+			<partner>
+				<id>80c5f07d-298f-11e2-a469-00155d028301</id>
+				<name>О'КЕЙ ООО</name>
+				<inn>7826087713</inn>
+			</partner>
+			<partner>
+				<id>e2489226-fe1a-11df-b7f1-00155d028c03</id>
+				<name>Жировой комбинат АО</name>
+				<inn>6453110490</inn>
+			</partner>
+		</partners>
+		<vehicleTypes>
+			<vehicleType>
+				<id>db56b3a4-ce2b-11e4-9bba-00155d044117</id>
+				<name>Авто</name>
+			</vehicleType>
+		</vehicleTypes>
+		<vehicleCarringTypes>
+			<vehicleCarringType>
+				<id>911ccb56-eb59-11e5-9bc2-00155d046c01</id>
+				<name>20 т</name>
+			</vehicleCarringType>
+		</vehicleCarringTypes>
+		<contacts>
+			<contact>
+				<id>c53d1323-5a5c-11e2-a816-00155d16880a</id>
+				<name>Жуйкова Марина Алексеевна</name>
+				<phone/>
+			</contact>
+			<contact>
+				<id>1d08a73a-6b4a-11e5-bb1a-00155d046117</id>
+				<name>Беленинова Галина Валентиновна</name>
+				<phone/>
+			</contact>
+		</contacts>
+		<drivers>
+			<driver>
+				<id>2216a8fc-0ff1-11e5-b1b2-00155d044117</id>
+				<name> Алёна </name>
+				<phone/>
+				<license>несуществующая лицензия водителя</license>
+				<passport>Паспорт гражданина Российской Федерации, 01 06, 958477, 01.12.2006 0:00:00, ОВД Ленинского р-на г.Барнаула Алтайского края</passport>
+			</driver>
+		</drivers>
+		<vehicles>
+			<vehicle>
+				<id>70d50653-d2dd-11e4-aae8-00155d044117</id>
+				<mark/>
+				<registrationNumber>Т 598 ХО 164</registrationNumber>
+				<truckRegistrationNumber>false</truckRegistrationNumber>
+			</vehicle>
+		</vehicles>
+		<carriers>
+			<carrier>
+				<id>e180d4f2-0252-11e6-8d97-00155d046c01</id>
+				<name>АгроТрансАвто</name>
+				<access>true</access>
+			</carrier>
+			<carrier>
+				<id>29f84e73-0253-11e6-8d97-00155d046c01</id>
+				<name>Базис</name>
+				<access>true</access>
+			</carrier>
+		</carriers>
+		<carrierUsers>
+			<carrierUsers>
+				<id>10fb803f-0253-11e6-8d97-00155d046c01</id>
+				<carrierId>e180d4f2-0252-11e6-8d97-00155d046c01</carrierId>
+				<name>Перевозчиков И.И.</name>
+				<access>true</access>
+				<login>ag1</login>
+				<password>ag1</password>
+				<email>1@ag1.ru</email>
+			</carrierUsers>
+			<carrierUsers>
+				<id>441a50b5-0253-11e6-8d97-00155d046c01</id>
+				<carrierId>29f84e73-0253-11e6-8d97-00155d046c01</carrierId>
+				<name>Кучеров</name>
+				<access>false</access>
+				<login>kucher</login>
+				<password>kucher</password>
+				<email>kucher@baaaz.ru</email>
+			</carrierUsers>
+		</carrierUsers>
+	</references>
+	<routes>
+		<route>
+			<id>32942b59-cafe-11e5-9518-00155d046c01</id>
+			<loadDate>2015-12-15T00:00:00</loadDate>
+			<routeType>1</routeType>
+			<code>тс-00000003</code>
+			<name>Заглушка маршрут № тс-00000003</name>
+			<statusId>08ae86d6-2b8e-4977-a2f3-46cd34db08f1</statusId>
+			<carrierId>e180d4f2-0252-11e6-8d97-00155d046c01</carrierId>
+			<loadRegionId>421fd9b4-d871-11e5-9bc2-00155d046c01</loadRegionId>
+			<unloadRegionId>568eb2c0-d871-11e5-9bc2-00155d046c01</unloadRegionId>
+			<vehicleTypeId>db56b3a4-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>911ccb56-eb59-11e5-9bc2-00155d046c01</vehicleCarringId>
+			<driverId>2216a8fc-0ff1-11e5-b1b2-00155d044117</driverId>
+			<vehicleId>70d50653-d2dd-11e4-aae8-00155d044117</vehicleId>
+			<tradeCost>10</tradeCost>
+			<tradeStep>1000</tradeStep>
+			<cargoWeight>136</cargoWeight>
+			<cargoCount>1</cargoCount>
+			<comment/>
+			<executionCost>0</executionCost>
+			<orders>
+				<order>
+					<id>d08637ce-9fe8-11e5-a77f-00155d046117</id>
+					<code>тс-00000120</code>
+					<date>2015-12-15T00:00:00</date>
+					<consignee>80c5f07d-298f-11e2-a469-00155d028301</consignee>
+					<unloadAddress>Сибирский филиал ООО "О'КЕЙ", 644065, РФ, Омская область, г. Омск, ул. Энтузиастов, д. 2, корп. 1.</unloadAddress>
+					<weight>136</weight>
+					<count>1</count>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>c53d1323-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>112d6e82-ca80-11e5-a3fd-00155d046c01</id>
+			<loadDate>2015-12-09T00:00:00</loadDate>
+			<routeType>0</routeType>
+			<code>тс-00000002</code>
+			<name>Заглушка маршрут № тс-00000002</name>
+			<statusId>a89a43f8-b05e-40b5-8a45-acc63fc6f290</statusId>
+			<carrierId/>
+			<loadRegionId>421fd9b4-d871-11e5-9bc2-00155d046c01</loadRegionId>
+			<unloadRegionId>568eb2c0-d871-11e5-9bc2-00155d046c01</unloadRegionId>
+			<vehicleTypeId>db56b3a4-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>911ccb56-eb59-11e5-9bc2-00155d046c01</vehicleCarringId>
+			<driverId/>
+			<vehicleId/>
+			<tradeCost>0</tradeCost>
+			<tradeStep>1000</tradeStep>
+			<cargoWeight>146153</cargoWeight>
+			<cargoCount>228</cargoCount>
+			<comment/>
+			<executionCost>0</executionCost>
+			<orders>
+				<order>
+					<id>1ca11b62-9da2-11e5-b3de-00155d046117</id>
+					<code/>
+					<date>0001-01-01T00:00:00</date>
+					<consignee>e097a0ed-4260-11e5-9ff0-00155d044117</consignee>
+					<unloadAddress>Станция назначения: Назарбек Узбекской ЖД, код станции 722203, код получателя 5712</unloadAddress>
+					<weight>52834</weight>
+					<count>83</count>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>1d08a73a-6b4a-11e5-bb1a-00155d046117</manager>
+					<comment>ЗП0418647</comment>
+				</order>
+				<order>
+					<id>0845c69e-9da3-11e5-b3de-00155d046117</id>
+					<code/>
+					<date>0001-01-01T00:00:00</date>
+					<consignee>e097a0ed-4260-11e5-9ff0-00155d044117</consignee>
+					<unloadAddress>Станция назначения: Назарбек Узбекской ЖД, код станции 722203, код получателя 5712</unloadAddress>
+					<weight>65471</weight>
+					<count>101</count>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>1d08a73a-6b4a-11e5-bb1a-00155d046117</manager>
+					<comment>ЗП0418648</comment>
+				</order>
+				<order>
+					<id>e732255e-9da4-11e5-b3de-00155d046117</id>
+					<code/>
+					<date>0001-01-01T00:00:00</date>
+					<consignee>c5c92b67-298e-11e2-a469-00155d028301</consignee>
+					<unloadAddress>Краснодарский край,г.Кореновск, ул.Тимашевская,д.16,РФ,353181.</unloadAddress>
+					<weight>19115</weight>
+					<count>32</count>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>1d08a73a-6b4a-11e5-bb1a-00155d046117</manager>
+					<comment>ЗП0418656</comment>
+				</order>
+				<order>
+					<id>325171ab-9fe2-11e5-a77f-00155d046117</id>
+					<code/>
+					<date>0001-01-01T00:00:00</date>
+					<consignee>559a5b74-298f-11e2-a469-00155d028301</consignee>
+					<unloadAddress>НСО,Новосибирский р-н,п.Садовый,ул.Пасечная,уч.11/1,1,РФ,630531.</unloadAddress>
+					<weight>2188</weight>
+					<count>4</count>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>c53d1323-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+				<order>
+					<id>f93c662d-9e74-11e5-9195-00155d046117</id>
+					<code/>
+					<date>0001-01-01T00:00:00</date>
+					<consignee>e2489226-fe1a-11df-b7f1-00155d028c03</consignee>
+					<unloadAddress>Саратовская обл,г.Саратов ,пр-кт 50 лет Октября ,112 "А",РФ,410065.</unloadAddress>
+					<weight>6544</weight>
+					<count>8</count>
+					<loadSpecialConditions/>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager/>
+					<comment>УЗНП074113</comment>
+				</order>
+			</orders>
+		</route>
+	</routes>
+	<lots>
+		<lot>
+			<id>894dc3df-0254-11e6-8d97-00155d046c01</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2016-04-15T12:00:00</startDate>
+			<duration>300</duration>
+			<prolong>10</prolong>
+			<routeId>112d6e82-ca80-11e5-a3fd-00155d046c01</routeId>
+		</lot>
+		<lot>
+			<id>98beba55-0254-11e6-8d97-00155d046c01</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2016-04-15T12:00:00</startDate>
+			<duration>300</duration>
+			<prolong>10</prolong>
+			<routeId>32942b59-cafe-11e5-9518-00155d046c01</routeId>
+		</lot>
+	</lots>
+</MessageFrom1C>

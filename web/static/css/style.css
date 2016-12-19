@@ -613,6 +613,8 @@ form[name="appbundle_transport"] input.btn, form[name="appbundle_driver"] input.
 
 .routeInfo{
     margin-top: 10px;
+    width: 100%;
+    float: left;
 }
 
 span#routeStatus{
@@ -626,6 +628,11 @@ span#routeStatus{
     margin: 5px 0;
 }
 
+.routeInfoTable{
+    float: left;
+    width: 50%;
+}
+
 .routeInfoTable table td{
     padding-right: 10px;
     padding-bottom: 2px;
@@ -633,4 +640,49 @@ span#routeStatus{
 
 .showLotRouteInfo{
     cursor: pointer;
+}
+
+.routeAssignDriver{
+    float: left;
+    width: 50%;
+}
+
+.routeDriverName{
+    font-size: 111%;
+    font-weight: bold;
+}
+
+.routeDriverPassportData{
+    font-size: 85%;
+}
+
+.routeDriverVehicle{
+    margin: 5px 0;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#routeAddDriverWindow{
+    display: none;
+    width: 800px;
+    margin: 100px auto;
+}
+
+#routeAddDriverWindow .chosen-search input[type="text"] {
+    width: 290px !important;
+}
+
+#routeAddDriverWindow .chosen-container{
+    width: 300px !important;
+    margin: 0 10px 10px 0px;
+}
+
+#routeDeleteDriver{
+    float: right;
+}
+
+.routeAddDriverSelect, .routeAddVehicleSelect{
+    width: 50%;
+    float: left;
+    margin-bottom: 20px;
 }

@@ -131,4 +131,22 @@ $( document ).ready(function(){
     });
     */
 
+    $('#routeAssignDriver').click(function (e) {
+        var $lotInfoWindow = $('#lotInfoWindow'), $routeAddDriverWindow = $('#routeAddDriverWindow');
+
+        $routeAddDriverSelect = $('#routeAddDriverSelect');
+        if( $routeAddDriverSelect ){
+            $routeAddDriverSelect.addClass("chosen-select");
+            $routeAddDriverSelect.chosen({no_results_text: "Ничего не найдено"});
+        }
+
+        $routeAddVehicleSelect = $('#routeAddVehicleSelect');
+        if( $routeAddVehicleSelect ){
+            $routeAddVehicleSelect.addClass("chosen-select");
+            $routeAddVehicleSelect.chosen({no_results_text: "Ничего не найдено"});
+        }
+
+        $lotInfoWindow.hide();
+        $routeAddDriverWindow.show();
+    });
 });
