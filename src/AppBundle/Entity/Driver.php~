@@ -52,7 +52,14 @@ class Driver
      * One Driver has One Vehicle (Transport).
      * @ORM\OneToOne(targetEntity="Transport", mappedBy="driver_id")
      */
-    private $transport_id;
+    protected $transport_id;
+
+    /**
+     * One Driver has One Route.
+     * @ORM\OneToOne(targetEntity="Route", inversedBy="vehicleDriver")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     */
+    protected $route_id;
 
     /**
      * Get id

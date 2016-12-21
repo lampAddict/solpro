@@ -31,6 +31,12 @@ class User extends BaseUser
      */
     protected $driver;
 
+    /**
+     * One User has Many Routes.
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="user_id")
+     */
+    protected $route;
+    
     public function __construct()
     {
         parent::__construct();
@@ -101,5 +107,38 @@ class User extends BaseUser
     public function getDriver()
     {
         return $this->driver;
+    }
+
+    /**
+     * Add route
+     *
+     * @param \AppBundle\Entity\Route $route
+     * @return User
+     */
+    public function addRoute(\AppBundle\Entity\Route $route)
+    {
+        $this->route[] = $route;
+
+        return $this;
+    }
+
+    /**
+     * Remove route
+     *
+     * @param \AppBundle\Entity\Route $route
+     */
+    public function removeRoute(\AppBundle\Entity\Route $route)
+    {
+        $this->route->removeElement($route);
+    }
+
+    /**
+     * Get route
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

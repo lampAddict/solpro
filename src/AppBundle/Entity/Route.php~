@@ -1,0 +1,125 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="route")
+ */
+class Route
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $id1C;
+
+    /**
+     * @ORM\Column(type="datetimetz")
+     */
+    protected $loadDate;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $routeDirectAssign;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $code;
+    
+    /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $status;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $carrier;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $regionFrom;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     */
+    protected $regionTo;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $vehicleType;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $vehiclePayload;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    protected $vehicleRegNumber;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $tradeCost;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $tradeStep;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $cargoWeight;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $cargoCount;
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $comment;
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $executionCost;
+
+    //one route - many orders
+    /**
+     * One Route has Many Orders.
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="route_id")
+     */
+    protected $orders;
+
+    //one user - many routes
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="route")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user_id;
+
+    //one route - one driver
+    /**
+     * One Route has One Driver.
+     * @ORM\OneToOne(targetEntity="Driver", mappedBy="route_id")
+     */
+    protected $vehicleDriver;
+}

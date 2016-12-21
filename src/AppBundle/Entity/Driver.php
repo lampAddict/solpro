@@ -55,6 +55,13 @@ class Driver
     protected $transport_id;
 
     /**
+     * One Driver has One Route.
+     * @ORM\OneToOne(targetEntity="Route", inversedBy="vehicleDriver")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     */
+    protected $route_id;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -223,5 +230,28 @@ class Driver
     public function getTransportId()
     {
         return $this->transport_id;
+    }
+
+    /**
+     * Set route_id
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     * @return Driver
+     */
+    public function setRouteId(\AppBundle\Entity\Route $routeId = null)
+    {
+        $this->route_id = $routeId;
+
+        return $this;
+    }
+
+    /**
+     * Get route_id
+     *
+     * @return \AppBundle\Entity\Route 
+     */
+    public function getRouteId()
+    {
+        return $this->route_id;
     }
 }
