@@ -35,7 +35,9 @@ class Import1CDataCommand extends ContainerAwareCommand
     {
         $output->writeln('Import data started..');
 
-        $data = new Crawler(file_get_contents('web/data.xml'));
+        $data = new Crawler();
+        $data->addXmlContent(file_get_contents('web/data.xml'));
+
         if( $data ){
             //Parsing references block
             $refs = $data->filter('MessageFrom1C > references')->children();
@@ -163,7 +165,6 @@ class Import1CDataCommand extends ContainerAwareCommand
             
             $import1CDataManager = $this->getContainer()->get('app.import1cdata');
             $import1CDataManager->import1CData($data);
-
         }
     }
 }
