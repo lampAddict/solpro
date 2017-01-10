@@ -1,0 +1,43 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="lot")
+ */
+class Lot
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $status;
+
+    /**
+     * @ORM\Column(type="datetimetz")
+     */
+    protected $startDate;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $duration;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $prolong;
+
+    /**
+     * @ORM\Column(type="bigint")
+     */
+    protected $routeId;
+}

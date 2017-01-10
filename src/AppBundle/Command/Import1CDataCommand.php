@@ -5,9 +5,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+
 use Symfony\Component\DomCrawler\Crawler;
 
-class Import1CDataCommand extends Command
+class Import1CDataCommand extends ContainerAwareCommand
 {
     protected $refs;
     protected $routes;
@@ -152,6 +154,9 @@ class Import1CDataCommand extends Command
                     $count++;
                 }
             }
+
+            $import1CDataManager = $this->getContainer()->get('app.import1cdata');
+            $import1CDataManager->import1CData();
 
         }
     }
