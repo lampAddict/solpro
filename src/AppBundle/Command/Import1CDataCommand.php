@@ -155,8 +155,14 @@ class Import1CDataCommand extends ContainerAwareCommand
                 }
             }
 
+            $data = [
+                 'lots' => $this->lots
+                ,'routes' => $this->routes
+                ,'ref' => $this->refs
+            ];
+            
             $import1CDataManager = $this->getContainer()->get('app.import1cdata');
-            $import1CDataManager->import1CData();
+            $import1CDataManager->import1CData($data);
 
         }
     }

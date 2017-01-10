@@ -37,9 +37,11 @@ class Lot
     protected $prolong;
 
     /**
-     * @ORM\Column(type="bigint")
+     * One Lot has One Route.
+     * @ORM\OneToOne(targetEntity="Route", inversedBy="lot_id")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
-    protected $routeId;
+    protected $route_id;
 
     /**
      * Get id

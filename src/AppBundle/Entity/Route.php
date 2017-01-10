@@ -122,6 +122,14 @@ class Route
      * @ORM\OneToOne(targetEntity="Driver", mappedBy="route_id")
      */
     protected $vehicleDriver;
+    
+    //one route - one lot
+    /**
+     * One Route has One Lot.
+     * @ORM\OneToOne(targetEntity="Lot", mappedBy="route_id")
+     */
+    protected $lot_id;
+
     /**
      * Constructor
      */
@@ -631,5 +639,28 @@ class Route
     public function getVehicleDriver()
     {
         return $this->vehicleDriver;
+    }
+
+    /**
+     * Set lot_id
+     *
+     * @param \AppBundle\Entity\Lot $lotId
+     * @return Route
+     */
+    public function setLotId(\AppBundle\Entity\Lot $lotId = null)
+    {
+        $this->lot_id = $lotId;
+
+        return $this;
+    }
+
+    /**
+     * Get lot_id
+     *
+     * @return \AppBundle\Entity\Lot 
+     */
+    public function getLotId()
+    {
+        return $this->lot_id;
     }
 }

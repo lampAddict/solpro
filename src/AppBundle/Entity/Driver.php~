@@ -231,4 +231,27 @@ class Driver
     {
         return $this->transport_id;
     }
+
+    /**
+     * Set route_id
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     * @return Driver
+     */
+    public function setRouteId(\AppBundle\Entity\Route $routeId = null)
+    {
+        $this->route_id = $routeId;
+
+        return $this;
+    }
+
+    /**
+     * Get route_id
+     *
+     * @return \AppBundle\Entity\Route 
+     */
+    public function getRouteId()
+    {
+        return $this->route_id;
+    }
 }
