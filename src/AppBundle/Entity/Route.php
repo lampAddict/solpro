@@ -126,7 +126,7 @@ class Route
     //one route - one lot
     /**
      * One Route has One Lot.
-     * @ORM\OneToOne(targetEntity="Lot", mappedBy="route_id")
+     * @ORM\OneToOne(targetEntity="Lot", mappedBy="routeId")
      */
     protected $lot_id;
 

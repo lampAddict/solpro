@@ -17,6 +17,11 @@ class Lot
     protected $id;
 
     /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $id1C;
+
+    /**
      * @ORM\Column(type="string", length=100)
      */
     protected $status;
@@ -41,7 +46,12 @@ class Lot
      * @ORM\OneToOne(targetEntity="Route", inversedBy="lot_id")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
-    protected $route_id;
+    protected $routeId;
+
+    /**
+     * @ORM\Column(type="datetimetz")
+     */
+    protected $created_at;
 
     /**
      * Get id
@@ -166,5 +176,51 @@ class Lot
     public function getRouteId()
     {
         return $this->routeId;
+    }
+
+    /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return Lot
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set id1C
+     *
+     * @param string $id1C
+     * @return Lot
+     */
+    public function setId1C($id1C)
+    {
+        $this->id1C = $id1C;
+
+        return $this;
+    }
+
+    /**
+     * Get id1C
+     *
+     * @return string 
+     */
+    public function getId1C()
+    {
+        return $this->id1C;
     }
 }

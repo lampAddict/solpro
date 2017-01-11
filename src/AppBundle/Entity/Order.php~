@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="order")
+ * @ORM\Table(name="orders")
  */
 class Order
 {
@@ -49,7 +49,7 @@ class Order
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $count;
+    protected $countNum;
 
     /**
      * @ORM\Column(type="text")
@@ -363,5 +363,28 @@ class Order
     public function getRouteId()
     {
         return $this->route_id;
+    }
+
+    /**
+     * Set countNum
+     *
+     * @param integer $countNum
+     * @return Order
+     */
+    public function setCountNum($countNum)
+    {
+        $this->countNum = $countNum;
+
+        return $this;
+    }
+
+    /**
+     * Get countNum
+     *
+     * @return integer 
+     */
+    public function getCountNum()
+    {
+        return $this->countNum;
     }
 }
