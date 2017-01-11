@@ -18,8 +18,17 @@ class AuctionController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $em = $this->getDoctrine()->getManager();
+
+        $lots = $em
+            ->getRepository('AppBundle:Lot')
+            ->createQueryBuilder('l')
+            ->leftJoin('l.routeId', 'r')
+            ->getQuery()
+            ->getResult();
+
         return $this->render('auctionPage.html.twig', array(
-            'trades' => []
+            'lots' => $lots,
         ));
     }
 }

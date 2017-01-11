@@ -87,6 +87,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for lot in lots %}
+                        <tr>
+                            <td class="lotStatus">{{ lot.getStatus }}</td>
+                            <td align="center"><a class="showLotRouteInfo">{{ lot.getRouteId.getCode }}</a></td>
+                            <td class="lotDirection">Саратов (СЖК) &xrarr;<br />Павловский Посад (Московская обл)</td>
+                        </tr>
+                    {% endfor %}
                     <tr>
                         <td class="lotStatus">Торги идут</td>
                         <td align="center"><a class="showLotRouteInfo">Р-001354</a></td>
