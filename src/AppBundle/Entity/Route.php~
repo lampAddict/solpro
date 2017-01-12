@@ -63,7 +63,7 @@ class Route
     protected $regionTo;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string", length=256)
      */
     protected $vehicleType;
 

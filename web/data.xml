@@ -268,16 +268,16 @@
 		<lot>
 			<id>894dc3df-0254-11e6-8d97-00155d046c01</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2016-04-15T12:00:00</startDate>
-			<duration>300</duration>
+			<startDate>2017-01-12T12:00:00</startDate>
+			<duration>600</duration>
 			<prolong>10</prolong>
 			<routeId>112d6e82-ca80-11e5-a3fd-00155d046c01</routeId>
 		</lot>
 		<lot>
 			<id>98beba55-0254-11e6-8d97-00155d046c01</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2016-04-15T12:00:00</startDate>
-			<duration>300</duration>
+			<startDate>2017-01-13T00:00:00</startDate>
+			<duration>1440</duration>
 			<prolong>10</prolong>
 			<routeId>32942b59-cafe-11e5-9518-00155d046c01</routeId>
 		</lot>

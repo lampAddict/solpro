@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,7 +38,7 @@ class DriverType extends AbstractType
                     ,[
                          'label'=>'Фамилия имя отчество'
                         ,'attr'=>[
-                                     'class'=>'"addDriverWindowBtn"'
+                                     'class'=>'addDriverWindowBtn'
                                     ,'placeholder'=>'Иванов Иван Иванович'
                         ]
                     ])
@@ -47,7 +48,7 @@ class DriverType extends AbstractType
                     ,[
                          'label'=>'Телефон'
                         ,'attr'=>[
-                                     'class'=>'"addDriverWindowBtn"'
+                                     'class'=>'addDriverWindowBtn'
                         ]
                     ])
             ->add(
@@ -116,8 +117,7 @@ class DriverType extends AbstractType
     {
         return 'appbundle_driver';
     }
-
-
+    
     public function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([

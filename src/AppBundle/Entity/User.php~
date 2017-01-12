@@ -36,6 +36,12 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Route", mappedBy="user_id")
      */
     protected $route;
+
+    /**
+     * One User has Many Bets.
+     * @ORM\OneToMany(targetEntity="Bet", mappedBy="user_id")
+     */
+    protected $bet;
     
     public function __construct()
     {

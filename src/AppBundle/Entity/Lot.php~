@@ -49,6 +49,12 @@ class Lot
     protected $routeId;
 
     /**
+     * One Lot has Many Bets.
+     * @ORM\OneToMany(targetEntity="Bet", mappedBy="lot_id")
+     */
+    protected $bet;
+    
+    /**
      * @ORM\Column(type="datetimetz")
      */
     protected $created_at;

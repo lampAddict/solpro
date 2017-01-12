@@ -49,6 +49,12 @@ class Lot
     protected $routeId;
 
     /**
+     * One Lot has Many Bets.
+     * @ORM\OneToMany(targetEntity="Bet", mappedBy="lot_id")
+     */
+    protected $bet;
+    
+    /**
      * @ORM\Column(type="datetimetz")
      */
     protected $created_at;
@@ -222,5 +228,45 @@ class Lot
     public function getId1C()
     {
         return $this->id1C;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->bet = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add bet
+     *
+     * @param \AppBundle\Entity\Bet $bet
+     * @return Lot
+     */
+    public function addBet(\AppBundle\Entity\Bet $bet)
+    {
+        $this->bet[] = $bet;
+
+        return $this;
+    }
+
+    /**
+     * Remove bet
+     *
+     * @param \AppBundle\Entity\Bet $bet
+     */
+    public function removeBet(\AppBundle\Entity\Bet $bet)
+    {
+        $this->bet->removeElement($bet);
+    }
+
+    /**
+     * Get bet
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBet()
+    {
+        return $this->bet;
     }
 }

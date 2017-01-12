@@ -36,6 +36,12 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Route", mappedBy="user_id")
      */
     protected $route;
+
+    /**
+     * One User has Many Bets.
+     * @ORM\OneToMany(targetEntity="Bet", mappedBy="user_id")
+     */
+    protected $bet;
     
     public function __construct()
     {
@@ -140,5 +146,38 @@ class User extends BaseUser
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * Add bet
+     *
+     * @param \AppBundle\Entity\Bet $bet
+     * @return User
+     */
+    public function addBet(\AppBundle\Entity\Bet $bet)
+    {
+        $this->bet[] = $bet;
+
+        return $this;
+    }
+
+    /**
+     * Remove bet
+     *
+     * @param \AppBundle\Entity\Bet $bet
+     */
+    public function removeBet(\AppBundle\Entity\Bet $bet)
+    {
+        $this->bet->removeElement($bet);
+    }
+
+    /**
+     * Get bet
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBet()
+    {
+        return $this->bet;
     }
 }

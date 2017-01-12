@@ -88,10 +88,33 @@
                 </thead>
                 <tbody>
                     {% for lot in lots %}
-                        <tr>
+                        <tr id="{{ lot.getId }}">
                             <td class="lotStatus">{{ lot.getStatus }}</td>
                             <td align="center"><a class="showLotRouteInfo">{{ lot.getRouteId.getCode }}</a></td>
-                            <td class="lotDirection">Саратов (СЖК) &xrarr;<br />Павловский Посад (Московская обл)</td>
+                            <td class="lotDirection">{{ lot.getRouteId.getRegionFrom }} &xrarr;<br />{{ lot.getRouteId.getRegionTo }}</td>
+                            <td class="lotGetInTime">{{ lot.getRouteId.getLoadDate|date('d.m.Y H:i') }}</td>
+                            <td class="lotVehicleType">{{ lot.getRouteId.getVehicleType }}<br />{{ lot.getRouteId.getVehiclePayload }}</td>
+                            <td align="right">{{ lot.getRouteId.getCargoWeight }} ({{ lot.getRouteId.getCargoCount }})</td>
+                            <td class="lotComment">{{ lot.getRouteId.getComment }}</td>
+
+                            <td class="lotTimeLeft" align="center">
+                                {% if lot.getStartDate.timestamp <= date().timestamp and lot.getStartDate.timestamp + lot.getDuration*60 > date().timestamp %} {{ (lot.getStartDate.timestamp + lot.getDuration*60 - date().timestamp) | date('H:i:s') }}{% else %}&mdash;{% endif %}
+                            </td>
+
+                            <td class="lotCurrentPrice" align="right">30000</td>
+                            <td class="lotDoBid" align="right">
+
+                                {{ form_start(forms[lot.getId]) }}
+                                    {{ form_widget(forms[lot.getId]) }}
+                                    <input class="btn btn-default doBid" type="submit" value="Сделать ставку" />
+                                {{ form_end(forms[lot.getId]) }}
+                                <!--
+                                <form action="" method="POST">
+                                    <input class="bid" type="text" name="bid" value="77000" />
+                                    <a class="btn btn-default doBid" type="submit">Сделать ставку</a>
+                                </form>
+                                -->
+                            </td>
                         </tr>
                     {% endfor %}
                     <tr>
