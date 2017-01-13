@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BetType extends AbstractType
@@ -13,6 +14,8 @@ class BetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $lot        = $options['lot'];
+        
         $builder
             ->add(
                      'value'
@@ -24,6 +27,14 @@ class BetType extends AbstractType
                                     ,'placeholder'=>''
                         ]
                     ])
+
+            ->add(
+                     'lot_id'
+                    ,HiddenType::class
+                    ,[
+                        //'data'=>$lot
+                    ])
+
         ;
     }
 
@@ -43,5 +54,12 @@ class BetType extends AbstractType
     public function getBlockPrefix()
     {
         return 'appbundle_bet';
+    }
+
+    public function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+             'lot' => null
+        ]);
     }
 }

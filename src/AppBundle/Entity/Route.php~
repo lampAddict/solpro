@@ -97,10 +97,6 @@ class Route
      * @ORM\Column(type="text")
      */
     protected $comment;
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    protected $executionCost;
 
     //one route - many orders
     /**

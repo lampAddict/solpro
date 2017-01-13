@@ -149,4 +149,20 @@ $( document ).ready(function(){
         $lotInfoWindow.hide();
         $routeAddDriverWindow.show();
     });
+
+    $('.lotTimeLeft').each(function() {
+        var $this = $(this);
+
+        $(this).data('etime', $(this).html());
+
+        var finalDate = $(this).data('etime');
+
+        console.log(finalDate);
+
+        $this.countdown(finalDate, function(event) {
+            //$this.html(event.strftime('%H:%M:%S'));
+            var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+            $(this).html(event.strftime(totalHours + ':%M:%S'));
+        });
+    });
 });

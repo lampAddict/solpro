@@ -37,28 +37,27 @@ class Lot
     protected $duration;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $prolong;
-
-    /**
      * One Lot has One Route.
      * @ORM\OneToOne(targetEntity="Route", inversedBy="lot_id")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
     protected $routeId;
-
+    /*
     /**
      * One Lot has Many Bets.
      * @ORM\OneToMany(targetEntity="Bet", mappedBy="lot_id")
      */
-    protected $bet;
+    //protected $bet;
     
     /**
      * @ORM\Column(type="datetimetz")
      */
     protected $created_at;
 
+    public function __toString() {
+        return (string)$this->id;
+    }
+    
     /**
      * Get id
      *

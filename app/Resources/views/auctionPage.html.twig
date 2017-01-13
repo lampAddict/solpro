@@ -83,6 +83,7 @@
                         <th class="txtAlignCenter">Комментарий</th>
                         <th>До конца торгов</th>
                         <th>Текущая цена лота, &#8381;</th>
+                        <th>Шаг уменьшения цены, &#8381;</th>
                         <th class="txtAlignCenter">Ставка</th>
                     </tr>
                 </thead>
@@ -97,57 +98,18 @@
                             <td align="right">{{ lot.getRouteId.getCargoWeight }} ({{ lot.getRouteId.getCargoCount }})</td>
                             <td class="lotComment">{{ lot.getRouteId.getComment }}</td>
 
-                            <td class="lotTimeLeft" align="center">
-                                {% if lot.getStartDate.timestamp <= date().timestamp and lot.getStartDate.timestamp + lot.getDuration*60 > date().timestamp %} {{ (lot.getStartDate.timestamp + lot.getDuration*60 - date().timestamp) | date('H:i:s') }}{% else %}&mdash;{% endif %}
-                            </td>
+                            <td class="lotTimeLeft" align="center">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60*2) > date().timestamp %}{{ (lot.getStartDate.timestamp + lot.getDuration*60*2) | date('Y/m/d H:i:s') }}{% elseif lot.getStartDate.timestamp > date().timestamp %}До начала торгов:<br />{{ (lot.getStartDate.timestamp - date().timestamp) | date('H:i:s') }}{% else %}&mdash;{% endif %}</td>
 
-                            <td class="lotCurrentPrice" align="right">30000</td>
+                            <td class="lotCurrentPrice" align="right">{{ lot.getRouteId.getTradeCost }}</td>
+                            <td align="right">{{ lot.getRouteId.getTradeStep }}</td>
                             <td class="lotDoBid" align="right">
-
                                 {{ form_start(forms[lot.getId]) }}
                                     {{ form_widget(forms[lot.getId]) }}
                                     <input class="btn btn-default doBid" type="submit" value="Сделать ставку" />
                                 {{ form_end(forms[lot.getId]) }}
-                                <!--
-                                <form action="" method="POST">
-                                    <input class="bid" type="text" name="bid" value="77000" />
-                                    <a class="btn btn-default doBid" type="submit">Сделать ставку</a>
-                                </form>
-                                -->
                             </td>
                         </tr>
                     {% endfor %}
-                    <tr>
-                        <td class="lotStatus">Торги идут</td>
-                        <td align="center"><a class="showLotRouteInfo">Р-001354</a></td>
-                        <td class="lotDirection">Саратов (СЖК) &xrarr;<br />Павловский Посад (Московская обл)</td>
-                        <td class="lotGetInTime">02.12.16 09:00</td>
-                        <td class="lotVehicleType">Изотерм 20т</td>
-                        <td align="right">19200 (24)</td>
-                        <td class="lotComment"></td>
-                        <td align="center">00:49:16</td>
-                        <td align="right">78000</td>
-                        <td class="lotDoBid" align="right">
-                            <form action="" method="POST">
-                                <input class="bid" type="text" name="bid" value="77000" />
-                                <a class="btn btn-default doBid">Сделать ставку</a>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lotStatus">
-                            Начало торгов<br />03.12.16 в 09:00
-                        </td>
-                        <td align="center"><a class="showLotRouteInfo">Р-038882</a></td>
-                        <td class="lotDirection">Аткарск (АМЭЗ) &xrarr;<br />Тула (РЦ Тандер)</td>
-                        <td class="lotGetInTime">02.12.16 09:00</td>
-                        <td class="lotVehicleType">Тент 20т</td>
-                        <td align="right">18000 (32)</td>
-                        <td class="lotComment">№ заказа: YB122325454, выгрузка 05.12.2016. Обязательна регистрация в тайм-слоте.</td>
-                        <td align="center">&mdash;</td>
-                        <td align="right">54000</td>
-                        <td  class="lotDoBid" align="center">&mdash;</td>
-                    </tr>
                 </tbody>
             </table>
         </div>

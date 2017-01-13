@@ -25,19 +25,46 @@ class AuctionController extends Controller
             ->getRepository('AppBundle:Lot')
             ->createQueryBuilder('l')
             ->leftJoin('l.routeId', 'r')
-            ->leftJoin('l.bet', 'b')
+            ->leftJoin(
+                'AppBundle\Entity\Bet',
+                'b',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'l.id = b.lot_id'
+            )
             ->getQuery()
             ->getResult();
 
         $forms = [];
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        foreach($lots as $lot){
+        foreach( $lots as $lot ){
             $bet = new Bet();
             
-            $bet->setLotId($lot);
-            $bet->setUserId($user);
+            $bet->setLotId($lot->getId());
+            //$bet->setUserId($this->getUser());
             
-            $form = $this->createForm('AppBundle\Form\BetType', $bet);
+            $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
+
+            $form->handleRequest($request);
+            if(    $form->isSubmitted()
+                && $form->isValid()
+            ){
+
+                //check if received token is the same as stored one
+                if( $this->get('security.token_storage')->getToken() == $request->request->get('appbundle_bet')['_token'] ){
+                    //$user = $this->get('security.token_storage')->getToken()->getUser();
+
+                    $lot = $em->getRepository('AppBundle:Lot')->findOneBy(['id'=>$request->request->get('appbundle_bet')['lot_id']]);
+                    $bet = new Bet();
+                    
+                    $bet->setLotId( $lot->getId() );
+                    $bet->setUserId( $this->getUser() );
+                    $bet->setValue( $request->request->get('appbundle_bet')['value'] );
+                    $bet->setCreatedAt(new \DateTime());
+                }
+
+                var_dump($request->request->get('appbundle_bet'));
+                
+                die('Form submitted');
+            }
 
             $forms[ $lot->getId() ] = $form->createView();
         }

@@ -24,8 +24,10 @@ class import1CDataService{
                 $_route = new Route();
 
                 $user = null;
-                if( $route['routeType'] == 1 ){
-                    foreach( $data['ref']['carrierUsers'] as $cu ){
+                if(    $route['routeType'] == 1
+                    && intval($route['carrierId']) > 0
+                ){
+                    foreach( $data['ref']['carrierUser'] as $cu ){
                         if( $cu['carrierId'] == $route['carrierId'] ){
                             $user = $this->em->getRepository('AppBundle:User')->findOneBy(['username'=>$cu['login']]);
                             break;
@@ -63,7 +65,6 @@ class import1CDataService{
                 $_route->setCargoCount( $route['cargoCount'] );
                 $_route->setCargoWeight( $route['cargoWeight'] );
                 $_route->setComment( $route['comment'] );
-                $_route->setExecutionCost( $route['executionCost'] );
 
                 $this->em->persist($_route);
                 $this->em->flush();
@@ -88,6 +89,7 @@ class import1CDataService{
 
                         if(    isset($order['manager'])
                             && $order['manager'] != ''
+                            && !empty($data['ref']['contact'])
                         ){
                             $_order->setManager( $data['ref']['contact'][ $order['manager'] ]['name'] );
                         }
@@ -112,7 +114,6 @@ class import1CDataService{
                 $_lot->setId1C( $lot['id'] );
                 $_lot->setStatus( $data['ref']['lotStatus'][ $lot['statusID'] ]['name'] );
                 $_lot->setDuration( $lot['duration'] );
-                $_lot->setProlong( $lot['prolong'] );
                 $_lot->setStartDate( new \DateTime($lot['startDate']) );
                 $_lot->setCreatedAt( new \DateTime(date('c', time())) );
 

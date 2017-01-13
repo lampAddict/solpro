@@ -17,13 +17,17 @@ class Bet
     protected $id;
 
     //one lot - many bets
+    /*
     /**
      * @ORM\ManyToOne(targetEntity="Lot", inversedBy="bet")
      * @ORM\JoinColumn(name="lot_id", referencedColumnName="id")
      */
+    /**
+     * @ORM\Column(type="integer")
+     */
     protected $lot_id;
 
-    //one user - many best
+    //one user - many bets
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="bet")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -80,10 +84,10 @@ class Bet
     /**
      * Set lot_id
      *
-     * @param \AppBundle\Entity\Lot $lotId
+     * @param integer $lotId
      * @return Bet
      */
-    public function setLotId(\AppBundle\Entity\Lot $lotId = null)
+    public function setLotId($lotId = null)
     {
         $this->lot_id = $lotId;
 
