@@ -42,6 +42,11 @@ class Lot
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
     protected $routeId;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $price;
     /*
     /**
      * One Lot has Many Bets.

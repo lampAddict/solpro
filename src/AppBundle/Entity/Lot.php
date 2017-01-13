@@ -42,6 +42,11 @@ class Lot
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
     protected $routeId;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $price;
     /*
     /**
      * One Lot has Many Bets.
@@ -267,5 +272,28 @@ class Lot
     public function getBet()
     {
         return $this->bet;
+    }
+
+    /**
+     * Set price
+     *
+     * @param integer $price
+     * @return Lot
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return integer 
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

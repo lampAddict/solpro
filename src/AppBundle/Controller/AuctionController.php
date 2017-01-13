@@ -47,23 +47,34 @@ class AuctionController extends Controller
             if(    $form->isSubmitted()
                 && $form->isValid()
             ){
-
-                //check if received token is the same as stored one
-                if( $this->get('security.token_storage')->getToken() == $request->request->get('appbundle_bet')['_token'] ){
-                    //$user = $this->get('security.token_storage')->getToken()->getUser();
-
-                    $lot = $em->getRepository('AppBundle:Lot')->findOneBy(['id'=>$request->request->get('appbundle_bet')['lot_id']]);
-                    $bet = new Bet();
-                    
-                    $bet->setLotId( $lot->getId() );
-                    $bet->setUserId( $this->getUser() );
-                    $bet->setValue( $request->request->get('appbundle_bet')['value'] );
-                    $bet->setCreatedAt(new \DateTime());
+                if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                    throw $this->createAccessDeniedException();
                 }
+                //$user = $this->get('security.token_storage')->getToken()->getUser();
 
-                var_dump($request->request->get('appbundle_bet'));
-                
-                die('Form submitted');
+                $lot = $em
+                        ->getRepository('AppBundle:Lot')
+                        ->createQueryBuilder('l')
+                        ->leftJoin('l.routeId', 'r')
+                        ->where('l.id = '.$request->request->get('appbundle_bet')['lot_id'])
+                        ->setMaxResults( 1 )
+                        ->getQuery()
+                        ->getResult();
+                //$lot = $em->getRepository('AppBundle:Lot')->findOneBy(['id'=>$request->request->get('appbundle_bet')['lot_id']]);
+                //$lot = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>$request->request->get('appbundle_bet')['lot_id']]);
+                $bet = new Bet();
+
+                $lot = $lot[0];
+
+                $bet->setLotId( $lot->getId() );
+                $bet->setUserId( $this->getUser() );
+                $bet->setCreatedAt(new \DateTime());
+                if( intval($request->request->get('appbundle_bet')['value']) <= $lot->getPrice() - $lot->getRouteId()->getTradeStep() ){
+                    $bet->setValue( intval($request->request->get('appbundle_bet')['value']) );
+
+                    $em->persist($bet);
+                    $em->flush();
+                }
             }
 
             $forms[ $lot->getId() ] = $form->createView();
