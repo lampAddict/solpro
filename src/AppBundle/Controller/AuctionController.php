@@ -39,7 +39,6 @@ class AuctionController extends Controller
             $bet = new Bet();
             
             $bet->setLotId($lot->getId());
-            //$bet->setUserId($this->getUser());
             
             $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
 
@@ -48,6 +47,7 @@ class AuctionController extends Controller
                 && $form->isValid()
                 && intval($request->request->get('appbundle_bet')['lot_id']) == $lot->getId()
             ){
+                //check if user authenticated
                 if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
                     throw $this->createAccessDeniedException();
                 }
@@ -61,8 +61,7 @@ class AuctionController extends Controller
                         ->setMaxResults( 1 )
                         ->getQuery()
                         ->getResult();
-                //$lot = $em->getRepository('AppBundle:Lot')->findOneBy(['id'=>$request->request->get('appbundle_bet')['lot_id']]);
-                //$lot = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>$request->request->get('appbundle_bet')['lot_id']]);
+                
                 $bet = new Bet();
 
                 $lot = $lot[0];
@@ -70,7 +69,9 @@ class AuctionController extends Controller
                 $bet->setLotId( $lot->getId() );
                 $bet->setUserId( $this->getUser() );
                 $bet->setCreatedAt(new \DateTime());
-                if( intval($request->request->get('appbundle_bet')['value']) <= $lot->getPrice() - $lot->getRouteId()->getTradeStep() ){
+                if(    intval($request->request->get('appbundle_bet')['value']) <= $lot->getPrice() - $lot->getRouteId()->getTradeStep()
+                    && (strtotime($lot->getStartDate()) + $lot->getDuration()) < time()
+                ){
                     $bet->setValue( intval($request->request->get('appbundle_bet')['value']) );
                     $lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );
 

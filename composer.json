@@ -23,7 +23,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0dev",
         "symfony/dom-crawler": "^3.2",
-        "symfony/css-selector": "^3.2"
+        "symfony/css-selector": "^3.2",
+        "leaseweb/memcache-bundle": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

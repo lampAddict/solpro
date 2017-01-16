@@ -89,7 +89,7 @@
                 </thead>
                 <tbody>
                     {% for lot in lots %}
-                        <tr id="{{ lot.getId }}">
+                        <tr>
                             <td class="lotStatus">{{ lot.getStatus }}</td>
                             <td align="center"><a class="showLotRouteInfo">{{ lot.getRouteId.getCode }}</a></td>
                             <td class="lotDirection">{{ lot.getRouteId.getRegionFrom }} &xrarr;<br />{{ lot.getRouteId.getRegionTo }}</td>
@@ -100,12 +100,12 @@
 
                             <td class="lotTimeLeft" align="center">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s') }}{% elseif lot.getStartDate.timestamp > date().timestamp %}До начала торгов:<br />{{ (lot.getStartDate.timestamp - date().timestamp) | date('H:i:s') }}{% else %}&mdash;{% endif %}</td>
 
-                            <td class="lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
-                            <td align="right">{{ lot.getRouteId.getTradeStep }}</td>
+                            <td id="{{ lot.getId }}" class="lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
+                            <td class="lotCurrentTradeStep" align="right">{{ lot.getRouteId.getTradeStep }}</td>
                             <td class="lotDoBid" align="right">
                                 {{ form_start(forms[lot.getId]) }}
                                     {{ form_widget(forms[lot.getId]) }}
-                                    <input class="btn btn-default doBid" type="submit" value="Сделать ставку" />
+                                    <input class="btn btn-default doBid" type="button" data-tradeStep="{{ lot.getRouteId.getTradeStep }}" value="Сделать ставку" />
                                 {{ form_end(forms[lot.getId]) }}
                             </td>
                         </tr>

@@ -285,7 +285,7 @@ ul.topnav li.icon {display: none;}
 }
 
 .bid{
-    width: 70px;
+    width: 60px;
     margin-right: 0px;
     height: 27px;
     text-align: right;
@@ -294,6 +294,7 @@ ul.topnav li.icon {display: none;}
 .doBid{
     padding: 3px !important;
     width: 110px;
+    margin-left: 5px;
 }
 
 .lotDoBid{
@@ -688,7 +689,7 @@ span#routeStatus{
 }
 
 #appbundle_bet div{
-    width: 70px;
+    width: 65px;
     float: left;
 }
 

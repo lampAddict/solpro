@@ -150,19 +150,51 @@ $( document ).ready(function(){
         $routeAddDriverWindow.show();
     });
 
-    $('.lotTimeLeft').each(function() {
+    //time left countdowns
+    $('.lotTimeLeft').each(function(){
         var $this = $(this);
-
         $(this).data('etime', $(this).html());
-
         var finalDate = $(this).data('etime');
-
-        console.log(finalDate);
-
         $this.countdown(finalDate, function(event) {
-            //$this.html(event.strftime('%H:%M:%S'));
             var totalHours = event.offset.totalDays * 24 + event.offset.hours;
             $(this).html(event.strftime(totalHours + ':%M:%S'));
         });
     });
+
+    //click handlers for do bet buttons
+    var bets = [];
+    $('.doBid').each(function(){
+        var $this = $(this);
+        $this.click(function(){
+            var _bet = parseInt( $this.siblings('#appbundle_bet').find('#appbundle_bet_value').val() );
+            var _price = $this.parents('.lotDoBid').siblings('.lotCurrentPrice').html();
+            //in order to place bet it must conform following conditions
+            if(    _bet > 0 //positive number
+                && bets.indexOf(_bet) < 0 //new bet
+                && _bet <= parseInt(_price) - parseInt($this.attr('data-tradeStep')) //less than current lot price minus step of price reducing
+            ){
+                bets.push( _bet );
+                $this.parent().submit();
+            }
+        });
+    });
+
+    var updateLotPrices = function(){
+        $.ajax({
+            url: '/solpro/solportal/web/app_dev.php/lotsPrices',
+            cache: false
+        }).done(function( data ){
+            console.log(data);
+            if( !jQuery.isEmptyObject(data.lots) ){
+                $('.lotCurrentPrice').each(function(){
+                    var _id = parseInt($(this).attr('id'));
+                    if( data.lots[ _id ] != parseInt($(this).html()) ){
+                        $(this).html(data.lots[ _id ]);
+                    }
+                });
+            }
+        });
+    };
+
+    setInterval( updateLotPrices, 3000 );
 });

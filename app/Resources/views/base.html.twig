@@ -5,6 +5,9 @@
     <title>{% block title %}Портал "Солнечные продукты"{% endblock %}</title>
     {% block stylesheets %}
         <link href="{{ asset('/static/css/style.css') }}" type="text/css" rel="stylesheet" />
+        <!--[if IE]>
+        <link href="{{ asset('/static/css/ie.css') }}" type="text/css" rel="stylesheet" />
+        <![endif]-->
         <link href="{{ asset('/static/js/plugins/chosen/chosen.css') }}" type="text/css" rel="stylesheet" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     {% endblock %}
