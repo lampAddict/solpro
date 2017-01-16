@@ -69,7 +69,7 @@ class import1CDataService{
                 $this->em->persist($_route);
                 $this->em->flush();
 
-                $routeDbIds[ $route['id'] ] = $_route;
+                $routeDbIds[ $route['id'] ] = ['routeId'=>$_route, 'startPrice'=>$route['tradeCost']];
 
                 if( !empty($route['orders']) ){
 
@@ -117,9 +117,11 @@ class import1CDataService{
                 $_lot->setStartDate( new \DateTime($lot['startDate']) );
                 $_lot->setCreatedAt( new \DateTime(date('c', time())) );
 
-                if( isset($routeDbIds[ $lot['routeId'] ]) )
-                    $_lot->setRouteId( $routeDbIds[ $lot['routeId'] ] );
-
+                if( isset($routeDbIds[ $lot['routeId'] ]) ){
+                    $_lot->setRouteId( $routeDbIds[ $lot['routeId'] ]['routeId'] );
+                    $_lot->setPrice( $routeDbIds[ $lot['routeId'] ]['startPrice'] );
+                }
+                
                 $this->em->persist($_lot);
                 $this->em->flush();
             }

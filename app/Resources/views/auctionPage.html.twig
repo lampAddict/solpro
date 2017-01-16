@@ -98,9 +98,9 @@
                             <td align="right">{{ lot.getRouteId.getCargoWeight }} ({{ lot.getRouteId.getCargoCount }})</td>
                             <td class="lotComment">{{ lot.getRouteId.getComment }}</td>
 
-                            <td class="lotTimeLeft" align="center">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60*2) > date().timestamp %}{{ (lot.getStartDate.timestamp + lot.getDuration*60*2) | date('Y/m/d H:i:s') }}{% elseif lot.getStartDate.timestamp > date().timestamp %}До начала торгов:<br />{{ (lot.getStartDate.timestamp - date().timestamp) | date('H:i:s') }}{% else %}&mdash;{% endif %}</td>
+                            <td class="lotTimeLeft" align="center">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s') }}{% elseif lot.getStartDate.timestamp > date().timestamp %}До начала торгов:<br />{{ (lot.getStartDate.timestamp - date().timestamp) | date('H:i:s') }}{% else %}&mdash;{% endif %}</td>
 
-                            <td class="lotCurrentPrice" align="right">{{ lot.getRouteId.getTradeCost }}</td>
+                            <td class="lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
                             <td align="right">{{ lot.getRouteId.getTradeStep }}</td>
                             <td class="lotDoBid" align="right">
                                 {{ form_start(forms[lot.getId]) }}

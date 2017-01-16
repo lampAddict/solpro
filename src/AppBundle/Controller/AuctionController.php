@@ -46,6 +46,7 @@ class AuctionController extends Controller
             $form->handleRequest($request);
             if(    $form->isSubmitted()
                 && $form->isValid()
+                && intval($request->request->get('appbundle_bet')['lot_id']) == $lot->getId()
             ){
                 if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
                     throw $this->createAccessDeniedException();
@@ -71,8 +72,11 @@ class AuctionController extends Controller
                 $bet->setCreatedAt(new \DateTime());
                 if( intval($request->request->get('appbundle_bet')['value']) <= $lot->getPrice() - $lot->getRouteId()->getTradeStep() ){
                     $bet->setValue( intval($request->request->get('appbundle_bet')['value']) );
+                    $lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );
 
                     $em->persist($bet);
+                    $em->persist($lot);
+
                     $em->flush();
                 }
             }

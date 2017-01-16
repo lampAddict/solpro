@@ -25,6 +25,7 @@ class BetType extends AbstractType
                         ,'attr'=>[
                                      'class'=>'bid'
                                     ,'placeholder'=>''
+                                    ,'value'=>''
                         ]
                     ])
 
