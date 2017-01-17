@@ -151,13 +151,26 @@ $( document ).ready(function(){
     });
 
     //time left countdowns
-    $('.lotTimeLeft').each(function(){
+    $.each($('.lotTimeLeft'), function(i, el){
         var $this = $(this);
-        $(this).data('etime', $(this).html());
-        var finalDate = $(this).data('etime');
-        $this.countdown(finalDate, function(event) {
+        var finalDate = $this.html();
+        $this.countdown(finalDate, function(event){
             var totalHours = event.offset.totalDays * 24 + event.offset.hours;
-            $(this).html(event.strftime(totalHours + ':%M:%S'));
+            $this.html(event.strftime(totalHours + ':%M:%S'));
+            if( event.elapsed ){
+                console.log('elapsed');
+                $.ajax({
+                    method: 'POST',
+                    url: '/solpro/solportal/web/app_dev.php/lotAuctionEnd',
+                    data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') }
+                })
+                .done(function( response ){
+                    if( response.result ){
+                        //delete row with expired lot from auction table
+                        $this.parent().parent().remove();
+                    }
+                });
+            }
         });
     });
 
@@ -172,6 +185,7 @@ $( document ).ready(function(){
             if(    _bet > 0 //positive number
                 && bets.indexOf(_bet) < 0 //new bet
                 && _bet <= parseInt(_price) - parseInt($this.attr('data-tradeStep')) //less than current lot price minus step of price reducing
+                //lot is in auction
             ){
                 bets.push( _bet );
                 $this.parent().submit();

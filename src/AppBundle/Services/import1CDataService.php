@@ -121,6 +121,8 @@ class import1CDataService{
                     $_lot->setRouteId( $routeDbIds[ $lot['routeId'] ]['routeId'] );
                     $_lot->setPrice( $routeDbIds[ $lot['routeId'] ]['startPrice'] );
                 }
+
+                $_lot->setAuctionStatus(1);//lot is in auction state
                 
                 $this->em->persist($_lot);
                 $this->em->flush();

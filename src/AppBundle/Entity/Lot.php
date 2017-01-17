@@ -59,6 +59,11 @@ class Lot
      */
     protected $created_at;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $auctionStatus;
+
     public function __toString() {
         return (string)$this->id;
     }
@@ -295,5 +300,28 @@ class Lot
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set auctionStatus
+     *
+     * @param integer $auctionStatus
+     * @return Lot
+     */
+    public function setAuctionStatus($auctionStatus)
+    {
+        $this->auctionStatus = $auctionStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get auctionStatus
+     *
+     * @return integer 
+     */
+    public function getAuctionStatus()
+    {
+        return $this->auctionStatus;
     }
 }

@@ -25,12 +25,15 @@ class AuctionController extends Controller
             ->getRepository('AppBundle:Lot')
             ->createQueryBuilder('l')
             ->leftJoin('l.routeId', 'r')
+            /*
             ->leftJoin(
                 'AppBundle\Entity\Bet',
                 'b',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'l.id = b.lot_id'
             )
+            */
+            ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 1')
             ->getQuery()
             ->getResult();
 
@@ -63,7 +66,8 @@ class AuctionController extends Controller
                         ->getResult();
                 
                 $bet = new Bet();
-
+                
+                /* @var $lot \AppBundle\Entity\Lot */
                 $lot = $lot[0];
 
                 $bet->setLotId( $lot->getId() );
@@ -79,6 +83,8 @@ class AuctionController extends Controller
                     $em->persist($lot);
 
                     $em->flush();
+
+                    $this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
                 }
             }
 
