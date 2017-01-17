@@ -18,8 +18,17 @@ class RoutesController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $em = $this->getDoctrine()->getManager();
+
+        $routes = $em
+            ->getRepository('AppBundle:Route')
+            ->createQueryBuilder('r')
+            ->where('r.user_id = '.$this->getUser()->getId())
+            ->getQuery()
+            ->getResult();
+
         return $this->render('routesPage.html.twig', array(
-            'routes' => []
+            'routes' => $routes
         ));
     }
 }

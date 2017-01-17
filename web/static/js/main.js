@@ -64,8 +64,9 @@ $( document ).ready(function(){
     });
 
     $('.showLotRouteInfo').click(function(e){
-        $('#lotInfoWindow').show();
-        $('#auctionPageContainer').hide();
+        $(this).parent().parent().next().removeClass('dnone');
+        //$('#lotInfoWindow').show();
+        //$('#auctionPageContainer').hide();
     });
 
     //show add driver window

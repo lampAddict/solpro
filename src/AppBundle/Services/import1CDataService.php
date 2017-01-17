@@ -80,7 +80,7 @@ class import1CDataService{
                         $_order->setId1C( $order['id'] );
                         $_order->setCode( $order['code'] );
                         $_order->setDate( new \DateTime($order['date']) );
-                        $_order->setConsignee( $order['consignee'] );
+                        $_order->setConsignee( $data['ref']['partner'][ $order['consignee'] ]['name'] );
                         $_order->setUnloadAddress( $order['unloadAddress'] );
                         $_order->setWeight( $order['weight'] );
                         $_order->setCountNum( $order['count'] );
