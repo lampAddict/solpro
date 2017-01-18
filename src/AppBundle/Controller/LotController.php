@@ -14,6 +14,11 @@ class LotController extends Controller
      */
     public function indexAction(Request $request)
     {
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+        
         //$this->get('memcache.default')->flush();
 
         $_lots = [];
@@ -57,6 +62,11 @@ class LotController extends Controller
      */
     public function lotAuctionEndAction(Request $request)
     {
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+        
         $em = $this->getDoctrine()->getManager();
         /* @var $lot \AppBundle\Entity\Lot */
         $lot = $em->getRepository('AppBundle:Lot')->findOneBy(['id'=>intval($request->request->get('lot')), 'auctionStatus'=>1]);

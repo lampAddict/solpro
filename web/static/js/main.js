@@ -64,9 +64,19 @@ $( document ).ready(function(){
     });
 
     $('.showLotRouteInfo').click(function(e){
-        $(this).parent().parent().next().removeClass('dnone');
+        var $routeInfo = $(this).parent().parent().next().find('.lotInfoWindow');
+        if( $routeInfo.is(':visible') ){
+            $routeInfo.slideUp(1100);
+        }
+        else{
+            $routeInfo.slideDown(1100);
+        }
         //$('#lotInfoWindow').show();
         //$('#auctionPageContainer').hide();
+    });
+
+    $('.btnCloseRouteInfo').click(function(){
+        $(this).parent().parent().slideUp(1100);
     });
 
     //show add driver window
@@ -132,8 +142,8 @@ $( document ).ready(function(){
     });
     */
 
-    $('#routeAssignDriver').click(function (e) {
-        var $lotInfoWindow = $('#lotInfoWindow'), $routeAddDriverWindow = $('#routeAddDriverWindow');
+    $('#routeAssignDriver').click(function(e){
+        var $routesTable = $('#routesTable'), $routesFilter = $('#routesFilter'), $routeAddDriverWindow = $('#routeAddDriverWindow');
 
         $routeAddDriverSelect = $('#routeAddDriverSelect');
         if( $routeAddDriverSelect ){
@@ -147,8 +157,36 @@ $( document ).ready(function(){
             $routeAddVehicleSelect.chosen({no_results_text: "Ничего не найдено"});
         }
 
-        $lotInfoWindow.hide();
+        $routesTable.hide();
+        $routesFilter.hide();
+
+        $routeAddDriverWindow.data('routeId', $(this).attr('data-routeId'));
         $routeAddDriverWindow.show();
+    });
+
+    //show driver's vehicle while driveris being selected
+    $('#routeAddDriverSelect').on('change', function(e, params){
+        //params.selected shows current selected option
+        $('.routeAddVehicleSelect .driversVehicle').html( $('#routeAddDriverSelect option:selected').attr('data-vehicle') );
+    });
+
+    //submit attach driver to route data
+    $('#routeAddDriverWindow input[type="button"]').click(function(e){
+        $.ajax({
+            method: 'POST',
+            url: '/solpro/solportal/web/app_dev.php/attachDriver',
+            data: {
+                     driver: $(this).parent().find('#routeAddDriverSelect').val()
+                    ,vehicle: $(this).parent().find('#routeAddVehicleSelect').val()
+                    ,route: $(this).parent().data('routeId')
+            }
+        })
+        .done(function( response ){
+            console.log(response);
+            if( response.result ){
+                location.reload();
+            }
+        });
     });
 
     //time left countdowns
@@ -159,7 +197,6 @@ $( document ).ready(function(){
             var totalHours = event.offset.totalDays * 24 + event.offset.hours;
             $this.html(event.strftime(totalHours + ':%M:%S'));
             if( event.elapsed ){
-                console.log('elapsed');
                 $.ajax({
                     method: 'POST',
                     url: '/solpro/solportal/web/app_dev.php/lotAuctionEnd',
@@ -211,5 +248,5 @@ $( document ).ready(function(){
         });
     };
 
-    setInterval( updateLotPrices, 3000 );
+    //setInterval( updateLotPrices, 3000 );
 });

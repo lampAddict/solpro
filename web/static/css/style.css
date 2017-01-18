@@ -696,3 +696,19 @@ span#routeStatus{
 .lotTimeLeft {
     width: 90px;
 }
+
+.zeroHeight td.hiddenRow{
+    padding: 0 7px !important;
+}
+
+.routeInfoTable table{
+    width: 90% !important;
+}
+
+.lotInfoWindow table tr td{
+    padding: 5px 7px;
+}
+
+.routeAddVehicleSelect .attachedVehicle{
+    height: 40px;
+}

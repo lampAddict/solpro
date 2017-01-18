@@ -92,8 +92,8 @@ class AuctionController extends Controller
         }
         
         return $this->render('auctionPage.html.twig', array(
-            'lots' => $lots,
-            'forms' => $forms,
+             'lots' => $lots
+            ,'forms' => $forms
         ));
     }
 }

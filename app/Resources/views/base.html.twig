@@ -130,28 +130,7 @@
 {% endblock %}
 
 {% block additionalWindows %}
-    <div id="routeAddDriverWindow">
-        <div class="routeAddDriverSelect">
-            <select id="routeAddDriverSelect">
-                <option selected="selected">Выберите водителя</option>
-                <option>Иванов Иван Иванович</option>
-                <option>Петров Петр Петрович</option>
-                <option>Сидоров Сидр Сидорович</option>
-            </select>
-        </div>
-        <div class="routeAddVehicleSelect">
-            <div>Прикрепленная к водителю машина:<br /><strong>Газель у292нт09</strong></div>
-            <div style="margin:5px 0">Если у водителя нет прикрепленной машины или он поедет на другой, то</div>
-            <select id="routeAddVehicleSelect">
-                <option selected="selected">Выберите машину</option>
-                <option>Камаз</option>
-                <option>Газель</option>
-                <option>Volvo</option>
-            </select>
-        </div>
-        <input class="btn btn-success" type="submit" value="Сохранить" />
-        <a class="btn btn-default" style="float:right" href="{{ path('routes') }}">Отменить</a>
-    </div>
+
 {% endblock %}
 
 {% block javascripts %}

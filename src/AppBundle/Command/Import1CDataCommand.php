@@ -27,7 +27,7 @@ class Import1CDataCommand extends ContainerAwareCommand
 
             // the full command description shown when running the command with
             // the "--help" option
-            ->setHelp("This command allows you to import routes data onto portal from 1C")
+            ->setHelp("This command allows you to import auction lots data onto portal from 1C")
         ;
     }
 

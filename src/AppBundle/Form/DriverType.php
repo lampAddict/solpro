@@ -38,7 +38,7 @@ class DriverType extends AbstractType
                     ,[
                          'label'=>'Фамилия имя отчество'
                         ,'attr'=>[
-                                     'class'=>'addDriverWindowBtn'
+                                     'class'=>''
                                     ,'placeholder'=>'Иванов Иван Иванович'
                         ]
                     ])
@@ -48,7 +48,7 @@ class DriverType extends AbstractType
                     ,[
                          'label'=>'Телефон'
                         ,'attr'=>[
-                                     'class'=>'addDriverWindowBtn'
+                                     'class'=>''
                         ]
                     ])
             ->add(

@@ -72,8 +72,10 @@
                 </div>
             </div>
         </div>
-        {{ dump(routes) }}
         <div id="routesTable">
+            {{ dump(routes) }}
+            {{ dump(drivers) }}
+            {{ dump(vehicles) }}
             <table cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
@@ -82,7 +84,7 @@
                     <th>Направление</th>
                     <th>Подача</th>
                     <th>Вид ТС</th>
-                    <th>Вес (Объем)</th>
+                    <th>Вес, кг (Объем, плт)</th>
                     <th>Ставка</th>
                     <th>Водитель</th>
                     <th>Марка, гос. номер ТС</th>
@@ -98,12 +100,12 @@
                             <td class="lotVehicleType">{{ route.getVehicleType }}<br />{{ route.getVehiclePayload }}</td>
                             <td align="right">{{ route.getCargoWeight }} ({{ route.getCargoCount }})</td>
                             <td align="right">{{ route.getLotId.getPrice }}</td>
-                            <td align="center"></td>
-                            <td align="right"></td>
+                            <td align="center">{% if route.getVehicleDriver is not null %}{{ route.getVehicleDriver.getFio }}{% endif %}</td>
+                            <td align="right">{% if route.getVehicleDriver is not null and route.getVehicleDriver.getTransportId is not null %}{{ route.getVehicleDriver.getTransportId.getName }} {{ route.getVehicleDriver.getTransportId.getRegNum }}{% endif %}</td>
                         </tr>
-                        <tr class="dnone">
-                            <td colspan="9">
-                                <div class="lotInfoWindow">
+                        <tr class="zeroHeight">
+                            <td colspan="9" class="hiddenRow">
+                                <div id="liw_{{ route.getId }}" class="dnone lotInfoWindow">
                                     <div class="routeNumber">
                                         Рейс №: <span id="routeNumber">{{ route.getCode }}</span>
                                     </div>
@@ -137,11 +139,15 @@
 
                                     <div class="routeAssignDriver">
                                         <div class="routeDriverHeader">Водитель:</div>
-                                        <div class="routeDriverName">Петров Петр Петрович</div>
-                                        <div class="routeDriverPassportData">Паспорт: 7762 113241, выдан ОУФМС России по Пресненскому району г.Москвы в ЦАО. дата выдачи 16.12.2005</div>
-                                        <div class="routeDriverVehicle">КАМАЗ е093мм/199 п/п: ак7854/99</div>
-                                        <div id="routeAssignDriver" class="btn btn-default">Назначить водителя</div>
-                                        <div id="routeDeleteDriver" class="btn btn-danger">Удалить водителя из рейса</div>
+                                        {% if route.getVehicleDriver|length > 0 %}
+                                            <div class="routeDriverName">{{ route.getVehicleDriver.getFio }}</div>
+                                            <div class="routeDriverPassportData">{{ route.getVehicleDriver.getPassport }}</div>
+                                            <div class="routeDriverVehicle">{{ route.getVehicleDriver.getTransportId.getName }} {{ route.getVehicleDriver.getTransportId.getRegNum }} {% if route.getVehicleDriver.getTransportId.getTrailerRegNum|length > 0 %}п/п: {{ route.getVehicleDriver.getTransportId.getTrailerRegNum }}{% endif %}</div>
+                                        {% endif %}
+                                        <div id="routeAssignDriver" class="btn btn-default" data-routeId="{{ route.getId }}">Назначить водителя</div>
+                                        {% if route.getVehicleDriver is not null %}
+                                            <div id="routeDeleteDriver" class="btn btn-danger">Удалить водителя из рейса</div>
+                                        {% endif %}
                                     </div>
 
                                     <div class="routeInfo">
@@ -155,7 +161,8 @@
                                                 <td>Дата отгрузки</td>
                                                 <td>Вес кг, объём плт</td>
                                                 <td>Категория продукции</td>
-                                                <td>Условия</td>
+                                                <td>Спец. условия погрузки</td>
+                                                <td>Спец. условия выгрузки</td>
                                                 <td>Ответственный</td>
                                             </tr>
                                             </thead>
@@ -169,36 +176,17 @@
                                                         <td>{{ order.getWeight }} ({{  order.getCountNum }})</td>
                                                         <td></td>
                                                         <td>{{ order.getLoadSpecialConditions }}</td>
+                                                        <td>{{ order.getUnloadSpecialConditions }}</td>
                                                         <td>{{ order.getManager }}</td>
                                                     </tr>
                                                 {% endfor %}
-                                                <tr>
-                                                    <td>тс-00081587</td>
-                                                    <td>Тандер АО</td>
-                                                    <td>РЦ Орел,Орловская обл., Орловский район, д. Хардиково, ул.Совхозная, 10 А, РФ, 302507,</td>
-                                                    <td>28.11.16 11:00</td>
-                                                    <td>7000 (14)</td>
-                                                    <td>масло</td>
-                                                    <td></td>
-                                                    <td>Верещак Виктор, тел. 8 (629) 531-10-66</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>тс-00081587</td>
-                                                    <td>Южная сырная лавка</td>
-                                                    <td>344065, Ростовская обл, Ростов-на-Дону г, Орская ул, дом № 31Д</td>
-                                                    <td>30.11.16</td>
-                                                    <td>2300 (6)</td>
-                                                    <td>майонез</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
                                             </tbody>
                                         </table>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> 3</span></div>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> 17300</span></div>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> 32</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> {{ route.getOrders|length }}</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> {{ route.getCargoWeight }} кг</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> {{ route.getCargoCount }}</span></div>
                                     </div>
-                                    <div style="float:right"><a class="btn btn-default" href="{{ url("auction") }}">Вернуться к списку</a></div>
+                                    <div style="float:right; padding-bottom: 10px;"><a class="btn btn-default btnCloseRouteInfo">Вернуться к списку</a></div>
                                 </div>
                             </td>
                         </tr>
@@ -206,5 +194,27 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <div id="routeAddDriverWindow">
+        <div class="routeAddDriverSelect">
+            <select id="routeAddDriverSelect">
+                <option selected="selected">Выберите водителя</option>
+                {% for driver in drivers %}
+                    <option value="{{ driver.getId }}" data-vehicle="{% if driver.getTransportId is not null %}{{ driver.getTransportId.getName }} {{ driver.getTransportId.getRegNum }}{% endif %}">{{ driver.getFio }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="routeAddVehicleSelect">
+            <div class="attachedVehicle">Прикрепленная к водителю машина:<br /><strong class="driversVehicle"></strong></div>
+            <div style="margin:5px 0">Если у водителя нет прикрепленной машины или он поедет на другой, то</div>
+            <select id="routeAddVehicleSelect">
+                <option selected="selected">Выберите машину</option>
+                {% for vehicle in vehicles %}
+                    <option value="{{ vehicle.getId }}">{{ vehicle.getName }} {{ vehicle.getRegNum }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input class="btn btn-success" type="button" value="Сохранить" />
+        <a class="btn btn-default" style="float:right" href="{{ path('routes') }}">Отменить</a>
     </div>
 {% endblock %}
