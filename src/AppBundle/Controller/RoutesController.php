@@ -114,4 +114,30 @@ class RoutesController extends Controller
 
         return new JsonResponse(['result'=>false]);
     }
+
+    /**
+     * @Route("/removeDriver", name="removeDriver")
+     */
+    public function removeDriverAction(Request $request){
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        /* @var $route \AppBundle\Entity\Route */
+        $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'user_id'=>$this->getUser()->getId()]);
+        if( $route ){
+            /* @var $driver \AppBundle\Entity\Driver */
+            $driver = $em->getRepository('AppBundle:Driver')->findOneBy(['route_id'=>$route->getId(), 'user_id'=>$this->getUser()->getId()]);
+            if( $driver ){
+                $driver->setRouteId(null);
+                $em->persist($driver);
+                $em->flush();
+                return new JsonResponse(['result'=>true]);
+            }
+        }
+
+        return new JsonResponse(['result'=>false]);
+    }
 }

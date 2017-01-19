@@ -160,13 +160,13 @@ $( document ).ready(function(){
         $routesTable.hide();
         $routesFilter.hide();
 
-        $routeAddDriverWindow.data('routeId', $(this).attr('data-routeId'));
+        $routeAddDriverWindow.data('routeId', $('.routeAssignDriver').attr('data-routeId'));
         $routeAddDriverWindow.show();
     });
 
-    //show driver's vehicle while driveris being selected
+    //show driver's vehicle while driver is being selected
+    //params.selected shows current selected option
     $('#routeAddDriverSelect').on('change', function(e, params){
-        //params.selected shows current selected option
         $('.routeAddVehicleSelect .driversVehicle').html( $('#routeAddDriverSelect option:selected').attr('data-vehicle') );
     });
 
@@ -182,8 +182,27 @@ $( document ).ready(function(){
             }
         })
         .done(function( response ){
-            console.log(response);
             if( response.result ){
+                location.reload();
+            }
+        });
+    });
+
+    $('#routeDeleteDriver').click(function(e){
+        var $this = $(e.currentTarget);
+        $.ajax({
+            method: 'POST',
+            url: '/solpro/solportal/web/app_dev.php/removeDriver',
+            data: { route: $('.routeAssignDriver').attr('data-routeId') }
+        })
+        .done(function( response ){
+            if( response.result ){
+                //delete driver information from route info table
+                $this.parent().find('.routeDriverName').html('');
+                $this.parent().find('.routeDriverPassportData').html('');
+                $this.parent().find('.routeDriverVehicle').html('');
+
+                //delete driver's info from routes table
                 location.reload();
             }
         });
