@@ -267,5 +267,5 @@ $( document ).ready(function(){
         });
     };
 
-    //setInterval( updateLotPrices, 3000 );
+    setInterval( updateLotPrices, 3000 );
 });

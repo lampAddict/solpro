@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MessageFrom1C sendNumber="22206" recNumber="24924" messageCreationTime="2017-01-13T15:43:23">
+<MessageFrom1C sendNumber="22770" recNumber="24924" messageCreationTime="2017-01-19T12:43:24">
 	<references>
 		<lotStatuses>
 			<lotStatus>
@@ -8,6 +8,14 @@
 			</lotStatus>
 		</lotStatuses>
 		<routeStatuses>
+			<routeStatuse>
+				<id>19be2e74-02ae-4a6e-8470-7441cb9d2d65</id>
+				<name>6. Получены документы</name>
+			</routeStatuse>
+			<routeStatuse>
+				<id>fa228c16-72d7-43e1-a507-e384817fd0f9</id>
+				<name>Закрыт</name>
+			</routeStatuse>
 			<routeStatuse>
 				<id>6f64ed10-762a-4567-ac3f-7a69477cd4ea</id>
 				<name>5. Отгружен</name>
@@ -581,7 +589,7 @@
 			<code>Р-000316</code>
 			<name>Заглушка для наименования маршрута №Р-000316</name>
 			<loadDate>2017-01-09T08:00:00</loadDate>
-			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<statusId>fa228c16-72d7-43e1-a507-e384817fd0f9</statusId>
 			<carrierId/>
 			<loadRegionId>1aa3faa1-06c2-11e6-9f13-00155d02c510</loadRegionId>
 			<unloadRegionId>00c81522-023b-11e6-9b89-00155d02c510</unloadRegionId>
@@ -614,7 +622,7 @@
 			<code>Р-000320</code>
 			<name>Заглушка для наименования маршрута №Р-000320</name>
 			<loadDate>2017-01-09T09:00:00</loadDate>
-			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<statusId>19be2e74-02ae-4a6e-8470-7441cb9d2d65</statusId>
 			<carrierId/>
 			<loadRegionId>70afa8e2-02d2-11e6-ae89-00155d02c510</loadRegionId>
 			<unloadRegionId>f03fc2bf-0155-11e6-b7e5-00155d02c510</unloadRegionId>
@@ -779,7 +787,7 @@
 			<code>Р-000336</code>
 			<name>Заглушка для наименования маршрута №Р-000336</name>
 			<loadDate>2017-01-09T09:00:00</loadDate>
-			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<statusId>19be2e74-02ae-4a6e-8470-7441cb9d2d65</statusId>
 			<carrierId/>
 			<loadRegionId>4b96a628-023d-11e6-9b89-00155d02c510</loadRegionId>
 			<unloadRegionId>ab293500-dbc6-11e5-9996-00155d046117</unloadRegionId>
@@ -812,7 +820,7 @@
 			<code>Р-000144</code>
 			<name>Заглушка для наименования маршрута №Р-000144</name>
 			<loadDate>2017-01-09T00:01:00</loadDate>
-			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<statusId>fa228c16-72d7-43e1-a507-e384817fd0f9</statusId>
 			<carrierId/>
 			<loadRegionId>00c81522-023b-11e6-9b89-00155d02c510</loadRegionId>
 			<unloadRegionId>b1322df7-dbc6-11e5-9996-00155d046117</unloadRegionId>
@@ -890,105 +898,105 @@
 		<lot>
 			<id>c2763d6c-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>1d2d2fb4-d62d-11e6-9e4f-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c2763d6d-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>fe5f5df7-d408-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c2763d6f-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>dc37dd34-d409-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c2763d70-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>0d4508eb-d40a-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c2763d71-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>0d4508ec-d40a-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a043-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>13df611c-d40a-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a044-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>c2ad89a9-d40a-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a045-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>5813aa95-d40b-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a046-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>013f5013-d40c-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a047-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>2adb89e7-d40c-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a048-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>2adb89e8-d40c-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a049-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>3a09a49b-d40c-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a04a-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>3a09a49e-d40c-11e6-9ec7-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a04b-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>feea159e-d280-11e6-a2f5-00155d044126</routeId>
 		</lot>
 		<lot>
 			<id>c875a04c-d988-11e6-8550-00155d044126</id>
 			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
-			<startDate>2017-01-16T00:00:00</startDate>
+			<startDate>2017-01-19T00:00:00</startDate>
 			<duration>1440</duration>
 			<routeId>e97b974d-d4c8-11e6-bde1-00155d044126</routeId>
 		</lot>

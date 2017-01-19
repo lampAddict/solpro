@@ -33,6 +33,13 @@ class Import1CDataCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /*
+        $output->writeln('Connecting to ftp..');
+        $conn_id = ftp_connect('ftp.solpro.ru') or die("Couldn't establish connection to ftp server");
+        if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
+        if( ftp_get($conn_id, 'web/data.xml', 'MessageFrom1C.xml', FTP_BINARY) )$output->writeln('XML file downloaded successfully');
+        ftp_close($conn_id);
+        */
         $output->writeln('Import data started..');
 
         $data = new Crawler();

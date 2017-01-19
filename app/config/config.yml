@@ -70,11 +70,3 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: AppBundle\Entity\User
-
-lsw_memcache:
-    session:
-        pool: default
-    pools:
-        default:
-            servers:
-              - { host: localhost, tcp_port: 11211 }
