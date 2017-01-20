@@ -109,6 +109,80 @@
                                 {{ form_end(forms[lot.getId]) }}
                             </td>
                         </tr>
+                        <tr class="zeroHeight">
+                            <td colspan="11" class="hiddenRow">
+                                <div class="dnone lotInfoWindow">
+                                    <div class="routeNumber">
+                                        Рейс №: <span id="routeNumber">{{ lot.getRouteId.getCode }}</span>
+                                    </div>
+                                    <div class="routeStatus">
+                                        Статус: <span id="routeStatus">{{ lot.getRouteId.getStatus }}</span>
+                                    </div>
+                                    <div class="routeInfoTable">
+                                        <table cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                            <tr>
+                                                <td>Дата загрузки:</td><td>{{ lot.getRouteId.getLoadDate|date('d.m.Y H:i') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Пункт отгрузки:</td><td>{{ lot.getRouteId.getRegionFrom }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Регион доставки:</td><td>{{ lot.getRouteId.getRegionTo }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Вид ТС:</td><td>{{ lot.getRouteId.getVehiclePayload }} {{ lot.getRouteId.getVehicleType }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Тариф:</td><td>{{ lot.getRouteId.getLotId.getPrice }} &#8381;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Комментарий:</td><td>{{ lot.getRouteId.getComment }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="routeInfo">
+                                        <span>Информация по заказам:</span>
+                                        <table id="routeOrdersTable" cellpadding="0" cellspacing="0" style="border:1px solid gray; border-collapse: collapse">
+                                            <thead>
+                                            <tr>
+                                                <td>№ Заказа</td>
+                                                <td>Контрагент</td>
+                                                <td>Адрес доставки</td>
+                                                <td>Дата отгрузки</td>
+                                                <td>Вес кг, объём плт</td>
+                                                <td>Категория продукции</td>
+                                                <td>Спец. условия погрузки</td>
+                                                <td>Спец. условия выгрузки</td>
+                                                <td>Ответственный</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for order in lot.getRouteId.getOrders %}
+                                                <tr>
+                                                    <td>{{ order.getCode }}</td>
+                                                    <td>{{ order.getConsignee }}</td>
+                                                    <td>{{ order.getUnloadAddress }}</td>
+                                                    <td>{{ order.getDate|date('d.m.Y H:i') }}</td>
+                                                    <td>{{ order.getWeight }} ({{  order.getCountNum }})</td>
+                                                    <td></td>
+                                                    <td>{{ order.getLoadSpecialConditions }}</td>
+                                                    <td>{{ order.getUnloadSpecialConditions }}</td>
+                                                    <td>{{ order.getManager }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> {{ lot.getRouteId.getOrders|length }}</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> {{ lot.getRouteId.getCargoWeight }} кг</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> {{ lot.getRouteId.getCargoCount }}</span></div>
+                                    </div>
+                                    <div style="float:right; padding-bottom: 10px;"><a class="btn btn-default btnCloseRouteInfo">Вернуться к списку</a></div>
+                                </div>
+                            </td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>

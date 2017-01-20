@@ -116,14 +116,19 @@ class import1CDataService{
                 $_lot->setDuration( $lot['duration'] );
                 $_lot->setStartDate( new \DateTime($lot['startDate']) );
                 $_lot->setCreatedAt( new \DateTime(date('c', time())) );
+                $_lot->setAuctionStatus(1);//lot is in auction state
 
                 if( isset($routeDbIds[ $lot['routeId'] ]) ){
-                    $_lot->setRouteId( $routeDbIds[ $lot['routeId'] ]['routeId'] );
+                    /* @var $route \AppBundle\Entity\Route */
+                    $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
+                    $_lot->setRouteId( $route->getId() );
                     $_lot->setPrice( $routeDbIds[ $lot['routeId'] ]['startPrice'] );
+
+                    if( $route->getUserId() ){
+                        $_lot->setAuctionStatus(0);
+                    }
                 }
 
-                $_lot->setAuctionStatus(1);//lot is in auction state
-                
                 $this->em->persist($_lot);
                 $this->em->flush();
             }

@@ -712,3 +712,7 @@ span#routeStatus{
 .routeAddVehicleSelect .attachedVehicle{
     height: 40px;
 }
+
+tr.zeroHeight{
+    background-color: #ececec;
+}

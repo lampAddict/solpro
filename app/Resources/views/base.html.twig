@@ -78,20 +78,19 @@
                 <ul>
                     <li>
                         <div>Активных лотов</div>
-                        <div class="pdleft3">518</div>
+                        <div class="pdleft3">{{ lots|length }}</div>
                     </li>
-                    <li class="pdleft20">
-                        <div>Москва - Тюмень</div>
-                        <div>328</div>
-                    </li>
-                    <li class="pdleft20">
-                        <div>Новосибирск - Омск</div>
-                        <div>190</div>
-                    </li>
+                    {% for s in stat %}
+                        <li class="pdleft20">
+                            <div>{{ s['dir'] }}</div>
+                            <div>{{ s['num'] }}</div>
+                        </li>
+                    {% endfor %}
                     <li>
                         <div>Планируемых лотов</div>
-                        <div class="pdleft3">150</div>
+                        <div class="pdleft3">0</div>
                     </li>
+                    <!--
                     <li class="pdleft20">
                         <div>Саратов - Рязань</div>
                         <div>87</div>
@@ -100,6 +99,7 @@
                         <div>Ижевск - Красноярск</div>
                         <div>63</div>
                     </li>
+                    -->
                 </ul>
             </div>
         </div>
@@ -110,15 +110,15 @@
                 <ul>
                     <li>
                         <div>Рейсы требующие назначения</div>
-                        <div>18</div>
+                        <div>0</div>
                     </li>
                     <li>
                         <div>Опоздания</div>
-                        <div>6</div>
+                        <div>0</div>
                     </li>
                     <li>
                         <div>Всего рейсов</div>
-                        <div>24</div>
+                        <div>0</div>
                     </li>
                 </ul>
             </div>
