@@ -22,7 +22,7 @@
                 {% if app.request.get('_route') == 'mainpage' %}
                     <a class="active" href="{{ app.request.baseUrl }}">Главная</a>
                 {% else %}
-                    <a href="{{ url('mainpage') }}">Главная</a>
+                    <a href="/">Главная</a>
                 {% endif %}
             </li>
             <li>
