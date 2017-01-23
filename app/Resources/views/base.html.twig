@@ -20,9 +20,9 @@
         <ul class="topnav" id="menu">
             <li>
                 {% if app.request.get('_route') == 'mainpage' %}
-                    <a class="active" href="{{ url('mainpage') }}">Главная</a>
+                    <a class="active" href="{{ app.request.baseUrl }}">Главная</a>
                 {% else %}
-                    <a href="{{ app.request.baseUrl }}">Главная</a>
+                    <a href="{{ url('mainpage') }}">Главная</a>
                 {% endif %}
             </li>
             <li>
