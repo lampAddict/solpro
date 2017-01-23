@@ -113,7 +113,7 @@ $( document ).ready(function(){
     $('#routeAddDriverWindow input[type="button"]').click(function(e){
         $.ajax({
             method: 'POST',
-            url: '/solpro/solportal/web/app_dev.php/attachDriver',
+            url: '/attachDriver',
             data: {
                      driver: $(this).parent().find('#routeAddDriverSelect').val()
                     ,vehicle: $(this).parent().find('#routeAddVehicleSelect').val()
@@ -131,7 +131,7 @@ $( document ).ready(function(){
         var $this = $(e.currentTarget);
         $.ajax({
             method: 'POST',
-            url: '/solpro/solportal/web/app_dev.php/removeDriver',
+            url: '/removeDriver',
             data: { route: $('.routeAssignDriver').attr('data-routeId') }
         })
         .done(function( response ){
@@ -157,7 +157,7 @@ $( document ).ready(function(){
             if( event.elapsed ){
                 $.ajax({
                     method: 'POST',
-                    url: '/solpro/solportal/web/app_dev.php/lotAuctionEnd',
+                    url: '/lotAuctionEnd',
                     data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') }
                 })
                 .done(function( response ){
@@ -191,7 +191,7 @@ $( document ).ready(function(){
 
     var updateLotPrices = function(){
         $.ajax({
-            url: '/solpro/solportal/web/app_dev.php/lotsPrices',
+            url: '/lotsPrices',
             cache: false
         }).done(function( data ){
             console.log(data);
@@ -206,5 +206,5 @@ $( document ).ready(function(){
         });
     };
 
-    setInterval( updateLotPrices, 3000 );
+    setInterval( updateLotPrices, 2500 );
 });

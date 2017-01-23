@@ -121,7 +121,7 @@ class import1CDataService{
                 if( isset($routeDbIds[ $lot['routeId'] ]) ){
                     /* @var $route \AppBundle\Entity\Route */
                     $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
-                    $_lot->setRouteId( $route->getId() );
+                    $_lot->setRouteId( $route );
                     $_lot->setPrice( $routeDbIds[ $lot['routeId'] ]['startPrice'] );
 
                     if( $route->getUserId() ){
