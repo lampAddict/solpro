@@ -19,23 +19,15 @@ class LotController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        require_once('Cache/Lite.php');
-        // Set a few options
-        $options = array(
-            'cacheDir' => '/tmp/',
-            'lifeTime' => 3600
-        );
-
-        // Create a Cache_Lite object
-        $Cache_Lite = new Cache_Lite($options);
+        $_session = $request->getSession();
 
         $_lots = [];
         //check if lots current prices are stored in memcache
-        if( $l_ids = $Cache_Lite->get('lcp') ){
+        if( $l_ids = $_session->get('lcp') ){
             //get lot prices from memcache
             $l_ids = explode(',',$l_ids);
             foreach( $l_ids as $l_id ){
-                $_lots[ $l_id ] = $Cache_Lite->get('lcp_'.$l_id);
+                $_lots[ $l_id ] = $_session->get('lcp_'.$l_id);
             }
         }
         else{
@@ -54,10 +46,10 @@ class LotController extends Controller
                     $_lots[ $lot->getId() ] = $lot->getPrice();
 
                     //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
-                    $Cache_Lite->save($lot->getPrice(), 'lcp_'.$lot->getId());
+                    $_session->set('lcp_'.$lot->getId(), $lot->getPrice());
                 }
                 //$this->get('memcache.default')->set('lcp', join(',',array_keys($_lots)), 0, 1*60*60);
-                $Cache_Lite->save(join(',',array_keys($_lots)), 'lcp');
+                $_session->set('lcp', join(',',array_keys($_lots)));
             }
             else{
                 $_lots = false;
