@@ -37,6 +37,12 @@ class LotController extends Controller
                 ->getRepository('AppBundle:Lot')
                 ->createQueryBuilder('l')
                 ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 1')
+                ->leftJoin(
+                    'AppBundle\Entity\Bet',
+                    'b',
+                    \Doctrine\ORM\Query\Expr\Join::WITH,
+                    'l.id = b.lot_id'
+                )
                 ->getQuery()
                 ->getResult();
 
