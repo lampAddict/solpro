@@ -70,3 +70,38 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: AppBundle\Entity\User
+
+emagister_memcached:
+    session_support:
+        enabled: true
+        instance_id: instance1
+        options:
+            prefix: "memcached_session_prefix_"
+            expiretime: 172800
+
+    instances:
+        instance1:
+            type: memcached
+            persistent_id: instance1
+            hosts:
+                - { dsn: 127.0.0.1, port: 11211, weight: 100 }
+
+            memcached_options:
+                compression: true
+                serializer: igbinary
+                prefix_key: instance1
+                hash: default
+                distribution: consistent
+                libketama_compatible: true
+                buffer_writes: true
+                binary_protocol: true
+                no_block: true
+                socket_send_size: 1
+                socket_recv_size: 1
+                connect_timeout: 1
+                retry_timeout: 1
+                send_timeout: 1
+                recv_timeout: 1
+                poll_timeout: 1
+                cache_lookups: true
+                server_failure_limit: 1

@@ -21,9 +21,12 @@ class LotController extends Controller
         
         //$this->get('memcache.default')->flush();
 
+        $cache = $this->get('emagister_memcached.memcached_instances.instance1');
+        
         $_lots = [];
         //check if lots current prices are stored in memcache
-        $l_ids = false;//$this->get('memcache.default')->get('lcp');
+        //$l_ids = false;
+        $l_ids = $cache->get('lcp');
         if( !$l_ids ){
             //read lot prices from db
             $em = $this->getDoctrine()->getManager();
@@ -38,9 +41,12 @@ class LotController extends Controller
                 foreach( $lots as $lot ){
                     /* @var $lot \AppBundle\Entity\Lot */
                     $_lots[ $lot->getId() ] = $lot->getPrice();
+                    
                     //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
+                    $cache->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
                 }
                 //$this->get('memcache.default')->set('lcp', join(',',array_keys($_lots)), 0, 1*60*60);
+                $cache->set('lcp', join(',',array_keys($_lots)), 0, 1*60*60);
             }
             else{
                 $_lots = false;
