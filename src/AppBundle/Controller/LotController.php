@@ -18,19 +18,27 @@ class LotController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-        
-        //$this->get('memcache.default')->flush();
 
-        $cache = $this->get('emagister_memcached.memcached_instances.instance1');
-        
-        echo var_export($cache, true);
-        die;
+        require_once('Cache/Lite.php');
+        // Set a few options
+        $options = array(
+            'cacheDir' => '/tmp/',
+            'lifeTime' => 3600
+        );
+
+        // Create a Cache_Lite object
+        $Cache_Lite = new Cache_Lite($options);
 
         $_lots = [];
         //check if lots current prices are stored in memcache
-        //$l_ids = false;
-        $l_ids = $cache->get('lcp');
-        if( !$l_ids ){
+        if( $l_ids = $Cache_Lite->get('lcp') ){
+            //get lot prices from memcache
+            $l_ids = explode(',',$l_ids);
+            foreach( $l_ids as $l_id ){
+                $_lots[ $l_id ] = $Cache_Lite->get('lcp_'.$l_id);
+            }
+        }
+        else{
             //read lot prices from db
             $em = $this->getDoctrine()->getManager();
             $lots = $em
@@ -44,22 +52,15 @@ class LotController extends Controller
                 foreach( $lots as $lot ){
                     /* @var $lot \AppBundle\Entity\Lot */
                     $_lots[ $lot->getId() ] = $lot->getPrice();
-                    
+
                     //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
-                    $cache->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
+                    $Cache_Lite->save($lot->getPrice(), 'lcp_'.$lot->getId());
                 }
                 //$this->get('memcache.default')->set('lcp', join(',',array_keys($_lots)), 0, 1*60*60);
-                $cache->set('lcp', join(',',array_keys($_lots)), 0, 1*60*60);
+                $Cache_Lite->save(join(',',array_keys($_lots)), 'lcp');
             }
             else{
                 $_lots = false;
-            }
-        }
-        else{
-            //get lot prices from memcache
-            $l_ids = explode(',',$l_ids);
-            foreach( $l_ids as $l_id ){
-                $_lots[ $l_id ] = $this->get('memcache.default')->get('lcp_'.$l_id);
             }
         }
 
