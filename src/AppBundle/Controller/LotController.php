@@ -23,6 +23,9 @@ class LotController extends Controller
 
         $cache = $this->get('emagister_memcached.memcached_instances.instance1');
         
+        echo var_export($cache, true);
+        die;
+
         $_lots = [];
         //check if lots current prices are stored in memcache
         //$l_ids = false;
