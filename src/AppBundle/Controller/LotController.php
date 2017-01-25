@@ -23,42 +23,44 @@ class LotController extends Controller
 
         $_lots = [];
         //check if lots current prices are stored in memcache
-        if( $l_ids = false/*$l_ids = $_session->get('lcp')*/ ){
+        if( $l_ids = $_session->get('lcp') ){
             //get lot prices from memcache
             $l_ids = explode(',',$l_ids);
             foreach( $l_ids as $l_id ){
-                $_lots[ $l_id ] = $_session->get('lcp_'.$l_id);
+                $_lots[ $l_id ] = json_decode($_session->get('lcp_'.$l_id));
             }
         }
         else{
             //read lot prices from db
             $em = $this->getDoctrine()->getManager();
-            $lots = $em
-                ->getRepository('AppBundle:Lot')
-                ->createQueryBuilder('l')
-                ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 0')
-                ->leftJoin(
-                    'AppBundle\Entity\Bet',
-                    'b',
-                    \Doctrine\ORM\Query\Expr\Join::WITH,
-                    'l.id = b.lot_id'
-                )
-                ->getQuery()
-                ->getResult();
-
-            //echo var_dump($lots[0]);
-            die;
+            $qb = $em->createQueryBuilder();
+            $lots = $qb
+                    ->select('l.id, l.price')
+                    ->from('AppBundle\Entity\Lot', 'l')
+                    ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 1')
+                    ->leftJoin(
+                        'AppBundle\Entity\Bet',
+                        'b',
+                        \Doctrine\ORM\Query\Expr\Join::WITH,
+                        'l.id = b.lot_id'
+                    )
+                    ->addSelect('min(b.value) as bet')
+                    ->leftJoin('b.user_id', 'u')
+                    ->addSelect('u.id as uid')
+                    ->groupBy('b.lot_id')
+                    ->getQuery()
+                    ->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
 
             if( !empty($lots) ){
                 foreach( $lots as $lot ){
+                    $_own = '';
+                    if( $lot['uid'] == $this->getUser()->getId() )
+                        $_own .= 'me';
 
-
-
-                    /* @var $lot \AppBundle\Entity\Lot */
-                    $_lots[ $lot->getId() ] = $lot->getPrice();
+                    $_lots[ $lot['id'] ] = ['price'=>$lot['price'], 'owner'=>$_own];
 
                     //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
-                    $_session->set('lcp_'.$lot->getId(), $lot->getPrice());
+                    $_session->set('lcp_'.$lot['id'], json_encode($_lots[ $lot['id'] ]));
                 }
                 //$this->get('memcache.default')->set('lcp', join(',',array_keys($_lots)), 0, 1*60*60);
                 $_session->set('lcp', join(',',array_keys($_lots)));
