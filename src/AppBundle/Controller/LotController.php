@@ -23,7 +23,7 @@ class LotController extends Controller
 
         $_lots = [];
         //check if lots current prices are stored in memcache
-        if( $l_ids = $_session->get('lcp') ){
+        if( $l_ids = false/*$l_ids = $_session->get('lcp')*/ ){
             //get lot prices from memcache
             $l_ids = explode(',',$l_ids);
             foreach( $l_ids as $l_id ){
@@ -36,7 +36,7 @@ class LotController extends Controller
             $lots = $em
                 ->getRepository('AppBundle:Lot')
                 ->createQueryBuilder('l')
-                ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 1')
+                ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 0')
                 ->leftJoin(
                     'AppBundle\Entity\Bet',
                     'b',
@@ -46,8 +46,14 @@ class LotController extends Controller
                 ->getQuery()
                 ->getResult();
 
+            //echo var_dump($lots[0]);
+            die;
+
             if( !empty($lots) ){
                 foreach( $lots as $lot ){
+
+
+
                     /* @var $lot \AppBundle\Entity\Lot */
                     $_lots[ $lot->getId() ] = $lot->getPrice();
 
