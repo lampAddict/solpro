@@ -21,9 +21,11 @@ class AuctionController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $lots = $em
+        $qb = $em
             ->getRepository('AppBundle:Lot')
-            ->createQueryBuilder('l')
+            ->createQueryBuilder('l');
+
+        $lots = $qb
             ->leftJoin('l.routeId', 'r')
             /*
             ->leftJoin(
@@ -33,7 +35,10 @@ class AuctionController extends Controller
                 'l.id = b.lot_id'
             )
             */
-            ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 1')
+            ->where(
+                $qb->expr()->lte('l.startDate', 'CURRENT_TIMESTAMP()')
+            )
+            ->andWhere('l.auctionStatus = 1')
             ->getQuery()
             ->getResult();
 
@@ -85,6 +90,8 @@ class AuctionController extends Controller
 
                     $em->flush();
 
+                    $_session = $request->getSession();
+                    $_session->set('lcp_'.$lot->getId(), json_encode(['price'=>$lot->getPrice(), 'owner'=>$this->getUser()->getId()]));
                     //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
                 }
             }

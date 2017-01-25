@@ -198,8 +198,8 @@ $( document ).ready(function(){
             if( !jQuery.isEmptyObject(data.lots) ){
                 $('.lotCurrentPrice').each(function(){
                     var _id = parseInt($(this).attr('id'));
-                    if( data.lots[ _id ] != parseInt($(this).html()) ){
-                        $(this).html(data.lots[ _id ]);
+                    if( data.lots[ _id ].price != parseInt($(this).html()) ){
+                        $(this).html(data.lots[ _id ].price);
                     }
                 });
             }

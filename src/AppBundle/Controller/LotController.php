@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+use Doctrine\ORM\Query\ResultSetMapping;
+
 class LotController extends Controller
 {
     /**
@@ -20,11 +22,13 @@ class LotController extends Controller
         }
 
         $_session = $request->getSession();
+        $_session->clear();
 
         $_lots = [];
         //check if lots current prices are stored in memcache
-        if( $l_ids = $_session->get('lcp') ){
-            //get lot prices from memcache
+        $l_ids = $_session->get('lcp');
+        if( $l_ids ){
+            //get lot prices from session stored in `memcached`
             $l_ids = explode(',',$l_ids);
             foreach( $l_ids as $l_id ){
                 $_lots[ $l_id ] = json_decode($_session->get('lcp_'.$l_id));
@@ -33,29 +37,17 @@ class LotController extends Controller
         else{
             //read lot prices from db
             $em = $this->getDoctrine()->getManager();
-            $qb = $em->createQueryBuilder();
-            $lots = $qb
-                    ->select('l.id, l.price')
-                    ->from('AppBundle\Entity\Lot', 'l')
-                    ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 1')
-                    ->leftJoin(
-                        'AppBundle\Entity\Bet',
-                        'b',
-                        \Doctrine\ORM\Query\Expr\Join::WITH,
-                        'l.id = b.lot_id'
-                    )
-                    ->addSelect('min(b.value) as bet')
-                    ->leftJoin('b.user_id', 'u')
-                    ->addSelect('u.id as uid')
-                    ->groupBy('b.lot_id')
-                    ->getQuery()
-                    ->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
 
+            $sql = 'SELECT l.id, l.price AS price, b.bet, b.uid FROM lot l left join (select b1.lot_id as lot_id, min(b1.value) as bet, u.id as uid from bet b1 left join fos_user u on b1.user_id = u.id group by b1.lot_id)b on l.id = b.lot_id WHERE l.auction_status = 1 AND l.start_date <= NOW()';
+            $stmt = $em->getConnection()->prepare($sql);
+            $stmt->execute();
+            $lots = $stmt->fetchAll();
+            
             if( !empty($lots) ){
                 foreach( $lots as $lot ){
                     $_own = '';
                     if( $lot['uid'] == $this->getUser()->getId() )
-                        $_own .= 'me';
+                        $_own = $lot['uid'];
 
                     $_lots[ $lot['id'] ] = ['price'=>$lot['price'], 'owner'=>$_own];
 
