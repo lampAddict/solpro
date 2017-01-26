@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-use Doctrine\ORM\Query\ResultSetMapping;
-
 class LotController extends Controller
 {
     /**
@@ -22,7 +20,7 @@ class LotController extends Controller
         }
 
         $_session = $request->getSession();
-        $_session->clear();
+        //$_session->clear();
 
         $_lots = [];
         //check if lots current prices are stored in memcache
@@ -38,7 +36,7 @@ class LotController extends Controller
             //read lot prices from db
             $em = $this->getDoctrine()->getManager();
 
-            $sql = 'SELECT l.id, l.price AS price, b.bet, b.uid FROM lot l left join (select b1.lot_id as lot_id, min(b1.value) as bet, u.id as uid from bet b1 left join fos_user u on b1.user_id = u.id group by b1.lot_id)b on l.id = b.lot_id WHERE l.auction_status = 1 AND l.start_date <= NOW()';
+            $sql = 'SELECT l.id, l.price AS price, b.bet, b.uid FROM lot l left join (select b1.lot_id as lot_id, min(b1.value) as bet, u.id as uid from bet b1 left join fos_user u on b1.user_id = u.id group by b1.lot_id)b on l.id = b.lot_id WHERE l.auction_status = 1';//AND l.start_date <= NOW()
             $stmt = $em->getConnection()->prepare($sql);
             $stmt->execute();
             $lots = $stmt->fetchAll();

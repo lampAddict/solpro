@@ -298,7 +298,7 @@ ul.topnav li.icon {display: none;}
 }
 
 .lotDoBid{
-    width: 200px;
+    width: 210px;
 }
 
 .dnone{
@@ -689,12 +689,16 @@ span#routeStatus{
 }
 
 #appbundle_bet div{
-    width: 65px;
     float: left;
 }
 
 .lotTimeLeft {
     width: 90px;
+}
+
+td.lotTimeLeftTimer{
+    width: 145px;
+    text-align: center;
 }
 
 .zeroHeight td.hiddenRow{

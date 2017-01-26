@@ -45,7 +45,10 @@ class BetType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Bet'
+             'data_class' => 'AppBundle\Entity\Bet'
+            ,'csrf_protection' => true
+            ,'csrf_field_name' => '_token'
+            ,'csrf_token_id'   => 'form_do_bet'
         ));
     }
 
