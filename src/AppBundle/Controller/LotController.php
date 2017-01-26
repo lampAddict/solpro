@@ -19,17 +19,19 @@ class LotController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        $_session = $request->getSession();
+        $redis = $this->container->get('snc_redis.default');
+
+        //$_session = $request->getSession();
         //$_session->clear();
 
         $_lots = [];
         //check if lots current prices are stored in memcache
-        $l_ids = $_session->get('lcp');
+        $l_ids = $redis->get('lcp');
         if( $l_ids ){
             //get lot prices from session stored in `memcached`
             $l_ids = explode(',',$l_ids);
             foreach( $l_ids as $l_id ){
-                $_lots[ $l_id ] = json_decode($_session->get('lcp_'.$l_id));
+                $_lots[ $l_id ] = json_decode($redis->get('lcp_'.$l_id));
             }
         }
         else{
@@ -50,10 +52,10 @@ class LotController extends Controller
                     $_lots[ $lot['id'] ] = ['price'=>$lot['price'], 'owner'=>$_own];
 
                     //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
-                    $_session->set('lcp_'.$lot['id'], json_encode($_lots[ $lot['id'] ]));
+                    $redis->set('lcp_'.$lot['id'], json_encode($_lots[ $lot['id'] ]));
                 }
                 //$this->get('memcache.default')->set('lcp', join(',',array_keys($_lots)), 0, 1*60*60);
-                $_session->set('lcp', join(',',array_keys($_lots)));
+                $redis->set('lcp', join(',',array_keys($_lots)));
             }
             else{
                 $_lots = false;

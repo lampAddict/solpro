@@ -19,6 +19,8 @@ class AuctionController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $redis = $this->container->get('snc_redis.default');
+
         $em = $this->getDoctrine()->getManager();
 
         $qb = $em
@@ -91,11 +93,8 @@ class AuctionController extends Controller
                     $em->persist($lot);
 
                     $em->flush();
-
-                    /* @var $_session \Symfony\Component\HttpFoundation\Session\Session */
-                    $_session = $request->getSession();
-                    $_session->remove('lcp_'.$lot->getId());
-                    $_session->set('lcp_'.$lot->getId(), json_encode(['price'=>$lot->getPrice(), 'owner'=>$this->getUser()->getId()]));
+                    
+                    $redis->set('lcp_'.$lot->getId(), json_encode(['price'=>$lot->getPrice(), 'owner'=>$this->getUser()->getId()]));
                     //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
                 }
             }
