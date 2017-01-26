@@ -37,7 +37,7 @@ class AuctionController extends Controller
                 'l.id = b.lot_id'
             )
             */
-            ->Where('l.auctionStatus = 1')
+            ->where('l.auctionStatus = 1')
             /*
             ->andWhere(
                 $qb->expr()->lte('l.startDate', 'CURRENT_TIMESTAMP()')
