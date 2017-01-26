@@ -190,20 +190,22 @@ $( document ).ready(function(){
     });
 
     var updateLotPrices = function(){
-        $.ajax({
-            url: 'lotsPrices',
-            cache: false
-        }).done(function( data ){
-            console.log(data);
-            if( !jQuery.isEmptyObject(data.lots) ){
-                $('.lotCurrentPrice').each(function(){
-                    var _id = parseInt($(this).attr('id'));
-                    if( data.lots[ _id ].price != parseInt($(this).html()) ){
-                        $(this).html(data.lots[ _id ].price);
-                    }
-                });
-            }
-        });
+        if( window.location.pathname.replace(/\//g,'') == 'auction' ){
+            $.ajax({
+                url: 'lotsPrices',
+                cache: false
+            }).done(function( data ){
+                console.log(data);
+                if( !jQuery.isEmptyObject(data.lots) ){
+                    $('.lotCurrentPrice').each(function(){
+                        var _id = parseInt($(this).attr('id'));
+                        if( data.lots[ _id ].price != parseInt($(this).html()) ){
+                            $(this).html(data.lots[ _id ].price);
+                        }
+                    });
+                }
+            });
+        }
     };
 
     setInterval( updateLotPrices, 2500 );

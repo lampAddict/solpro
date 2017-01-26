@@ -720,3 +720,11 @@ td.lotTimeLeftTimer{
 tr.zeroHeight{
     background-color: #ececec;
 }
+
+.notMyBet{
+    background-color: #933a3d;
+}
+
+.myBet{
+    background-color: #0e935c;
+}
