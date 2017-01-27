@@ -82,6 +82,12 @@ class LotController extends Controller
         if(     $lot
             &&  time() >= $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60
         ){
+            //delete lot price from redis
+            $redis = $this->container->get('snc_redis.default');
+            if( $redis->exists('lcp_'.$lot->getId()) ){
+                $redis->del('lcp_'.$lot->getId());
+            }
+
             //get lot off the auction
             $lot->setAuctionStatus(0);
 
