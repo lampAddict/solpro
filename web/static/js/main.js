@@ -191,15 +191,26 @@ $( document ).ready(function(){
 
     //update lots prices routine
     var updateLotPrices = function(){
-        if( window.location.pathname.replace(/\//g,'') == 'auction' ){
+        if( window.location.pathname.replace(/\//g,'') == 'solprosolportalwebapp_dev.phpauction' ){
             $.ajax({
                 url: 'lotsPrices',
                 cache: false
             }).done(function( data ){
                 console.log(data);
+                var _uid = parseInt($('#auctionPageContainer').attr('data-user'));
                 if( !jQuery.isEmptyObject(data.lots) ){
                     $('.lotCurrentPrice').each(function(){
                         var _id = parseInt($(this).attr('id'));
+                        //highlight users bets
+                        if( _uid == parseInt(data.lots[ _id ].owner) ){
+                            if( !$(this).hasClass('myBet') )
+                                $(this).removeClass('notMyBet').addClass('myBet');
+                        }
+                        else{
+                            if( !$(this).hasClass('notMyBet') )
+                                $(this).removeClass('myBet').addClass('notMyBet');
+                        }
+                        //update lot price if needed
                         if( data.lots[ _id ].price != parseInt($(this).html()) ){
                             $(this).html(data.lots[ _id ].price);
                         }

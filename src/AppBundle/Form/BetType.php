@@ -33,7 +33,7 @@ class BetType extends AbstractType
                      'lot_id'
                     ,HiddenType::class
                     ,[
-                        //'data'=>$lot
+                        'data'=>$lot
                     ])
 
         ;
@@ -46,9 +46,6 @@ class BetType extends AbstractType
     {
         $resolver->setDefaults(array(
              'data_class' => 'AppBundle\Entity\Bet'
-            ,'csrf_protection' => true
-            ,'csrf_field_name' => '_token'
-            ,'csrf_token_id'   => 'form_do_bet'
         ));
     }
 

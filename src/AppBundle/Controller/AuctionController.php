@@ -23,26 +23,38 @@ class AuctionController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $qb = $em
-            ->getRepository('AppBundle:Lot')
-            ->createQueryBuilder('l');
+        //TODO simplify query
+        //$sql = 'SELECT l.*, b.bet, b.uid FROM lot l LEFT JOIN (SELECT b1.lot_id AS lot_id, min(b1.value) AS bet, b1.user_id AS uid FROM bet b1 GROUP BY b1.user_id, b1.lot_id)b ON l.id = b.lot_id WHERE l.auction_status = 1';
+        //$stmt = $em->getConnection()->prepare($sql);
+        //$stmt->execute();
+        //$lots = $stmt->fetchAll();
 
-        $lots = $qb
+        $bets = $em
+            ->getRepository('AppBundle:Bet')
+            ->createQueryBuilder('b')
+            ->select('b.lot_id AS lot_id, min(b.value) AS bet, u.id as uid')
+            ->leftJoin('b.user_id', 'u')
+            ->groupBy('b.lot_id, b.user_id')
+            ->getQuery()
+            ->getResult();
+
+        $_bets = [];
+        foreach( $bets as $bet ){
+            if( !isset($_bets[ $bet['lot_id'] ]) ){
+                $_bets[ $bet['lot_id'] ] = $bet;
+            }
+            else{
+                if( $_bets[ $bet['lot_id'] ]['bet'] > $bet['bet'] ){
+                    $_bets[ $bet['lot_id'] ] = $bet;
+                }
+            }
+        }
+
+        $lots = $em
+            ->getRepository('AppBundle:Lot')
+            ->createQueryBuilder('l')
             ->leftJoin('l.routeId', 'r')
-            /*
-            ->leftJoin(
-                'AppBundle\Entity\Bet',
-                'b',
-                \Doctrine\ORM\Query\Expr\Join::WITH,
-                'l.id = b.lot_id'
-            )
-            */
             ->where('l.auctionStatus = 1')
-            /*
-            ->andWhere(
-                $qb->expr()->lte('l.startDate', 'CURRENT_TIMESTAMP()')
-            )
-            */
             ->getQuery()
             ->getResult();
 
@@ -52,7 +64,7 @@ class AuctionController extends Controller
                 $bet = new Bet();
 
                 $bet->setLotId($lot->getId());
-
+                
                 $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
 
                 $form->handleRequest($request);
@@ -110,6 +122,7 @@ class AuctionController extends Controller
         return $this->render('auctionPage.html.twig', array(
              'lots' => $lots
             ,'forms' => $forms
+            ,'bets' => $_bets
         ));
     }
 }

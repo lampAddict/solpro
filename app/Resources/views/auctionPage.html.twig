@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <div id="auctionPageContainer">
+    <div id="auctionPageContainer" data-user="{{ app.user.id }}">
         <div id="lotFilter">
             <div class="half">
                 <div><a id="filter">Показать фильтры</a></div>
@@ -100,7 +100,7 @@
 
                             <td class="lotTimeLeftTimer">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}<span class="lotTimeLeft">{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s') }}</span>{% elseif lot.getStartDate.timestamp > date().timestamp %}До начала торгов:<br /><span class="lotTimeLeft">{{ lot.getStartDate.timestamp | date('Y/m/d H:i:s') }}</span>{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
 
-                            <td id="{{ lot.getId }}" class="lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
+                            <td id="{{ lot.getId }}" class="{% if lot.getId in bets|keys and app.user.id == bets[ lot.getId ]['uid'] %}{{'myBet '}}{% else %}{{'notMyBet '}}{% endif %}lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
                             <td class="lotCurrentTradeStep" align="right">{{ lot.getRouteId.getTradeStep }}</td>
                             <td class="lotDoBid" align="right">
                                 {{ form_start(forms[lot.getId]) }}

@@ -34,20 +34,29 @@ class LotController extends Controller
         else{
             //read lot prices from db
             $em = $this->getDoctrine()->getManager();
-
-            $sql = 'SELECT l.id, l.price AS price, b.bet, b.uid FROM lot l left join (select b1.lot_id as lot_id, min(b1.value) as bet, u.id as uid from bet b1 left join fos_user u on b1.user_id = u.id group by b1.lot_id)b on l.id = b.lot_id WHERE l.auction_status = 1';//AND l.start_date <= NOW()
+            //TODO simplify query
+            $sql = 'SELECT l.id, l.price AS price, b.bet, b.uid FROM lot l left join (select b1.lot_id as lot_id, min(b1.value) as bet, b1.user_id as uid from bet b1 group by b1.user_id, b1.lot_id)b on l.id = b.lot_id WHERE l.auction_status = 1';//AND l.start_date <= NOW()
             $stmt = $em->getConnection()->prepare($sql);
             $stmt->execute();
             $lots = $stmt->fetchAll();
             
             if( !empty($lots) ){
+                $__lots = [];
                 foreach( $lots as $lot ){
-                    $_own = '';
-                    if( $lot['uid'] == $this->getUser()->getId() )
-                        $_own = $lot['uid'];
+                    if( !isset($__lots[ $lot['id'] ]) ){
+                        $__lots[ $lot['id'] ] = $lot;
+                    }
+                    else{
+                        if( $__lots[ $lot['id'] ]['bet'] > $lot['bet'] ){
+                            $__lots[ $lot['id'] ] = $lot;
+                        }
+                    }
+                }
 
-                    $_lots[ $lot['id'] ] = ['price'=>$lot['price'], 'owner'=>$_own];
+                $lots = $__lots;
 
+                foreach( $lots as $lot ){
+                    $_lots[ $lot['id'] ] = ['price'=>$lot['price'], 'owner'=>$lot['uid']];
                     $redis->set('lcp_'.$lot['id'], json_encode($_lots[ $lot['id'] ]));
                 }
                 //store lots ids in redis
