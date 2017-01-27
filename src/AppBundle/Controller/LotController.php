@@ -53,7 +53,7 @@ class LotController extends Controller
                 //store lots ids in redis
                 $redis->set('lcp', join(',',array_keys($_lots)));
                 //set time expiration for `lcp` key equals to 10 mins
-                $redis->expire('lcp', 1);
+                $redis->expire('lcp', 600);
             }
             else{
                 $_lots = false;
