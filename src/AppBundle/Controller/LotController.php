@@ -21,14 +21,11 @@ class LotController extends Controller
 
         $redis = $this->container->get('snc_redis.default');
 
-        //$_session = $request->getSession();
-        //$_session->clear();
-
         $_lots = [];
-        //check if lots current prices are stored in memcache
+        //check if lots current prices are stored in redis
         $l_ids = $redis->get('lcp');
         if( $l_ids ){
-            //get lot prices from session stored in `memcached`
+            //get lot prices from redis
             $l_ids = explode(',',$l_ids);
             foreach( $l_ids as $l_id ){
                 $_lots[ $l_id ] = json_decode($redis->get('lcp_'.$l_id));
@@ -51,11 +48,12 @@ class LotController extends Controller
 
                     $_lots[ $lot['id'] ] = ['price'=>$lot['price'], 'owner'=>$_own];
 
-                    //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
                     $redis->set('lcp_'.$lot['id'], json_encode($_lots[ $lot['id'] ]));
                 }
-                //$this->get('memcache.default')->set('lcp', join(',',array_keys($_lots)), 0, 1*60*60);
+                //store lots ids in redis
                 $redis->set('lcp', join(',',array_keys($_lots)));
+                //set time expiration for `lcp` key equals to 10 mins
+                $redis->expire('lcp', 1);
             }
             else{
                 $_lots = false;
