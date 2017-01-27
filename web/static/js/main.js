@@ -191,7 +191,7 @@ $( document ).ready(function(){
 
     //update lots prices routine
     var updateLotPrices = function(){
-        if( window.location.pathname.replace(/\//g,'') == 'solprosolportalwebapp_dev.phpauction' ){
+        if( window.location.pathname.replace(/\//g,'') == 'auction' ){
             $.ajax({
                 url: 'lotsPrices',
                 cache: false
