@@ -207,8 +207,11 @@ $( document ).ready(function(){
                                 $(this).removeClass('notMyBet').addClass('myBet');
                         }
                         else{
-                            if( !$(this).hasClass('notMyBet') )
+                            if(    !$(this).hasClass('notMyBet')
+                                && $(this).parent().find('.lotTimeLeftTimer').html().indexOf('До начала торгов') === -1
+                            ){
                                 $(this).removeClass('myBet').addClass('notMyBet');
+                            }
                         }
                         //update lot price if needed
                         if( data.lots[ _id ].price != parseInt($(this).html()) ){
