@@ -134,16 +134,16 @@
                                         </table>
                                     </div>
 
-                                    <div data-routeId="{{ route.getId }}" class="routeAssignDriver">
+                                    <div data-routeId="{{ route.getId }}">
                                         <div class="routeDriverHeader">Водитель:</div>
                                         {% if route.getVehicleDriver|length > 0 %}
                                             <div class="routeDriverName">{{ route.getVehicleDriver.getFio }}</div>
                                             <div class="routeDriverPassportData">{{ route.getVehicleDriver.getPassport }}</div>
                                             <div class="routeDriverVehicle">{{ route.getVehicleDriver.getTransportId.getName }} {{ route.getVehicleDriver.getTransportId.getRegNum }} {% if route.getVehicleDriver.getTransportId.getTrailerRegNum|length > 0 %}п/п: {{ route.getVehicleDriver.getTransportId.getTrailerRegNum }}{% endif %}</div>
                                         {% endif %}
-                                        <div id="routeAssignDriver" class="btn btn-default">Назначить водителя</div>
+                                        <div class="btn btn-default routeAssignDriver">Назначить водителя</div>
                                         {% if route.getVehicleDriver is not null %}
-                                            <div id="routeDeleteDriver" class="btn btn-danger">Удалить водителя из рейса</div>
+                                            <div class="btn btn-danger routeDeleteDriver">Удалить водителя из рейса</div>
                                         {% endif %}
                                     </div>
 

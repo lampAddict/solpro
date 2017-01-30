@@ -63,7 +63,7 @@ $( document ).ready(function(){
         $vehicleSelect.append('<option val="" selected="selected"> </option>');
     });
 
-    $('.showLotRouteInfo').click(function(e){
+    $('#auctionTable .showLotRouteInfo').click(function(e){
         var $routeInfo = $(this).parent().parent().next().find('.lotInfoWindow');
         if( $routeInfo.is(':visible') ){
             $routeInfo.slideUp(1100);
@@ -73,16 +73,36 @@ $( document ).ready(function(){
         }
     });
 
-    $('.btnCloseRouteInfo').click(function(){
+    $('#auctionTable .btnCloseRouteInfo').click(function(){
         $(this).parent().parent().slideUp(1100);
+    });
+
+    $('#routesTable .showLotRouteInfo').click(function(e){
+        var $routeInfo = $(this).parent().parent().next().find('.lotInfoWindow');
+
+        var $ri = $routeInfo.clone(true).removeClass('dnone').addClass('mtop60');
+        $('#routesPageContainer > .lotInfoWindow').remove();
+        $('#routesPageContainer').append($ri);
+
+        $('#routesTable').hide();
+        $('#routesFilter').hide();
+        $('#routeAddDriverWindow').hide();
+
+        $ri.show();
+    });
+
+    $('#routesTable .btnCloseRouteInfo').click(function(){
+        $(this).parent().parent().hide();
+        $('#routesFilter').show();
+        $('#routesTable').show();
     });
 
     $('#appbundle_transport_type').change(function (e) {
         $(e.currentTarget).addClass('black');
     });
 
-    $('#routeAssignDriver').click(function(e){
-        var $routesTable = $('#routesTable'), $routesFilter = $('#routesFilter'), $routeAddDriverWindow = $('#routeAddDriverWindow');
+    $('.routeAssignDriver').click(function(e){
+        var $routeAddDriverWindow = $('#routeAddDriverWindow');
 
         $routeAddDriverSelect = $('#routeAddDriverSelect');
         if( $routeAddDriverSelect ){
@@ -96,10 +116,12 @@ $( document ).ready(function(){
             $routeAddVehicleSelect.chosen({no_results_text: "Ничего не найдено"});
         }
 
-        $routesTable.hide();
-        $routesFilter.hide();
+        $('#routesTable').hide();
+        $('#routesFilter').hide();
 
-        $routeAddDriverWindow.data('routeId', $('.routeAssignDriver').attr('data-routeId'));
+        $('#routesPageContainer > .lotInfoWindow').hide();
+
+        $routeAddDriverWindow.data('routeId', $(e.currentTarget).parent().attr('data-routeId'));
         $routeAddDriverWindow.show();
     });
 
@@ -130,12 +152,12 @@ $( document ).ready(function(){
         }
     });
 
-    $('#routeDeleteDriver').click(function(e){
+    $('.routeDeleteDriver').click(function(e){
         var $this = $(e.currentTarget);
         $.ajax({
             method: 'POST',
             url: 'removeDriver',
-            data: { route: $('.routeAssignDriver').attr('data-routeId') }
+            data: { route: $(e.currentTarget).parent().attr('data-routeId') }
         })
         .done(function( response ){
             if( response.result ){

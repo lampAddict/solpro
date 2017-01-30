@@ -631,7 +631,7 @@ span#routeStatus{
 
 .routeInfoTable{
     float: left;
-    width: 50%;
+    width: 40%;
 }
 
 .routeInfoTable table td{
@@ -645,7 +645,7 @@ span#routeStatus{
 
 .routeAssignDriver{
     float: left;
-    width: 50%;
+    width: 20%;
 }
 
 .routeDriverName{
@@ -707,6 +707,8 @@ td.lotTimeLeftTimer{
 
 .routeInfoTable table{
     width: 90% !important;
+    border: 1px solid dimgrey;
+    border-collapse: collapse;
 }
 
 .lotInfoWindow table tr td{
@@ -727,4 +729,8 @@ tr.zeroHeight{
 
 .myBet{
     background-color: #88d985;
+}
+
+.mtop60{
+    margin-top: 60px;
 }
