@@ -38,7 +38,7 @@ class RoutesController extends Controller
             ->getRepository('AppBundle:Driver')
             ->createQueryBuilder('d')
             ->leftJoin('d.transport_id', 'v')
-            ->where('d.route_id IS NULL AND d.user_id = '.$this->getUser()->getId())
+            ->where('d.route_id IS NULL AND d.status = 1 AND d.user_id = '.$this->getUser()->getId())
             ->getQuery()
             ->getResult();
 
