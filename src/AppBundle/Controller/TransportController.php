@@ -93,7 +93,6 @@ class TransportController extends Controller
     {
         $this->doChecks($transport);
 
-        $deleteForm = $this->createDeleteForm($transport);
         $editForm = $this->createForm('AppBundle\Form\TransportType', $transport);
         $editForm->handleRequest($request);
 
@@ -106,8 +105,7 @@ class TransportController extends Controller
 
         return $this->render('transport/edit.html.twig', array(
             'transport' => $transport,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $editForm->createView()
         ));
     }
 

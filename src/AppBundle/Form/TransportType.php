@@ -29,10 +29,6 @@ class TransportType extends AbstractType
                         ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                         ,[
                              'label'=>'Марка транспортного средства'
-                            ,'attr'=>[
-                                         'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>''
-                            ]
                         ])
                 ->add(
                          'type'
@@ -45,19 +41,12 @@ class TransportType extends AbstractType
                                             ,'Изотерм'
                                             ,'Цистерна'
                             ]
-                            ,'attr'=>[
-                                    'class'=>'"addVehicleWindowBtn"'
-                            ]
                         ])
                 ->add(
                          'payload'
                         ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                         ,[
                              'label'=>'Грузоподъёмность, т'
-                            ,'attr'=>[
-                                         'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>''
-                            ]
                         ])
                 ->add(
                          'regNum'
@@ -65,8 +54,9 @@ class TransportType extends AbstractType
                         ,[
                              'label'=>'Автомобильный номер'
                             ,'attr'=>[
-                                         'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>'е097кх 97'
+                                         'class'=>''
+                                        ,'placeholder'=>'х000хх 000'
+                                        ,'maxlength'=>10
                             ]
                         ])
                 ->add(
@@ -76,8 +66,9 @@ class TransportType extends AbstractType
                              'label'=>'Номер полуприцепа (необязательное поле)'
                             ,'required'=>false
                             ,'attr'=>[
-                                         'class'=>'"addVehicleWindowBtn"'
-                                        ,'placeholder'=>'аа9797 97'
+                                         'class'=>''
+                                        ,'placeholder'=>'хх0000 00'
+                                        ,'maxlength'=>9
                             ]
                         ])
         ;

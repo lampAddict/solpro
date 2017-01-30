@@ -80,14 +80,14 @@ class DriverType extends AbstractType
 
                                 if( is_null($driver) ){
                                     return $er->createQueryBuilder('t')
-                                        ->where('t.user_id = '.$user->getId())
+                                        ->where('t.status = 1 AND t.user_id = '.$user->getId())
                                         //->andWhere('t.driver_id IS NULL') //show only free to bind vehicles
                                         ->orderBy('t.id', 'DESC')
                                         ;
                                 }
                                 else{
                                     return $er->createQueryBuilder('t')
-                                        ->where('t.user_id = '.$user->getId())
+                                        ->where('t.status = 1 AND t.user_id = '.$user->getId())
                                         //->andWhere('t.driver_id IS NULL') //show only free to bind vehicles
                                         ->orWhere('t.driver_id = '.$driver->getId())
                                         ->orderBy('t.id', 'DESC')

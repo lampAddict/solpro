@@ -31,26 +31,26 @@ $( document ).ready(function(){
     //masked input for driver add/edit window
     $driverPhone = $('#appbundle_driver_phone');
     if( $driverPhone ){
-        $driverPhone.mask("9 (999) 999-99-99", {placeholder:"_"});
+        $driverPhone.mask("9 (999) 999-99-99", {placeholder:""});
     }
 
     $driverLicense = $('#appbundle_driver_driverLicense');
     if( $driverLicense ){
         $.mask.definitions['~'] = '[а-яА-ЯёЁ0-9]';
-        $driverLicense.mask("~~ ~~ 999999", {placeholder:"_"});
+        $driverLicense.mask("~~ ~~ 999999");
     }
 
     //masked input for vehicle add/edit window
     $vehicleRegNum = $('#appbundle_transport_regNum');
     if( $vehicleRegNum ){
         $.mask.definitions['~'] = '[авекмнорстухАВЕКМНОРСТУХ]';//А, В, Е, К, М, Н, О, Р, С, Т, У, Х
-        $vehicleRegNum.mask("~999~~ 99?9", {placeholder:"_"});
+        $vehicleRegNum.mask("~999~~ 99?9");
     }
 
     $vehicleTrailerRegNum = $('#appbundle_transport_trailerRegNum');
     if( $vehicleTrailerRegNum ){
         $.mask.definitions['~'] = '[авекмнорстухАВЕКМНОРСТУХ]';//А, В, Е, К, М, Н, О, Р, С, Т, У, Х
-        $vehicleTrailerRegNum.mask("~~9999 99?9", {placeholder:"_"});
+        $vehicleTrailerRegNum.mask("~~9999 99?9");
     }
 
     //unlink vehicle from driver routine
