@@ -111,20 +111,23 @@ $( document ).ready(function(){
 
     //submit attach driver to route data
     $('#routeAddDriverWindow input[type="button"]').click(function(e){
-        $.ajax({
-            method: 'POST',
-            url: 'attachDriver',
-            data: {
-                     driver: $(this).parent().find('#routeAddDriverSelect').val()
+        //Don't send request if none of the drivers selected
+        if( $('#routeAddDriverSelect').val() != 'Выберите водителя' ){
+            $.ajax({
+                method: 'POST',
+                url: 'attachDriver',
+                data: {
+                    driver: $(this).parent().find('#routeAddDriverSelect').val()
                     ,vehicle: $(this).parent().find('#routeAddVehicleSelect').val()
                     ,route: $(this).parent().data('routeId')
-            }
-        })
-        .done(function( response ){
-            if( response.result ){
-                location.reload();
-            }
-        });
+                }
+            })
+                .done(function( response ){
+                    if( response.result ){
+                        location.reload();
+                    }
+                });
+        }
     });
 
     $('#routeDeleteDriver').click(function(e){
