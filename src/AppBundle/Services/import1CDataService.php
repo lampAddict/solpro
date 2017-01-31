@@ -134,6 +134,6 @@ class import1CDataService{
             }
         }
 
-        echo 'Data import done';
+        echo "Data import done\n";
     }
 }

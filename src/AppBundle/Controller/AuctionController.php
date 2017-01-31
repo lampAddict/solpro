@@ -28,27 +28,6 @@ class AuctionController extends Controller
         //$stmt->execute();
         //$lots = $stmt->fetchAll();
 
-        $bets = $em
-            ->getRepository('AppBundle:Bet')
-            ->createQueryBuilder('b')
-            ->select('b.lot_id AS lot_id, min(b.value) AS bet, u.id as uid')
-            ->leftJoin('b.user_id', 'u')
-            ->groupBy('b.lot_id, b.user_id')
-            ->getQuery()
-            ->getResult();
-
-        $_bets = [];
-        foreach( $bets as $bet ){
-            if( !isset($_bets[ $bet['lot_id'] ]) ){
-                $_bets[ $bet['lot_id'] ] = $bet;
-            }
-            else{
-                if( $_bets[ $bet['lot_id'] ]['bet'] > $bet['bet'] ){
-                    $_bets[ $bet['lot_id'] ] = $bet;
-                }
-            }
-        }
-
         $lots = $em
             ->getRepository('AppBundle:Lot')
             ->createQueryBuilder('l')
@@ -117,7 +96,29 @@ class AuctionController extends Controller
         else{
             $lots = [];
         }
-        
+
+        //get last information about bets
+        $bets = $em
+            ->getRepository('AppBundle:Bet')
+            ->createQueryBuilder('b')
+            ->select('b.lot_id AS lot_id, min(b.value) AS bet, u.id as uid')
+            ->leftJoin('b.user_id', 'u')
+            ->groupBy('b.lot_id, b.user_id')
+            ->getQuery()
+            ->getResult();
+
+        $_bets = [];
+        foreach( $bets as $bet ){
+            if( !isset($_bets[ $bet['lot_id'] ]) ){
+                $_bets[ $bet['lot_id'] ] = $bet;
+            }
+            else{
+                if( $_bets[ $bet['lot_id'] ]['bet'] > $bet['bet'] ){
+                    $_bets[ $bet['lot_id'] ] = $bet;
+                }
+            }
+        }
+
         return $this->render('auctionPage.html.twig', array(
              'lots' => $lots
             ,'forms' => $forms
