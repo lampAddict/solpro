@@ -110,7 +110,7 @@
                 <ul>
                     <li>
                         <div>Рейсы требующие назначения</div>
-                        <div>0</div>
+                        <div>{{ routes_no_driver }}</div>
                     </li>
                     <li>
                         <div>Опоздания</div>
@@ -118,19 +118,12 @@
                     </li>
                     <li>
                         <div>Всего рейсов</div>
-                        <div>0</div>
+                        <div>{{ routes_sum }}</div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block popup %}
-{% endblock %}
-
-{% block additionalWindows %}
-
 {% endblock %}
 
 {% block javascripts %}

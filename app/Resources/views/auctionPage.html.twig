@@ -147,17 +147,17 @@
                                         <span>Информация по заказам:</span>
                                         <table id="routeOrdersTable" cellpadding="0" cellspacing="0" style="border:1px solid gray; border-collapse: collapse">
                                             <thead>
-                                            <tr>
-                                                <td>№ Заказа</td>
-                                                <td>Контрагент</td>
-                                                <td>Адрес доставки</td>
-                                                <td>Дата отгрузки</td>
-                                                <td>Вес кг, объём плт</td>
-                                                <td>Категория продукции</td>
-                                                <td>Спец. условия погрузки</td>
-                                                <td>Спец. условия выгрузки</td>
-                                                <td>Ответственный</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>№ Заказа</td>
+                                                    <td>Контрагент</td>
+                                                    <td>Адрес доставки</td>
+                                                    <td>Дата отгрузки</td>
+                                                    <td>Вес кг, объём плт</td>
+                                                    <td>Категория продукции</td>
+                                                    <td>Спец. условия погрузки</td>
+                                                    <td>Спец. условия выгрузки</td>
+                                                    <td>Ответственный</td>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                             {% for order in lot.getRouteId.getOrders %}
@@ -187,96 +187,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-{% endblock %}
-
-{% block popup %}
-    <div id="lotInfoWindow">
-        <div class="routeNumber">
-            Рейс №: <span id="routeNumber">Р-001254</span>
-        </div>
-        <div class="routeStatus">
-            Статус: <span id="routeStatus">Утвержден</span>
-        </div>
-        <div class="routeInfoTable">
-            <table cellspacing="0" cellpadding="0">
-                <tbody>
-                    <tr>
-                        <td>Дата загрузки:</td><td>27.11.2016 в 09:00</td>
-                    </tr>
-                    <tr>
-                        <td>Пункт отгрузки:</td><td>Саратов (СЖК)</td>
-                    </tr>
-                    <tr>
-                        <td>Регион доставки:</td><td>Балашиха (Московская обл)</td>
-                    </tr>
-                    <tr>
-                        <td>Вид ТС:</td><td>20тн Реф</td>
-                    </tr>
-                    <tr>
-                        <td>Тариф:</td><td>123500 руб</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Комментарий:</td><td>Выгрузка 28.11.2016, обязательно наличие мед.книжки</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="routeAssignDriver">
-            <div class="routeDriverHeader">Водитель:</div>
-            <div class="routeDriverName">Петров Петр Петрович</div>
-            <div class="routeDriverPassportData">Паспорт: 7762 113241, выдан ОУФМС России по Пресненскому району г.Москвы в ЦАО. дата выдачи 16.12.2005</div>
-            <div class="routeDriverVehicle">КАМАЗ е093мм/199 п/п: ак7854/99</div>
-            <div id="routeAssignDriver" class="btn btn-default">Назначить водителя</div>
-            <div id="routeDeleteDriver" class="btn btn-danger">Удалить водителя из рейса</div>
-        </div>
-
-        <div class="routeInfo">
-            <span>Информация по заказам:</span>
-            <table id="routeOrdersTable" cellpadding="0" cellspacing="0" style="border:1px solid gray; border-collapse: collapse">
-                <thead>
-                    <tr>
-                        <td>№ Заказа</td>
-                        <td>Контрагент</td>
-                        <td>Адрес доставки</td>
-                        <td>Дата отгрузки</td>
-                        <td>Вес кг, объём плт</td>
-                        <td>Категория продукции</td>
-                        <td>Условия</td>
-                        <td>Ответственный</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>тс-00081587</td>
-                        <td>Тандер АО</td>
-                        <td>РЦ Орел,Орловская обл., Орловский район, д. Хардиково, ул.Совхозная, 10 А, РФ, 302507,</td>
-                        <td>28.11.16 11:00</td>
-                        <td>7000 (14)</td>
-                        <td>масло</td>
-                        <td></td>
-                        <td>Верещак Виктор, тел. 8 (629) 531-10-66</td>
-                    </tr>
-                    <tr>
-                        <td>тс-00081587</td>
-                        <td>Южная сырная лавка</td>
-                        <td>344065, Ростовская обл, Ростов-на-Дону г, Орская ул, дом № 31Д</td>
-                        <td>30.11.16</td>
-                        <td>2300 (6)</td>
-                        <td>майонез</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> 3</span></div>
-            <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> 17300</span></div>
-            <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> 32</span></div>
-        </div>
-        <div style="float:right"><a class="btn btn-default" href="{{ url("auction") }}">Вернуться к списку</a></div>
     </div>
 {% endblock %}

@@ -44,11 +44,19 @@ class DefaultController extends Controller
         foreach($_lots as $ld=>$ls){
             $_stat[] = ['dir'=>$ld, 'num'=>$ls];
         }
+
+        $uid = $this->getUser()->getId();
+        //get routes without assigned driver 
+        $sql = "SELECT DISTINCT r.id FROM route r LEFT JOIN (SELECT DISTINCT route_id FROM driver WHERE user_id = $uid AND status = 1)d ON d.route_id = r.id WHERE r.user_id = $uid AND d.route_id IS NULL";
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $_rnd = $stmt->fetchAll();
         
-        // replace this example code with whatever you need
         return $this->render('base.html.twig', array(
              'lots' => $lots
             ,'stat' => $_stat
+            ,'routes_no_driver'=>count($_rnd)
+            ,'routes_sum'=>count($_rnd)
         ));
     }
 }
