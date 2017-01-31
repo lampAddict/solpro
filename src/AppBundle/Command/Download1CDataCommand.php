@@ -25,7 +25,8 @@ class Download1CDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Connecting to ftp..');
-        $conn_id = ftp_connect('ftp.solpro.ru') or die("Couldn't establish connection to ftp server");
+        //ftp.solpro.ru
+        $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");
         if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
         ftp_pasv($conn_id, TRUE);
         ftp_set_option($conn_id, FTP_TIMEOUT_SEC, 360);
