@@ -22,11 +22,6 @@ class AuctionController extends Controller
         $redis = $this->container->get('snc_redis.default');
 
         $em = $this->getDoctrine()->getManager();
-        
-        //$sql = 'SELECT l.*, b.bet, b.uid FROM lot l LEFT JOIN (SELECT b1.lot_id AS lot_id, min(b1.value) AS bet, b1.user_id AS uid FROM bet b1 GROUP BY b1.user_id, b1.lot_id)b ON l.id = b.lot_id WHERE l.auction_status = 1';
-        //$stmt = $em->getConnection()->prepare($sql);
-        //$stmt->execute();
-        //$lots = $stmt->fetchAll();
 
         $lots = $em
             ->getRepository('AppBundle:Lot')
@@ -39,11 +34,12 @@ class AuctionController extends Controller
         $forms = [];
         if( !empty($lots) ){
             foreach( $lots as $lot ){
-                $bet = new Bet();
 
+                $bet = new Bet();
                 $bet->setLotId($lot->getId());
                 
                 $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
+                $forms[ $lot->getId() ] = $form->createView();
 
                 $form->handleRequest($request);
                 if(    $form->isSubmitted()
@@ -51,9 +47,9 @@ class AuctionController extends Controller
                     && intval($request->request->get('appbundle_bet')['lot_id']) == $lot->getId()
                 ){
                     //check if user authenticated
-                    if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-                        throw $this->createAccessDeniedException();
-                    }
+                    //if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                    //    throw $this->createAccessDeniedException();
+                    //}
                     //$user = $this->get('security.token_storage')->getToken()->getUser();
 
                     $lot = $em
@@ -89,8 +85,6 @@ class AuctionController extends Controller
                         //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
                     }
                 }
-
-                $forms[ $lot->getId() ] = $form->createView();
             }
         }
         else{
