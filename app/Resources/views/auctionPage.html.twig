@@ -74,7 +74,6 @@
             <table cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Статус лота</th>
                         <th>№ Рейса</th>
                         <th class="txtAlignCenter">Направление</th>
                         <th>Подача</th>
@@ -90,7 +89,6 @@
                 <tbody>
                     {% for lot in lots %}
                         <tr>
-                            <td class="lotStatus">{{ lot.getStatus }}</td>
                             <td align="center"><a class="showLotRouteInfo">{{ lot.getRouteId.getCode }}</a></td>
                             <td class="lotDirection">{{ lot.getRouteId.getRegionFrom }} &xrarr;<br />{{ lot.getRouteId.getRegionTo }}</td>
                             <td class="lotGetInTime">{{ lot.getRouteId.getLoadDate|date('d.m.Y H:i') }}</td>
@@ -110,7 +108,7 @@
                             </td>
                         </tr>
                         <tr class="zeroHeight">
-                            <td colspan="11" class="hiddenRow">
+                            <td colspan="10" class="hiddenRow">
                                 <div class="dnone lotInfoWindow">
                                     <div class="routeNumber">
                                         Рейс №: <span id="routeNumber">{{ lot.getRouteId.getCode }}</span>
@@ -134,7 +132,7 @@
                                                 <td>Вид ТС:</td><td>{{ lot.getRouteId.getVehiclePayload }} {{ lot.getRouteId.getVehicleType }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Тариф:</td><td>{{ lot.getRouteId.getLotId.getPrice }} &#8381;</td>
+                                                <td>Тариф:</td><td id="lpi_{{ lot.getId }}">{{ lot.getPrice }} &#8381;</td>
                                             </tr>
                                             <tr>
                                                 <td>Комментарий:</td><td>{{ lot.getRouteId.getComment }}</td>
@@ -151,7 +149,7 @@
                                                     <td>№ Заказа</td>
                                                     <td>Контрагент</td>
                                                     <td>Адрес доставки</td>
-                                                    <td>Дата отгрузки</td>
+                                                    <td>Плановая дата доставки</td>
                                                     <td>Вес кг, объём плт</td>
                                                     <td>Категория продукции</td>
                                                     <td>Спец. условия погрузки</td>

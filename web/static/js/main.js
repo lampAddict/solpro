@@ -257,6 +257,8 @@ $( document ).ready(function(){
                         //update lot price if needed
                         if( data.lots[ _id ].price != parseInt($(this).html()) ){
                             $(this).html(data.lots[ _id ].price);
+
+                            $('#lpi_' + _id).html(data.lots[ _id ].price + ' &#8381;');
                         }
                     });
                 }
