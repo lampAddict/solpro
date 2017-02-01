@@ -41,6 +41,7 @@ class AuctionController extends Controller
                 $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
                 $forms[ $lot->getId() ] = $form->createView();
 
+                //do bet request processing
                 $form->handleRequest($request);
                 if(    $form->isSubmitted()
                     && $form->isValid()
@@ -76,6 +77,11 @@ class AuctionController extends Controller
                         $bet->setValue( intval($request->request->get('appbundle_bet')['value']) );
                         $lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );
 
+                        //auction prolongation if bet was made during last minute
+                        if( $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60 - time() < 60 ){
+                            $lot->setDuration( $lot->getDuration() + 2 );
+                        }
+                        
                         $em->persist($bet);
                         $em->persist($lot);
 

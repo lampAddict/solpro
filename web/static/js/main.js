@@ -186,29 +186,42 @@ $( document ).ready(function(){
                     data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') }
                 })
                 .done(function( response ){
-                    if( response.result ){
+                    //if( response.result ){
                         //delete row with expired lot from auction table
                         $this.parent().parent().remove();
-                    }
+                    //}
                 });
             }
         });
     });
 
     //click handlers for do bet buttons
-    var bets = [];
+    var bets = {};
     $('.doBid').each(function(){
         var $this = $(this);
         $this.click(function(){
-            var _bet = parseInt( $this.siblings('#appbundle_bet').find('#appbundle_bet_value').val() );
-            var _price = $this.parents('.lotDoBid').siblings('.lotCurrentPrice').html();
+            var _bet = parseInt( $this.siblings('#appbundle_bet').find('#appbundle_bet_value').val() ),
+                _lcp = $this.parents('.lotDoBid').siblings('.lotCurrentPrice'),
+                _price = _lcp.html(),
+                _lotId = _lcp.attr('id'),
+                betInArr = false;
+
+            if( bets[_lotId] !== undefined ){
+                if( bets[_lotId].indexOf(_bet) > 0 ){
+                    betInArr = true;
+                }
+            }
+            else{
+                bets[_lotId] = [];
+            }
+
             //in order to place bet it must conform following conditions
             if(    _bet > 0 //positive number
-                && bets.indexOf(_bet) < 0 //new bet
+                && !betInArr //new bet
                 && _bet <= parseInt(_price) - parseInt($this.attr('data-tradeStep')) //less than current lot price minus step of price reducing
                 //lot is in auction
             ){
-                bets.push( _bet );
+                bets[_lotId].push( _bet );
                 $this.parent().submit();
             }
         });
@@ -227,7 +240,10 @@ $( document ).ready(function(){
                     $('.lotCurrentPrice').each(function(){
                         var _id = parseInt($(this).attr('id'));
                         //highlight users bets
-                        if( _uid == parseInt(data.lots[ _id ].owner) ){
+                        if(    data.lots[ _id ] !== null
+                            && data.lots[ _id ] !== undefined
+                            && _uid == parseInt(data.lots[ _id ].owner)
+                        ){
                             if( !$(this).hasClass('myBet') )
                                 $(this).removeClass('notMyBet').addClass('myBet');
                         }
