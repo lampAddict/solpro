@@ -186,10 +186,10 @@ $( document ).ready(function(){
                     data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') }
                 })
                 .done(function( response ){
-                    //if( response.result ){
+                    if( response.result ){
                         //delete row with expired lot from auction table
                         $this.parent().parent().remove();
-                    //}
+                    }
                 });
             }
         });

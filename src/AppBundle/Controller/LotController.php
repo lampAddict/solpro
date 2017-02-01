@@ -85,10 +85,12 @@ class LotController extends Controller
         $em = $this->getDoctrine()->getManager();
         /* @var $lot \AppBundle\Entity\Lot */
         $lot = $em->getRepository('AppBundle:Lot')->findOneBy(['id'=>intval($request->request->get('lot')), 'auctionStatus'=>1]);
-
-        if(     $lot
-            &&  time() >= $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60
-        ){
+        
+        //if there is no lot found then auction ended up successfully (probably)
+        if( !$lot )return new JsonResponse(['result'=>true]);
+        
+        //check auction end time
+        if( time() >= $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60 ){
             //delete lot price from redis
             $redis = $this->container->get('snc_redis.default');
             if( $redis->exists('lcp_'.$lot->getId()) ){
