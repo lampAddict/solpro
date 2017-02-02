@@ -188,8 +188,9 @@ $( document ).ready(function(){
                 .done(function( response ){
                     if( response.result ){
                         //delete row with expired lot from auction table
-                        var $lot_tr =
-                        $this.parent().parent().remove();
+                        var $lot_tr = $this.parent().parent();
+                        $lot_tr.next().remove();
+                        $lot_tr.remove();
                     }
                 });
             }
