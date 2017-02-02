@@ -1,0 +1,1156 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MessageFrom1C sendNumber="23342" recNumber="24924" messageCreationTime="2017-01-25T11:49:08">
+	<references>
+		<lotStatuses>
+			<lotStatus>
+				<id>175d0f31-a9ca-45ba-835e-bae500c8c35c</id>
+				<name>1. Подготовка</name>
+			</lotStatus>
+		</lotStatuses>
+		<routeStatuses>
+			<routeStatuse>
+				<id>df802ece-519b-4c44-8005-0115da346089</id>
+				<name>1. Создан</name>
+			</routeStatuse>
+			<routeStatuse>
+				<id>fa228c16-72d7-43e1-a507-e384817fd0f9</id>
+				<name>Закрыт</name>
+			</routeStatuse>
+			<routeStatuse>
+				<id>6f64ed10-762a-4567-ac3f-7a69477cd4ea</id>
+				<name>5. Отгружен</name>
+			</routeStatuse>
+		</routeStatuses>
+		<regions>
+			<region>
+				<id>a52500d4-dbc6-11e5-9996-00155d046117</id>
+				<name>Москва</name>
+			</region>
+			<region>
+				<id>a52500da-dbc6-11e5-9996-00155d046117</id>
+				<name>Самара</name>
+			</region>
+			<region>
+				<id>ab2934fe-dbc6-11e5-9996-00155d046117</id>
+				<name>Ульяновск</name>
+			</region>
+			<region>
+				<id>ab293500-dbc6-11e5-9996-00155d046117</id>
+				<name>Краснодар</name>
+			</region>
+			<region>
+				<id>ab293507-dbc6-11e5-9996-00155d046117</id>
+				<name>Казань</name>
+			</region>
+			<region>
+				<id>b1322de7-dbc6-11e5-9996-00155d046117</id>
+				<name>Тула</name>
+			</region>
+			<region>
+				<id>b1322df7-dbc6-11e5-9996-00155d046117</id>
+				<name>Смоленск</name>
+			</region>
+			<region>
+				<id>b7509d5c-dbc6-11e5-9996-00155d046117</id>
+				<name>Истра (Московская обл)</name>
+			</region>
+			<region>
+				<id>bd6f0e06-dbc6-11e5-9996-00155d046117</id>
+				<name>Курск</name>
+			</region>
+			<region>
+				<id>c4830691-dbc6-11e5-9996-00155d046117</id>
+				<name>Армавир (Краснодарский кр)</name>
+			</region>
+			<region>
+				<id>c4830694-dbc6-11e5-9996-00155d046117</id>
+				<name>Оренбург</name>
+			</region>
+			<region>
+				<id>8721c859-0230-11e6-9b89-00155d02c510</id>
+				<name>Краснодар (РЦ Тандер)</name>
+			</region>
+			<region>
+				<id>00c81522-023b-11e6-9b89-00155d02c510</id>
+				<name>Москва (МЖК)</name>
+			</region>
+			<region>
+				<id>4b96a628-023d-11e6-9b89-00155d02c510</id>
+				<name>Саратов (ТТС)</name>
+			</region>
+			<region>
+				<id>1aa3faa1-06c2-11e6-9f13-00155d02c510</id>
+				<name>Аткарск (АМЭЗ)</name>
+			</region>
+			<region>
+				<id>70afa8e2-02d2-11e6-ae89-00155d02c510</id>
+				<name>Саратов (СЖК)</name>
+			</region>
+			<region>
+				<id>f03fc2bf-0155-11e6-b7e5-00155d02c510</id>
+				<name>Шахты (РЦ Тандер)</name>
+			</region>
+			<region>
+				<id>0cd0b664-e69f-11e5-bcd9-00155d046117</id>
+				<name>Кореновск (Краснодарский кр)</name>
+			</region>
+			<region>
+				<id>1b986415-e69f-11e5-bcd9-00155d046117</id>
+				<name>Собинка (Владимирская обл)</name>
+			</region>
+		</regions>
+		<partners>
+			<partner>
+				<id>da55ac00-c32f-11e5-83ce-00155d046117</id>
+				<name>Мечта ООО</name>
+				<inn>5638067206</inn>
+			</partner>
+			<partner>
+				<id>9a7733b6-c36f-11e5-83ce-00155d046117</id>
+				<name>Альянс-торг ООО</name>
+				<inn>7327013071</inn>
+			</partner>
+			<partner>
+				<id>3909eb2f-58b6-11e6-9172-00155d044120</id>
+				<name>Сервис Фудс ООО</name>
+				<inn>2311198090</inn>
+			</partner>
+			<partner>
+				<id>58ecc50e-165a-11e5-92e0-00155d044117</id>
+				<name>Фацер ООО</name>
+				<inn>7810356819</inn>
+			</partner>
+			<partner>
+				<id>418beda8-b2ad-11e4-9323-00155d044112</id>
+				<name>ЛИДЕР ООО</name>
+				<inn>2312142075</inn>
+			</partner>
+			<partner>
+				<id>f15515ad-df9e-11e5-97e2-00155d046117</id>
+				<name>Регион-трейд ООО</name>
+				<inn>6319184353</inn>
+			</partner>
+			<partner>
+				<id>bf7afe6a-298e-11e2-a469-00155d028301</id>
+				<name>ТАНДЕР АО</name>
+				<inn>2310031475</inn>
+			</partner>
+			<partner>
+				<id>c5c92b67-298e-11e2-a469-00155d028301</id>
+				<name>Кореновский молочно консервный  комбинат</name>
+				<inn>2335013799</inn>
+			</partner>
+			<partner>
+				<id>cc14fa82-298e-11e2-a469-00155d028301</id>
+				<name>Халлач С.И. ИП</name>
+				<inn>263600105205</inn>
+			</partner>
+			<partner>
+				<id>d29077f3-298e-11e2-a469-00155d028301</id>
+				<name>Мон'дэлис Русь ООО (до 23.05.2013г. Крафт Фудс Рус ООО)</name>
+				<inn>3321020710</inn>
+			</partner>
+			<partner>
+				<id>2e82b35c-298f-11e2-a469-00155d028301</id>
+				<name>АгроАльянс ООО</name>
+				<inn>6319712412</inn>
+			</partner>
+			<partner>
+				<id>49cd479a-298f-11e2-a469-00155d028301</id>
+				<name>Гильдия Ромб ООО</name>
+				<inn>7106052040</inn>
+			</partner>
+			<partner>
+				<id>b27ee95d-f573-11e5-af91-00155d046117</id>
+				<name>ЛИДЕР  ООО</name>
+				<inn>2372000188</inn>
+			</partner>
+			<partner>
+				<id>ec4b758e-f573-11e5-af91-00155d046117</id>
+				<name>Лидер-Новороссийск ООО</name>
+				<inn>2315158073</inn>
+			</partner>
+			<partner>
+				<id>108bb41d-fecf-11df-b4bb-00155d028c03</id>
+				<name>Филиал Московский жировой комбинат АО Жировой комбинат</name>
+				<inn>6453110490</inn>
+			</partner>
+			<partner>
+				<id>b8d24b23-817c-11e6-b4f2-00155d044123</id>
+				<name>Смоленская логистическая компания ООО</name>
+				<inn>6732112338</inn>
+			</partner>
+			<partner>
+				<id>0288352e-950c-11e2-bd3c-00155d028301</id>
+				<name>Лихачева Марина Сергеевна ИП</name>
+				<inn>463225397310</inn>
+			</partner>
+		</partners>
+		<vehicleTypes>
+			<vehicleType>
+				<id>321cba32-f27f-11e5-94f7-00155d046117</id>
+				<name>Цистерна-газ-подогрев</name>
+			</vehicleType>
+			<vehicleType>
+				<id>a5657f64-ce2b-11e4-9bba-00155d044117</id>
+				<name>Изотерм</name>
+			</vehicleType>
+			<vehicleType>
+				<id>b153a3be-ce2b-11e4-9bba-00155d044117</id>
+				<name>Реф</name>
+			</vehicleType>
+			<vehicleType>
+				<id>bb9bc7de-ce2b-11e4-9bba-00155d044117</id>
+				<name>Тент</name>
+			</vehicleType>
+		</vehicleTypes>
+		<vehicleCarringTypes>
+			<vehicleCarringType>
+				<id>5101b2a5-0636-11e6-88e4-00155d02c510</id>
+				<name>10тн</name>
+			</vehicleCarringType>
+			<vehicleCarringType>
+				<id>811ba4dd-0636-11e6-88e4-00155d02c510</id>
+				<name>5тн</name>
+			</vehicleCarringType>
+			<vehicleCarringType>
+				<id>716775d4-0dfb-11e6-8c00-00155d143506</id>
+				<name>22тн</name>
+			</vehicleCarringType>
+			<vehicleCarringType>
+				<id>9c776c68-e1f6-11e5-a603-00155d046117</id>
+				<name>20тн</name>
+			</vehicleCarringType>
+		</vehicleCarringTypes>
+		<contacts/>
+		<carriers>
+			<carrier>
+				<id>dc1da3a3-b562-11e6-8450-00155d044126</id>
+				<name>Макс-Авто ТЛО</name>
+				<access>false</access>
+			</carrier>
+			<carrier>
+				<id>0cef642f-b611-11e6-949c-00155d044126</id>
+				<name>Макс-Капитал</name>
+				<access>false</access>
+			</carrier>
+			<carrier>
+				<id>6e7eef06-2329-11e6-ac96-00155d143506</id>
+				<name>Альфа Транс ГК ООО</name>
+				<access>false</access>
+			</carrier>
+			<carrier>
+				<id>90954f44-5a17-11e6-bb64-00155d044120</id>
+				<name>Квант Сервис ЛК ООО</name>
+				<access>false</access>
+			</carrier>
+		</carriers>
+		<carrierUsers>
+			<carrierUser>
+				<id>0b8c4088-b563-11e6-8450-00155d044126</id>
+				<carrierId>dc1da3a3-b562-11e6-8450-00155d044126</carrierId>
+				<name>Пользователь Макс-Авто</name>
+				<access>false</access>
+				<login>max-avto</login>
+				<password>1111</password>
+				<email>menyalin@gmail.com</email>
+			</carrierUser>
+			<carrierUser>
+				<id>11f816f5-b613-11e6-949c-00155d044126</id>
+				<carrierId>0cef642f-b611-11e6-949c-00155d044126</carrierId>
+				<name>Макс-Капитал User</name>
+				<access>false</access>
+				<login>max-kapital</login>
+				<password>1111</password>
+				<email>menyalin@icloud.com</email>
+			</carrierUser>
+			<carrierUser>
+				<id>24bc3833-b613-11e6-949c-00155d044126</id>
+				<carrierId>6e7eef06-2329-11e6-ac96-00155d143506</carrierId>
+				<name>Пользователь Альфа Транс</name>
+				<access>false</access>
+				<login>alfa_trans_user_02</login>
+				<password>1111</password>
+				<email>1@1.com</email>
+			</carrierUser>
+			<carrierUser>
+				<id>b0421daa-2329-11e6-ac96-00155d143506</id>
+				<carrierId>6e7eef06-2329-11e6-ac96-00155d143506</carrierId>
+				<name>Пользователь Альфа Транс</name>
+				<access>true</access>
+				<login>alfa_trans_user_01</login>
+				<password>alfa_trans</password>
+				<email>petr@itehnik.ru</email>
+			</carrierUser>
+			<carrierUser>
+				<id>dc158d5f-5a17-11e6-bb64-00155d044120</id>
+				<carrierId>90954f44-5a17-11e6-bb64-00155d044120</carrierId>
+				<name>Пользователь Квант Сервис</name>
+				<access>false</access>
+				<login>kvant_user_01</login>
+				<password>kvant</password>
+				<email>a.menyalin@solpro.ru</email>
+			</carrierUser>
+		</carrierUsers>
+	</references>
+	<routes>
+		<route>
+			<id>1d2d2fb4-d62d-11e6-9e4f-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000491</code>
+			<name>Заглушка для наименования маршрута №Р-000491</name>
+			<loadDate>2017-01-09T00:01:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>00c81522-023b-11e6-9b89-00155d02c510</loadRegionId>
+			<unloadRegionId>0cd0b664-e69f-11e5-bcd9-00155d046117</unloadRegionId>
+			<vehicleTypeId>b153a3be-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>65300</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>10200</cargoWeight>
+			<cargoCount>25</cargoCount>
+			<comment>2 точки Краснодар+Кореновск+Новокубанск+Новороссийск</comment>
+			<orders>
+				<order>
+					<id>b7bd9f46-d270-11e6-a2f5-00155d044126</id>
+					<code>тс-0043891 </code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>c5c92b67-298e-11e2-a469-00155d028301</consignee>
+					<count>1</count>
+					<weight>202.272</weight>
+					<loadSpecialConditions/>
+					<unloadAddress>Краснодарский край,г.Кореновск, ул.Тимашевская,д.16,РФ,353181.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment>фри</comment>
+				</order>
+				<order>
+					<id>4497262e-d271-11e6-a2f5-00155d044126</id>
+					<code>тс-0043892 </code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>418beda8-b2ad-11e4-9323-00155d044112</consignee>
+					<count>1</count>
+					<weight>249.047</weight>
+					<loadSpecialConditions/>
+					<unloadAddress>г.Краснодар ул. Тополиная,30/1</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment>фри</comment>
+				</order>
+				<order>
+					<id>8630e483-d271-11e6-a2f5-00155d044126</id>
+					<code>тс-0043893 </code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>b27ee95d-f573-11e5-af91-00155d046117</consignee>
+					<count>1</count>
+					<weight>72.888</weight>
+					<loadSpecialConditions/>
+					<unloadAddress>г.Новокубанск ул. Победы,4/3</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment>фри</comment>
+				</order>
+				<order>
+					<id>b8d8403f-d271-11e6-a2f5-00155d044126</id>
+					<code>тс-0043894 </code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>ec4b758e-f573-11e5-af91-00155d046117</consignee>
+					<count>1</count>
+					<weight>249.047</weight>
+					<loadSpecialConditions/>
+					<unloadAddress>г.Новороссийск ул. Вишневского,18</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment>фри</comment>
+				</order>
+				<order>
+					<id>d22e7562-d261-11e6-a2f5-00155d044126</id>
+					<code>CH701106/01</code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>c5c92b67-298e-11e2-a469-00155d028301</consignee>
+					<count>3</count>
+					<weight>1106.495</weight>
+					<loadSpecialConditions>вн заказ тс-00018557+тс-00091728; вн заказ тс-00018557+тс-00091728</loadSpecialConditions>
+					<unloadAddress>Краснодарский край,г.Кореновск, ул.Тимашевская,д.16,РФ,353181.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+				<order>
+					<id>755e8549-d262-11e6-a2f5-00155d044126</id>
+					<code>CH701107/01</code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>b27ee95d-f573-11e5-af91-00155d046117</consignee>
+					<count>7</count>
+					<weight>3263.96</weight>
+					<loadSpecialConditions>вн заказ вн заказ тс-00018560+ тс-00091729; вн заказ вн заказ тс-00018560+ тс-00091729</loadSpecialConditions>
+					<unloadAddress>г.Новокубанск ул. Победы,4/3</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+				<order>
+					<id>d2832c1f-d262-11e6-a2f5-00155d044126</id>
+					<code>CH701118/01</code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>418beda8-b2ad-11e4-9323-00155d044112</consignee>
+					<count>7</count>
+					<weight>3236.287</weight>
+					<loadSpecialConditions>вн заказ тс-00018558+тс-00091740; вн заказ тс-00018558+тс-00091740</loadSpecialConditions>
+					<unloadAddress>г.Краснодар ул. Тополиная,30/1</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+				<order>
+					<id>2a886b7d-d263-11e6-a2f5-00155d044126</id>
+					<code>CH701121/01</code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>ec4b758e-f573-11e5-af91-00155d046117</consignee>
+					<count>3</count>
+					<weight>1379.785</weight>
+					<loadSpecialConditions>тс-00091742+тс-00018562; </loadSpecialConditions>
+					<unloadAddress>г.Новороссийск ул. Вишневского,18</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+				<order>
+					<id>9c65fbd0-cd9c-11e6-a523-00155d044126</id>
+					<code>CH701181/01</code>
+					<date>2017-01-10T00:00:00</date>
+					<consignee>3909eb2f-58b6-11e6-9172-00155d044120</consignee>
+					<count>1</count>
+					<weight>440.176</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>г.Краснодар ул.Профессора Рудакова7/6</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>857a7e82-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>fe5f5df7-d408-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000279</code>
+			<name>Заглушка для наименования маршрута №Р-000279</name>
+			<loadDate>2017-01-09T09:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>70afa8e2-02d2-11e6-ae89-00155d02c510</loadRegionId>
+			<unloadRegionId>8721c859-0230-11e6-9b89-00155d02c510</unloadRegionId>
+			<vehicleTypeId>a5657f64-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>811ba4dd-0636-11e6-88e4-00155d02c510</vehicleCarringId>
+			<tradeCost>55000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>3259</cargoWeight>
+			<cargoCount>5</cargoCount>
+			<comment>Доставка 11.01 Заказ YB02011409 Обязательна регистьрация в тайм-слот!</comment>
+			<orders>
+				<order>
+					<id>9869b00e-d272-11e6-a2f5-00155d044126</id>
+					<code>CH700001216</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>bf7afe6a-298e-11e2-a469-00155d028301</consignee>
+					<count>5</count>
+					<weight>3258.92</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>РЦ Краснодар,Краснодарский край, Краснодар г, Индустриальный проезд</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>857a7e82-5a5c-11e2-a816-00155d16880a</manager>
+					<comment>отгрузка 07.01. доставка 10.01</comment>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>dc37dd34-d409-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000288</code>
+			<name>Заглушка для наименования маршрута №Р-000288</name>
+			<loadDate>2017-01-09T09:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>70afa8e2-02d2-11e6-ae89-00155d02c510</loadRegionId>
+			<unloadRegionId>ab293507-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>a5657f64-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>5101b2a5-0636-11e6-88e4-00155d02c510</vehicleCarringId>
+			<tradeCost>35000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>5868</cargoWeight>
+			<cargoCount>13</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>7b154c9d-d3e2-11e6-9ec7-00155d044126</id>
+					<code>CH700001386</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>f15515ad-df9e-11e5-97e2-00155d046117</consignee>
+					<count>13</count>
+					<weight>5868.23</weight>
+					<loadSpecialConditions>; Пн-Пт с 9:00 до 17:00</loadSpecialConditions>
+					<unloadAddress>420087, г.Казань, ул.Родины,д.7 корпус 4</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>0d4508eb-d40a-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000305</code>
+			<name>Заглушка для наименования маршрута №Р-000305</name>
+			<loadDate>2017-01-09T08:00:00</loadDate>
+			<statusId>fa228c16-72d7-43e1-a507-e384817fd0f9</statusId>
+			<carrierId/>
+			<loadRegionId>4b96a628-023d-11e6-9b89-00155d02c510</loadRegionId>
+			<unloadRegionId>b1322de7-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>28000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>19536</cargoWeight>
+			<cargoCount>24</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>1071f2f9-ce78-11e6-ae5d-00155d044126</id>
+					<code>CH700001579</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>49cd479a-298f-11e2-a469-00155d028301</consignee>
+					<count>24</count>
+					<weight>19536</weight>
+					<loadSpecialConditions>; склад пн-пт с 8 до 17, Абрамов Игорь (910) 940-41-86, Губанов Николай 89101560340</loadSpecialConditions>
+					<unloadAddress>Тула,ул.Новомосковское шоссе,д.60,РФ,300045.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>66091612-a0a3-11e4-a8d9-00155d044112</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>0d4508ec-d40a-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000306</code>
+			<name>Заглушка для наименования маршрута №Р-000306</name>
+			<loadDate>2017-01-09T00:30:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>4b96a628-023d-11e6-9b89-00155d02c510</loadRegionId>
+			<unloadRegionId>b1322de7-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>28000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>19536</cargoWeight>
+			<cargoCount>24</cargoCount>
+			<comment>Ленинский</comment>
+			<orders>
+				<order>
+					<id>e55f516a-ce78-11e6-ae5d-00155d044126</id>
+					<code>CH700001583</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>49cd479a-298f-11e2-a469-00155d028301</consignee>
+					<count>24</count>
+					<weight>19536</weight>
+					<loadSpecialConditions>п. ленинский; склад пн-пт с 8 до 17, Абрамов Игорь (910) 940-41-86, Губанов Николай 89101560340</loadSpecialConditions>
+					<unloadAddress>Тула,ул.Новомосковское шоссе,д.60,РФ,300045.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>66091612-a0a3-11e4-a8d9-00155d044112</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>13df611c-d40a-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000314</code>
+			<name>Заглушка для наименования маршрута №Р-000314</name>
+			<loadDate>2017-01-09T09:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>4b96a628-023d-11e6-9b89-00155d02c510</loadRegionId>
+			<unloadRegionId>a52500d4-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>31000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>19536</cargoWeight>
+			<cargoCount>24</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>2485ad3b-cb51-11e6-bd60-00155d044126</id>
+					<code>CH700001530</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>58ecc50e-165a-11e5-92e0-00155d044117</consignee>
+					<count>24</count>
+					<weight>19536</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>129075, Москва г, Звездный б-р, дом № 23</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8b66619c-aee7-11e5-9705-00155d046117</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>c2ad89a9-d40a-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000316</code>
+			<name>Заглушка для наименования маршрута №Р-000316</name>
+			<loadDate>2017-01-09T08:00:00</loadDate>
+			<statusId>fa228c16-72d7-43e1-a507-e384817fd0f9</statusId>
+			<carrierId/>
+			<loadRegionId>1aa3faa1-06c2-11e6-9f13-00155d02c510</loadRegionId>
+			<unloadRegionId>00c81522-023b-11e6-9b89-00155d02c510</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>35000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>19682</cargoWeight>
+			<cargoCount>29</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>9fe133f7-d3dc-11e6-9ec7-00155d044126</id>
+					<code>тс-0043869 </code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>108bb41d-fecf-11df-b4bb-00155d028c03</consignee>
+					<count>29</count>
+					<weight>19682.14</weight>
+					<loadSpecialConditions/>
+					<unloadAddress>Москва, 1-й Грайвороновский проезд,дом 3,РФ,109518.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager/>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>5813aa95-d40b-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000320</code>
+			<name>Заглушка для наименования маршрута №Р-000320</name>
+			<loadDate>2017-01-09T09:00:00</loadDate>
+			<statusId>fa228c16-72d7-43e1-a507-e384817fd0f9</statusId>
+			<carrierId/>
+			<loadRegionId>70afa8e2-02d2-11e6-ae89-00155d02c510</loadRegionId>
+			<unloadRegionId>f03fc2bf-0155-11e6-b7e5-00155d02c510</unloadRegionId>
+			<vehicleTypeId>b153a3be-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>5101b2a5-0636-11e6-88e4-00155d02c510</vehicleCarringId>
+			<tradeCost>48000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>8751</cargoWeight>
+			<cargoCount>13</cargoCount>
+			<comment>Доставка 11.01 Заказ YB02012891 Обязательна регистрация в тайм-слот!</comment>
+			<orders>
+				<order>
+					<id>e0117aaf-d269-11e6-a2f5-00155d044126</id>
+					<code>CH700001179</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>bf7afe6a-298e-11e2-a469-00155d028301</consignee>
+					<count>13</count>
+					<weight>8750.555</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>РЦ Шахты,346473, Ростовская обл., Октябрьский р-н, Интернациональный п., Майская ул.,4А .</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>857a7e82-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>013f5013-d40c-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000329</code>
+			<name>Заглушка для наименования маршрута №Р-000329</name>
+			<loadDate>2017-01-09T08:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>70afa8e2-02d2-11e6-ae89-00155d02c510</loadRegionId>
+			<unloadRegionId>1b986415-e69f-11e5-bcd9-00155d046117</unloadRegionId>
+			<vehicleTypeId>321cba32-f27f-11e5-94f7-00155d046117</vehicleTypeId>
+			<vehicleCarringId>716775d4-0dfb-11e6-8c00-00155d143506</vehicleCarringId>
+			<tradeCost>75000</tradeCost>
+			<tradeStep>1000</tradeStep>
+			<cargoWeight>0</cargoWeight>
+			<cargoCount>0</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>93c66695-cc3b-11e6-a4e6-00155d044126</id>
+					<code>CH600000389</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>d29077f3-298e-11e2-a469-00155d028301</consignee>
+					<count>0</count>
+					<weight>0</weight>
+					<loadSpecialConditions>накладную разносить по фактически налитому кол-ву 33511; пн-пятн. с 8.00 до 17.00 8(901)524-70-34</loadSpecialConditions>
+					<unloadAddress>Владимирская обл., г.Собинка, ул.Мира, д.12, РФ, 601203.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8b66619c-aee7-11e5-9705-00155d046117</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>2adb89e7-d40c-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000331</code>
+			<name>Заглушка для наименования маршрута №Р-000331</name>
+			<loadDate>2017-01-09T09:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>70afa8e2-02d2-11e6-ae89-00155d02c510</loadRegionId>
+			<unloadRegionId>a52500da-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>a5657f64-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>5101b2a5-0636-11e6-88e4-00155d02c510</vehicleCarringId>
+			<tradeCost>30000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>6383</cargoWeight>
+			<cargoCount>13</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>1c672fb2-d3e3-11e6-9ec7-00155d044126</id>
+					<code>CH700001389</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>2e82b35c-298f-11e2-a469-00155d028301</consignee>
+					<count>13</count>
+					<weight>6383.156</weight>
+					<loadSpecialConditions>; Пн-Пт с 9.00до 16.00,сб,вс с 9.00 до 12.00. (Разгрузка строго по графику). Телефон   +7 (846) 933-36-07 доб. 1440)</loadSpecialConditions>
+					<unloadAddress>Самара,Заводское шоссе,д.20, РФ,443022.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>2adb89e8-d40c-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000332</code>
+			<name>Заглушка для наименования маршрута №Р-000332</name>
+			<loadDate>2017-01-09T09:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>70afa8e2-02d2-11e6-ae89-00155d02c510</loadRegionId>
+			<unloadRegionId>ab2934fe-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>a5657f64-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>5101b2a5-0636-11e6-88e4-00155d02c510</vehicleCarringId>
+			<tradeCost>25000</tradeCost>
+			<tradeStep>250</tradeStep>
+			<cargoWeight>5831</cargoWeight>
+			<cargoCount>13</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>819e2193-d245-11e6-a2f5-00155d044126</id>
+					<code>CH700000995</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>9a7733b6-c36f-11e5-83ce-00155d046117</consignee>
+					<count>13</count>
+					<weight>5830.741</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>432042, Ульяновская обл, Ульяновск г, Рузаевский пер, дом № 1</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>3a09a49b-d40c-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000334</code>
+			<name>Заглушка для наименования маршрута №Р-000334</name>
+			<loadDate>2017-01-09T09:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>4b96a628-023d-11e6-9b89-00155d02c510</loadRegionId>
+			<unloadRegionId>c4830691-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>60000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>19536</cargoWeight>
+			<cargoCount>24</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>f00ce50a-cc11-11e6-a4e6-00155d044126</id>
+					<code>CH700001531</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>cc14fa82-298e-11e2-a469-00155d028301</consignee>
+					<count>24</count>
+					<weight>19536</weight>
+					<loadSpecialConditions>; пн-пт с 8.30 до 17.30 тел.(86137) 5-65-75</loadSpecialConditions>
+					<unloadAddress>Краснодарский край, г.Армавир, ул.Ефремова, д.462, РФ, 352900.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>9e06c0bd-aee7-11e5-9705-00155d046117</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>3a09a49e-d40c-11e6-9ec7-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000336</code>
+			<name>Заглушка для наименования маршрута №Р-000336</name>
+			<loadDate>2017-01-09T09:00:00</loadDate>
+			<statusId>fa228c16-72d7-43e1-a507-e384817fd0f9</statusId>
+			<carrierId/>
+			<loadRegionId>4b96a628-023d-11e6-9b89-00155d02c510</loadRegionId>
+			<unloadRegionId>ab293500-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>60000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>19571</cargoWeight>
+			<cargoCount>27</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>d6fd1201-cc1d-11e6-a4e6-00155d044126</id>
+					<code>CH700001134</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>cc14fa82-298e-11e2-a469-00155d028301</consignee>
+					<count>27</count>
+					<weight>19570.95</weight>
+					<loadSpecialConditions>; пн-пт с 8.30 до 17.00</loadSpecialConditions>
+					<unloadAddress>г.Краснодар, ул.Ярославская, д.122/1, РФ, 350051.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>9e06c0bd-aee7-11e5-9705-00155d046117</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>feea159e-d280-11e6-a2f5-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000144</code>
+			<name>Заглушка для наименования маршрута №Р-000144</name>
+			<loadDate>2017-01-09T00:01:00</loadDate>
+			<statusId>fa228c16-72d7-43e1-a507-e384817fd0f9</statusId>
+			<carrierId/>
+			<loadRegionId>00c81522-023b-11e6-9b89-00155d02c510</loadRegionId>
+			<unloadRegionId>b1322df7-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>b153a3be-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>5101b2a5-0636-11e6-88e4-00155d02c510</vehicleCarringId>
+			<tradeCost>20200</tradeCost>
+			<tradeStep>250</tradeStep>
+			<cargoWeight>5856</cargoWeight>
+			<cargoCount>11</cargoCount>
+			<comment>Смоленск+Вязьма</comment>
+			<orders>
+				<order>
+					<id>edf5801a-d24f-11e6-a2f5-00155d044126</id>
+					<code>CH701046/01</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>b8d24b23-817c-11e6-b4f2-00155d044123</consignee>
+					<count>7</count>
+					<weight>3786.866</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>214019, г. Смоленск, пос.Тихвинка, д. 10 А.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>9e06c0bd-aee7-11e5-9705-00155d046117</manager>
+					<comment/>
+				</order>
+				<order>
+					<id>bacd8836-d24f-11e6-a2f5-00155d044126</id>
+					<code>CH701044/01</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>b8d24b23-817c-11e6-b4f2-00155d044123</consignee>
+					<count>4</count>
+					<weight>2069.625</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>г. Вязьма улица Ленина ,д.62</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>9e06c0bd-aee7-11e5-9705-00155d046117</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>e97b974d-d4c8-11e6-bde1-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-000406</code>
+			<name>Заглушка для наименования маршрута №Р-000406</name>
+			<loadDate>2017-01-09T00:15:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>00c81522-023b-11e6-9b89-00155d02c510</loadRegionId>
+			<unloadRegionId>bd6f0e06-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>a5657f64-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>26900</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>8655</cargoWeight>
+			<cargoCount>18</cargoCount>
+			<comment>Ждали продукцию из Саратова код-31431</comment>
+			<orders>
+				<order>
+					<id>843100b2-d24f-11e6-a2f5-00155d044126</id>
+					<code>CH701043/01</code>
+					<date>2017-01-09T00:00:00</date>
+					<consignee>0288352e-950c-11e2-bd3c-00155d028301</consignee>
+					<count>18</count>
+					<weight>8655.157</weight>
+					<loadSpecialConditions>; С 10.00 до 16.00 т.(4271)32-77-57</loadSpecialConditions>
+					<unloadAddress>г.Курск,2-Моковский пр-д,д.7 "Б",РФ,305007.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>9e06c0bd-aee7-11e5-9705-00155d046117</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>4aae1d67-df07-11e6-b985-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-047945</code>
+			<name>Заглушка для наименования маршрута №Р-047945</name>
+			<loadDate>2017-01-21T16:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>1aa3faa1-06c2-11e6-9f13-00155d02c510</loadRegionId>
+			<unloadRegionId>b1322df7-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>40000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>18630</cargoWeight>
+			<cargoCount>32</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>db3b09f6-de33-11e6-875b-00155d044126</id>
+					<code>CH704314/06</code>
+					<date>2017-01-21T00:00:00</date>
+					<consignee>b8d24b23-817c-11e6-b4f2-00155d044123</consignee>
+					<count>32</count>
+					<weight>18629.6</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>214019, г. Смоленск, пос.Тихвинка, д. 10 А.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>66091612-a0a3-11e4-a8d9-00155d044112</manager>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>4aae1d68-df07-11e6-b985-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-047946</code>
+			<name>Заглушка для наименования маршрута №Р-047946</name>
+			<loadDate>2017-01-23T09:00:00</loadDate>
+			<statusId>df802ece-519b-4c44-8005-0115da346089</statusId>
+			<carrierId/>
+			<loadRegionId>1aa3faa1-06c2-11e6-9f13-00155d02c510</loadRegionId>
+			<unloadRegionId>b7509d5c-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>5101b2a5-0636-11e6-88e4-00155d02c510</vehicleCarringId>
+			<tradeCost>29000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>0</cargoWeight>
+			<cargoCount>0</cargoCount>
+			<comment/>
+			<orders/>
+		</route>
+		<route>
+			<id>4aae1d6b-df07-11e6-b985-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-047949</code>
+			<name>Заглушка для наименования маршрута №Р-047949</name>
+			<loadDate>2017-01-23T09:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>1aa3faa1-06c2-11e6-9f13-00155d02c510</loadRegionId>
+			<unloadRegionId>c4830694-dbc6-11e5-9996-00155d046117</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>5101b2a5-0636-11e6-88e4-00155d02c510</vehicleCarringId>
+			<tradeCost>49700</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>8353</cargoWeight>
+			<cargoCount>13</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>26f8db58-dd65-11e6-b409-00155d044126</id>
+					<code>CH704053/06</code>
+					<date>2017-01-23T00:00:00</date>
+					<consignee>da55ac00-c32f-11e5-83ce-00155d046117</consignee>
+					<count>13</count>
+					<weight>8352.865</weight>
+					<loadSpecialConditions>; </loadSpecialConditions>
+					<unloadAddress>460027, Оренбург г, Беляевская ул, дом № 42</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager>8ba07fcf-5a5c-11e2-a816-00155d16880a</manager>
+					<comment>будет служебка по Цене</comment>
+				</order>
+			</orders>
+		</route>
+		<route>
+			<id>4aae1d6c-df07-11e6-b985-00155d044126</id>
+			<routeType>1</routeType>
+			<code>Р-047950</code>
+			<name>Заглушка для наименования маршрута №Р-047950</name>
+			<loadDate>2017-01-23T09:00:00</loadDate>
+			<statusId>6f64ed10-762a-4567-ac3f-7a69477cd4ea</statusId>
+			<carrierId/>
+			<loadRegionId>1aa3faa1-06c2-11e6-9f13-00155d02c510</loadRegionId>
+			<unloadRegionId>00c81522-023b-11e6-9b89-00155d02c510</unloadRegionId>
+			<vehicleTypeId>bb9bc7de-ce2b-11e4-9bba-00155d044117</vehicleTypeId>
+			<vehicleCarringId>9c776c68-e1f6-11e5-a603-00155d046117</vehicleCarringId>
+			<tradeCost>32000</tradeCost>
+			<tradeStep>500</tradeStep>
+			<cargoWeight>19301</cargoWeight>
+			<cargoCount>28</cargoCount>
+			<comment/>
+			<orders>
+				<order>
+					<id>343ae7f5-dedd-11e6-b985-00155d044126</id>
+					<code>тс-0045928 </code>
+					<date>2017-01-23T00:00:00</date>
+					<consignee>108bb41d-fecf-11df-b4bb-00155d028c03</consignee>
+					<count>28</count>
+					<weight>19301.484</weight>
+					<loadSpecialConditions/>
+					<unloadAddress>Москва, 1-й Грайвороновский проезд,дом 3,РФ,109518.</unloadAddress>
+					<unloadSpecialConditions>0</unloadSpecialConditions>
+					<manager/>
+					<comment/>
+				</order>
+			</orders>
+		</route>
+	</routes>
+	<lots>
+		<lot>
+			<id>c2763d6c-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>1d2d2fb4-d62d-11e6-9e4f-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c2763d6d-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>fe5f5df7-d408-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c2763d6f-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>dc37dd34-d409-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c2763d70-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>0d4508eb-d40a-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c2763d71-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>0d4508ec-d40a-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a043-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>13df611c-d40a-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a044-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>c2ad89a9-d40a-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a045-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>5813aa95-d40b-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a046-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>013f5013-d40c-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a047-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>2adb89e7-d40c-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a048-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>2adb89e8-d40c-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a049-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>3a09a49b-d40c-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a04a-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>3a09a49e-d40c-11e6-9ec7-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a04b-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>feea159e-d280-11e6-a2f5-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>c875a04c-d988-11e6-8550-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T10:00:00</startDate>
+			<duration>1440</duration>
+			<routeId>e97b974d-d4c8-11e6-bde1-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>63a3a305-df12-11e6-b985-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T12:00:00</startDate>
+			<duration>60</duration>
+			<routeId>4aae1d67-df07-11e6-b985-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>63a3a306-df12-11e6-b985-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-01T13:00:00</startDate>
+			<duration>300</duration>
+			<routeId>4aae1d68-df07-11e6-b985-00155d044126</routeId>
+		</lot>
+		<lot>
+			<id>63a3a307-df12-11e6-b985-00155d044126</id>
+			<statusID>175d0f31-a9ca-45ba-835e-bae500c8c35c</statusID>
+			<startDate>2017-02-05T15:40:00</startDate>
+			<duration>360</duration>
+			<routeId>4aae1d6b-df07-11e6-b985-00155d044126</routeId>
+		</lot>
+	</lots>
+</MessageFrom1C>

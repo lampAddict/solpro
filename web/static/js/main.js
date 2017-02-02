@@ -188,6 +188,7 @@ $( document ).ready(function(){
                 .done(function( response ){
                     if( response.result ){
                         //delete row with expired lot from auction table
+                        var $lot_tr =
                         $this.parent().parent().remove();
                     }
                 });
@@ -229,7 +230,7 @@ $( document ).ready(function(){
 
     //update lots prices routine
     var updateLotPrices = function(){
-        if( window.location.pathname.replace(/\//g,'') == 'auction' ){
+        if( window.location.pathname.replace(/\//g,'') == 'auction' ){ //solprosolportalwebapp_dev.phpauction
             $.ajax({
                 url: 'lotsPrices',
                 cache: false
