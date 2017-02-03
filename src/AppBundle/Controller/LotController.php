@@ -26,7 +26,7 @@ class LotController extends Controller
         $l_ids = $redis->get('lcp');
         if( $l_ids ){
             //get lot prices from redis
-            $l_ids = explode(',',$l_ids);
+            $l_ids = explode(',', $l_ids);
             foreach( $l_ids as $l_id ){
                 $_lots[ $l_id ] = json_decode($redis->get('lcp_'.$l_id));
             }
@@ -41,23 +41,28 @@ class LotController extends Controller
             $lots = $stmt->fetchAll();
             
             if( !empty($lots) ){
-                $__lots = [];
                 foreach( $lots as $lot ){
-                    if( !isset($__lots[ $lot['id'] ]) ){
-                        $__lots[ $lot['id'] ] = $lot;
+
+                    if( !isset($_lots[ $lot['id'] ]) ){
+                        $_lots[ $lot['id'] ] = [
+                             'price'=>$lot['price']
+                            ,'owner'=>$lot['uid']
+                            ,'history'=>[]
+                            ,'bet'=>$lot['bet']
+                        ];
                     }
                     else{
-                        if( $__lots[ $lot['id'] ]['bet'] > $lot['bet'] ){
-                            $__lots[ $lot['id'] ] = $lot;
+                        if( $_lots[ $lot['id'] ]['bet'] > $lot['bet'] ){
+                            $_lots[ $lot['id'] ]['owner'] = $lot['uid'];
                         }
                     }
+
+                    array_push($_lots[ $lot['id'] ]['history'], $lot['uid']);
                 }
 
-                $lots = $__lots;
-
-                foreach( $lots as $lot ){
-                    $_lots[ $lot['id'] ] = ['price'=>$lot['price'], 'owner'=>$lot['uid']];
-                    $redis->set('lcp_'.$lot['id'], json_encode($_lots[ $lot['id'] ]));
+                foreach( $_lots as $lotId=>$lData ){
+                    unset($lData['bet']);
+                    $redis->set('lcp_'.$lotId, json_encode($lData));
                 }
                 //store lots ids in redis
                 $redis->set('lcp', join(',',array_keys($_lots)));

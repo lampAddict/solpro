@@ -47,12 +47,7 @@ class AuctionController extends Controller
                     && $form->isValid()
                     && intval($request->request->get('appbundle_bet')['lot_id']) == $lot->getId()
                 ){
-                    //check if user authenticated
-                    //if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-                    //    throw $this->createAccessDeniedException();
-                    //}
-                    //$user = $this->get('security.token_storage')->getToken()->getUser();
-
+                    
                     $lot = $em
                         ->getRepository('AppBundle:Lot')
                         ->createQueryBuilder('l')
@@ -87,8 +82,28 @@ class AuctionController extends Controller
 
                         $em->flush();
 
-                        $redis->set('lcp_'.$lot->getId(), json_encode(['price'=>$lot->getPrice(), 'owner'=>$this->getUser()->getId()]));
-                        //$this->get('memcache.default')->set('lcp_'.$lot->getId(), $lot->getPrice(), 0, 1*60*60);
+                        'SELECT b1.lot_id AS lot_id, min(b1.value) AS bet, b1.user_id AS uid FROM bet b1 GROUP BY b1.user_id, b1.lot_id';
+
+                        $bets = $em
+                            ->getRepository('AppBundle:Bet')
+                            ->createQueryBuilder('b')
+                            ->select('IDENTITY(b.user_id) AS uid')
+                            ->where('b.lot_id = '.$lot->getId())
+                            ->groupBy('b.user_id, b.lot_id')
+                            ->getQuery()
+                            ->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
+
+                        $history = [];
+                        if( !empty($bets) ){
+                            foreach( $bets as $bet ){
+                                array_push($history, $bet['uid']);
+                            }
+                        }
+
+                        $redis->set('lcp_'.$lot->getId(), json_encode(['price'=>$lot->getPrice(), 'owner'=>$this->getUser()->getId(), 'history'=>$history]));
+                        
+                        $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
+                        $forms[ $lot->getId() ] = $form->createView();
                     }
                 }
             }

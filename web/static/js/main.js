@@ -223,6 +223,7 @@ $( document ).ready(function(){
                 && _bet <= parseInt(_price) - parseInt($this.attr('data-tradeStep')) //less than current lot price minus step of price reducing
                 //lot is in auction
             ){
+                $this.attr('disabled', 'disabled');
                 bets[_lotId].push( _bet );
                 $this.parent().submit();
             }
@@ -237,29 +238,42 @@ $( document ).ready(function(){
                 cache: false
             }).done(function( data ){
                 console.log(data);
-                var _uid = parseInt($('#auctionPageContainer').attr('data-user'));
+                var _uid = $('#auctionPageContainer').attr('data-user');
                 if( !jQuery.isEmptyObject(data.lots) ){
                     $('.lotCurrentPrice').each(function(){
                         var _id = parseInt($(this).attr('id'));
                         //highlight users bets
                         if(    data.lots[ _id ] !== null
                             && data.lots[ _id ] !== undefined
-                            && _uid == parseInt(data.lots[ _id ].owner)
                         ){
-                            if( !$(this).hasClass('myBet') )
-                                $(this).removeClass('notMyBet').addClass('myBet');
-                        }
-                        else{
-                            if(    !$(this).hasClass('notMyBet')
-                                && $(this).parent().find('.lotTimeLeftTimer').html().indexOf('До начала торгов') === -1
-                            ){
-                                $(this).removeClass('myBet').addClass('notMyBet');
+                            if( _uid == data.lots[ _id ].owner ){
+                                if( !$(this).hasClass('myBet') )
+                                    $(this).removeClass('notMyBet').addClass('myBet');
+                            }
+                            else{
+                                if( data.lots[ _id ].history.indexOf(_uid) >= 0 ){
+                                    if( !$(this).hasClass('notMyBet') ){
+                                        $(this).removeClass('myBet').addClass('notMyBet');
+                                    }
+                                }
                             }
                         }
+
                         //update lot price if needed
                         if( data.lots[ _id ].price != parseInt($(this).html()) ){
+                            //main table on auction page
                             $(this).html(data.lots[ _id ].price);
 
+                            //update 'next bet' input value
+                            var price = parseInt(data.lots[ _id ].price), tradeStep = parseInt($(this).siblings('.lotDoBid').find('input.doBid').attr('data-tradeStep'));
+                            if( price - tradeStep > 0 ){
+                                $(this).siblings('.lotDoBid').find('input#appbundle_bet_value').val((price - tradeStep));
+                            }
+                            else{
+                                $(this).siblings('.lotDoBid').find('input#appbundle_bet_value').val('');
+                            }
+
+                            //full lot information window
                             $('#lpi_' + _id).html(data.lots[ _id ].price + ' &#8381;');
                         }
                     });

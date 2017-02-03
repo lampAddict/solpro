@@ -14,7 +14,10 @@ class BetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /* @var $lot \AppBundle\Entity\Lot */
         $lot        = $options['lot'];
+
+        $nextMinAcceptedLotPrice = $lot->getPrice() - $lot->getRouteId()->getTradeStep();
         
         $builder
             ->add(
@@ -24,8 +27,8 @@ class BetType extends AbstractType
                          'label'=>' '
                         ,'attr'=>[
                                      'class'=>'bid'
-                                    ,'placeholder'=>''
-                                    ,'value'=>''
+                                    ,'placeholder'=>$nextMinAcceptedLotPrice
+                                    ,'value'=>$nextMinAcceptedLotPrice
                         ]
                     ])
 
@@ -35,7 +38,6 @@ class BetType extends AbstractType
                     ,[
                         'data'=>$lot
                     ])
-
         ;
     }
 

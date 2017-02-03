@@ -82,7 +82,6 @@
                         <th class="txtAlignCenter">Комментарий</th>
                         <th>До конца торгов</th>
                         <th>Текущая цена лота, &#8381;</th>
-                        <th>Шаг уменьшения цены, &#8381;</th>
                         <th class="txtAlignCenter">Ставка</th>
                     </tr>
                 </thead>
@@ -98,17 +97,16 @@
 
                             <td class="lotTimeLeftTimer">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}<span class="lotTimeLeft">{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s') }}</span>{% elseif lot.getStartDate.timestamp > date().timestamp %}До начала торгов:<br /><span class="lotTimeLeft">{{ lot.getStartDate.timestamp | date('Y/m/d H:i:s') }}</span>{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
 
-                            <td id="{{ lot.getId }}" class="{% if lot.getId in bets|keys and app.user.id == bets[ lot.getId ]['uid'] %}{{'myBet '}}{% elseif lot.getStartDate.timestamp <= date().timestamp %}{{'notMyBet '}}{% endif %}lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
-                            <td class="lotCurrentTradeStep" align="right">{{ lot.getRouteId.getTradeStep }}</td>
+                            <td id="{{ lot.getId }}" class="lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
                             <td class="lotDoBid" align="right">
                                 {{ form_start(forms[lot.getId]) }}
                                     {{ form_widget(forms[lot.getId]) }}
-                                    <input class="btn btn-default doBid" type="button" data-tradeStep="{{ lot.getRouteId.getTradeStep }}" value="Сделать ставку" />
+                                    <input class="btn btn-default doBid" type="button" data-tradeStep="{{ lot.getRouteId.getTradeStep }}" value="Ставка &#8681;" />
                                 {{ form_end(forms[lot.getId]) }}
                             </td>
                         </tr>
                         <tr class="zeroHeight">
-                            <td colspan="10" class="hiddenRow">
+                            <td colspan="9" class="hiddenRow">
                                 <div class="dnone lotInfoWindow">
                                     <div class="routeNumber">
                                         Рейс №: <span id="routeNumber">{{ lot.getRouteId.getCode }}</span>
