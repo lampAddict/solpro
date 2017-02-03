@@ -53,16 +53,6 @@ $( document ).ready(function(){
         $vehicleTrailerRegNum.mask("~~9999 99?9");
     }
 
-    //unlink vehicle from driver routine
-    $('#btnUnlinkVehicle').click(function(e){
-        var  $vehicleSelect = $('#appbundle_driver_transport_id')
-            ,$vehicleSelectLabel = $vehicleSelect.parent().find('label');
-
-        $vehicleSelectLabel.text('Прикреплённое транспортное средство:');
-        $vehicleSelect.find('option:selected').removeAttr('selected');
-        $vehicleSelect.append('<option val="" selected="selected"> </option>');
-    });
-
     $('#auctionTable .showLotRouteInfo').click(function(e){
         var $routeInfo = $(this).parent().parent().next().find('.lotInfoWindow');
         if( $routeInfo.is(':visible') ){

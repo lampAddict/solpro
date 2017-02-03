@@ -39,7 +39,6 @@
                     <th>Статус</th>
                     <th>ФИО</th>
                     <th>Телефон</th>
-                    <th>ТС, гос. номер</th>
                     <th>Действие</th>
                 </tr>
                 </thead>
@@ -57,7 +56,6 @@
                         </td>
                         <td align="center"><a href="{{ path('driver_show', { 'id': driver.id }) }}">{{ driver.fio }}</a></td>
                         <td align="center">{{ driver.phone }}</td>
-                        <td align="center">{% if driver.getTransportId is not null %}{{ driver.getTransportId.name }} {{ driver.getTransportId.regNum }}{% endif %}</td>
                         <td>
                             <a class="btn btn-default changeVehicleInfo customtooltip" href="{{ path('driver_edit', { 'id': driver.id }) }}"><i class="fa fa-pencil"></i><span class="tooltiptext">Изменить</span></a>
                             <a class="btn btn-danger deleteVehicle customtooltip" href="{{ path('driver_confirmDelete', { 'id': driver.id }) }}"><i class="fa fa-trash-o"></i><span class="tooltiptext">Удалить</span></a>

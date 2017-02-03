@@ -16,10 +16,6 @@ class DriverType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $user       = $options['user'];
-        $transport  = $options['transport'];
-        $driver     = $options['driver'];
-
         $builder
             ->add(
                      'status'
@@ -68,34 +64,8 @@ class DriverType extends AbstractType
                          'label'=>'Водительское удостоверение'
                         ,'attr'=>[
                                      'class'=>'"addDriverWindowBtn"'
-                                    ,'placeholder'=>'01 23 456789'
+                                    ,'placeholder'=>''
                         ]
-                    ])
-            ->add(
-                     'transport_id'
-                    ,EntityType::class
-                    ,[
-                         'class' => 'AppBundle:Transport'
-                        ,'query_builder' => function (EntityRepository $er) use ($user, $driver) {
-
-                                if( is_null($driver) ){
-                                    return $er->createQueryBuilder('t')
-                                        ->where('t.status = 1 AND t.user_id = '.$user->getId())
-                                        //->andWhere('t.driver_id IS NULL') //show only free to bind vehicles
-                                        ->orderBy('t.id', 'DESC')
-                                        ;
-                                }
-                                else{
-                                    return $er->createQueryBuilder('t')
-                                        ->where('t.status = 1 AND t.user_id = '.$user->getId())
-                                        //->andWhere('t.driver_id IS NULL') //show only free to bind vehicles
-                                        ->orWhere('t.driver_id = '.$driver->getId())
-                                        ->orderBy('t.id', 'DESC')
-                                        ;
-                                }
-                        }
-                        ,'choice_label' => function($transport){return $transport->getName() . ' ' . $transport->getRegNum();}
-                        ,'label' => $transport
                     ])
         ;
     }

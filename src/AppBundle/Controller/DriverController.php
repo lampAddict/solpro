@@ -108,52 +108,17 @@ class DriverController extends Controller
     {
         $this->doChecks($driver);
 
-        $deleteForm = $this->createDeleteForm($driver);
+        $editForm = $this->createForm('AppBundle\Form\DriverType', $driver);
 
-        $em = $this->getDoctrine()->getManager();
-        $transport = ' ';
-        if( $request->get('driver')->getTransportId() ){
-            $vehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['id'=>$request->get('driver')->getTransportId()->getId()]);
-            $transport = 'Прикреплённое транспортное средство: ' . $vehicle->getName() . ' ' . $vehicle->getRegNum();
-        }
-        else{
-            $transport = 'Прикрепить транспортное средство к водителю';
-        }
-
-        $editForm = $this->createForm('AppBundle\Form\DriverType', $driver, ['user'=>$this->getUser(), 'transport'=>$transport, 'driver'=>$driver]);
         $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-
-            //unset driver from previous vehicle
-            $vehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['driver_id'=>$driver->getId()]);
-            if( $vehicle ){
-                $vehicle->setDriverId(null);
-                $em->persist($vehicle);
-
-                $em->flush();
-            }
-
-            //var_dump($vehicle->getDriverId()->getId());
-            $newVehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['id'=>$request->request->get('appbundle_driver')['transport_id']]);
-            if(    $newVehicle
-                && $newVehicle->getDriverId() !== intval($request->request->get('appbundle_driver')['transport_id'])
-            ){
-                //set driver to new assigned vehicle
-                $newVehicle->setDriverId($driver);
-                $em->persist($newVehicle);
-
-                $em->flush();
-            }
-
+        if( $editForm->isSubmitted() && $editForm->isValid() ){
+            $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('driver');
-            //return $this->redirectToRoute('driver_edit', array('id' => $driver->getId()));
         }
 
         return $this->render('driver/edit.html.twig', array(
             'driver' => $driver,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $editForm->createView()
         ));
     }
 
