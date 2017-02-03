@@ -115,12 +115,6 @@ $( document ).ready(function(){
         $routeAddDriverWindow.show();
     });
 
-    //show driver's vehicle while driver is being selected
-    //params.selected shows current selected option
-    $('#routeAddDriverSelect').on('change', function(e, params){
-        $('.routeAddVehicleSelect .driversVehicle').html( $('#routeAddDriverSelect option:selected').attr('data-vehicle') );
-    });
-
     //submit attach driver to route data
     $('#routeAddDriverWindow input[type="button"]').click(function(e){
         //Don't send request if none of the drivers selected

@@ -683,9 +683,17 @@ span#routeStatus{
 }
 
 .routeAddDriverSelect, .routeAddVehicleSelect{
-    width: 50%;
+    width: 300px;
     float: left;
     margin-bottom: 20px;
+}
+
+.routeAddDriverSelect{
+    margin-right: 100px;
+}
+
+.routeAddVehicleSelect{
+    margin-left: 100px;
 }
 
 #appbundle_bet div{

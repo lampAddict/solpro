@@ -31,7 +31,6 @@ class DriverController extends Controller
         $drivers = $em
                     ->getRepository('AppBundle:Driver')
                     ->createQueryBuilder('d')
-                    ->leftJoin('d.transport_id', 't')
                     ->where('d.user_id = '.$this->getUser()->getId())
                     ->getQuery()
                     ->getResult()
@@ -53,7 +52,7 @@ class DriverController extends Controller
         $this->checkUserAuthentication();
 
         $driver = new Driver();
-        $form = $this->createForm('AppBundle\Form\DriverType', $driver, ['user'=>$this->getUser(), 'transport'=>'Прикрепить транспортное средство к водителю']);
+        $form = $this->createForm('AppBundle\Form\DriverType', $driver);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,12 +61,6 @@ class DriverController extends Controller
             $driver->setUserId($this->getUser());
 
             $em->persist($driver);
-
-            if( isset($request->request->get('appbundle_driver')['transport_id']) ){
-                $vehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['id'=>$request->request->get('appbundle_driver')['transport_id']]);
-                $vehicle->setDriverId($driver);
-                $em->persist($vehicle);
-            }
 
             $em->flush();
 

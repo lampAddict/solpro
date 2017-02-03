@@ -47,12 +47,6 @@ class Driver
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user_id;
-    
-    /**
-     * One Driver has One Vehicle (Transport).
-     * @ORM\OneToOne(targetEntity="Transport", mappedBy="driver_id")
-     */
-    protected $transport_id;
 
     /**
      * One Driver has One Route.

@@ -53,13 +53,6 @@ class Transport
      */
     protected $user_id;
 
-    /**
-     * One Vehicle (Transport) has One Driver.
-     * @ORM\OneToOne(targetEntity="Driver", inversedBy="transport_id")
-     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
-     */
-    protected $driver_id;
-
     public function __toString() {
         return $this->name;
     }
