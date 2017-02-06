@@ -49,9 +49,8 @@ class Driver
     protected $user_id;
 
     /**
-     * One Driver has One Route.
-     * @ORM\OneToOne(targetEntity="Route", inversedBy="vehicleDriver")
-     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     * One Driver has Many Routes.
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="driver_id")
      */
     protected $route_id;
 
@@ -204,29 +203,6 @@ class Driver
     }
 
     /**
-     * Set transport_id
-     *
-     * @param \AppBundle\Entity\Transport $transportId
-     * @return Driver
-     */
-    public function setTransportId(\AppBundle\Entity\Transport $transportId = null)
-    {
-        $this->transport_id = $transportId;
-
-        return $this;
-    }
-
-    /**
-     * Get transport_id
-     *
-     * @return \AppBundle\Entity\Transport 
-     */
-    public function getTransportId()
-    {
-        return $this->transport_id;
-    }
-
-    /**
      * Set route_id
      *
      * @param \AppBundle\Entity\Route $routeId
@@ -247,5 +223,36 @@ class Driver
     public function getRouteId()
     {
         return $this->route_id;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->route_id = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add routeId
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     *
+     * @return Driver
+     */
+    public function addRouteId(\AppBundle\Entity\Route $routeId)
+    {
+        $this->route_id[] = $routeId;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeId
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     */
+    public function removeRouteId(\AppBundle\Entity\Route $routeId)
+    {
+        $this->route_id->removeElement($routeId);
     }
 }

@@ -28,7 +28,13 @@ class RoutesController extends Controller
                 'AppBundle\Entity\Driver',
                 'd',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
-                'r.id = d.route_id'
+                'r.driver_id = d.id'
+            )
+            ->leftJoin(
+                'AppBundle\Entity\Transport',
+                't',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'r.vehicle_id = t.id'
             )
             ->where('r.user_id = '.$this->getUser()->getId())
             ->getQuery()
@@ -37,7 +43,7 @@ class RoutesController extends Controller
         $drivers = $em
             ->getRepository('AppBundle:Driver')
             ->createQueryBuilder('d')
-            ->where('d.route_id IS NULL AND d.status = 1 AND d.user_id = '.$this->getUser()->getId())
+            ->where('d.status = 1 AND d.user_id = '.$this->getUser()->getId())
             ->getQuery()
             ->getResult();
 
@@ -70,43 +76,18 @@ class RoutesController extends Controller
         $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'user_id'=>$this->getUser()->getId()]);
         if( $route ){
             /* @var $driver \AppBundle\Entity\Driver */
-            $driver = $em->getRepository('AppBundle:Driver')->findOneBy(['id'=>intval($request->request->get('driver')), 'user_id'=>$this->getUser()->getId(), 'route_id'=>null]);
+            $driver = $em->getRepository('AppBundle:Driver')->findOneBy(['id'=>intval($request->request->get('driver')), 'user_id'=>$this->getUser()->getId()]);
             if( $driver ){
-                /* @var $driverSameRoute \AppBundle\Entity\Driver */
-                $driverSameRoute = $em->getRepository('AppBundle:Driver')->findOneBy(['user_id'=>$this->getUser()->getId(), 'route_id'=>$route->getId()]);
-
                 /* @var $vehicle \AppBundle\Entity\Transport */
                 $vehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['id'=>intval($request->request->get('vehicle')), 'user_id'=>$this->getUser()->getId()]);
                 if( $vehicle ){
-                    if( is_null($vehicle->getDriverId()) ){
-                        $vehicle->setDriverId($driver);
-                        $em->persist($vehicle);
-
-                        $driver->setRouteId($route);
-                        $em->persist($driver);
-
-                        if( $driverSameRoute ){
-                            $driverSameRoute->setRouteId(null);
-                            $em->persist($driverSameRoute);
-                        }
-
-                        $em->flush();
-                        return new JsonResponse(['result'=>true]);
-                    }
+                    $route->setDriverId($driver);
+                    $route->setVehicleId($vehicle);
+                    $em->persist($route);
+                    $em->flush();
+                    return new JsonResponse(['result'=>true]);
                 }
                 else{
-                    if( !is_null($driver->getTransportId()) ){
-                        $driver->setRouteId($route);
-                        $em->persist($driver);
-
-                        if( $driverSameRoute ){
-                            $driverSameRoute->setRouteId(null);
-                            $em->persist($driverSameRoute);
-                        }
-
-                        $em->flush();
-                        return new JsonResponse(['result'=>true]);
-                    }
                 }
             }
         }

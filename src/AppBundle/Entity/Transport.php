@@ -53,6 +53,12 @@ class Transport
      */
     protected $user_id;
 
+    /**
+     * One Vehicle has Many Routes.
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="vehicle_id")
+     */
+    protected $route_id;
+
     public function __toString() {
         return $this->name;
     }
@@ -249,5 +255,46 @@ class Transport
     public function getDriverId()
     {
         return $this->driver_id;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->route_id = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add routeId
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     *
+     * @return Transport
+     */
+    public function addRouteId(\AppBundle\Entity\Route $routeId)
+    {
+        $this->route_id[] = $routeId;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeId
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     */
+    public function removeRouteId(\AppBundle\Entity\Route $routeId)
+    {
+        $this->route_id->removeElement($routeId);
+    }
+
+    /**
+     * Get routeId
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRouteId()
+    {
+        return $this->route_id;
     }
 }

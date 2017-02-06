@@ -112,12 +112,21 @@ class Route
      */
     protected $user_id;
 
-    //one route - one driver
+    //TODO one driver - many roots
+    //one driver - many routes
     /**
-     * One Route has One Driver.
-     * @ORM\OneToOne(targetEntity="Driver", mappedBy="route_id")
+     * @ORM\ManyToOne(targetEntity="Driver", inversedBy="route_id")
+     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
      */
-    protected $vehicleDriver;
+    protected $driver_id;
+
+    //TODO one vehicle - many roots
+    //one vehicle - many routes
+    /**
+     * @ORM\ManyToOne(targetEntity="Transport", inversedBy="route_id")
+     * @ORM\JoinColumn(name="vehicle_id", referencedColumnName="id")
+     */
+    protected $vehicle_id;
     
     //one route - one lot
     /**
@@ -613,30 +622,7 @@ class Route
     {
         return $this->user_id;
     }
-
-    /**
-     * Set vehicleDriver
-     *
-     * @param \AppBundle\Entity\Driver $vehicleDriver
-     * @return Route
-     */
-    public function setVehicleDriver(\AppBundle\Entity\Driver $vehicleDriver = null)
-    {
-        $this->vehicleDriver = $vehicleDriver;
-
-        return $this;
-    }
-
-    /**
-     * Get vehicleDriver
-     *
-     * @return \AppBundle\Entity\Driver 
-     */
-    public function getVehicleDriver()
-    {
-        return $this->vehicleDriver;
-    }
-
+    
     /**
      * Set lot_id
      *
@@ -658,5 +644,53 @@ class Route
     public function getLotId()
     {
         return $this->lot_id;
+    }
+
+    /**
+     * Set driverId
+     *
+     * @param \AppBundle\Entity\Driver $driverId
+     *
+     * @return Route
+     */
+    public function setDriverId(\AppBundle\Entity\Driver $driverId = null)
+    {
+        $this->driver_id = $driverId;
+
+        return $this;
+    }
+
+    /**
+     * Get driverId
+     *
+     * @return \AppBundle\Entity\Driver
+     */
+    public function getDriverId()
+    {
+        return $this->driver_id;
+    }
+
+    /**
+     * Set vehicleId
+     *
+     * @param \AppBundle\Entity\Transport $vehicleId
+     *
+     * @return Route
+     */
+    public function setVehicleId(\AppBundle\Entity\Transport $vehicleId = null)
+    {
+        $this->vehicle_id = $vehicleId;
+
+        return $this;
+    }
+
+    /**
+     * Get vehicleId
+     *
+     * @return \AppBundle\Entity\Transport
+     */
+    public function getVehicleId()
+    {
+        return $this->vehicle_id;
     }
 }

@@ -76,7 +76,22 @@ $( document ).ready(function(){
 
         $('#routesTable').hide();
         $('#routesFilter').hide();
-        $('#routeAddDriverWindow').hide();
+
+        var $routeAddDriverWindow = $ri.find('.routeAddDriverWindow');
+
+        $routeAddDriverSelect = $routeAddDriverWindow.find('#routeAddDriverSelect');
+        if( $routeAddDriverSelect ){
+            $routeAddDriverSelect.addClass("chosen-select");
+            $routeAddDriverSelect.chosen({no_results_text: "Ничего не найдено"});
+        }
+
+        $routeAddVehicleSelect = $routeAddDriverWindow.find('#routeAddVehicleSelect');
+        if( $routeAddVehicleSelect ){
+            $routeAddVehicleSelect.addClass("chosen-select");
+            $routeAddVehicleSelect.chosen({no_results_text: "Ничего не найдено"});
+        }
+
+        $routeAddDriverWindow.data('routeId', $routeAddDriverWindow.parent().attr('data-routeId'));
 
         $ri.show();
     });
@@ -91,34 +106,10 @@ $( document ).ready(function(){
         $(e.currentTarget).addClass('black');
     });
 
-    $('.routeAssignDriver').click(function(e){
-        var $routeAddDriverWindow = $('#routeAddDriverWindow');
-
-        $routeAddDriverSelect = $('#routeAddDriverSelect');
-        if( $routeAddDriverSelect ){
-            $routeAddDriverSelect.addClass("chosen-select");
-            $routeAddDriverSelect.chosen({no_results_text: "Ничего не найдено"});
-        }
-
-        $routeAddVehicleSelect = $('#routeAddVehicleSelect');
-        if( $routeAddVehicleSelect ){
-            $routeAddVehicleSelect.addClass("chosen-select");
-            $routeAddVehicleSelect.chosen({no_results_text: "Ничего не найдено"});
-        }
-
-        $('#routesTable').hide();
-        $('#routesFilter').hide();
-
-        $('#routesPageContainer > .lotInfoWindow').hide();
-
-        $routeAddDriverWindow.data('routeId', $(e.currentTarget).parent().attr('data-routeId'));
-        $routeAddDriverWindow.show();
-    });
-
     //submit attach driver to route data
-    $('#routeAddDriverWindow input[type="button"]').click(function(e){
+    $('.routeAddDriverWindow input[type="button"]').click(function(e){
         //Don't send request if none of the drivers selected
-        if( $('#routeAddDriverSelect').val() != 'Выберите водителя' ){
+        if( $(e.currentTarget).parent().find('#routeAddDriverSelect').val() != 'Выберите водителя' ){
             $.ajax({
                 method: 'POST',
                 url: 'attachDriver',

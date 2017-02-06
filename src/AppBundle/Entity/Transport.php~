@@ -53,6 +53,12 @@ class Transport
      */
     protected $user_id;
 
+    /**
+     * One Vehicle has Many Routes.
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="vehicle_id")
+     */
+    protected $route_id;
+
     public function __toString() {
         return $this->name;
     }

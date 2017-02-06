@@ -442,11 +442,8 @@ ul.topnav li.icon {display: none;}
 }
 
 .chosen-container{
-    width: 480px !important;
+    width: 250px !important;
     margin: 0 10px 10px 0px;
-}
-.chosen-search input[type="text"]{
-    width: 470px !important;
 }
 
 .addDriverWindowBtn, .addVehicleWindowBtn{
@@ -663,18 +660,14 @@ span#routeStatus{
     font-size: 13px;
 }
 
-#routeAddDriverWindow{
-    display: none;
-    width: 800px;
-    margin: 100px auto;
+.routeAddDriverWindow{
+    width: 570px;
+    margin: 20px auto;
+    float: left;
 }
 
-#routeAddDriverWindow .chosen-search input[type="text"] {
-    width: 290px !important;
-}
-
-#routeAddDriverWindow .chosen-container{
-    width: 300px !important;
+.routeAddDriverWindow .chosen-container{
+    width: 250px !important;
     margin: 0 10px 10px 0px;
 }
 
@@ -683,17 +676,17 @@ span#routeStatus{
 }
 
 .routeAddDriverSelect, .routeAddVehicleSelect{
-    width: 300px;
+    width: 250px;
     float: left;
     margin-bottom: 20px;
 }
 
 .routeAddDriverSelect{
-    margin-right: 100px;
+    margin-right: 50px;
 }
 
 .routeAddVehicleSelect{
-    margin-left: 100px;
+    margin-left: 20px;
 }
 
 #appbundle_bet div{
@@ -741,4 +734,18 @@ tr.zeroHeight{
 
 .mtop60{
     margin-top: 60px;
+}
+
+.routeVehicleName{
+    float: left;
+}
+
+.routeVehicleRegNum{
+    float: left;
+    margin-left: 10px;
+}
+
+.routeDriverHeader{
+    float: left;
+    width: 60%;
 }

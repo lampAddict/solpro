@@ -49,9 +49,8 @@ class Driver
     protected $user_id;
 
     /**
-     * One Driver has One Route.
-     * @ORM\OneToOne(targetEntity="Route", inversedBy="vehicleDriver")
-     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     * One Driver has Many Routes.
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="driver_id")
      */
     protected $route_id;
 
@@ -201,29 +200,6 @@ class Driver
     public function getUserId()
     {
         return $this->user_id;
-    }
-
-    /**
-     * Set transport_id
-     *
-     * @param \AppBundle\Entity\Transport $transportId
-     * @return Driver
-     */
-    public function setTransportId(\AppBundle\Entity\Transport $transportId = null)
-    {
-        $this->transport_id = $transportId;
-
-        return $this;
-    }
-
-    /**
-     * Get transport_id
-     *
-     * @return \AppBundle\Entity\Transport 
-     */
-    public function getTransportId()
-    {
-        return $this->transport_id;
     }
 
     /**

@@ -97,8 +97,8 @@
                             <td class="routeVehicleType">{{ route.getVehicleType }}<br />{{ route.getVehiclePayload }}</td>
                             <td align="right">{{ route.getCargoWeight }} ({{ route.getCargoCount }})</td>
                             <td align="right">{{ route.getLotId.getPrice }}</td>
-                            <td class="routeAssignedDriver" align="center">{% if route.getVehicleDriver is not null %}{{ route.getVehicleDriver.getFio }}{% endif %}</td>
-                            <td class="routeAttachedVehicle" align="right"></td>
+                            <td class="routeAssignedDriver" align="center">{% if route.getDriverId is not null %}{{ route.getDriverId.getFio }}{% endif %}</td>
+                            <td class="routeAttachedVehicle" align="right">{% if route.getVehicleId is not null %}{{ route.getVehicleId.getName }}&nbsp;&nbsp;{{ route.getVehicleId.getRegNum }}{% endif %}</td>
                         </tr>
                         <tr class="zeroHeight">
                             <td colspan="9" class="hiddenRow">
@@ -135,16 +135,41 @@
                                     </div>
 
                                     <div data-routeId="{{ route.getId }}">
-                                        <div class="routeDriverHeader">Водитель:</div>
-                                        {% if route.getVehicleDriver|length > 0 %}
-                                            <div class="routeDriverName">{{ route.getVehicleDriver.getFio }}</div>
-                                            <div class="routeDriverPassportData">{{ route.getVehicleDriver.getPassport }}</div>
-                                            <div class="routeDriverVehicle"></div>
+                                        {% if route.getDriverId|length > 0 %}
+                                            <div style="float: left; margin-right: 10px; width: 25%; height: 115px;">
+                                                <div class="routeDriverName">{{ route.getDriverId.getFio }}</div>
+                                                <div class="routeDriverPassportData">{{ route.getDriverId.getPassport }}</div>
+                                            </div>
                                         {% endif %}
-                                        <div class="btn btn-default routeAssignDriver">Назначить водителя</div>
-                                        {% if route.getVehicleDriver is not null %}
-                                            <div class="btn btn-danger routeDeleteDriver">Удалить водителя из рейса</div>
+
+                                        {% if route.getVehicleId|length > 0 %}
+                                            <div style="float:left; height: 115px;">
+                                                <div class="routeVehicleName">{{ route.getVehicleId.getName }}</div>
+                                                <div class="routeVehicleRegNum">{{ route.getVehicleId.getRegNum }}</div>
+                                            </div>
                                         {% endif %}
+
+                                        <div class="routeDriverHeader">Назначить водителя и машину:</div>
+                                        <div class="routeAddDriverWindow">
+                                            <div class="routeAddDriverSelect">
+                                                <select id="routeAddDriverSelect">
+                                                    <option selected="selected">Выберите водителя</option>
+                                                    {% for driver in drivers %}
+                                                        <option value="{{ driver.getId }}">{{ driver.getFio }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="routeAddVehicleSelect">
+                                                <select id="routeAddVehicleSelect">
+                                                    <option selected="selected">Выберите машину</option>
+                                                    {% for vehicle in vehicles %}
+                                                        <option value="{{ vehicle.getId }}">{{ vehicle.getName }} {{ vehicle.getRegNum }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <input class="btn btn-success" type="button" value="Сохранить" />
+                                            <a class="btn btn-default" style="float:right" href="{{ path('routes') }}">Отменить</a>
+                                        </div>
                                     </div>
 
                                     <div class="routeInfo">
@@ -192,24 +217,5 @@
             </table>
         </div>
     </div>
-    <div id="routeAddDriverWindow">
-        <div class="routeAddDriverSelect">
-            <select id="routeAddDriverSelect">
-                <option selected="selected">Выберите водителя</option>
-                {% for driver in drivers %}
-                    <option value="{{ driver.getId }}">{{ driver.getFio }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="routeAddVehicleSelect">
-            <select id="routeAddVehicleSelect">
-                <option selected="selected">Выберите машину</option>
-                {% for vehicle in vehicles %}
-                    <option value="{{ vehicle.getId }}">{{ vehicle.getName }} {{ vehicle.getRegNum }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <input class="btn btn-success" type="button" value="Сохранить" />
-        <a class="btn btn-default" style="float:right" href="{{ path('routes') }}">Отменить</a>
-    </div>
+
 {% endblock %}

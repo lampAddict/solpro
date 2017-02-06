@@ -112,12 +112,20 @@ class Route
      */
     protected $user_id;
 
-    //one route - one driver
+    //TODO one driver - many roots
+    //one driver - many routes
     /**
-     * One Route has One Driver.
-     * @ORM\OneToOne(targetEntity="Driver", mappedBy="route_id")
+     * @ORM\ManyToOne(targetEntity="Driver", inversedBy="route_id")
+     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
      */
-    protected $vehicleDriver;
+    protected $driver_id;
+
+    //TODO one vehicle - many roots
+    /**
+     * @ORM\ManyToOne(targetEntity="Transport", inversedBy="route_id")
+     * @ORM\JoinColumn(name="vehicle_id", referencedColumnName="id")
+     */
+    protected $vehicle_id;
     
     //one route - one lot
     /**
