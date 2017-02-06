@@ -47,7 +47,7 @@ class DefaultController extends Controller
 
         $uid = $this->getUser()->getId();
         //get routes without assigned driver 
-        $sql = "SELECT DISTINCT r.id FROM route r LEFT JOIN (SELECT DISTINCT route_id FROM driver WHERE user_id = $uid AND status = 1)d ON d.route_id = r.id WHERE r.user_id = $uid AND d.route_id IS NULL";
+        $sql = "SELECT DISTINCT r.id FROM route r WHERE r.user_id = $uid AND r.driver_id IS NULL";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $_rnd = $stmt->fetchAll();
