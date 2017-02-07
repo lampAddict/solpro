@@ -47,16 +47,23 @@ class DefaultController extends Controller
 
         $uid = $this->getUser()->getId();
         //get routes without assigned driver 
-        $sql = "SELECT DISTINCT r.id FROM route r WHERE r.user_id = $uid AND r.driver_id IS NULL";
+        $sql = "SELECT count(r.id) as num  FROM route r WHERE r.user_id = $uid";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
-        $_rnd = $stmt->fetchAll();
-        
+        $rn = $stmt->fetchAll();
+
+        $rnd = 0;
+        foreach($rn as $r){
+            if( $r['driver_id'] == null ){
+                $rnd++;
+            }
+        }
+
         return $this->render('base.html.twig', array(
              'lots' => $lots
             ,'stat' => $_stat
-            ,'routes_no_driver'=>count($_rnd)
-            ,'routes_sum'=>count($_rnd)
+            ,'routes_no_driver'=>$rnd
+            ,'routes_sum'=>$rn['num']
         ));
     }
 }
