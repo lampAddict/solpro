@@ -662,7 +662,7 @@ span#routeStatus{
 
 .routeAddDriverWindow{
     width: 570px;
-    margin: 20px auto;
+    margin: 10px 0 0 0;
     float: left;
 }
 
@@ -710,6 +710,7 @@ td.lotTimeLeftTimer{
     width: 90% !important;
     border: 1px solid dimgrey;
     border-collapse: collapse;
+    height: 240px;
 }
 
 .lotInfoWindow table tr td{
@@ -748,4 +749,5 @@ tr.zeroHeight{
 .routeDriverHeader{
     float: left;
     width: 60%;
+    margin-top: 10px;
 }
