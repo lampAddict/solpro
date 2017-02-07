@@ -47,13 +47,15 @@ class DefaultController extends Controller
 
         $uid = $this->getUser()->getId();
         //get routes without assigned driver 
-        $sql = "SELECT count(r.id) as num  FROM route r WHERE r.user_id = $uid";
+        $sql = "SELECT r.id, r.driver_id FROM route r WHERE r.user_id = $uid";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $rn = $stmt->fetchAll();
 
         $rnd = 0;
+        $rnc = 0;
         foreach($rn as $r){
+            $rnc++;
             if( $r['driver_id'] == null ){
                 $rnd++;
             }
@@ -63,7 +65,7 @@ class DefaultController extends Controller
              'lots' => $lots
             ,'stat' => $_stat
             ,'routes_no_driver'=>$rnd
-            ,'routes_sum'=>$rn['num']
+            ,'routes_sum'=>$rnc
         ));
     }
 }
