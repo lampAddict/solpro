@@ -28,9 +28,9 @@ class Download1CDataCommand extends Command
         //ftp.solpro.ru
         $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");
         if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
-        ftp_pasv($conn_id, TRUE);
-        ftp_set_option($conn_id, FTP_TIMEOUT_SEC, 360);
-        if( @ftp_get($conn_id, 'data/data.xml', 'MessageFrom1C.xml', FTP_BINARY) )$output->writeln('XML file downloaded successfully');
+        //ftp_pasv($conn_id, TRUE);
+        //ftp_set_option($conn_id, FTP_TIMEOUT_SEC, 360);
+        if( ftp_get($conn_id, 'data/data.xml', 'MessageFrom1C.xml', FTP_BINARY) )$output->writeln('XML file downloaded successfully');
         ftp_close($conn_id);
     }
 }
