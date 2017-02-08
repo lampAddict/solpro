@@ -5,16 +5,116 @@ namespace AppBundle\Services;
 use AppBundle\Entity\Lot;
 use AppBundle\Entity\Order;
 use AppBundle\Entity\Route;
+use AppBundle\Entity\RefLotStatus;
+use AppBundle\Entity\RefRouteStatus;
+use AppBundle\Entity\RefRegion;
+use AppBundle\Entity\RefPartner;
+use AppBundle\Entity\RefVehicleType;
+use AppBundle\Entity\RefCarrier;
+use AppBundle\Entity\RefCarrierUser;
+
 
 class import1CDataService{
 
     protected $em;
+    protected $um;
 
-    public function __construct($entityManager){
+    public function __construct($entityManager, $userManager){
         $this->em = $entityManager;
+        $this->um = $userManager;
+    }
+
+    private function importReferences($entityName, $refsData, $fields=['id', 'name']){
+
+        $className = 'AppBundle\Entity\\'.$entityName;
+
+        $fieldMethods = [    'name'      => 'setName'
+                            ,'id'        => 'setId1C'
+                            ,'inn'       => 'setInn'
+                            ,'access'    => 'setAccess'
+                            ,'carrierId' => 'setCarrierId'
+                            ,'login'     => 'setLogin'
+                            ,'password'  => 'setPassword'
+                            ,'email'     => 'setEmail'
+                        ];
+
+        foreach( $refsData as $k=>$v ){
+            $e = new $className();
+            foreach ($fields as $fld){
+                $e->{$fieldMethods[$fld]}( $v[$fld] );
+            }
+            $e_exist = $this->em->getRepository('AppBundle:'.$entityName)->findOneBy(['id1C'=>$k]);
+            if( is_null($e_exist) ){
+                $this->em->persist($e);
+            }
+        }
     }
 
     public function import1CData(array $data){
+
+        //import lot status references
+        if( !empty($data['ref']['lotStatus']) ){
+            $this->importReferences('RefLotStatus', $data['ref']['lotStatus']);
+            $this->em->flush();
+        }
+
+        //import route status  references
+        if( !empty($data['ref']['routeStatuse']) ){
+            $this->importReferences('RefRouteStatus', $data['ref']['routeStatuse']);
+            $this->em->flush();
+        }
+
+        //import region references
+        if( !empty($data['ref']['region']) ){
+            $this->importReferences('RefRegion', $data['ref']['region']);
+            $this->em->flush();
+        }
+
+        //import partner references
+        if( !empty($data['ref']['partner']) ){
+            $this->importReferences('RefPartner', $data['ref']['partner'], ['id', 'name', 'inn']);
+            $this->em->flush();
+        }
+
+        //import vehicle type references
+        if( !empty($data['ref']['vehicleType']) ){
+            $this->importReferences('RefVehicleType', $data['ref']['vehicleType']);
+            $this->em->flush();
+        }
+
+        //import vehicle carrying type references
+        if( !empty($data['ref']['vehicleCarringType']) ){
+            $this->importReferences('RefVehicleCarryingType', $data['ref']['vehicleCarringType']);
+            $this->em->flush();
+        }
+
+        //import carrier references
+        if( !empty($data['ref']['carrier']) ){
+            $this->importReferences('RefCarrier', $data['ref']['carrier'], ['id', 'name', 'access']);
+            $this->em->flush();
+        }
+
+        //import carrier users references
+        if( !empty($data['ref']['carrierUser']) ){
+            $this->importReferences('RefCarrierUser', $data['ref']['carrierUser'], ['id', 'name', 'access', 'carrierId', 'login', 'password', 'email']);
+
+            //create user profiles
+            foreach( $data['ref']['carrierUser'] as $k=>$v ){
+                $usr_exist = $this->em->getRepository('AppBundle:User')->findOneBy(['username'=>$v['login']]);
+                if( is_null($usr_exist) ){
+                    $user = $this->um->createUser();
+                    $user
+                        ->setUsername($v['login'])
+                        ->setEmail($v['email'])
+                        ->setPlainPassword($v['password'])
+                        ->setEnabled(true)
+                    ;
+                    $this->em->persist($user);
+                }
+            }
+
+            $this->em->flush();
+        }
 
         $routeDbIds = [];
         if( !empty($data['routes']) ){
@@ -24,8 +124,8 @@ class import1CDataService{
                 $_route = new Route();
 
                 $user = null;
-                if(    $route['routeType'] == 1
-                    && intval($route['carrierId']) > 0
+                if(    intval($route['routeType']) == 0
+                    && $route['carrierId'] != ''
                 ){
                     foreach( $data['ref']['carrierUser'] as $cu ){
                         if( $cu['carrierId'] == $route['carrierId'] ){
@@ -59,12 +159,13 @@ class import1CDataService{
                 $_route->setVehicleType( $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name'] );
                 $_route->setVehiclePayload( $data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'] );
                 $_route->setVehicleRegNumber( '' );
-                $_route->setVehicleDriver( null );
                 $_route->setTradeCost( $route['tradeCost'] );
                 $_route->setTradeStep( $route['tradeStep'] );
                 $_route->setCargoCount( $route['cargoCount'] );
                 $_route->setCargoWeight( $route['cargoWeight'] );
                 $_route->setComment( $route['comment'] );
+                $_route->setDriverId( null );
+                $_route->setVehicleId( null );
 
                 $this->em->persist($_route);
                 $this->em->flush();

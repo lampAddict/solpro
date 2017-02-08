@@ -47,6 +47,7 @@ class User extends BaseUser
     {
         parent::__construct();
         // your own logic
+        $this->roles = array('ROLE_USER');
     }
 
     /**
