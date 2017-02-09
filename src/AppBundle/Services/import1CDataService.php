@@ -96,6 +96,8 @@ class import1CDataService{
             $this->em->flush();
         }
 
+        echo "References imported\n";
+
         //import carrier users references
         if( !empty($data['ref']['carrierUser']) ){
             $this->importReferences('RefCarrierUser', $data['ref']['carrierUser'], ['id', 'name', 'access', 'carrierId', 'login', 'password', 'email']);
@@ -117,6 +119,8 @@ class import1CDataService{
 
             $this->em->flush();
         }
+
+        echo "Carrier users profiles created\n";
 
         $routeDbIds = [];
         if( !empty($data['routes']) ){
@@ -159,11 +163,16 @@ class import1CDataService{
                 $_route->setCode( $route['code'] );
                 $_route->setName( $route['name'] );
                 $_route->setStatus( $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] );
-                
                 $_route->setRegionFrom( $data['ref']['region'][ $route['loadRegionId'] ]['name'] );
                 $_route->setRegionTo( $data['ref']['region'][ $route['unloadRegionId'] ]['name'] );
                 $_route->setVehicleType( $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name'] );
-                $_route->setVehiclePayload( $data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'] );
+
+                if(    isset($route['vehicleCarringId'])
+                    && !is_null($data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'])
+                ){
+                    $_route->setVehiclePayload( $data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'] );
+                }
+
                 $_route->setVehicleRegNumber( '' );
                 $_route->setTradeCost( $route['tradeCost'] );
                 $_route->setTradeStep( $route['tradeStep'] );
@@ -216,11 +225,13 @@ class import1CDataService{
                     }
                 }
             }
+
+            echo "Routes imported\n";
         }
 
         if( !empty($data['lots']) ){
 
-            foreach ($data['lots'] as $lot){
+            foreach( $data['lots'] as $lot ){
 
                 if(    !is_null($this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id']]))
                     || !isset($routeDbIds[ $lot['routeId'] ])
@@ -249,6 +260,8 @@ class import1CDataService{
                 $this->em->persist($_lot);
                 $this->em->flush();
             }
+
+            echo "Lots imported\n";
         }
 
         echo "Data import done\n";

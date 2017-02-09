@@ -77,6 +77,7 @@ class Import1CDataCommand extends ContainerAwareCommand
                         }
                     }
                 }
+                $output->writeln('References parsed');
             }
 
             //Parsing routes block
@@ -138,6 +139,7 @@ class Import1CDataCommand extends ContainerAwareCommand
 
                     $count++;
                 }
+                $output->writeln('Routes parsed');
             }
 
             //Parsing lots block
@@ -165,6 +167,7 @@ class Import1CDataCommand extends ContainerAwareCommand
 
                     $count++;
                 }
+                $output->writeln('Lots parsed');
             }
 
             $data = [
