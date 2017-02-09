@@ -217,7 +217,7 @@ $( document ).ready(function(){
                 if( !jQuery.isEmptyObject(data.lots) ){
                     var $lotsPrices = $('.lotCurrentPrice');
                     //reload page if need to show new lot prices data
-                    if( $lotsPrices.length != data.lots.length ){
+                    if( $lotsPrices.length != Object.keys(data.lots).length ){
                         location.reload();
                     }
                     $lotsPrices.each(function(){

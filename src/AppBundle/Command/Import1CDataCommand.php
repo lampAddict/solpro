@@ -4,10 +4,10 @@ namespace AppBundle\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Console\Input\InputArgument;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-
-use Symfony\Component\DomCrawler\Crawler;
 
 class Import1CDataCommand extends ContainerAwareCommand
 {
@@ -28,17 +28,20 @@ class Import1CDataCommand extends ContainerAwareCommand
             // the full command description shown when running the command with
             // the "--help" option
             ->setHelp("This command allows you to import auction lots data onto portal from 1C")
+            ->addArgument('downloadFromFTP', InputArgument::OPTIONAL, 'Download data from ftp ?')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Connecting to ftp..');
-        //ftp.solpro.ru
-        $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");
-        if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
-        if( ftp_get($conn_id, 'data/data.xml', 'MessageFrom1C.xml', FTP_BINARY) )$output->writeln('XML file downloaded successfully');
-        ftp_close($conn_id);
+        $downloadFromFTP = $input->getArgument('downloadFromFTP');
+        if( $downloadFromFTP ){
+            $output->writeln('Connecting to ftp..');
+            $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");//ftp.solpro.ru
+            if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
+            if( ftp_get($conn_id, 'data/data.xml', 'MessageFrom1C.xml', FTP_BINARY) )$output->writeln('XML file downloaded successfully');
+            ftp_close($conn_id);
+        }
 
         $output->writeln('Import data started..');
 
@@ -174,7 +177,7 @@ class Import1CDataCommand extends ContainerAwareCommand
             if( $import1CDataManager->import1CData($data) ){
                 //clear cached lots data
                 $this->getContainer()->get('snc_redis.default')->flushall();
-                rename('data/data.xml', 'data/data_imported/data_'.date('H:i:s_d-m-Y', time()).'.xml');
+                rename('data/data.xml', 'data/data_imported/data_'.date('H.i.s_d-m-Y', time()).'.xml');
             }
         }
     }
