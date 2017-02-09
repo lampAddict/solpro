@@ -215,7 +215,12 @@ $( document ).ready(function(){
                 console.log(data);
                 var _uid = $('#auctionPageContainer').attr('data-user');
                 if( !jQuery.isEmptyObject(data.lots) ){
-                    $('.lotCurrentPrice').each(function(){
+                    var $lotsPrices = $('.lotCurrentPrice');
+                    //reload page if need to show new lot prices data
+                    if( $lotsPrices.length != data.lots.length ){
+                        location.reload();
+                    }
+                    $lotsPrices.each(function(){
                         var _id = parseInt($(this).attr('id'));
                         //highlight users bets
                         if(    data.lots[ _id ] !== null
