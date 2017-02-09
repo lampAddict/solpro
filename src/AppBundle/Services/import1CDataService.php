@@ -24,6 +24,8 @@ class import1CDataService{
         $this->um = $userManager;
     }
 
+
+
     private function importReferences($entityName, $refsData, $fields=['id', 'name']){
 
         $className = 'AppBundle\Entity\\'.$entityName;
@@ -121,6 +123,10 @@ class import1CDataService{
 
             foreach( $data['routes'] as $route ){
 
+                if( !is_null($this->em->getRepository('AppBundle:Route')->findOneBy(['id1C'=>$route['id']])) ){
+                    continue;
+                }
+
                 $_route = new Route();
 
                 $user = null;
@@ -146,7 +152,7 @@ class import1CDataService{
                 else{
                     $_route->setCarrier( '' );
                 }
-                
+
                 $_route->setId1C( $route['id'] );
                 $_route->setLoadDate( new \DateTime($route['loadDate']) );
                 $_route->setRouteDirectAssign( $route['routeType'] );
@@ -172,10 +178,15 @@ class import1CDataService{
 
                 $routeDbIds[ $route['id'] ] = ['routeId'=>$_route, 'startPrice'=>$route['tradeCost']];
 
-                if( !empty($route['orders']) ){
-
+                if(    !empty($route['orders'])
+                    && isset($routeDbIds[ $route['id'] ])
+                ){
                     foreach( $route['orders'] as $order ){
-                        
+
+                        if( !is_null($this->em->getRepository('AppBundle:Order')->findOneBy(['id1C'=>$order['id']])) ){
+                            continue;
+                        }
+
                         $_order = new Order();
                         $_order->setRouteId( $_route );
                         $_order->setId1C( $order['id'] );
@@ -211,6 +222,12 @@ class import1CDataService{
 
             foreach ($data['lots'] as $lot){
 
+                if(    !is_null($this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id']]))
+                    || !isset($routeDbIds[ $lot['routeId'] ])
+                ){
+                    continue;
+                }
+
                 $_lot = new Lot();
                 $_lot->setId1C( $lot['id'] );
                 $_lot->setStatus( $data['ref']['lotStatus'][ $lot['statusID'] ]['name'] );
@@ -220,7 +237,6 @@ class import1CDataService{
                 $_lot->setAuctionStatus(1);//lot is in auction state
 
                 if( isset($routeDbIds[ $lot['routeId'] ]) ){
-                    /* @var $route \AppBundle\Entity\Route */
                     $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
                     $_lot->setRouteId( $route );
                     $_lot->setPrice( $routeDbIds[ $lot['routeId'] ]['startPrice'] );
