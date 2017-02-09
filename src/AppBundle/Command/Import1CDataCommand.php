@@ -33,6 +33,13 @@ class Import1CDataCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln('Connecting to ftp..');
+        //ftp.solpro.ru
+        $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");
+        if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
+        if( ftp_get($conn_id, 'data/data.xml', 'MessageFrom1C.xml', FTP_BINARY) )$output->writeln('XML file downloaded successfully');
+        ftp_close($conn_id);
+
         $output->writeln('Import data started..');
 
         $data = new Crawler();
@@ -164,7 +171,11 @@ class Import1CDataCommand extends ContainerAwareCommand
             ];
             
             $import1CDataManager = $this->getContainer()->get('app.import1cdata');
-            $import1CDataManager->import1CData($data);
+            if( $import1CDataManager->import1CData($data) ){
+                //clear cached lots data
+                $this->getContainer()->get('snc_redis.default')->flushall();
+                rename('data/data.xml', 'data/data_imported/data_'.date('H:i:s_d-m-Y', time()).'.xml');
+            }
         }
     }
 }

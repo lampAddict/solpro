@@ -252,5 +252,7 @@ class import1CDataService{
         }
 
         echo "Data import done\n";
+        
+        return true;
     }
 }
