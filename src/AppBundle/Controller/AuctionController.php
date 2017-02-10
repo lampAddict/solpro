@@ -67,7 +67,8 @@ class AuctionController extends Controller
                     $bet->setCreatedAt(new \DateTime());
                     if(    intval($request->request->get('appbundle_bet')['value']) <= $lot->getPrice() - $lot->getRouteId()->getTradeStep()
                         && intval($request->request->get('appbundle_bet')['value']) > 0
-                        && ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) > time()
+                        && $lot->getStartDate()->getTimestamp() >= time()
+                        && ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) >= time()
                     ){
                         $bet->setValue( intval($request->request->get('appbundle_bet')['value']) );
                         $lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );

@@ -100,6 +100,20 @@ class LotController extends Controller
             $redis = $this->container->get('snc_redis.default');
             if( $redis->exists('lcp_'.$lot->getId()) ){
                 $redis->del('lcp_'.$lot->getId());
+
+                //delete lot id from redis
+                $l_ids = $redis->get('lcp');
+                if( $l_ids ){
+                    $l_ids = explode(',', $l_ids);
+                    foreach( $l_ids as $indx=>$l_id ){
+                        if( $l_id == $lot->getId() ){
+                            unset($l_ids[$indx]);
+                            break;
+                        }
+                    }
+                    $redis->set('lcp', join(',',$l_ids));
+                    $redis->expire('lcp', 600);
+                }
             }
 
             //get lot off the auction
