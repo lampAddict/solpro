@@ -264,7 +264,7 @@ class import1CDataService{
             echo "Lots imported\n";
         }
 
-        echo "Data import done\n";
+        echo "Data import done\n\n";
         
         return true;
     }

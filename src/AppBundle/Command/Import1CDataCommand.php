@@ -180,7 +180,7 @@ class Import1CDataCommand extends ContainerAwareCommand
             if( $import1CDataManager->import1CData($data) ){
                 //clear cached lots data
                 $this->getContainer()->get('snc_redis.default')->flushall();
-                rename('data/data.xml', 'data/data_imported/data_'.date('H.i.s_d-m-Y', time()).'.xml');
+                rename('data/data.xml', 'data/data_imported/data_'.date('H_i_s__d_m_Y', time()).'.xml');
             }
         }
     }
