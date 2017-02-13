@@ -127,6 +127,7 @@ $( document ).ready(function(){
         }
     });
 
+    //remove driver from route
     $('.routeDeleteDriver').click(function(e){
         var $this = $(e.currentTarget);
         $.ajax({
@@ -154,23 +155,34 @@ $( document ).ready(function(){
         $this.countdown(finalDate, function(event){
             var totalHours = event.offset.totalDays * 24 + event.offset.hours;
             $this.html(event.strftime(totalHours + ':%M:%S'));
+
             if( event.elapsed ){
-                $.ajax({
-                    method: 'POST',
-                    url: 'lotAuctionEnd',
-                    data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') }
-                })
-                .done(function( response ){
-                    if( response.result ){
-                        //delete row with expired lot from auction table
-                        var $lot_tr = $this.parent().parent();
-                        $lot_tr.next().remove();
-                        $lot_tr.remove();
-                    }
-                });
+                sendLotAuctionEndRequest($this);
             }
-        });
+        });//.on('finish.countdown', sendLotAuctionEndRequest($this));
     });
+
+    //lot auction end request
+    function sendLotAuctionEndRequest($this){
+        $.ajax({
+            method: 'POST',
+            url: 'lotAuctionEnd',
+            data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') },
+            //timeout: 3000
+        })
+        .done(function( response ){
+            if( response.result ){
+                //delete row with expired lot from auction table
+                var $lot_tr = $this.parent().parent();
+                $lot_tr.next().remove();
+                $lot_tr.remove();
+            }
+        })
+        .fail(function(jqXHR, textStatus){
+            console.log(textStatus);
+            setTimeout( sendLotAuctionEndRequest($this), 5000 );
+        });
+    }
 
     //click handlers for do bet buttons
     var bets = {};
@@ -215,11 +227,32 @@ $( document ).ready(function(){
                 console.log(data);
                 var _uid = $('#auctionPageContainer').attr('data-user');
                 if( !jQuery.isEmptyObject(data.lots) ){
-                    var $lotsPrices = $('.lotCurrentPrice');
-                    //reload page if need to show new lot prices data
-                    if( $lotsPrices.length != Object.keys(data.lots).length ){
-                        location.reload();
+                    var $lotsPrices = $('.lotCurrentPrice'), lotPricesTableCount = $lotsPrices.length, lotPricesDataCount = Object.keys(data.lots).length;
+
+                    if( lotPricesTableCount != lotPricesDataCount ){
+                        //check if some lots should be removed already
+                        if( lotPricesTableCount > lotPricesDataCount ){
+                            var _id;
+                            for( var i=0; i<$lotsPrices.length; i++ ){
+                                _id = parseInt($(this).attr('id'));
+                                if(    _id
+                                    &&
+                                    (
+                                           data.lots[ _id ] == null
+                                        || data.lots[ _id ] == undefined
+                                    )
+                                ){
+                                    $(this).parent().next().remove();
+                                    $(this).parent().remove();
+                                }
+                            }
+                        }
+                        //reload page if need to show new lot prices data
+                        else if( lotPricesTableCount < lotPricesDataCount ){
+                            location.reload();
+                        }
                     }
+
                     $lotsPrices.each(function(){
                         var _id = parseInt($(this).attr('id'));
                         //highlight users bets
@@ -237,24 +270,24 @@ $( document ).ready(function(){
                                     }
                                 }
                             }
-                        }
 
-                        //update lot price if needed
-                        if( data.lots[ _id ].price != parseInt($(this).html()) ){
-                            //main table on auction page
-                            $(this).html(data.lots[ _id ].price);
+                            //update lot price if needed
+                            if( data.lots[ _id ].price != parseInt($(this).html()) ){
+                                //main table on auction page
+                                $(this).html(data.lots[ _id ].price);
 
-                            //update 'next bet' input value
-                            var price = parseInt(data.lots[ _id ].price), tradeStep = parseInt($(this).siblings('.lotDoBid').find('input.doBid').attr('data-tradeStep'));
-                            if( price - tradeStep > 0 ){
-                                $(this).siblings('.lotDoBid').find('input#appbundle_bet_value').val((price - tradeStep));
+                                //update 'next bet' input value
+                                var price = parseInt(data.lots[ _id ].price), tradeStep = parseInt($(this).siblings('.lotDoBid').find('input.doBid').attr('data-tradeStep'));
+                                if( price - tradeStep > 0 ){
+                                    $(this).siblings('.lotDoBid').find('input#appbundle_bet_value').val((price - tradeStep));
+                                }
+                                else{
+                                    $(this).siblings('.lotDoBid').find('input#appbundle_bet_value').val('');
+                                }
+
+                                //full lot information window
+                                $('#lpi_' + _id).html(data.lots[ _id ].price + ' &#8381;');
                             }
-                            else{
-                                $(this).siblings('.lotDoBid').find('input#appbundle_bet_value').val('');
-                            }
-
-                            //full lot information window
-                            $('#lpi_' + _id).html(data.lots[ _id ].price + ' &#8381;');
                         }
                     });
                 }
@@ -262,5 +295,5 @@ $( document ).ready(function(){
         }
     };
 
-    setInterval( updateLotPrices, 2500 );
+    setInterval( updateLotPrices, 3000 );
 });
