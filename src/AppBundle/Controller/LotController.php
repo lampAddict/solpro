@@ -57,7 +57,12 @@ class LotController extends Controller
                         }
                     }
 
-                    array_push($_lots[ $lot['id'] ]['history'], $lot['uid']);
+                    if(    !is_null($lot['uid'])
+                        && !in_array($lot['uid'], $_lots[ $lot['id'] ]['history'])
+                    ){
+                        array_push($_lots[ $lot['id'] ]['history'], $lot['uid']);
+                    }
+
                 }
 
                 foreach( $_lots as $lotId=>$lData ){

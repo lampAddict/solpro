@@ -45,7 +45,6 @@ class Import1CDataCommand extends ContainerAwareCommand
             }
             ftp_close($conn_id);
         //}
-
         $output->writeln('Import data started..');
 
         $data = new Crawler();

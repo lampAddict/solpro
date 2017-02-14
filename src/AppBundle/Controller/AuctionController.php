@@ -28,6 +28,7 @@ class AuctionController extends Controller
             ->createQueryBuilder('l')
             ->leftJoin('l.routeId', 'r')
             ->where('l.auctionStatus = 1')
+            ->orderBy('l.startDate')
             ->getQuery()
             ->getResult();
 
@@ -41,7 +42,7 @@ class AuctionController extends Controller
                 $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
                 $forms[ $lot->getId() ] = $form->createView();
 
-                //do bet request processing
+                //do `place bet` request processing
                 $form->handleRequest($request);
                 if(    $form->isSubmitted()
                     && $form->isValid()
@@ -67,8 +68,8 @@ class AuctionController extends Controller
                     $bet->setCreatedAt(new \DateTime());
                     if(    intval($request->request->get('appbundle_bet')['value']) <= $lot->getPrice() - $lot->getRouteId()->getTradeStep()
                         && intval($request->request->get('appbundle_bet')['value']) > 0
-                        && $lot->getStartDate()->getTimestamp() >= time()
-                        && ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) >= time()
+                        && $lot->getStartDate()->getTimestamp() <= time() //auction has started
+                        && ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) >= time() //auction has not ended yet
                     ){
                         $bet->setValue( intval($request->request->get('appbundle_bet')['value']) );
                         $lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );
@@ -80,31 +81,25 @@ class AuctionController extends Controller
                         
                         $em->persist($bet);
                         $em->persist($lot);
-
-                        $em->flush();
-
-                        'SELECT b1.lot_id AS lot_id, min(b1.value) AS bet, b1.user_id AS uid FROM bet b1 GROUP BY b1.user_id, b1.lot_id';
-
-                        $bets = $em
-                            ->getRepository('AppBundle:Bet')
-                            ->createQueryBuilder('b')
-                            ->select('IDENTITY(b.user_id) AS uid')
-                            ->where('b.lot_id = '.$lot->getId())
-                            ->groupBy('b.user_id, b.lot_id')
-                            ->getQuery()
-                            ->getResult(\Doctrine\ORM\AbstractQuery::HYDRATE_ARRAY);
-
-                        $history = [];
-                        if( !empty($bets) ){
-                            foreach( $bets as $bet ){
-                                array_push($history, $bet['uid']);
+                        
+                        //update cache lot information
+                        if( $redis->exists('lcp_'.$lot->getId()) === 0 ){
+                            $redis->set('lcp_'.$lot->getId(), json_encode(['price'=>$lot->getPrice(), 'owner'=>$this->getUser()->getId(), 'history'=>[$this->getUser()->getId()]]));
+                        }
+                        else{
+                            $lotBetData = json_decode( $redis->get('lcp_'.$lot->getId()) );
+                            if( !in_array($this->getUser()->getId(), $lotBetData->history) ){
+                                array_push($lotBetData->history, $this->getUser()->getId());
                             }
+                            $lotBetData->price = $lot->getPrice();
+                            $lotBetData->owner = $this->getUser()->getId();
+                            $redis->set('lcp_'.$lot->getId(), json_encode($lotBetData));
                         }
 
-                        $redis->set('lcp_'.$lot->getId(), json_encode(['price'=>$lot->getPrice(), 'owner'=>$this->getUser()->getId(), 'history'=>$history]));
-                        
                         $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
                         $forms[ $lot->getId() ] = $form->createView();
+
+                        $em->flush();
                     }
                 }
             }
