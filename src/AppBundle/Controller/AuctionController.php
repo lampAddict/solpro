@@ -108,25 +108,30 @@ class AuctionController extends Controller
             $lots = [];
         }
 
-        //get last information about bets
-        $bets = $em
-            ->getRepository('AppBundle:Bet')
-            ->createQueryBuilder('b')
-            ->select('b.lot_id AS lot_id, min(b.value) AS bet, u.id as uid')
-            ->leftJoin('b.user_id', 'u')
-            ->groupBy('b.lot_id, b.user_id')
-            ->getQuery()
-            ->getResult();
+        //get bets history and current lot owner
+        $sql = 'SELECT b.lot_id, min(b.value) AS bet, b.user_id AS uid FROM bet b GROUP BY b.user_id, b.lot_id';
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $bets = $stmt->fetchAll();
 
         $_bets = [];
         foreach( $bets as $bet ){
             if( !isset($_bets[ $bet['lot_id'] ]) ){
-                $_bets[ $bet['lot_id'] ] = $bet;
+                $_bets[ $bet['lot_id'] ] = [
+                     'owner'=>$bet['uid']
+                    ,'history'=>[]
+                    ,'bet'=>$bet['bet']
+                ];
             }
             else{
                 if( $_bets[ $bet['lot_id'] ]['bet'] > $bet['bet'] ){
-                    $_bets[ $bet['lot_id'] ] = $bet;
+                    $_bets[ $bet['lot_id'] ]['bet'] = $bet['bet'];
+                    $_bets[ $bet['lot_id'] ]['owner'] = $bet['uid'];
                 }
+            }
+
+            if(  !in_array($bet['uid'], $_bets[ $bet['lot_id'] ]['history']) ){
+                array_push($_bets[ $bet['lot_id'] ]['history'], $bet['uid']);
             }
         }
 

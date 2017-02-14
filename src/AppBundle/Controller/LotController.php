@@ -62,7 +62,6 @@ class LotController extends Controller
                     ){
                         array_push($_lots[ $lot['id'] ]['history'], $lot['uid']);
                     }
-
                 }
 
                 foreach( $_lots as $lotId=>$lData ){

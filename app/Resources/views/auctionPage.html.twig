@@ -97,10 +97,7 @@
 
                             <td class="lotTimeLeftTimer">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}<span class="lotTimeLeft">{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s') }}</span>{% elseif lot.getStartDate.timestamp > date().timestamp %}{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
 
-                            <!--
-                            {% if lot.getId in bets|keys and app.user.id == bets[ lot.getId ]['uid'] %}{{'myBet '}}{% elseif lot.getStartDate.timestamp <= date().timestamp %}{% endif %}
-                            -->
-                            <td id="{{ lot.getId }}" class="lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
+                            <td id="{{ lot.getId }}" class="{% if lot.getId in bets|keys and app.user.id == bets[ lot.getId ]['owner'] %}{{'myBet '}}{% elseif lot.getId in bets|keys and app.user.id in bets[ lot.getId ]['history'] and app.user.id != bets[ lot.getId ]['owner'] %}{{'notMyBet '}}{% endif %}lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
 
                             <td class="lotDoBid" align="right">
                                 {% if lot.getStartDate.timestamp > date().timestamp %}До начала торгов:<br /><span class="lotTimeLeft">{{ lot.getStartDate.timestamp | date('Y/m/d H:i:s') }}</span>{% else %}
