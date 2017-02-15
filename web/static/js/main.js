@@ -180,7 +180,7 @@ $( document ).ready(function(){
         })
         .fail(function(jqXHR, textStatus){
             console.log(textStatus);
-            setTimeout( sendLotAuctionEndRequest($this), 5000 );
+            setTimeout( function(){sendLotAuctionEndRequest($this)}, 3000 );
         });
     }
 
