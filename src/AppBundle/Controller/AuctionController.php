@@ -89,7 +89,7 @@ class AuctionController extends Controller
                         else{
                             $lotBetData = json_decode( $redis->get('lcp_'.$lot->getId()) );
                             if( !in_array($this->getUser()->getId(), $lotBetData->history) ){
-                                array_push($lotBetData->history, $this->getUser()->getId());
+                                array_push($lotBetData->history, $this->getUser()->getId(). '');
                             }
                             $lotBetData->price = $lot->getPrice();
                             $lotBetData->owner = $this->getUser()->getId();
