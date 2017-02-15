@@ -97,9 +97,9 @@ class LotController extends Controller
         
         //if there is no lot found then auction ended up successfully (probably)
         if( !$lot )return new JsonResponse(['result'=>true]);
-        
+
         //check auction end time
-        if( time() >= $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60 ){
+        if( time() >= ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) ){
             //delete lot price from redis
             $redis = $this->container->get('snc_redis.default');
             if( $redis->exists('lcp_'.$lot->getId()) ){
