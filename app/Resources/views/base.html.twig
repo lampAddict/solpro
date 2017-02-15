@@ -78,7 +78,7 @@
                 <ul>
                     <li>
                         <div>Активных лотов</div>
-                        <div class="pdleft3">{{ lots|length }}</div>
+                        <div class="pdleft3">{{ activeLotsNum }}</div>
                     </li>
                     {% for s in stat %}
                         <li class="pdleft20">
@@ -88,7 +88,7 @@
                     {% endfor %}
                     <li>
                         <div>Планируемых лотов</div>
-                        <div class="pdleft3">0</div>
+                        <div class="pdleft3">{{ plannedLotsNum }}</div>
                     </li>
                     <!--
                     <li class="pdleft20">

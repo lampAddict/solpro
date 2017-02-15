@@ -168,6 +168,7 @@ class import1CDataService{
                 $_route->setVehicleType( $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name'] );
 
                 if(    isset($route['vehicleCarringId'])
+                    && $route['vehicleCarringId'] != ''
                     && !is_null($data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'])
                 ){
                     $_route->setVehiclePayload( $data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'] );

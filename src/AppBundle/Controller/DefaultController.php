@@ -24,19 +24,27 @@ class DefaultController extends Controller
             ->getRepository('AppBundle:Lot')
             ->createQueryBuilder('l')
             ->leftJoin('l.routeId', 'r')
-            ->where('l.startDate <= CURRENT_DATE() AND l.auctionStatus = 1')
+            ->where('l.auctionStatus = 1')
             ->getQuery()
             ->getResult();
 
         $_lots = [];
+        $plannedLotsNum = $activeLotsNum = 0;
         /* @var $lot \AppBundle\Entity\Lot */
         foreach ($lots as $lot){
-            $k = $lot->getRouteId()->getRegionFrom().' - '.$lot->getRouteId()->getRegionTo();
-            if( !isset($_lots[$k]) ){
-                $_lots[ $k ] = 1;
+            if( $lot->getStartDate()->getTimestamp() <= time() ){
+                $k = $lot->getRouteId()->getRegionFrom().' - '.$lot->getRouteId()->getRegionTo();
+                if( !isset($_lots[$k]) ){
+                    $_lots[ $k ] = 1;
+                }
+                else{
+                    $_lots[ $k ]++;
+                }
+
+                $activeLotsNum++;
             }
             else{
-                $_lots[ $k ]++;
+                $plannedLotsNum++;
             }
         }
         
@@ -62,8 +70,9 @@ class DefaultController extends Controller
         }
 
         return $this->render('base.html.twig', array(
-             'lots' => $lots
-            ,'stat' => $_stat
+             'stat' => $_stat
+            ,'activeLotsNum'=>$activeLotsNum
+            ,'plannedLotsNum'=>$plannedLotsNum
             ,'routes_no_driver'=>$rnd
             ,'routes_sum'=>$rnc
         ));
