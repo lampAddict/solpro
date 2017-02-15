@@ -75,7 +75,7 @@ class AuctionController extends Controller
                         $lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );
 
                         //auction prolongation if bet was made during last minute
-                        if( $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60 - time() < 60 ){
+                        if( $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60 - time() < 2*60 ){
                             $lot->setDuration( $lot->getDuration() + 2 );
                         }
                         
