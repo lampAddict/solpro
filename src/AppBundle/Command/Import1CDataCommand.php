@@ -35,7 +35,7 @@ class Import1CDataCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $downloadFromFTP = $input->getArgument('downloadFromFTP');
-        if( $downloadFromFTP ){
+        if( $downloadFromFTP === 'true' ){
             $output->writeln('Connecting to ftp..');
             $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");//ftp.solpro.ru
             if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
