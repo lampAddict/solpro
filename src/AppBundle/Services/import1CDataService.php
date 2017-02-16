@@ -173,6 +173,9 @@ class import1CDataService{
                 ){
                     $_route->setVehiclePayload( $data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'] );
                 }
+                else{
+                    $_route->setVehiclePayload(' ');
+                }
 
                 $_route->setVehicleRegNumber( '' );
                 $_route->setTradeCost( $route['tradeCost'] );

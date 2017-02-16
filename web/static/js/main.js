@@ -156,8 +156,17 @@ $( document ).ready(function(){
             var totalHours = event.offset.totalDays * 24 + event.offset.hours;
             $this.html(event.strftime(totalHours + ':%M:%S'));
 
-            if( event.elapsed ){
-                sendLotAuctionEndRequest($this);
+            if(    event.type == 'finish'
+                && event.elapsed
+            ){
+                //if it's time to start auction
+                if( $this.parent().attr('class') == 'lotDoBid' ){
+                    location.reload();
+                }
+                //if auction has been ended
+                else{
+                    sendLotAuctionEndRequest($this);
+                }
             }
         });//.on('finish.countdown', sendLotAuctionEndRequest($this));
     });
@@ -167,7 +176,7 @@ $( document ).ready(function(){
         $.ajax({
             method: 'POST',
             url: 'lotAuctionEnd',
-            data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') },
+            data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') }
             //timeout: 3000
         })
         .done(function( response ){
@@ -178,8 +187,11 @@ $( document ).ready(function(){
                 $lot_tr.remove();
             }
         })
-        .fail(function(jqXHR, textStatus){
-            console.log(textStatus);
+        .fail(function( response ){
+            
+            console.log('FAIL');
+            console.log(response);
+            
             setTimeout( function(){sendLotAuctionEndRequest($this)}, 3000 );
         });
     }

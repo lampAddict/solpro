@@ -102,6 +102,7 @@ class LotController extends Controller
         if( time() >= ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) ){
             //delete lot price from redis
             $redis = $this->container->get('snc_redis.default');
+
             if( $redis->exists('lcp_'.$lot->getId()) ){
                 $redis->del('lcp_'.$lot->getId());
 
@@ -123,20 +124,17 @@ class LotController extends Controller
             //get lot off the auction
             $lot->setAuctionStatus(0);
 
-            //assign route to winner
-            $bet = $em
-                ->getRepository('AppBundle:Bet')
-                ->createQueryBuilder('b')
-                ->where('b.lot_id = '.intval($request->request->get('lot')))
-                ->orderBy('b.id', 'DESC')
-                ->setMaxResults( 1 )
-                ->getQuery()
-                ->getResult();
+            //get bets history and current lot owner
+            $sql = 'SELECT b.value AS bet, b.user_id AS uid FROM bet b WHERE b.lot_id = '.intval($request->request->get('lot')).' ORDER BY b.value ASC LIMIT 1';
+            $stmt = $em->getConnection()->prepare($sql);
+            $stmt->execute();
+            $bet = $stmt->fetchAll();
 
+            //assign route to winner
             if( !empty($bet) ){
                 /* @var $route \AppBundle\Entity\Route */
                 $route = $lot->getRouteId();
-                $route->setUserId($bet[0]->getUserId());
+                $route->setUserId($em->getRepository('AppBundle:User')->find($bet[0]['uid']));
                 $em->persist($route);
             }
 
