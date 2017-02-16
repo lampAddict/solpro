@@ -28,14 +28,14 @@ class Import1CDataCommand extends ContainerAwareCommand
             // the full command description shown when running the command with
             // the "--help" option
             ->setHelp("This command allows you to import auction lots data onto portal from 1C")
-            //->addArgument('downloadFromFTP', InputArgument::OPTIONAL, 'Download data from ftp ?')
+            ->addArgument('downloadFromFTP', InputArgument::OPTIONAL, 'Download data from ftp ?')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //$downloadFromFTP = $input->getArgument('downloadFromFTP');
-        //if( $downloadFromFTP ){
+        $downloadFromFTP = $input->getArgument('downloadFromFTP');
+        if( $downloadFromFTP ){
             $output->writeln('Connecting to ftp..');
             $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");//ftp.solpro.ru
             if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
@@ -44,7 +44,7 @@ class Import1CDataCommand extends ContainerAwareCommand
                 ftp_delete($conn_id, 'MessageFrom1C.xml');
             }
             ftp_close($conn_id);
-        //}
+        }
         $output->writeln('Import data started..');
 
         $data = new Crawler();
