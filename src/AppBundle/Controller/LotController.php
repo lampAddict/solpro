@@ -90,28 +90,40 @@ class LotController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-        
+
+        $redis = $this->container->get('snc_redis.default');
+        $lid = intval($request->request->get('lot'));
+        //lae - lot auction end
+        if( $redis->exists('lae_'.$lid) ){
+            return new JsonResponse(['result'=>true]);
+        }
+
         $em = $this->getDoctrine()->getManager();
+
         /* @var $lot \AppBundle\Entity\Lot */
-        $lot = $em->getRepository('AppBundle:Lot')->findOneBy(['id'=>intval($request->request->get('lot')), 'auctionStatus'=>1]);
+        $lot = $em->getRepository('AppBundle:Lot')->findOneBy(['id'=>$lid, 'auctionStatus'=>1]);
         
         //if there is no lot found then auction ended up successfully (probably)
-        if( !$lot )return new JsonResponse(['result'=>true]);
+        if( !$lot ){
+            $redis->set('lae_'.$lid, 1);
+            $redis->expire('lae_'.$lid, 120);
+            return new JsonResponse(['result'=>true]);
+        }
 
         //check auction end time
         if( time() >= ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) ){
             //delete lot price from redis
-            $redis = $this->container->get('snc_redis.default');
 
-            if( $redis->exists('lcp_'.$lot->getId()) ){
-                $redis->del('lcp_'.$lot->getId());
+            //lcp - lot current price
+            if( $redis->exists('lcp_'.$lid) ){
+                $redis->del('lcp_'.$lid);
 
                 //delete lot id from redis
                 $l_ids = $redis->get('lcp');
                 if( $l_ids ){
                     $l_ids = explode(',', $l_ids);
                     foreach( $l_ids as $indx=>$l_id ){
-                        if( $l_id == $lot->getId() ){
+                        if( $l_id == $lid ){
                             unset($l_ids[$indx]);
                             break;
                         }
@@ -125,7 +137,7 @@ class LotController extends Controller
             $lot->setAuctionStatus(0);
 
             //get bets history and current lot owner
-            $sql = 'SELECT b.value AS bet, b.user_id AS uid FROM bet b WHERE b.lot_id = '.intval($request->request->get('lot')).' ORDER BY b.value ASC LIMIT 1';
+            $sql = "SELECT b.value AS bet, b.user_id AS uid FROM bet b WHERE b.lot_id = $lid ORDER BY b.value ASC LIMIT 1";
             $stmt = $em->getConnection()->prepare($sql);
             $stmt->execute();
             $bet = $stmt->fetchAll();
@@ -142,6 +154,8 @@ class LotController extends Controller
 
             $em->flush();
 
+            $redis->set('lae_'.$lid, 1);
+            $redis->expire('lae_'.$lid, 120);
             return new JsonResponse(['result'=>true]);
         }
 
