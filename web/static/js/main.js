@@ -155,7 +155,10 @@ $( document ).ready(function(){
                 $('#routesPageContainer > .lotInfoWindow.mtop60').remove();
 
                 var $routeTr = $('.route-'+routeId);
-                $routeTr.scrollTop();
+                //$routeTr.scrollTop();
+                $('html, body').animate({
+                    scrollTop: $routeTr.offset().top
+                }, 800);
                 $routeTr.find('.routeAssignedDriver').html('');
                 $routeTr.find('.routeAttachedVehicle').html('');
 
