@@ -247,9 +247,9 @@ $( document ).ready(function(){
                 bets[_lotId].push( _bet );
                 //attach handler
                 $this.parent().submit(function(){
-                    $('html, body').animate({
-                        scrollTop: $this.offset().top
-                    }, 500);
+                    //$('html, body').animate({
+                    //    scrollTop: $this.offset().top
+                    //}, 500);
 
                     var url = window.location.toString();
                     url = url.replace(/#lot-[\d]+/g, '');
