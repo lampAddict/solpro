@@ -251,8 +251,9 @@ $( document ).ready(function(){
                         scrollTop: $this.offset().top
                     }, 500);
 
-                    document.location.href = document.location.href.replace(/#lot-[\d]+/g, '');
-                    document.location.href = document.location.href + '#lot-' + _lotId;
+                    var url = window.location.toString();
+                    url = url.replace(/#lot-[\d]+/g, '');
+                    document.location.href = url + '#lot-' + _lotId;
                 });
                 //call submit routine
                 $this.parent().submit();
