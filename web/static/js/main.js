@@ -250,6 +250,9 @@ $( document ).ready(function(){
                     $('html, body').animate({
                         scrollTop: $this.offset().top
                     }, 500);
+
+                    document.location.href.replace(/#lot-[\d]+/g, '');
+                    document.location.href = document.location.href + '#lot-' + _lotId;
                 });
                 //call submit routine
                 $this.parent().submit();

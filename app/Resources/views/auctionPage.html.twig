@@ -87,7 +87,7 @@
                 </thead>
                 <tbody>
                     {% for lot in lots %}
-                        <tr>
+                        <tr id="lot-{{ lot.getId }}">
                             <td align="center"><a class="showLotRouteInfo">{{ lot.getRouteId.getCode }}</a></td>
                             <td class="lotDirection">{{ lot.getRouteId.getRegionFrom }} &xrarr;<br />{{ lot.getRouteId.getRegionTo }}</td>
                             <td class="lotGetInTime">{{ lot.getRouteId.getLoadDate|date('d.m.Y H:i') }}</td>
