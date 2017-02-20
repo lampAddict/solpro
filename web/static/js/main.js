@@ -245,7 +245,11 @@ $( document ).ready(function(){
             ){
                 $this.attr('disabled', 'disabled');
                 bets[_lotId].push( _bet );
-                $this.parent().submit();
+                $this.parent().submit(function(){
+                    $('html, body').animate({
+                        scrollTop: $this.offset().top
+                    }, 500);
+                });
             }
         });
     });
