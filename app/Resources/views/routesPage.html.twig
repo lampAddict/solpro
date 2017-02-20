@@ -136,19 +136,25 @@
 
                                     <div data-routeId="{{ route.getId }}">
                                         {% if route.getDriverId|length > 0 %}
-                                            <div style="float: left; margin-right: 10px; width: 25%; height: 115px;">
+                                            <div style="float: left; margin: 0 10px 5px 0; width: 25%; height: 75px;">
                                                 <div class="routeDriverName">{{ route.getDriverId.getFio }}</div>
                                                 <div class="routeDriverPassportData">{{ route.getDriverId.getPassport }}</div>
+                                                <div class="routeDriverPhoneNumber">{{ route.getDriverId.getPhone }}</div>
                                             </div>
                                         {% endif %}
 
                                         {% if route.getVehicleId|length > 0 %}
-                                            <div style="float:left; height: 115px;">
+                                            <div style="float: left; margin-bottom: 5px; width: 310px; height: 75px;">
                                                 <div class="routeVehicleName">{{ route.getVehicleId.getName }}</div>
                                                 <div class="routeVehicleRegNum">{{ route.getVehicleId.getRegNum }}</div>
                                             </div>
                                         {% endif %}
 
+                                        {% if route.getDriverId|length > 0 %}
+                                            <div class="routeDeleteDriver">
+                                                <a class="btn btn-danger">Удалить водителя и машину</a>
+                                            </div>
+                                        {% endif %}
                                         <div class="routeDriverHeader">Назначить водителя и машину:</div>
                                         <div class="routeAddDriverWindow">
                                             <div class="routeAddDriverSelect">

@@ -37,6 +37,7 @@
 
 body {
     margin:0;
+    font-size: 12px;
 }
 
 ul.topnav {
@@ -681,6 +682,15 @@ span#routeStatus{
 
 #routeDeleteDriver{
     float: right;
+}
+
+.routeDeleteDriver{
+    float: left;
+    margin-bottom: 15px;
+}
+
+.routeDeleteDriver .btn-danger{
+    padding: 0 4px;
 }
 
 .routeAddDriverSelect, .routeAddVehicleSelect{

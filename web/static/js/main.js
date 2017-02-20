@@ -140,7 +140,10 @@ $( document ).ready(function(){
                 //delete driver information from route info table
                 $this.parent().find('.routeDriverName').html('');
                 $this.parent().find('.routeDriverPassportData').html('');
-                $this.parent().find('.routeDriverVehicle').html('');
+                $this.parent().find('.routeDriverPhoneNumber').html('');
+
+                $this.parent().find('.routeVehicleName').html('');
+                $this.parent().find('.routeVehicleRegNum').html('');
 
                 //delete driver's info from routes table
                 location.reload();

@@ -108,14 +108,11 @@ class RoutesController extends Controller
         /* @var $route \AppBundle\Entity\Route */
         $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'user_id'=>$this->getUser()->getId()]);
         if( $route ){
-            /* @var $driver \AppBundle\Entity\Driver */
-            $driver = $em->getRepository('AppBundle:Driver')->findOneBy(['route_id'=>$route->getId(), 'user_id'=>$this->getUser()->getId()]);
-            if( $driver ){
-                $driver->setRouteId(null);
-                $em->persist($driver);
-                $em->flush();
-                return new JsonResponse(['result'=>true]);
-            }
+            $route->setDriverId(null);
+            $route->setVehicleId(null);
+            $em->persist($route);
+            $em->flush();
+            return new JsonResponse(['result'=>true]);
         }
 
         return new JsonResponse(['result'=>false]);
