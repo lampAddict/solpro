@@ -89,7 +89,7 @@
                 </thead>
                 <tbody>
                     {% for route in routes %}
-                        <tr>
+                        <tr class="route-{{ route.getId }}">
                             <td class="routeStatus">{{ route.getStatus }}</td>
                             <td align="center"><a class="showLotRouteInfo">{{ route.getCode }}</a></td>
                             <td class="routeDirection">{{ route.getRegionFrom }} &xrarr;<br />{{ route.getRegionTo }}</td>

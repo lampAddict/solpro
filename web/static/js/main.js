@@ -119,21 +119,22 @@ $( document ).ready(function(){
                     ,route: $(this).parent().data('routeId')
                 }
             })
-                .done(function( response ){
-                    if( response.result ){
-                        location.reload();
-                    }
-                });
+            .done(function( response ){
+                if( response.result ){
+                    location.reload();
+                }
+            });
         }
     });
 
     //remove driver from route
     $('.routeDeleteDriver').click(function(e){
         var $this = $(e.currentTarget);
+        var routeId = $this.parent().attr('data-routeId');
         $.ajax({
             method: 'POST',
             url: 'removeDriver',
-            data: { route: $(e.currentTarget).parent().attr('data-routeId') }
+            data: { route: routeId }
         })
         .done(function( response ){
             if( response.result ){
@@ -146,7 +147,21 @@ $( document ).ready(function(){
                 $this.parent().find('.routeVehicleRegNum').html('');
 
                 //delete driver's info from routes table
-                location.reload();
+                //document.location.reload(true);
+
+                $('#routesFilter').show();
+                $('#routesTable').show();
+
+                $('#routesPageContainer > .lotInfoWindow.mtop60').remove();
+
+                var $routeTr = $('.route-'+routeId);
+                $routeTr.scrollTop();
+                $routeTr.find('.routeAssignedDriver').html('');
+                $routeTr.find('.routeAttachedVehicle').html('');
+
+                $routeTr.next().find('.routeDriverName').parent().hide();
+                $routeTr.next().find('.routeVehicleName').parent().hide();
+                $routeTr.next().find('.routeDeleteDriver').hide();
             }
         });
     });
