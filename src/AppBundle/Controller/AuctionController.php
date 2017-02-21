@@ -3,8 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bet;
+use AppBundle\Entity\Filter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AuctionController extends Controller
@@ -135,10 +137,92 @@ class AuctionController extends Controller
             }
         }
 
+
+        //get user filter settings
+        $_filters = [];
+        $filters = $em
+            ->getRepository('AppBundle:Filter')
+            ->createQueryBuilder('f')
+            ->where('f.uid = '.$this->getUser()->getId())
+            ->andWhere('f.type = 0')
+            ->getQuery()
+            ->getResult();
+
+        if( !empty($filters) ){
+            foreach( $filters as $filter ){
+                /* @var $filter \AppBundle\Entity\Filter */
+                $_filters = json_decode($filter->getParams());
+            }
+        }
+
         return $this->render('auctionPage.html.twig', array(
              'lots' => $lots
             ,'forms' => $forms
             ,'bets' => $_bets
+            ,'filters'=> $_filters
         ));
+    }
+
+    /**
+     * @Route("/auctionSetFilter", name="setFilter")
+     */
+    public function auctionSetFilter(Request $request){
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $filter = $em
+            ->getRepository('AppBundle:Filter')
+            ->createQueryBuilder('f')
+            ->where('f.uid = '.$this->getUser()->getId())
+            ->andWhere('f.type = '.intval($request->request->get('type')))
+            ->getQuery()
+            ->getResult();
+
+        if( !empty($filter) ){
+            /* @var $filter \AppBundle\Entity\Filter */
+            $filter = $filter[0];
+        }
+        else{
+            $filter = new Filter();
+            $filter->setUid($this->getUser()->getId());
+            $filter->setType($request->request->get('type'));
+        }
+
+        $filter->setParams(json_encode($request->request->get('params')));
+        $em->persist($filter);
+        $em->flush();
+        
+        return new JsonResponse(['result'=>true]);
+    }
+
+    /**
+     * @Route("/auctionUnsetFilter", name="unSetFilter")
+     */
+    public function auctionUnsetFilter(Request $request){
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $filter = $em
+            ->getRepository('AppBundle:Filter')
+            ->createQueryBuilder('f')
+            ->where('f.uid = '.$this->getUser()->getId())
+            ->andWhere('f.type = 0')
+            ->getQuery()
+            ->getResult();
+
+        if( !empty($filter) ){
+            $em->remove($filter[0]);
+            $em->flush();
+            return new JsonResponse(['result'=>true]);
+        }
+        return new JsonResponse(['result'=>false]);
     }
 }

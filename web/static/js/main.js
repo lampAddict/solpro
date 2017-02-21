@@ -340,4 +340,39 @@ $( document ).ready(function(){
     };
 
     setInterval( updateLotPrices, 3000 );
+
+    //set auction filters
+    $('.btnSetAuctionFilter').click(function(e){
+        $.ajax({
+            method: 'POST',
+            url: 'auctionSetFilter',
+            data: {type: 0, params: {'status_active':($('#lotFilterTradeActive').is(':checked')?1:0), 'status_planned':($('#lotFilterPlanned').is(':checked')?1:0)} }
+        })
+        .done(function( response ){
+            if( response.result ){
+                location.reload();
+            }
+        })
+        .fail(function( response ){
+            console.log('FAIL');
+            console.log(response);
+        });
+    });
+
+    //unset auction filters
+    $('.btnUnsetAuctionFilter').click(function(e){
+        $.ajax({
+            method: 'POST',
+            url: 'auctionUnsetFilter'
+        })
+        .done(function( response ){
+            if( response.result ){
+                location.reload();
+            }
+        })
+        .fail(function( response ){
+            console.log('FAIL');
+            console.log(response);
+        });
+    });
 });

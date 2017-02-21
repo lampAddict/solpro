@@ -12,61 +12,67 @@
                 <div id="filterBlock" class="half dnone">
                     <table cellpadding="0" cellspacing="0">
                         <thead>
-                        <tr>
-                            <th>Статус лота</th>
-                            <th>Направление</th>
-                            <th>Вид ТС</th>
-                            <th>Дата подачи</th>
-                            <th>Ставка</th>
-                        </tr>
+                            <tr>
+                                <th>Статус лота</th>
+                                <th>Направление</th>
+                                <th>Вид ТС</th>
+                                <th>Дата подачи</th>
+                                <th>Ставка</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="lotFilterStatus">
-                                <span>Активные</span><input type="checkbox" id="lotFilterTradeActive">
-                                <span>Планируемые</span><input type="checkbox" id="lotFilterPlanned">
-                            </td>
-                            <td class="lotFilterDirection">
-                                <div>
-                                    <span>Откуда</span>
-                                    <select id="lotFilterDirFrom">
-                                        <option selected="selected">&mdash;</option>
-                                        <option>Саратов</option>
-                                        <option>Аткарск</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <span>Куда</span>
-                                    <select id="lotFilterDirTo">
-                                        <option selected="selected">&mdash;</option>
-                                        <option>Павловский Посад</option>
-                                        <option>Тула</option>
-                                    </select>
-                                </div>
-                            </td>
-                            <td class="lotFilterVehicleType">
-                                <div><span>Реф</span><input type="checkbox" id="lotFilterVTRef"></div>
-                                <div><span>Тент</span><input type="checkbox" id="lotFilterVTTen"></div>
-                                <div><span>Изотерм</span><input type="checkbox" id="lotFilterVTIso"></div>
-                                <div><span>Цистерна</span><input type="checkbox" id="lotFilterVTCis"></div>
-                            </td>
-                            <td class="lotFilterGetInTime">
-                                <div>
-                                    <span>С</span>
-                                    <input type="datetime-local" id="lotFilterTimeFrom">
-                                </div>
-                                <div>
-                                    <span>По</span>
-                                    <input type="datetime-local" id="lotFilterTimeTo">
-                                </div>
-                            </td>
-                            <td class="lotFilterBids">
-                                <div><span>Ставку делал</span><input type="checkbox" id="lotFilterDoBid"></div>
-                                <div><span>Ставку не делал</span><input type="checkbox" id="lotFilterDontBid"></div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td class="lotFilterStatus">
+                                    <span>Активные</span><input type="checkbox" id="lotFilterTradeActive" {% if filters|length > 0 and filters.status_active %}checked="checked"{% endif %}>
+                                    <span>Планируемые</span><input type="checkbox" id="lotFilterPlanned" {% if filters|length > 0 and filters.status_planned %}checked="checked"{% endif %}>
+                                </td>
+                                <td class="lotFilterDirection">
+                                    <div>
+                                        <span>Откуда</span>
+                                        <select id="lotFilterDirFrom">
+                                            <option selected="selected">&mdash;</option>
+                                            <option>Саратов</option>
+                                            <option>Аткарск</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <span>Куда</span>
+                                        <select id="lotFilterDirTo">
+                                            <option selected="selected">&mdash;</option>
+                                            <option>Павловский Посад</option>
+                                            <option>Тула</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="lotFilterVehicleType">
+                                    <div><span>Реф</span><input type="checkbox" id="lotFilterVTRef"></div>
+                                    <div><span>Тент</span><input type="checkbox" id="lotFilterVTTen"></div>
+                                    <div><span>Изотерм</span><input type="checkbox" id="lotFilterVTIso"></div>
+                                    <div><span>Цистерна</span><input type="checkbox" id="lotFilterVTCis"></div>
+                                </td>
+                                <td class="lotFilterGetInTime">
+                                    <div>
+                                        <span>С</span>
+                                        <input type="datetime-local" id="lotFilterTimeFrom">
+                                    </div>
+                                    <div>
+                                        <span>По</span>
+                                        <input type="datetime-local" id="lotFilterTimeTo">
+                                    </div>
+                                </td>
+                                <td class="lotFilterBids">
+                                    <div><span>Ставку делал</span><input type="checkbox" id="lotFilterDoBid"></div>
+                                    <div><span>Ставку не делал</span><input type="checkbox" id="lotFilterDontBid"></div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
+                    <div style="float: right">
+                        <a class="btn btn-default btnSetAuctionFilter">Сохранить</a>
+                    </div>
+                    <div style="float: left">
+                        <a class="btn btn-danger btnUnsetAuctionFilter">Сбросить фильтры</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,7 +92,24 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% set showLot = true %}
                     {% for lot in lots %}
+                        {% if filters|length > 0 %}
+                            {% if filters.status_active %}
+                                {% if lot.getStartDate.timestamp > date().timestamp or (lot.getStartDate.timestamp + lot.getDuration*60) < date().timestamp%}
+                                    {% set showLot = false %}
+                                {% endif %}
+                            {% endif %}
+                            {% if filters.status_planned %}
+                                {% if lot.getStartDate.timestamp < date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp%}
+                                    {% set showLot = false %}
+                                {% endif %}
+                            {% endif %}
+                            {% if filters.status_active and filters.status_planned %}
+                                {% set showLot = true %}
+                            {% endif %}
+                        {% endif %}
+                        {% if showLot %}
                         <tr id="lot-{{ lot.getId }}">
                             <td align="center"><a class="showLotRouteInfo">{{ lot.getRouteId.getCode }}</a></td>
                             <td class="lotDirection">{{ lot.getRouteId.getRegionFrom }} &xrarr;<br />{{ lot.getRouteId.getRegionTo }}</td>
@@ -99,8 +122,8 @@
 
                             <td id="{{ lot.getId }}" class="{% if lot.getId in bets|keys and app.user.id == bets[ lot.getId ]['owner'] %}{{'myBet '}}{% elseif lot.getId in bets|keys and app.user.id in bets[ lot.getId ]['history'] and app.user.id != bets[ lot.getId ]['owner'] %}{{'notMyBet '}}{% endif %}lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
 
-                            <td class="lotDoBid" align="right">
-                                {% if lot.getStartDate.timestamp > date().timestamp %}До начала торгов:<br /><span class="lotTimeLeft">{{ lot.getStartDate.timestamp | date('Y/m/d H:i:s') }}</span>{% else %}
+                            <td class="lotDoBid" align="center">
+                                {% if lot.getStartDate.timestamp > date().timestamp %}Начало в {{ lot.getStartDate.timestamp | date('H:i:s d.m.Y') }}<br /><span class="lotAuctionWillStartAt">До начала торгов:</span><span class="lotTimeLeft floatLeft">{{ lot.getStartDate.timestamp | date('Y/m/d H:i:s') }}</span>{% else %}
                                     {{ form_start(forms[lot.getId]) }}
                                         {{ form_widget(forms[lot.getId]) }}
                                         <input class="btn btn-default doBid" type="button" data-tradeStep="{{ lot.getRouteId.getTradeStep }}" value="Ставка &#8681;" />
@@ -182,6 +205,8 @@
                                 </div>
                             </td>
                         </tr>
+                        {% endif %}
+                        {% set showLot = true %}
                     {% endfor %}
                 </tbody>
             </table>

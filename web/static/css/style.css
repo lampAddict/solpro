@@ -712,7 +712,12 @@ span#routeStatus{
 }
 
 .lotTimeLeft {
-    width: 90px;
+    width: 55px;
+    text-align: center;
+}
+
+.floatLeft{
+    float: left;
 }
 
 td.lotTimeLeftTimer{
@@ -768,4 +773,16 @@ tr.zeroHeight{
     float: left;
     width: 60%;
     margin-top: 10px;
+}
+
+.btnSetAuctionFilter, .btnUnsetAuctionFilter{
+    float: right;
+    margin-top: 10px;
+    padding: 2px 4px !important;
+}
+
+.lotAuctionWillStartAt{
+    width: 100px;
+    float: left;
+    margin-left: 23px;
 }
