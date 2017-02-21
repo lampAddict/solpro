@@ -292,7 +292,7 @@ $( document ).ready(function(){
                             }
                         }
                         //reload page if need to show new lot prices data
-                        else if( lotPricesTableCount < lotPricesDataCount ){
+                        else if( lotPricesTableCount > 0 && lotPricesDataCount > 0 && lotPricesTableCount < lotPricesDataCount ){
                             location.reload();
                         }
                     }
