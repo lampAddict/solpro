@@ -17,6 +17,9 @@ class export1CDataService
 
     private function exportData($recNum){
         $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auction_status'=>0]);
+        
+        error_log(var_export($auction_end_lots, true));
+        
         if( !empty($auction_end_lots) ){
 
             $stmt = $this->em->getConnection()->prepare('SELECT send_num FROM exchange ORDER BY id DESC LIMIT 1');

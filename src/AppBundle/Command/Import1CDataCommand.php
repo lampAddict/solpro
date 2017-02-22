@@ -195,8 +195,10 @@ class Import1CDataCommand extends ContainerAwareCommand
             }
             
             //Do export
+            $output->writeln('Export');
             $export1CDataManager = $this->getContainer()->get('app.export1cdata');
             if( $export1CDataManager->exportData($message_num) ){
+                $output->writeln('Upload xml to ftp');
                 $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");
                 if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
                 if( ftp_put($conn_id, 'messageFromPortal.xml', 'data/messageFromPortal.xml', FTP_BINARY) ){
