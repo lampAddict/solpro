@@ -16,7 +16,7 @@ class export1CDataService
     }
 
     public function exportData($recNum){
-        $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auction_status'=>0]);
+        $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auctionStatus'=>0]);
         
         error_log(var_export($auction_end_lots, true));
         
