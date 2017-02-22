@@ -15,7 +15,7 @@ class export1CDataService
         $this->um = $userManager;
     }
 
-    private function exportData($recNum){
+    public function exportData($recNum){
         $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auction_status'=>0]);
         
         error_log(var_export($auction_end_lots, true));
