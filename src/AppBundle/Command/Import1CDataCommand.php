@@ -47,10 +47,14 @@ class Import1CDataCommand extends ContainerAwareCommand
         }
         $output->writeln('Import data started..');
 
+        //Prepare data
         $data = new Crawler();
         $data->addXmlContent(file_get_contents('data/data.xml'));
 
         if( $data ){
+            //Send number
+            $message_num = $data->filter('MessageFrom1C')->attr('sendNumber');
+            
             //Parsing references block
             $refs = $data->filter('MessageFrom1C > references')->children();
             if( !empty($refs) ){
@@ -176,13 +180,29 @@ class Import1CDataCommand extends ContainerAwareCommand
                  'lots' => $this->lots
                 ,'routes' => $this->routes
                 ,'ref' => $this->refs
+                ,'message_num' => $message_num
             ];
             
+            //Do import
             $import1CDataManager = $this->getContainer()->get('app.import1cdata');
             if( $import1CDataManager->import1CData($data) ){
                 //clear cached lots data
                 $this->getContainer()->get('snc_redis.default')->flushall();
                 rename('data/data.xml', 'data/data_imported/data_'.date('H_i_s__d_m_Y', time()).'.xml');
+            }
+            else{
+                unlink('data/data.xml');
+            }
+            
+            //Do export
+            $export1CDataManager = $this->getContainer()->get('app.export1cdata');
+            if( $export1CDataManager->exportData($message_num) ){
+                $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");
+                if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
+                if( ftp_put($conn_id, 'messageFromPortal.xml', 'data/messageFromPortal.xml', FTP_BINARY) ){
+                    rename('data/messageFromPortal.xml', 'data/data_exported/data_'.date('H_i_s__d_m_Y', time()).'.xml');
+                }
+                ftp_close($conn_id);
             }
         }
     }

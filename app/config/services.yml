@@ -10,3 +10,7 @@ services:
     app.import1cdata:
         class: AppBundle\Services\import1CDataService
         arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager" ]
+
+    app.export1cdata:
+            class: AppBundle\Services\export1CDataService
+            arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager" ]

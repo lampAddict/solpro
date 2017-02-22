@@ -246,16 +246,6 @@ $( document ).ready(function(){
                 $this.attr('disabled', 'disabled');
                 bets[_lotId].push( _bet );
                 //attach handler
-                $this.parent().submit(function(){
-                    //$('html, body').animate({
-                    //    scrollTop: $this.offset().top
-                    //}, 500);
-
-                    var url = window.location.toString();
-                    url = url.replace(/#lot-[\d]+/g, '');
-                    document.location.href = url + '#lot-' + _lotId;
-                });
-                //call submit routine
                 $this.parent().submit();
             }
         });

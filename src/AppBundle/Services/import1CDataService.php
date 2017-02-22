@@ -2,6 +2,7 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Entity\Exchange;
 use AppBundle\Entity\Lot;
 use AppBundle\Entity\Order;
 use AppBundle\Entity\Route;
@@ -12,6 +13,7 @@ use AppBundle\Entity\RefPartner;
 use AppBundle\Entity\RefVehicleType;
 use AppBundle\Entity\RefCarrier;
 use AppBundle\Entity\RefCarrierUser;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 class import1CDataService{
@@ -23,9 +25,7 @@ class import1CDataService{
         $this->em = $entityManager;
         $this->um = $userManager;
     }
-
-
-
+    
     private function importReferences($entityName, $refsData, $fields=['id', 'name']){
 
         $className = 'AppBundle\Entity\\'.$entityName;
@@ -53,6 +53,12 @@ class import1CDataService{
     }
 
     public function import1CData(array $data){
+
+        //check if data has been already loaded
+        $data_loaded = $this->em->getRepository('AppBundle:Exchange')->findOneBy(['recNum'=>$data['message_num']]);
+        if( !is_null($data_loaded) ){
+            return false;
+        }
 
         //import lot status references
         if( !empty($data['ref']['lotStatus']) ){
@@ -267,6 +273,14 @@ class import1CDataService{
 
             echo "Lots imported\n";
         }
+
+        //save received message number to db
+        $exchange = new Exchange();
+        $exchange->setRecNum($data['message_num']);
+        $exchange->setSendNum( 0 );
+        $exchange->setDate( new \DateTime(date('c', time())) );
+        $this->em->persist($exchange);
+        $this->em->flush();
 
         echo "Data import done\n\n";
         
