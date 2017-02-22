@@ -23,7 +23,7 @@ class export1CDataService
             $stmt->execute();
             $sendNum = $stmt->fetchAll();
             $cdate = new \DateTime(date('c', time()));
-            $xml = '<?xml version="1.0" encoding="UTF-8"?><messageFromPortal sendNumber="'.($sendNum[0]['send_num'] + 1).'" recNumber="'.$recNum.'" messageCreationTime="'.$cdate.'">';
+            $xml = '<?xml version="1.0" encoding="UTF-8"?><messageFromPortal sendNumber="'.($sendNum[0]['send_num'] + 1).'" recNumber="'.$recNum.'" messageCreationTime="'.$cdate->format('c').'">';
             $xml .= '<lots>';
             foreach( $auction_end_lots as $lot){
                 /* @var $lot \AppBundle\Entity\Lot */
