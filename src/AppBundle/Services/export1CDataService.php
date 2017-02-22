@@ -22,8 +22,8 @@ class export1CDataService
             $stmt = $this->em->getConnection()->prepare('SELECT send_num FROM exchange ORDER BY id DESC LIMIT 1');
             $stmt->execute();
             $sendNum = $stmt->fetchAll();
-
-            $xml = '<?xml version="1.0" encoding="UTF-8"?><messageFromPortal sendNumber="'.($sendNum[0]['send_num'] + 1).'" recNumber="'.$recNum.'" messageCreationTime="'.(new DateTime(date('c', time()))).'">';
+            $cdate = new \DateTime(date('c', time()));
+            $xml = '<?xml version="1.0" encoding="UTF-8"?><messageFromPortal sendNumber="'.($sendNum[0]['send_num'] + 1).'" recNumber="'.$recNum.'" messageCreationTime="'.$cdate.'">';
             $xml .= '<lots>';
             foreach( $auction_end_lots as $lot){
                 /* @var $lot \AppBundle\Entity\Lot */
