@@ -55,7 +55,7 @@ class import1CDataService{
     public function import1CData(array $data){
 
         //check if data has been already loaded
-        $data_loaded = $this->em->getRepository('AppBundle:Exchange')->findOneBy(['recNum'=>$data['message_num']]);
+        $data_loaded = $this->em->getRepository('AppBundle:Exchange')->findOneBy(['recNum'=>$data['sendNum']]);
         if( !is_null($data_loaded) ){
             return false;
         }

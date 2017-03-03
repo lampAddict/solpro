@@ -104,6 +104,7 @@ class export1CDataService
             $xml .= $lots;
             $xml .= '   </messageFromPortal>';
             file_put_contents('data/messageFromPortal.xml', $xml);
+            
             return true;
         }
         
