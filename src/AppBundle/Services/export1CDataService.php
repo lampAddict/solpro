@@ -66,7 +66,7 @@ class export1CDataService
                 /* @var $route \AppBundle\Entity\Route */
                 $routes .= '<route>'
                             .'<id>'.$route->getId1C().'</id>'
-                            .'<carrierId>'.$user1cIds[ $route->getUserId()->getUsername() ].'</carrierId>'
+                            .'<carrierId>'.(is_null($route->getUserId()) ? '' : $user1cIds[ $route->getUserId()->getUsername() ]).'</carrierId>'
                             .'<tradeCost>'.$routesPrices[ $route->getId() ].'</tradeCost>'
                         .'</route>';
 
