@@ -110,11 +110,11 @@ class export1CDataService
             $xml .= $lots;
             $xml .= '</messageFromPortal>';
 
-            echo "xml data composed\n";
+            echo "Xml data composed\n";
 
             file_put_contents('data/messageFromPortal.xml', $xml);
 
-            echo "xml file created\n";
+            echo "Xml file created\n";
             
             return true;
         }
