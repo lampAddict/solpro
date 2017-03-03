@@ -57,6 +57,8 @@ class export1CDataService
                 $user1cIds[ $refCarrierUser->getName() ] = $refCarrierUser->getId1C();
             }
 
+            echo "routes data composition\n";
+
             $routesStartPrices = [];
             $q = $this->em->getConnection()->prepare('SELECT user_id, id1c, trade_cost FROM route WHERE id IN('.implode(',', $routesIds).')');
             $q->execute();
@@ -64,11 +66,11 @@ class export1CDataService
             $routes = '<routes>';
             foreach( $routesArr as $route ){
                 /* @var $route \AppBundle\Entity\Route */
-                $routes .= ' <route>
-                                <id>'.$route->getId1C().'</id>
-                                <carrierId>'.$user1cIds[ $route->getUserId()->getUsername() ].'</carrierId>
-                                <tradeCost>'.$routesPrices[ $route->getId() ].'</tradeCost>
-                             </route>';
+                $routes .= " <route>
+                                <id>".$route->getId1C()."</id>
+                                <carrierId>".$user1cIds[ $route->getUserId()->getUsername() ]."</carrierId>
+                                <tradeCost>".$routesPrices[ $route->getId() ]."</tradeCost>
+                             </route>";
 
                 $routesStartPrices[ $route->getId() ] = $route->getTradeCost();
             }
@@ -80,6 +82,8 @@ class export1CDataService
                 /* @var $refLotStatus \AppBundle\Entity\RefLotStatus */
                 $lot1cStatus[ $refLotStatus->getId() ] = $refLotStatus->getId1C();
             }
+
+            echo "lots data composition\n";
 
             $lots = '<lots>';
             foreach( $auction_end_lots as $lot ){
@@ -95,18 +99,18 @@ class export1CDataService
                     $lotStatusId = 5; //лот расторгован
                 }
 
-                $lots .= '<lot>
-                            <id>'.$lot->getId1C().'</id>
-                            <statusId>'.$lot1cStatus[ $lotStatusId ].'</statusId>
-                          </lot>';
+                $lots .= "<lot>
+                            <id>".$lot->getId1C()."</id>
+                            <statusId>".$lot1cStatus[ $lotStatusId ]."</statusId>
+                          </lot>";
             }
-            $lots .= '</lots>';
+            $lots .= "</lots>";
 
             $xml = ' <?xml version="1.0" encoding="UTF-8"?>
                         <messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
             $xml .= $routes;
             $xml .= $lots;
-            $xml .= '   </messageFromPortal>';
+            $xml .= "   </messageFromPortal>";
 
             echo "xml data composed\n";
 
