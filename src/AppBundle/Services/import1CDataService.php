@@ -163,15 +163,20 @@ class import1CDataService{
                     $_route->setCarrier( '' );
                 }
 
+                $routeStatus      = isset($data['ref']['routeStatuse'][ $route['statusId'] ]) ? $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] : '';
+                $routeRegionFrom  = isset($data['ref']['region'][ $route['loadRegionId'] ]) ? $data['ref']['region'][ $route['loadRegionId'] ]['name'] : '';
+                $routeRegionTo    = isset($data['ref']['region'][ $route['unloadRegionId'] ]) ? $data['ref']['region'][ $route['unloadRegionId'] ]['name'] : '';
+                $routeVehicleType = isset($data['ref']['vehicleType'][ $route['vehicleTypeId'] ]) ? $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name']: '';
+
                 $_route->setId1C( $route['id'] );
                 $_route->setLoadDate( new \DateTime($route['loadDate']) );
                 $_route->setRouteDirectAssign( $route['routeType'] );
                 $_route->setCode( $route['code'] );
                 $_route->setName( $route['name'] );
-                $_route->setStatus( $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] );
-                $_route->setRegionFrom( $data['ref']['region'][ $route['loadRegionId'] ]['name'] );
-                $_route->setRegionTo( $data['ref']['region'][ $route['unloadRegionId'] ]['name'] );
-                $_route->setVehicleType( $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name'] );
+                $_route->setStatus( $routeStatus );
+                $_route->setRegionFrom( $routeRegionFrom );
+                $_route->setRegionTo( $routeRegionTo );
+                $_route->setVehicleType( $routeVehicleType );
 
                 if(    isset($route['vehicleCarringId'])
                     && $route['vehicleCarringId'] != ''
