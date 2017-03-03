@@ -53,7 +53,8 @@ class Import1CDataCommand extends ContainerAwareCommand
 
         if( $data ){
             //Send number
-            $message_num = $data->filter('MessageFrom1C')->attr('sendNumber');
+            $sendNum = $data->filter('MessageFrom1C')->attr('sendNumber');
+            $recNum = $data->filter('MessageFrom1C')->attr('recNumber');
             
             //Parsing references block
             $refs = $data->filter('MessageFrom1C > references')->children();
@@ -180,7 +181,8 @@ class Import1CDataCommand extends ContainerAwareCommand
                  'lots' => $this->lots
                 ,'routes' => $this->routes
                 ,'ref' => $this->refs
-                ,'message_num' => $message_num
+                ,'sendNum' => $sendNum
+                ,'recNum' => $recNum
             ];
             
             //Do import
@@ -197,7 +199,7 @@ class Import1CDataCommand extends ContainerAwareCommand
             //Do export
             $output->writeln('Export');
             $export1CDataManager = $this->getContainer()->get('app.export1cdata');
-            if( $export1CDataManager->exportData($message_num) ){
+            if( $export1CDataManager->exportData($sendNum, $recNum) ){
                 $output->writeln('Upload xml to ftp');
                 $conn_id = ftp_connect('10.32.2.19') or die("Couldn't establish connection to ftp server");
                 if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");

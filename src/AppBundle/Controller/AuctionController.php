@@ -57,8 +57,7 @@ class AuctionController extends Controller
                         ->leftJoin('l.routeId', 'r')
                         ->where('l.id = '.$request->request->get('appbundle_bet')['lot_id'])
                         ->setMaxResults( 1 )
-                        ->getQuery()
-                        ->getResult();
+                        ->getOneOrNullResult();
 
                     $bet = new Bet();
 

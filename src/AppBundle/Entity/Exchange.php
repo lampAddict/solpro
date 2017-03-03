@@ -29,7 +29,7 @@ class Exchange
     /**
      * @ORM\Column(type="datetimetz")
      */
-    protected $date;
+    protected $dateExchange;
 
     /**
      * Get id
@@ -111,5 +111,29 @@ class Exchange
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set dateExchange
+     *
+     * @param \DateTime $dateExchange
+     *
+     * @return Exchange
+     */
+    public function setDateExchange($dateExchange)
+    {
+        $this->dateExchange = $dateExchange;
+
+        return $this;
+    }
+
+    /**
+     * Get dateExchange
+     *
+     * @return \DateTime
+     */
+    public function getDateExchange()
+    {
+        return $this->dateExchange;
     }
 }

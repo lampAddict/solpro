@@ -273,12 +273,12 @@ class import1CDataService{
 
             echo "Lots imported\n";
         }
-
+        
         //save received message number to db
         $exchange = new Exchange();
-        $exchange->setRecNum($data['message_num']);
-        $exchange->setSendNum( 0 );
-        $exchange->setDate( new \DateTime(date('c', time())) );
+        $exchange->setSendNum( $data['recNum'] );
+        $exchange->setRecNum( $data['sendNum'] );
+        $exchange->setDateExchange( new \DateTime(date('c', time())) );
         $this->em->persist($exchange);
         $this->em->flush();
 
