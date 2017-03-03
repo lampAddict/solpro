@@ -99,15 +99,11 @@ class export1CDataService
                     $lotStatusId = 5; //лот расторгован
                 }
 
-                $lots .= "<lot>
-                            <id>".$lot->getId1C()."</id>
-                            <statusId>".$lot1cStatus[ $lotStatusId ]."</statusId>
-                          </lot>";
+                $lots .= "<lot><id>".$lot->getId1C()."</id><statusId>".$lot1cStatus[ $lotStatusId ]."</statusId></lot>";
             }
             $lots .= "</lots>";
 
-            $xml = ' <?xml version="1.0" encoding="UTF-8"?>
-                        <messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
+            $xml = '<?xml version="1.0" encoding="UTF-8"?><messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
             $xml .= $routes;
             $xml .= $lots;
             $xml .= "   </messageFromPortal>";
