@@ -57,12 +57,10 @@ class export1CDataService
                 $user1cIds[ $refCarrierUser->getName() ] = $refCarrierUser->getId1C();
             }
 
-            echo "routes data composition\n";
+            echo "Routes data composition\n";
 
             $routesStartPrices = [];
-            $q = $this->em->getConnection()->prepare('SELECT user_id, id1c, trade_cost FROM route WHERE id IN('.implode(',', $routesIds).')');
-            $q->execute();
-            $routesArr = $q->fetchAll();
+            $routesArr = $this->em->getRepository('AppBundle:Route')->findBy(['id'=>$routesIds]);
             $routes = '<routes>';
             foreach( $routesArr as $route ){
                 /* @var $route \AppBundle\Entity\Route */
@@ -83,7 +81,7 @@ class export1CDataService
                 $lot1cStatus[ $refLotStatus->getId() ] = $refLotStatus->getId1C();
             }
 
-            echo "lots data composition\n";
+            echo "Lots data composition\n";
 
             $lots = '<lots>';
             foreach( $auction_end_lots as $lot ){
