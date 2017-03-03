@@ -33,8 +33,12 @@ class export1CDataService
             //return false;
         }
 
+        echo "Exchange table checked\n";
+
         $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auctionStatus'=>0]);
         if( !empty($auction_end_lots) ){
+
+            echo "Auction lots processing started\n";
 
             $current_date = new \DateTime(date('c', time()));
 
@@ -103,7 +107,12 @@ class export1CDataService
             $xml .= $routes;
             $xml .= $lots;
             $xml .= '   </messageFromPortal>';
+
+            echo "xml data composed\n";
+
             file_put_contents('data/messageFromPortal.xml', $xml);
+
+            echo "xml file created\n";
             
             return true;
         }
