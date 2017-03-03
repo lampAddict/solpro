@@ -45,6 +45,10 @@ class export1CDataService
             $routesIds = [];
             $routesPrices = [];
             foreach( $auction_end_lots as $lot ){
+                
+                var_dump($lot);
+                die;
+                
                 /* @var $lot \AppBundle\Entity\Lot */
                 $routesIds[] = $lot->getRouteId();
                 $routesPrices[ $lot->getRouteId() ] = $lot->getPrice();
