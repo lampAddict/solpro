@@ -40,7 +40,7 @@ class export1CDataService
 
             echo "Auction lots processing started\n";
 
-            $current_date = new \DateTime(date('c', time()));
+            //$current_date = new \DateTime();
 
             $routesIds = [];
             $routesPrices = [];
@@ -107,7 +107,7 @@ class export1CDataService
             $lots .= "</lots>";
 
             $xml = '<?xml version="1.0" encoding="UTF-8"?>'
-                        .'<messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
+                        .'<messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="">';//'.$current_date->format('c').'
             $xml .= $routes;
             $xml .= $lots;
             $xml .= '</messageFromPortal>';
