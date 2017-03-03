@@ -30,7 +30,7 @@ class export1CDataService
             $exchange_rec_id = $r[0]['id'];
         }
         else{
-            return false;
+            //return false;
         }
 
         $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auctionStatus'=>0]);
