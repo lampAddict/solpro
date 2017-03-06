@@ -33,9 +33,24 @@ class Driver
     protected $phone;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $passport_series;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $passport_number;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $passport_date_issue;
+
+    /**
      * @ORM\Column(type="text")
      */
-    protected $passport;
+    protected $passport_issued_by;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -54,6 +69,11 @@ class Driver
      */
     protected $route_id;
 
+    /**
+     * @ORM\Column(type="datetimetz")
+     */
+    protected $updated_at;
+    
     /**
      * Get id
      *
@@ -223,5 +243,36 @@ class Driver
     public function getRouteId()
     {
         return $this->route_id;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->route_id = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add routeId
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     *
+     * @return Driver
+     */
+    public function addRouteId(\AppBundle\Entity\Route $routeId)
+    {
+        $this->route_id[] = $routeId;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeId
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     */
+    public function removeRouteId(\AppBundle\Entity\Route $routeId)
+    {
+        $this->route_id->removeElement($routeId);
     }
 }

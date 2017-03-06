@@ -275,4 +275,124 @@ class Driver
     {
         $this->route_id->removeElement($routeId);
     }
+
+    /**
+     * Set passportSeries
+     *
+     * @param string $passportSeries
+     *
+     * @return Driver
+     */
+    public function setPassportSeries($passportSeries)
+    {
+        $this->passport_series = $passportSeries;
+
+        return $this;
+    }
+
+    /**
+     * Get passportSeries
+     *
+     * @return string
+     */
+    public function getPassportSeries()
+    {
+        return $this->passport_series;
+    }
+
+    /**
+     * Set passportNumber
+     *
+     * @param string $passportNumber
+     *
+     * @return Driver
+     */
+    public function setPassportNumber($passportNumber)
+    {
+        $this->passport_number = $passportNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get passportNumber
+     *
+     * @return string
+     */
+    public function getPassportNumber()
+    {
+        return $this->passport_number;
+    }
+
+    /**
+     * Set passportDateIssue
+     *
+     * @param string $passportDateIssue
+     *
+     * @return Driver
+     */
+    public function setPassportDateIssue($passportDateIssue)
+    {
+        $this->passport_date_issue = $passportDateIssue;
+
+        return $this;
+    }
+
+    /**
+     * Get passportDateIssue
+     *
+     * @return string
+     */
+    public function getPassportDateIssue()
+    {
+        return $this->passport_date_issue;
+    }
+
+    /**
+     * Set passportIssuedBy
+     *
+     * @param string $passportIssuedBy
+     *
+     * @return Driver
+     */
+    public function setPassportIssuedBy($passportIssuedBy)
+    {
+        $this->passport_issued_by = $passportIssuedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get passportIssuedBy
+     *
+     * @return string
+     */
+    public function getPassportIssuedBy()
+    {
+        return $this->passport_issued_by;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Driver
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
 }
