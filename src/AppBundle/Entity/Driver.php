@@ -400,4 +400,28 @@ class Driver
     {
         return $this->updated_at;
     }
+
+    /**
+     * Set passportType
+     *
+     * @param integer $passportType
+     *
+     * @return Driver
+     */
+    public function setPassportType($passportType)
+    {
+        $this->passport_type = $passportType;
+
+        return $this;
+    }
+
+    /**
+     * Get passportType
+     *
+     * @return integer
+     */
+    public function getPassportType()
+    {
+        return $this->passport_type;
+    }
 }
