@@ -33,6 +33,11 @@ class Driver
     protected $phone;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $passport_type;
+    
+    /**
      * @ORM\Column(type="string", length=10)
      */
     protected $passport_series;

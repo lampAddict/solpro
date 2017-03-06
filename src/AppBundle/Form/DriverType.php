@@ -48,7 +48,7 @@ class DriverType extends AbstractType
                         ]
                     ])
             ->add(
-                    'transport_id'
+                    'passport_type'
                     ,EntityType::class
                     ,[
                         'class' => 'AppBundle:RefPassport'
