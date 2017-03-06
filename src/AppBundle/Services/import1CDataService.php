@@ -103,6 +103,12 @@ class import1CDataService{
             $this->em->flush();
         }
 
+        //import types of persons ID's
+        if( !empty($data['ref']['docIDType']) ){
+            $this->importReferences('RefPassport', $data['ref']['docIDType'], ['id', 'name']);
+            $this->em->flush();
+        }
+
         echo "References imported\n";
 
         //import carrier users references
