@@ -48,13 +48,57 @@ class DriverType extends AbstractType
                         ]
                     ])
             ->add(
-                     'passport'
+                    'transport_id'
+                    ,EntityType::class
+                    ,[
+                        'class' => 'AppBundle:RefPassport'
+                        ,'query_builder' => function (EntityRepository $er){
+
+                            return $er->createQueryBuilder('rfp')
+                                      ->orderBy('rfp.id', 'DESC')
+                            ;
+                        }
+                        ,'choice_label' => function($p){return $p->getName();}
+                        ,'label' => 'Выберите тип документа'
+                    ])
+            ->add(
+                    'passport_series'
+                    ,'Symfony\Component\Form\Extension\Core\Type\TextType'
+                    ,[
+                        'label'=>'Паспортные данные'
+                        ,'attr'=>[
+                                    'class'=>'"passportSeries"'
+                                    ,'placeholder'=>'серия'
+                        ]
+                    ])
+            ->add(
+                    'passport_number'
+                    ,'Symfony\Component\Form\Extension\Core\Type\TextType'
+                    ,[
+                        'label'=>''
+                        ,'attr'=>[
+                                    'class'=>'"passportNumber"'
+                                    ,'placeholder'=>'номер'
+                        ]
+                    ])
+            ->add(
+                    'passport_date_issue'
+                    ,'Symfony\Component\Form\Extension\Core\Type\TextType'
+                    ,[
+                        'label'=>''
+                        ,'attr'=>[
+                                    'class'=>'"passportDateIssue"'
+                                    ,'placeholder'=>'когда выдан'
+                        ]
+                    ])
+            ->add(
+                     'passport_issued_by'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextareaType'
                     ,[
-                         'label'=>'Паспортные данные'
+                         'label'=>''
                         ,'attr'=>[
-                                     'class'=>'"addDriverWindowBtn"'
-                                    ,'placeholder'=>'Серия, номер, кем и когда выдан'
+                                     'class'=>'"passportIssuedBy"'
+                                    ,'placeholder'=>'кем выдан'
                         ]
                     ])
             ->add(
