@@ -193,7 +193,8 @@ class Import1CDataCommand extends ContainerAwareCommand
                 rename('data/data.xml', 'data/data_imported/data_'.date('H_i_s__d_m_Y', time()).'.xml');
             }
             else{
-                unlink('data/data.xml');
+                //if import failed delete source file
+                //unlink('data/data.xml');
             }
             
             //Do export
