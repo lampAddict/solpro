@@ -22,7 +22,9 @@
             </tr>
             <tr>
                 <th align="left">Паспортные данные</th>
-                <td>{{ driver.passport }}</td>
+                <td>
+                    {{ driver.getPassportSeries }}&nbsp;{{ driver.getPassportNumber }}<br />Выдан {{ driver.getPassportDateIssue }} {{ driver.getPassportIssuedBy }}
+                </td>
             </tr>
             <tr>
                 <th align="left">Водительское удостоверение</th>

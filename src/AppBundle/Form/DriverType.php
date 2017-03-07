@@ -55,7 +55,7 @@ class DriverType extends AbstractType
                         ,'query_builder' => function (EntityRepository $er){
 
                             return $er->createQueryBuilder('rfp')
-                                      ->orderBy('rfp.id', 'DESC')
+                                      ->orderBy('rfp.id', 'ASC')
                             ;
                         }
                         ,'choice_label' => function($p){return $p->getName();}
@@ -65,40 +65,40 @@ class DriverType extends AbstractType
                     'passport_series'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                     ,[
-                        'label'=>'Паспортные данные'
+                        'label'=>'Паспортные данные, серия'
                         ,'attr'=>[
-                                    'class'=>'"passportSeries"'
-                                    ,'placeholder'=>'серия'
+                                     'class'=>'passportSeries'
+                                    ,'placeholder'=>''
                         ]
                     ])
             ->add(
                     'passport_number'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                     ,[
-                        'label'=>''
+                        'label'=>'номер'
                         ,'attr'=>[
-                                    'class'=>'"passportNumber"'
-                                    ,'placeholder'=>'номер'
+                                     'class'=>'passportNumber'
+                                    ,'placeholder'=>''
                         ]
                     ])
             ->add(
                     'passport_date_issue'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextType'
                     ,[
-                        'label'=>''
+                        'label'=>'Когда выдан'
                         ,'attr'=>[
-                                    'class'=>'"passportDateIssue"'
-                                    ,'placeholder'=>'когда выдан'
+                                     'class'=>'passportDateIssue'
+                                    ,'placeholder'=>''
                         ]
                     ])
             ->add(
                      'passport_issued_by'
                     ,'Symfony\Component\Form\Extension\Core\Type\TextareaType'
                     ,[
-                         'label'=>''
+                         'label'=>'Кем выдан'
                         ,'attr'=>[
-                                     'class'=>'"passportIssuedBy"'
-                                    ,'placeholder'=>'кем выдан'
+                                     'class'=>'passportIssuedBy'
+                                    ,'placeholder'=>''
                         ]
                     ])
             ->add(
@@ -107,7 +107,7 @@ class DriverType extends AbstractType
                     ,[
                          'label'=>'Водительское удостоверение'
                         ,'attr'=>[
-                                     'class'=>'"addDriverWindowBtn"'
+                                     'class'=>'driverLicense'
                                     ,'placeholder'=>''
                         ]
                     ])

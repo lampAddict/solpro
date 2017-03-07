@@ -31,13 +31,18 @@ $( document ).ready(function(){
     //masked input for driver add/edit window
     $driverPhone = $('#appbundle_driver_phone');
     if( $driverPhone ){
-        $driverPhone.mask("9 (999) 999-99-99", {placeholder:""});
+        $driverPhone.mask("9 (999) 999-99-99", {placeholder:"0 (000) 000-00-00"});
     }
 
     $driverLicense = $('#appbundle_driver_driverLicense');
     if( $driverLicense ){
         $.mask.definitions['~'] = '[а-яА-ЯёЁ0-9]';
         $driverLicense.mask("~~ ~~ 999999");
+    }
+
+    $driverBithDate = $('#appbundle_driver_passport_date_issue');
+    if( $driverBithDate ){
+        $driverBithDate.mask("99.99.9999");
     }
 
     //masked input for vehicle add/edit window

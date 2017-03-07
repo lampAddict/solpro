@@ -786,3 +786,31 @@ tr.zeroHeight{
     float: left;
     margin-left: 23px;
 }
+
+#appbundle_driver div:nth-child(5){
+    width: 235px;
+    float: left;
+    margin-top: 0;
+    margin-right: 0;
+}
+
+#appbundle_driver div:nth-child(5) input.passportSeries{
+    width: 235px;
+    float: left;
+    margin-top: 0;
+    margin-right: 0;
+}
+
+#appbundle_driver div:nth-child(6){
+    float: left;
+    width: 235px;
+    margin-top: 0;
+}
+
+#appbundle_driver div:nth-child(6) input.passportNumber{
+    width: 235px;
+}
+
+#appbundle_driver .driverLicense{
+    margin: 0 10px 10px 0px;
+}

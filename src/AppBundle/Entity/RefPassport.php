@@ -23,9 +23,15 @@ class RefPassport
     protected $id1C;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=1024)
      */
     protected $name;
+
+    /**
+     * One RefPassport has Many Drivers.
+     * @ORM\OneToMany(targetEntity="Driver", mappedBy="passport_type")
+     */
+    protected $driver;
 
     /**
      * Get id
@@ -83,5 +89,46 @@ class RefPassport
     public function getName()
     {
         return $this->name;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->driver = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add driver
+     *
+     * @param \AppBundle\Entity\Driver $driver
+     *
+     * @return RefPassport
+     */
+    public function addDriver(\AppBundle\Entity\Driver $driver)
+    {
+        $this->driver[] = $driver;
+
+        return $this;
+    }
+
+    /**
+     * Remove driver
+     *
+     * @param \AppBundle\Entity\Driver $driver
+     */
+    public function removeDriver(\AppBundle\Entity\Driver $driver)
+    {
+        $this->driver->removeElement($driver);
+    }
+
+    /**
+     * Get driver
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDriver()
+    {
+        return $this->driver;
     }
 }

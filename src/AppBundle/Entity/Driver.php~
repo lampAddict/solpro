@@ -33,7 +33,8 @@ class Driver
     protected $phone;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\ManyToOne(targetEntity="RefPassport", inversedBy="driver")
+     * @ORM\JoinColumn(name="passport_type", referencedColumnName="id")
      */
     protected $passport_type;
     
@@ -399,5 +400,29 @@ class Driver
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    /**
+     * Set passportType
+     *
+     * @param integer $passportType
+     *
+     * @return Driver
+     */
+    public function setPassportType($passportType)
+    {
+        $this->passport_type = $passportType;
+
+        return $this;
+    }
+
+    /**
+     * Get passportType
+     *
+     * @return integer
+     */
+    public function getPassportType()
+    {
+        return $this->passport_type;
     }
 }
