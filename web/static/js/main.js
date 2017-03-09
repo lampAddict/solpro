@@ -202,8 +202,8 @@ $( document ).ready(function(){
         $.ajax({
             method: 'POST',
             url: 'lotAuctionEnd',
-            data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') }
-            //timeout: 3000
+            data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') },
+            timeout: 2500
         })
         .done(function( response ){
             if( response.result ){
@@ -250,15 +250,31 @@ $( document ).ready(function(){
             ){
                 $this.attr('disabled', 'disabled');
                 bets[_lotId].push( _bet );
-                //attach handler
-                $this.parent().submit();
+
+                //$this.parent().submit();
+                $.ajax({
+                    method: 'POST',
+                    url: 'lotAuctionEnd',
+                    data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') },
+                    timeout: 2500
+                })
+                    .done(function( response ){
+                        console.log(response);
+                        if( response.result ){
+
+                        }
+                    })
+                    .fail(function( response ){
+                        console.log('FAIL');
+                        console.log(response);
+                    });
             }
         });
     });
 
     //update lots prices routine
     var updateLotPrices = function(){
-        if( window.location.pathname.replace(/\//g,'') == 'auction' ){ //solprosolportalwebapp_dev.phpauction
+        if( window.location.pathname.replace(/\//g,'') == 'solprosolportalwebapp_dev.phpauction' ){ //solprosolportalwebapp_dev.phpauction
             $.ajax({
                 url: 'lotsPrices',
                 cache: false

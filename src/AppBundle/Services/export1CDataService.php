@@ -75,7 +75,7 @@ class export1CDataService
             }
 
             $routesPrices = [];
-            $lotsPrices = $this->em->getRepository('AppBundle:Lot')->findBy(['route_id'=>$routesIds]);
+            $lotsPrices = $this->em->getRepository('AppBundle:Lot')->findBy(['routeId'=>$routesIds]);
             foreach( $lotsPrices as $lot ){
                 /* @var $lot \AppBundle\Entity\Lot */
                 $routesPrices[ $lot->getRouteId()->getId() ] = $lot->getPrice();
