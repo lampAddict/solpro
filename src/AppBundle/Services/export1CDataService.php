@@ -121,7 +121,7 @@ class export1CDataService
                 foreach( $driversArr as $driver ){
                     /* @var $driver \AppBundle\Entity\Driver */
                     $drivers .= ' <driver>'
-                                    .'<docIDType>'.$docTypes[ $driver->getPassportType() ].'</docIDType>'
+                                    .'<docIDType>'.$docTypes[ $driver->getPassportType()->getId() ].'</docIDType>'
                                     .'<series>'.$driver->getPassportSeries().'</series>'
                                     .'<number>'.$driver->getPassportNumber().'</number>'
                                     .'<date>'.$driver->getPassportDateIssue().'</date>'
