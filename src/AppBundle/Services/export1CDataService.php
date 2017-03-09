@@ -8,13 +8,11 @@ class export1CDataService
 {
     protected $em;
     protected $um;
-    protected $user;
 
-    public function __construct($entityManager, $userManager, $tokenStorage)
+    public function __construct($entityManager, $userManager)
     {
         $this->em = $entityManager;
         $this->um = $userManager;
-        $this->user = $tokenStorage->getToken()->getUser();
     }
 
     public function exportData($sendNum, $recNum){
@@ -64,7 +62,7 @@ class export1CDataService
         }
 
         //TODO add select by route status condition to $userRoutesArr findBy
-        $userRoutesArr = $this->em->getRepository('AppBundle:Route')->findBy(['user_id'=>$this->user->getId()]);
+        $userRoutesArr = $this->em->getRepository('AppBundle:Route')->findAll();
         if( !empty($userRoutesArr) ){
 
             echo "Compose routes data\n";

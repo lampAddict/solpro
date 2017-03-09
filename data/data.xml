@@ -700,6 +700,88 @@
 				<email>a.menyalin@solpro.ru</email>
 			</carrierUser>
 		</carrierUsers>
+		<docIDTypes>
+			<docIDType>
+				<id>daa7dd82-27a6-4046-863e-5520ef07b1ee</id>
+				<name>Военный билет солдата (матроса, сержанта, старшины)</name>
+			</docIDType>
+			<docIDType>
+				<id>222f9a44-d0a3-4360-8668-fcaa6a636e9e</id>
+				<name>Загранпаспорт гражданина СССР</name>
+			</docIDType>
+			<docIDType>
+				<id>249ec532-b8f3-40fd-87a0-b38b6fedd3be</id>
+				<name>Паспорт гражданина СССР</name>
+			</docIDType>
+			<docIDType>
+				<id>2545efd4-af55-4646-87f6-69f2f9c1740c</id>
+				<name>Паспорт моряка</name>
+			</docIDType>
+			<docIDType>
+				<id>ffeceef4-bc4c-4076-8ea7-03636eb00fbb</id>
+				<name>Паспорт гражданина Российской Федерации</name>
+			</docIDType>
+			<docIDType>
+				<id>d15b903e-55bc-44da-8fbe-3d887d4b5c8c</id>
+				<name>Удостоверение личности офицера</name>
+			</docIDType>
+			<docIDType>
+				<id>70d9b0d7-2888-4e20-9471-6a01ddbbe3ef</id>
+				<name>Временное удостоверение личности гражданина Российской Федерации</name>
+			</docIDType>
+			<docIDType>
+				<id>ea7cd85b-400d-4209-94a7-097fe744d245</id>
+				<name>Паспорт иностранного гражданина</name>
+			</docIDType>
+			<docIDType>
+				<id>ecb83cec-6f87-4730-963b-51ff0efd7eca</id>
+				<name>Военный билет офицера запаса</name>
+			</docIDType>
+			<docIDType>
+				<id>8760c27f-8834-49f1-96f7-44e94b231f3a</id>
+				<name>Разрешение на временное проживание в Российской Федерации</name>
+			</docIDType>
+			<docIDType>
+				<id>8f3d9ebb-0091-407a-9732-ef2d99e78912</id>
+				<name>Загранпаспорт гражданина Российской Федерации</name>
+			</docIDType>
+			<docIDType>
+				<id>ad591946-39c1-4e8e-9916-eaeb5e2bc18b</id>
+				<name>Дипломатический паспорт гражданина Российской Федерации</name>
+			</docIDType>
+			<docIDType>
+				<id>b4e9bc15-23ff-4b1f-99f6-90172aa2cb4c</id>
+				<name>Паспорт Минморфлота</name>
+			</docIDType>
+			<docIDType>
+				<id>5206fa9c-a32c-40f0-9f96-9f0cbc8daba8</id>
+				<name>Иные документы</name>
+			</docIDType>
+			<docIDType>
+				<id>964bfbf3-2fe0-4285-a120-4b6a7292d2ce</id>
+				<name>Вид на жительство</name>
+			</docIDType>
+			<docIDType>
+				<id>5e03f4a6-3b00-46e8-a335-5ec2f9b47a28</id>
+				<name>Свидетельство о рассмотрении ходатайства о признании беженцем на территории Российской Федерации по </name>
+			</docIDType>
+			<docIDType>
+				<id>65dd2f4e-65dd-4452-a73c-fd2896d9e993</id>
+				<name>Удостоверение беженца в Российской Федерации</name>
+			</docIDType>
+			<docIDType>
+				<id>45e4e0c0-a7a7-4fb5-b7dd-8c97afa37016</id>
+				<name>Справка об освобождении из  места лишения свободы</name>
+			</docIDType>
+			<docIDType>
+				<id>86048612-a030-4df5-bc39-51061288deca</id>
+				<name>Свидетельство о рождении</name>
+			</docIDType>
+			<docIDType>
+				<id>ae0660be-a15f-46ad-bd12-1f391b4b25ea</id>
+				<name>Свидетельство о рождении, выданное уполномоченным органом иностранного государства</name>
+			</docIDType>
+		</docIDTypes>
 	</references>
 	<routes>
 		<route>

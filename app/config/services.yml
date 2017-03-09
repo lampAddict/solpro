@@ -13,4 +13,4 @@ services:
 
     app.export1cdata:
         class: AppBundle\Services\export1CDataService
-        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@security.token_storage" ]
+        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager" ]
