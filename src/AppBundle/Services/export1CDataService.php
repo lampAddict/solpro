@@ -127,7 +127,6 @@ class export1CDataService
                 }
             }
 
-            $drivers = '';
             if( !empty($driversIds) ){
 
                 echo "Drivers data composition\n";

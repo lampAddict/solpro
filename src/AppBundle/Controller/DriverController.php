@@ -51,6 +51,7 @@ class DriverController extends Controller
     {
         $this->checkUserAuthentication();
 
+        /* @var $driver \AppBundle\Entity\Driver */
         $driver = new Driver();
         $form = $this->createForm('AppBundle\Form\DriverType', $driver);
         $form->handleRequest($request);
@@ -59,6 +60,7 @@ class DriverController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $driver->setUserId($this->getUser());
+            $driver->setUpdatedAt(new \DateTime(date('c', time())));
 
             $em->persist($driver);
 
@@ -105,6 +107,7 @@ class DriverController extends Controller
 
         $editForm->handleRequest($request);
         if( $editForm->isSubmitted() && $editForm->isValid() ){
+            $driver->setUpdatedAt(new \DateTime(date('c', time())));
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('driver');
         }
