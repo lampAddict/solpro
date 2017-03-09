@@ -138,7 +138,7 @@
                                         {% if route.getDriverId|length > 0 %}
                                             <div style="float: left; margin: 0 10px 5px 0; width: 25%; height: 75px;">
                                                 <div class="routeDriverName">{{ route.getDriverId.getFio }}</div>
-                                                <div class="routeDriverPassportData">{{ route.getDriverId.getPassport }}</div>
+                                                <div class="routeDriverPassportData">{{ route.getDriverId.getPassportSeries }}&nbsp;{{ route.getDriverId.getPassportNumber }}<br />Выдан: {{ route.getDriverId.getPassportDateIssue }} {{ route.getDriverId.getPassportIssuedBy }}</div>
                                                 <div class="routeDriverPhoneNumber">{{ route.getDriverId.getPhone }}</div>
                                             </div>
                                         {% endif %}

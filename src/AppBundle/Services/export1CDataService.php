@@ -59,20 +59,50 @@ class export1CDataService
 
             echo "Routes data composition\n";
 
+            $driversIds = [];
             $routesStartPrices = [];
             $routesArr = $this->em->getRepository('AppBundle:Route')->findBy(['id'=>$routesIds]);
             $routes = '<routes>';
             foreach( $routesArr as $route ){
                 /* @var $route \AppBundle\Entity\Route */
-                $routes .= '<route>'
-                            .'<id>'.$route->getId1C().'</id>'
-                            .'<carrierId>'.(is_null($route->getUserId()) ? '' : (isset($user1cIds[ $route->getUserId()->getUsername() ]) ? $user1cIds[ $route->getUserId()->getUsername() ] : '')).'</carrierId>'
-                            .'<tradeCost>'.$routesPrices[ $route->getId() ].'</tradeCost>'
-                        .'</route>';
+                $routes .= ' <route>'
+                                .'<id>'.$route->getId1C().'</id>'
+                                .'<carrierId>'.(is_null($route->getUserId()) ? '' : (isset($user1cIds[ $route->getUserId()->getUsername() ]) ? $user1cIds[ $route->getUserId()->getUsername() ] : '')).'</carrierId>'
+                                .'<tradeCost>'.$routesPrices[ $route->getId() ].'</tradeCost>'
+                            .'</route>';
 
                 $routesStartPrices[ $route->getId() ] = $route->getTradeCost();
+
+                if( !is_null($route->getDriverId()) ){
+                    $driversIds[] = $route->getDriverId()->getId();
+                }
             }
             $routes .= '</routes>';
+
+            $drivers = '';
+            if( !empty($driversIds) ){
+
+                $docTypes = [];
+                $docTypesArr = $this->em->getRepository('AppBundle:RefPassport')->findAll();
+                foreach( $docTypesArr as $docType){
+                    /* @var $docType \AppBundle\Entity\RefPassport */
+                    $docTypes[ $docType->getId() ] = $docType->getId1C();
+                }
+
+                $driversArr = $this->em->getRepository('AppBundle:Driver')->findBy(['id'=>$driversIds]);
+                $drivers = '<drivers>';
+                foreach( $driversArr as $driver ){
+                    /* @var $driver \AppBundle\Entity\Driver */
+                    $drivers .= ' <driver>'
+                                    .'<docIDType>'.$docTypes[ $driver->getPassportType() ].'</docIDType>'
+                                    .'<series>'.$driver->getPassportSeries().'</series>'
+			                        .'<number>'.$driver->getPassportNumber().'</number>'
+			                        .'<date>'.$driver->getPassportDateIssue().'</date>'
+			                        .'<issuedBy>'.$driver->getPassportIssuedBy().'</issuedBy>'
+                                .'</driver>';
+                }
+                $drivers .= '</drivers>';
+            }
 
             $lot1cStatus = [];
             $refLotStatuses = $this->em->getRepository('AppBundle:RefLotStatus')->findAll();
@@ -106,6 +136,7 @@ class export1CDataService
 
             $xml = '<?xml version="1.0" encoding="UTF-8"?>'
                         .'<messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
+            $xml .= $drivers;
             $xml .= $routes;
             $xml .= $lots;
             $xml .= '</messageFromPortal>';

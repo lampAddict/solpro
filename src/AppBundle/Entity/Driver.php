@@ -33,6 +33,7 @@ class Driver
     protected $phone;
 
     /**
+     * @ORM\Column(type="smallint")
      * @ORM\ManyToOne(targetEntity="RefPassport", inversedBy="driver")
      * @ORM\JoinColumn(name="passport_type", referencedColumnName="id")
      */
@@ -158,30 +159,7 @@ class Driver
     {
         return $this->phone;
     }
-
-    /**
-     * Set passport
-     *
-     * @param string $passport
-     * @return Driver
-     */
-    public function setPassport($passport)
-    {
-        $this->passport = $passport;
-
-        return $this;
-    }
-
-    /**
-     * Get passport
-     *
-     * @return string 
-     */
-    public function getPassport()
-    {
-        return $this->passport;
-    }
-
+    
     /**
      * Set driverLicense
      *
