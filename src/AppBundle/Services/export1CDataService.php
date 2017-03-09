@@ -8,11 +8,13 @@ class export1CDataService
 {
     protected $em;
     protected $um;
+    protected $user;
 
-    public function __construct($entityManager, $userManager)
+    public function __construct($entityManager, $userManager, $tokenStorage)
     {
         $this->em = $entityManager;
         $this->um = $userManager;
+        $this->user = $tokenStorage->getToken()->getUser();
     }
 
     public function exportData($sendNum, $recNum){
@@ -35,13 +37,16 @@ class export1CDataService
 
         echo "Exchange table checked\n";
 
+        $data_added = false;
+        
+        $current_date = new \DateTime(date('c', time()));
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>'
+            .'<messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
+
+        echo "Auction lots processing started\n";
         $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auctionStatus'=>0]);
         if( !empty($auction_end_lots) ){
-
-            echo "Auction lots processing started\n";
-
-            $current_date = new \DateTime(date('c', time()));
-
+            
             $routesIds = [];
             $routesPrices = [];
             foreach( $auction_end_lots as $lot ){
@@ -59,7 +64,6 @@ class export1CDataService
 
             echo "Routes data composition\n";
 
-            $driversIds = [];
             $routesStartPrices = [];
             $routesArr = $this->em->getRepository('AppBundle:Route')->findBy(['id'=>$routesIds]);
             $routes = '<routes>';
@@ -73,36 +77,9 @@ class export1CDataService
 
                 $routesStartPrices[ $route->getId() ] = $route->getTradeCost();
 
-                if( !is_null($route->getDriverId()) ){
-                    $driversIds[] = $route->getDriverId()->getId();
-                }
+
             }
             $routes .= '</routes>';
-
-            $drivers = '';
-            if( !empty($driversIds) ){
-
-                $docTypes = [];
-                $docTypesArr = $this->em->getRepository('AppBundle:RefPassport')->findAll();
-                foreach( $docTypesArr as $docType){
-                    /* @var $docType \AppBundle\Entity\RefPassport */
-                    $docTypes[ $docType->getId() ] = $docType->getId1C();
-                }
-
-                $driversArr = $this->em->getRepository('AppBundle:Driver')->findBy(['id'=>$driversIds]);
-                $drivers = '<drivers>';
-                foreach( $driversArr as $driver ){
-                    /* @var $driver \AppBundle\Entity\Driver */
-                    $drivers .= ' <driver>'
-                                    .'<docIDType>'.$docTypes[ $driver->getPassportType() ].'</docIDType>'
-                                    .'<series>'.$driver->getPassportSeries().'</series>'
-			                        .'<number>'.$driver->getPassportNumber().'</number>'
-			                        .'<date>'.$driver->getPassportDateIssue().'</date>'
-			                        .'<issuedBy>'.$driver->getPassportIssuedBy().'</issuedBy>'
-                                .'</driver>';
-                }
-                $drivers .= '</drivers>';
-            }
 
             $lot1cStatus = [];
             $refLotStatuses = $this->em->getRepository('AppBundle:RefLotStatus')->findAll();
@@ -132,21 +109,61 @@ class export1CDataService
                             .'<statusId>'.$lot1cStatus[ $lotStatusId ].'</statusId>'
                         .'</lot>';
             }
-            $lots .= "</lots>";
+            $lots .= '</lots>';
 
-            $xml = '<?xml version="1.0" encoding="UTF-8"?>'
-                        .'<messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
-            $xml .= $drivers;
             $xml .= $routes;
             $xml .= $lots;
-            $xml .= '</messageFromPortal>';
 
-            echo "Xml data composed\n";
+            $data_added = true;
+        }
+        
+        $userRoutesArr = $this->em->getRepository('AppBundle:Route')->findBy(['user_id'=>$this->user->getId()]);
+        if( !empty($userRoutesArr) ){
+            $driversIds = [];
+            foreach( $userRoutesArr as $userRoute ){
+                /* @var $userRoute \AppBundle\Entity\Route */
+                if( !is_null($userRoute->getDriverId()) ){
+                    $driversIds[] = $userRoute->getDriverId()->getId();
+                }
+            }
 
+            $drivers = '';
+            if( !empty($driversIds) ){
+
+                echo "Drivers data composition\n";
+
+                $docTypes = [];
+                $docTypesArr = $this->em->getRepository('AppBundle:RefPassport')->findAll();
+                foreach( $docTypesArr as $docType){
+                    /* @var $docType \AppBundle\Entity\RefPassport */
+                    $docTypes[ $docType->getId() ] = $docType->getId1C();
+                }
+
+                $driversArr = $this->em->getRepository('AppBundle:Driver')->findBy(['id'=>$driversIds]);
+                $drivers = '<drivers>';
+                foreach( $driversArr as $driver ){
+                    /* @var $driver \AppBundle\Entity\Driver */
+                    $drivers .= ' <driver>'
+                                    .'<docIDType>'.$docTypes[ $driver->getPassportType() ].'</docIDType>'
+                                    .'<series>'.$driver->getPassportSeries().'</series>'
+                                    .'<number>'.$driver->getPassportNumber().'</number>'
+                                    .'<date>'.$driver->getPassportDateIssue().'</date>'
+                                    .'<issuedBy>'.$driver->getPassportIssuedBy().'</issuedBy>'
+                                .'</driver>';
+                }
+                $drivers .= '</drivers>';
+
+                $xml .= $drivers;
+
+                $data_added = true;
+            }
+        }
+        
+        $xml .= '</messageFromPortal>';
+        
+        if( $data_added ){
             file_put_contents('data/messageFromPortal.xml', $xml);
-
             echo "Xml file created\n";
-            
             return true;
         }
         
