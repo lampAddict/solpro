@@ -43,89 +43,69 @@ class export1CDataService
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'
             .'<messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
 
-        echo "Auction lots processing started\n";
         $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auctionStatus'=>0]);
         if( !empty($auction_end_lots) ){
-            
-            $routesIds = [];
-            $routesPrices = [];
+
+            echo "Compose lots data\n";
+
+            $lots = '<lots>';
             foreach( $auction_end_lots as $lot ){
                 /* @var $lot \AppBundle\Entity\Lot */
-                $routesIds[] = $lot->getRouteId()->getId();
-                $routesPrices[ $lot->getRouteId()->getId() ] = $lot->getPrice();
+                $lots .= '<lot>'
+                            .'<id>'.$lot->getId1C().'</id>'
+                            .'<statusId>'.$lot->getStatusId1c().'</statusId>'
+                        .'</lot>';
+            }
+            $lots .= '</lots>';
+
+            $xml .= $lots;
+
+            $data_added = true;
+        }
+
+        //TODO add select by route status condition to $userRoutesArr findBy
+        $userRoutesArr = $this->em->getRepository('AppBundle:Route')->findBy(['user_id'=>$this->user->getId()]);
+        if( !empty($userRoutesArr) ){
+
+            echo "Compose routes data\n";
+
+            //compose routes prices data
+            $routesIds = [];
+            foreach( $userRoutesArr as $route ){
+                /* @var $route \AppBundle\Entity\Route */
+                $routesIds[] = $route->getId();
             }
 
+            $routesPrices = [];
+            $lotsPrices = $this->em->getRepository('AppBundle:Lot')->findBy(['route_id'=>$routesIds]);
+            foreach( $lotsPrices as $lot ){
+                /* @var $lot \AppBundle\Entity\Lot */
+                $routesPrices[ $lot->getRouteId()->getId() ] = $lot->getPrice();
+            }
+            
             $user1cIds = [];
             $refCarrierUsers = $this->em->getRepository('AppBundle:RefCarrierUser')->findAll();
             foreach( $refCarrierUsers as $refCarrierUser ){
                 /* @var $refCarrierUser \AppBundle\Entity\RefCarrierUser */
-                $user1cIds[ $refCarrierUser->getName() ] = $refCarrierUser->getId1C();
+                $user1cIds[ $refCarrierUser->getLogin() ] = $refCarrierUser->getId1C();
             }
 
-            echo "Routes data composition\n";
-
-            $routesStartPrices = [];
-            $routesArr = $this->em->getRepository('AppBundle:Route')->findBy(['id'=>$routesIds]);
+            $driversIds = [];
             $routes = '<routes>';
-            foreach( $routesArr as $route ){
+            foreach( $userRoutesArr as $route ){
                 /* @var $route \AppBundle\Entity\Route */
                 $routes .= ' <route>'
                                 .'<id>'.$route->getId1C().'</id>'
                                 .'<carrierId>'.(is_null($route->getUserId()) ? '' : (isset($user1cIds[ $route->getUserId()->getUsername() ]) ? $user1cIds[ $route->getUserId()->getUsername() ] : '')).'</carrierId>'
                                 .'<tradeCost>'.$routesPrices[ $route->getId() ].'</tradeCost>'
                             .'</route>';
-
-                $routesStartPrices[ $route->getId() ] = $route->getTradeCost();
-
-
+                if( !is_null($route->getDriverId()) ){
+                    $driversIds[] = $route->getDriverId()->getId();
+                }
             }
             $routes .= '</routes>';
-
-            $lot1cStatus = [];
-            $refLotStatuses = $this->em->getRepository('AppBundle:RefLotStatus')->findAll();
-            foreach( $refLotStatuses as $refLotStatus ){
-                /* @var $refLotStatus \AppBundle\Entity\RefLotStatus */
-                $lot1cStatus[ $refLotStatus->getId() ] = $refLotStatus->getId1C();
-            }
-
-            echo "Lots data composition\n";
-
-            $lots = '<lots>';
-            foreach( $auction_end_lots as $lot ){
-                /* @var $lot \AppBundle\Entity\Lot */
-
-                $q = "SELECT b.value AS bet, b.user_id AS uid FROM bet b WHERE b.lot_id = ".($lot->getId())." ORDER BY b.value ASC LIMIT 1";
-                $r = $this->em->getConnection()->prepare($q);
-                $r->execute();
-                $bet = $r->fetchAll();
-
-                $lotStatusId = 3; //лот нерасторгован
-                if( !empty($bet) ){
-                    $lotStatusId = 5; //лот расторгован
-                }
-
-                $lots .= '<lot>'
-                            .'<id>'.$lot->getId1C().'</id>'
-                            .'<statusId>'.$lot1cStatus[ $lotStatusId ].'</statusId>'
-                        .'</lot>';
-            }
-            $lots .= '</lots>';
-
             $xml .= $routes;
-            $xml .= $lots;
-
             $data_added = true;
-        }
-        
-        $userRoutesArr = $this->em->getRepository('AppBundle:Route')->findBy(['user_id'=>$this->user->getId()]);
-        if( !empty($userRoutesArr) ){
-            $driversIds = [];
-            foreach( $userRoutesArr as $userRoute ){
-                /* @var $userRoute \AppBundle\Entity\Route */
-                if( !is_null($userRoute->getDriverId()) ){
-                    $driversIds[] = $userRoute->getDriverId()->getId();
-                }
-            }
 
             if( !empty($driversIds) ){
 
@@ -153,8 +133,6 @@ class export1CDataService
                 $drivers .= '</drivers>';
 
                 $xml .= $drivers;
-
-                $data_added = true;
             }
         }
         

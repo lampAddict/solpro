@@ -136,6 +136,9 @@ class LotController extends Controller
             //get lot off the auction
             $lot->setAuctionStatus(0);
 
+            //lot has been traded unsuccessfully
+            $lot->setStatusId1c('a9649dc5-266e-4084-8498-e89c351533ea');
+
             //get bets history and current lot owner
             $sql = "SELECT b.value AS bet, b.user_id AS uid FROM bet b WHERE b.lot_id = $lid ORDER BY b.value ASC LIMIT 1";
             $stmt = $em->getConnection()->prepare($sql);
@@ -148,9 +151,10 @@ class LotController extends Controller
                 $route = $lot->getRouteId();
                 $route->setUserId($em->getRepository('AppBundle:User')->find($bet[0]['uid']));
                 $em->persist($route);
-            }
 
-            $em->persist($lot);
+                //lot has been traded successfully
+                $lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
+            }
 
             $em->flush();
 

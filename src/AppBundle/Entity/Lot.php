@@ -24,7 +24,7 @@ class Lot
     /**
      * @ORM\Column(type="string", length=100)
      */
-    protected $status;
+    protected $statusId1c;
 
     /**
      * @ORM\Column(type="datetimetz")
@@ -77,30 +77,7 @@ class Lot
     {
         return $this->id;
     }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     * @return Lot
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string 
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
+    
     /**
      * Set startDate
      *
@@ -323,5 +300,29 @@ class Lot
     public function getAuctionStatus()
     {
         return $this->auctionStatus;
+    }
+
+    /**
+     * Set statusId1c
+     *
+     * @param string $statusId1c
+     *
+     * @return Lot
+     */
+    public function setStatusId1c($statusId1c)
+    {
+        $this->statusId1c = $statusId1c;
+
+        return $this;
+    }
+
+    /**
+     * Get statusId1c
+     *
+     * @return string
+     */
+    public function getStatusId1c()
+    {
+        return $this->statusId1c;
     }
 }

@@ -24,7 +24,7 @@ class Lot
     /**
      * @ORM\Column(type="string", length=100)
      */
-    protected $status;
+    protected $statusId1c;
 
     /**
      * @ORM\Column(type="datetimetz")
@@ -300,5 +300,28 @@ class Lot
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set auctionStatus
+     *
+     * @param integer $auctionStatus
+     * @return Lot
+     */
+    public function setAuctionStatus($auctionStatus)
+    {
+        $this->auctionStatus = $auctionStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get auctionStatus
+     *
+     * @return integer 
+     */
+    public function getAuctionStatus()
+    {
+        return $this->auctionStatus;
     }
 }

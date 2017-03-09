@@ -143,7 +143,7 @@ class import1CDataService{
                 if( !is_null($this->em->getRepository('AppBundle:Route')->findOneBy(['id1C'=>$route['id']])) ){
                     continue;
                 }
-
+                /* @var $_route \AppBundle\Entity\Route */
                 $_route = new Route();
 
                 $user = null;
@@ -217,7 +217,7 @@ class import1CDataService{
                         if( !is_null($this->em->getRepository('AppBundle:Order')->findOneBy(['id1C'=>$order['id']])) ){
                             continue;
                         }
-
+                        /* @var $_order \AppBundle\Entity\Order */
                         $_order = new Order();
                         $_order->setRouteId( $_route );
                         $_order->setId1C( $order['id'] );
@@ -260,10 +260,10 @@ class import1CDataService{
                 ){
                     continue;
                 }
-
+                /* @var $_lot \AppBundle\Entity\Lot */
                 $_lot = new Lot();
                 $_lot->setId1C( $lot['id'] );
-                $_lot->setStatus( $data['ref']['lotStatus'][ $lot['statusID'] ]['name'] );
+                $_lot->setStatusId1c( $lot['statusID'] );
                 $_lot->setDuration( $lot['duration'] );
                 $_lot->setStartDate( new \DateTime($lot['startDate']) );
                 $_lot->setCreatedAt( new \DateTime(date('c', time())) );
