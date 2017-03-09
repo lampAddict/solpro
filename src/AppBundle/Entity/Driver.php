@@ -33,7 +33,6 @@ class Driver
     protected $phone;
 
     /**
-     * @ORM\Column(type="smallint")
      * @ORM\ManyToOne(targetEntity="RefPassport", inversedBy="driver")
      * @ORM\JoinColumn(name="passport_type", referencedColumnName="id")
      */
