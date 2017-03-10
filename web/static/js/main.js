@@ -200,10 +200,10 @@ $( document ).ready(function(){
     //lot auction end request
     function sendLotAuctionEndRequest($this){
         $.ajax({
-            method: 'POST',
-            url: 'lotAuctionEnd',
-            data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') },
-            timeout: 2500
+             method: 'POST'
+            ,url: 'lotAuctionEnd'
+            ,data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') }
+            //,timeout: 2500
         })
         .done(function( response ){
             if( response.result ){
@@ -226,6 +226,37 @@ $( document ).ready(function(){
     var bets = {};
     $('.doBid').each(function(){
         var $this = $(this);
+        //submit data handler
+        $this.parent().submit(function(e){
+
+                e.preventDefault();
+
+                var formSerialize = $(this).serialize();
+                $.post('auction', formSerialize, function (response) {
+                    console.log(response);
+                    if( response.result ){
+                        $lcp = $this.parent().parent().siblings('.lotCurrentPrice');
+                        //set new current lot price
+                        $lcp.text(response.price);
+                        //highlight user's bet
+                        if( !$lcp.hasClass('myBet') ){
+                            $lcp.addClass('myBet');
+                        }
+                        //set new bet value
+                        $this.parent().find('#appbundle_bet_value').val(response.bet);
+                        //enable do bet button
+                        $this.removeAttr('disabled');
+
+                        //set current lot price in route full information window
+                        $('#lpi_' + $lcp.attr('id')).html(response.price);
+                    }
+                    else{
+                        location.reload();
+                    }
+                }, 'JSON');
+            }
+        );
+        //click `submit` button handler
         $this.click(function(){
             var _bet = parseInt( $this.siblings('#appbundle_bet').find('#appbundle_bet_value').val() ),
                 _lcp = $this.parents('.lotDoBid').siblings('.lotCurrentPrice'),
@@ -252,24 +283,6 @@ $( document ).ready(function(){
                 bets[_lotId].push( _bet );
 
                 $this.parent().submit();
-                /*
-                $.ajax({
-                    method: 'POST',
-                    url: 'lotAuctionEnd',
-                    data: { lot: $this.parent().siblings('.lotCurrentPrice').attr('id') },
-                    timeout: 2500
-                })
-                .done(function( response ){
-                    console.log(response);
-                    if( response.result ){
-
-                    }
-                })
-                .fail(function( response ){
-                    console.log('FAIL');
-                    console.log(response);
-                });
-                */
             }
         });
     });

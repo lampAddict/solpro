@@ -102,8 +102,18 @@ class AuctionController extends Controller
                         $forms[ $lot->getId() ] = $form->createView();
 
                         $em->flush();
+
+                        return new JsonResponse(
+                                                [    'result'=>true
+                                                    ,'price'=>$lot->getPrice() . ''
+                                                    ,'bet'=>($lot->getPrice() - $lot->getRouteId()->getTradeStep())
+                                                ]
+                        );
                     }
+
+                    return new JsonResponse(['result'=>false]);
                 }
+
             }
         }
         else{
