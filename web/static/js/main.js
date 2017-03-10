@@ -188,14 +188,17 @@ $( document ).ready(function(){
                 && event.elapsed
             ){
                 //if it's time to start auction
+                //@TODO rewrite code below for the case of multiple auctions start up which now're causes useless multiple page reload
+                /*
                 if( $this.parent().attr('class') == 'lotDoBid' ){
                     location.reload();
                 }
+                */
                 //if auction has been ended
-                else{
+                //else{
                     //sendLotAuctionEndRequest($this);
                     lotAuctionEndQuery.push( $this );
-                }
+                //}
             }
         });//.on('finish.countdown', sendLotAuctionEndRequest($this));
     });
