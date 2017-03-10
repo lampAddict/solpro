@@ -203,7 +203,7 @@ $( document ).ready(function(){
         });//.on('finish.countdown', sendLotAuctionEndRequest($this));
     });
 
-    var queryCheckId = setInterval( function(){checkLotAuctionEndQuery()}, 1500 );
+    var queryCheckId = setInterval( function(){checkLotAuctionEndQuery()}, 2000 );
 
     function checkLotAuctionEndQuery(){
         if( lotAuctionEndQuery.length > 0 ){
@@ -211,7 +211,7 @@ $( document ).ready(function(){
             sendLotAuctionEndRequest($this);
         }
         else{
-            clearInterval(queryCheckId);
+            //clearInterval(queryCheckId);
         }
     }
 
@@ -381,7 +381,7 @@ $( document ).ready(function(){
         }
     };
 
-    setInterval( updateLotPrices, 3000 );
+    setInterval( updateLotPrices, 4000 );
 
     //set auction filters
     $('.btnSetAuctionFilter').click(function(e){
