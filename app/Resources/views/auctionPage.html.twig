@@ -123,7 +123,9 @@
                             <td id="{{ lot.getId }}" class="{% if lot.getId in bets|keys and app.user.id == bets[ lot.getId ]['owner'] %}{{'myBet '}}{% elseif lot.getId in bets|keys and app.user.id in bets[ lot.getId ]['history'] and app.user.id != bets[ lot.getId ]['owner'] %}{{'notMyBet '}}{% endif %}lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
 
                             <td class="lotDoBid" align="center">
-                                {% if lot.getStartDate.timestamp > date().timestamp %}Начало в {{ lot.getStartDate.timestamp | date('H:i:s d.m.Y') }}<br /><span class="lotAuctionWillStartAt">До начала торгов:</span><span class="lotTimeLeft floatLeft">{{ lot.getStartDate.timestamp | date('Y/m/d H:i:s') }}</span>{% else %}
+                                {% if lot.getStartDate.timestamp > date().timestamp %}
+                                    Начало в {{ lot.getStartDate.timestamp | date('H:i:s d.m.Y') }}
+                                {% else %}
                                     {{ form_start(forms[lot.getId]) }}
                                         {{ form_widget(forms[lot.getId]) }}
                                         <input class="btn btn-default doBid" type="button" data-tradeStep="{{ lot.getRouteId.getTradeStep }}" value="Ставка &#8681;" />
