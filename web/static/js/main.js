@@ -174,6 +174,8 @@ $( document ).ready(function(){
         });
     });
 
+    var lotAuctionEndQuery = [];
+
     //time left countdowns
     $.each($('.lotTimeLeft'), function(i, el){
         var $this = $(this);
@@ -191,11 +193,24 @@ $( document ).ready(function(){
                 }
                 //if auction has been ended
                 else{
-                    sendLotAuctionEndRequest($this);
+                    //sendLotAuctionEndRequest($this);
+                    lotAuctionEndQuery.push( $this );
                 }
             }
         });//.on('finish.countdown', sendLotAuctionEndRequest($this));
     });
+
+    var queryCheckId = setInterval( function(){checkLotAuctionEndQuery()}, 1500 );
+
+    function checkLotAuctionEndQuery(){
+        if( lotAuctionEndQuery.length > 0 ){
+            $this = lotAuctionEndQuery.pop();
+            sendLotAuctionEndRequest($this);
+        }
+        else{
+            clearInterval(queryCheckId);
+        }
+    }
 
     //lot auction end request
     function sendLotAuctionEndRequest($this){
@@ -214,11 +229,9 @@ $( document ).ready(function(){
             }
         })
         .fail(function( response ){
-            
             console.log('FAIL');
             console.log(response);
-            
-            setTimeout( function(){sendLotAuctionEndRequest($this)}, 3000 );
+            //setTimeout( function(){sendLotAuctionEndRequest($this)}, 3000 );
         });
     }
 
