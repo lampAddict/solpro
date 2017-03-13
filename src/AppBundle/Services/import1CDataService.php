@@ -59,6 +59,7 @@ class import1CDataService{
         if( !is_null($data_loaded) ){
             /* @var $data_loaded \AppBundle\Entity\Exchange */
             $data_loaded->setDateExchange( new \DateTime(date('c', time())) );
+            $this->em->flush();
             //skip data if it was loaded in earlier messages
             return false;
         }
