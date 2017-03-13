@@ -58,7 +58,7 @@ class import1CDataService{
         $data_loaded = $this->em->getRepository('AppBundle:Exchange')->findOneBy(['recNum'=>$data['sendNum']]);
         if( !is_null($data_loaded) ){
             /* @var $data_loaded \AppBundle\Entity\Exchange */
-            $data_loaded->setDateExchange( new \DateTime(date('c', time())) );
+            $data_loaded->setDateExchange( new \DateTime(time()) );
             $this->em->flush();
             //skip data if it was loaded in earlier messages
             return false;
