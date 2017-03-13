@@ -17,14 +17,14 @@ class export1CDataService
 
     public function exportData($sendNum, $recNum){
 
-        $q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.$recNum.' ORDER BY id DESC LIMTI 1');
+        $q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.$recNum.' ORDER BY id DESC LIMIT 1');
         $q->execute();
         $r = $q->fetchAll();
         $lastDateExchangeTime = $r[0]['date_exchange'];
 
         $prevDateExchangeTime = 0;
         if( $recNum > 0 ){
-            $q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.($recNum - 1).' ORDER BY id ASC LIMTI 1');
+            $q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.($recNum - 1).' ORDER BY id ASC LIMIT 1');
             $q->execute();
             $r = $q->fetchAll();
             $prevDateExchangeTime = $r[0]['date_exchange'];
