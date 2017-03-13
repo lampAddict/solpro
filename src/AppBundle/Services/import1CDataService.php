@@ -58,7 +58,7 @@ class import1CDataService{
         $data_loaded = $this->em->getRepository('AppBundle:Exchange')->findOneBy(['recNum'=>$data['sendNum']]);
         if( !is_null($data_loaded) ){
             //skip data if it was loaded in earlier messages 
-            //return false;
+            return false;
         }
 
         //import lot status references

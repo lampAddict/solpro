@@ -17,22 +17,19 @@ class export1CDataService
 
     public function exportData($sendNum, $recNum){
 
-        $q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE rec_num = '.$sendNum);
+        $q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.$recNum.' ORDER BY id DESC LIMTI 1');
         $q->execute();
         $r = $q->fetchAll();
-        //if found couple or more records some data may not has been exported properly
-        if( count($r) > 1 ){
+        $lastDateExchangeTime = $r[0]['date_exchange'];
 
+        $prevDateExchangeTime = 0;
+        if( $recNum > 0 ){
+            $q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.($recNum - 1).' ORDER BY id ASC LIMTI 1');
+            $q->execute();
+            $r = $q->fetchAll();
+            $prevDateExchangeTime = $r[0]['date_exchange'];
         }
-        //single record - ok
-        elseif( count($r) == 1 ){
-            $exchange_date   = $r[0]['date_exchange'];
-            $exchange_rec_id = $r[0]['id'];
-        }
-        else{
-            //return false;
-        }
-
+        
         echo "Exchange table checked\n";
 
         $data_added = false;
