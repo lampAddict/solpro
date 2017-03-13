@@ -104,6 +104,9 @@ class export1CDataService
 
         //driver's data
         $q = $this->em->getConnection()->prepare('SELECT id, passport_type, passport_series, passport_number, passport_date_issue, passport_issued_by FROM driver WHERE updated_at > '.$prevDateExchangeTime.' AND updated_at < '.$lastDateExchangeTime);
+
+        echo 'SELECT id, passport_type, passport_series, passport_number, passport_date_issue, passport_issued_by FROM driver WHERE updated_at > '.$prevDateExchangeTime.' AND updated_at < '.$lastDateExchangeTime;
+
         $q->execute();
         $driversArr = $q->fetchAll();
         if( !empty($driversArr) ){
@@ -118,7 +121,6 @@ class export1CDataService
 
             $drivers = '<drivers>';
             foreach( $driversArr as $driver ){
-                /* @var $driver \AppBundle\Entity\Driver */
                 $drivers .= ' <driver>'
                                 .'<id>'.$driver['id'].'</id>'
                                 .'<docIDType>'.$docTypes[ $driver['passport_type'] ].'</docIDType>'
