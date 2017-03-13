@@ -104,7 +104,6 @@ class export1CDataService
 
         //driver's data
         $q = $this->em->getConnection()->prepare("SELECT id, passport_type, passport_series, passport_number, passport_date_issue, passport_issued_by FROM driver WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
-        echo "SELECT id, passport_type, passport_series, passport_number, passport_date_issue, passport_issued_by FROM driver WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'";
         $q->execute();
         $driversArr = $q->fetchAll();
         if( !empty($driversArr) ){
