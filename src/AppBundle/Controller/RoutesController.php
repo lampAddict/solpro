@@ -83,7 +83,7 @@ class RoutesController extends Controller
                 if( $vehicle ){
                     $route->setDriverId($driver);
                     $route->setVehicleId($vehicle);
-                    $em->persist($route);
+                    $driver->setUpdatedAt( new \DateTime(date('c', time())) );
                     $em->flush();
                     return new JsonResponse(['result'=>true]);
                 }
@@ -110,7 +110,6 @@ class RoutesController extends Controller
         if( $route ){
             $route->setDriverId(null);
             $route->setVehicleId(null);
-            $em->persist($route);
             $em->flush();
             return new JsonResponse(['result'=>true]);
         }

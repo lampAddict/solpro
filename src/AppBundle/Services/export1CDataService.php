@@ -85,7 +85,6 @@ class export1CDataService
                 $user1cIds[ $refCarrierUser->getLogin() ] = $refCarrierUser->getId1C();
             }
 
-            $driversIds = [];
             $routes = '<routes>';
             foreach( $userRoutesArr as $route ){
                 /* @var $route \AppBundle\Entity\Route */
@@ -93,45 +92,49 @@ class export1CDataService
                                 .'<id>'.$route->getId1C().'</id>'
                                 .'<carrierId>'.(is_null($route->getUserId()) ? '' : (isset($user1cIds[ $route->getUserId()->getUsername() ]) ? $user1cIds[ $route->getUserId()->getUsername() ] : '')).'</carrierId>'
                                 .'<tradeCost>'.$routesPrices[ $route->getId() ].'</tradeCost>'
+                                .( !is_null($route->getDriverId()) ? '<driverId>'.$route->getDriverId()->getId().'</driverId>' : '' )
                             .'</route>';
-                if( !is_null($route->getDriverId()) ){
-                    $driversIds[] = $route->getDriverId()->getId();
-                }
             }
             $routes .= '</routes>';
+
             $xml .= $routes;
+
             $data_added = true;
-
-            if( !empty($driversIds) ){
-
-                echo "Drivers data composition\n";
-
-                $docTypes = [];
-                $docTypesArr = $this->em->getRepository('AppBundle:RefPassport')->findAll();
-                foreach( $docTypesArr as $docType){
-                    /* @var $docType \AppBundle\Entity\RefPassport */
-                    $docTypes[ $docType->getId() ] = $docType->getId1C();
-                }
-
-                $driversArr = $this->em->getRepository('AppBundle:Driver')->findBy(['id'=>$driversIds]);
-                $drivers = '<drivers>';
-                foreach( $driversArr as $driver ){
-                    /* @var $driver \AppBundle\Entity\Driver */
-                    $drivers .= ' <driver>'
-                                    .'<id>'.$driver->getId().'</id>'
-                                    .'<docIDType>'.$docTypes[ $driver->getPassportType()->getId() ].'</docIDType>'
-                                    .'<series>'.$driver->getPassportSeries().'</series>'
-                                    .'<number>'.$driver->getPassportNumber().'</number>'
-                                    .'<date>'.$driver->getPassportDateIssue().'</date>'
-                                    .'<issuedBy>'.$driver->getPassportIssuedBy().'</issuedBy>'
-                                .'</driver>';
-                }
-                $drivers .= '</drivers>';
-
-                $xml .= $drivers;
-            }
         }
-        
+
+        //driver's data
+        $q = $this->em->getConnection()->prepare('SELECT id, passport_type, passport_series, passport_number, passport_date_issue, passport_issued_by FROM driver WHERE updated_at > '.$prevDateExchangeTime.' AND updated_at < '.$lastDateExchangeTime);
+        $q->execute();
+        $driversArr = $q->fetchAll();
+        if( !empty($driversArr) ){
+            echo "Drivers data composition\n";
+
+            $docTypes = [];
+            $docTypesArr = $this->em->getRepository('AppBundle:RefPassport')->findAll();
+            foreach( $docTypesArr as $docType){
+                /* @var $docType \AppBundle\Entity\RefPassport */
+                $docTypes[ $docType->getId() ] = $docType->getId1C();
+            }
+
+            $drivers = '<drivers>';
+            foreach( $driversArr as $driver ){
+                /* @var $driver \AppBundle\Entity\Driver */
+                $drivers .= ' <driver>'
+                                .'<id>'.$driver->getId().'</id>'
+                                .'<docIDType>'.$docTypes[ $driver->getPassportType()->getId() ].'</docIDType>'
+                                .'<series>'.$driver->getPassportSeries().'</series>'
+                                .'<number>'.$driver->getPassportNumber().'</number>'
+                                .'<date>'.$driver->getPassportDateIssue().'</date>'
+                                .'<issuedBy>'.$driver->getPassportIssuedBy().'</issuedBy>'
+                            .'</driver>';
+            }
+            $drivers .= '</drivers>';
+
+            $xml .= $drivers;
+
+            $data_added = true;
+        }
+
         $xml .= '</messageFromPortal>';
         
         if( $data_added ){
