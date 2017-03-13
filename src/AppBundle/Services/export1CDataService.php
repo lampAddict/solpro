@@ -20,8 +20,7 @@ class export1CDataService
         //$q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.$recNum.' ORDER BY id DESC LIMIT 1');
         //$q->execute();
         //$r = $q->fetchAll();
-        $now = new \DateTime(time());
-        $lastDateExchangeTime = $now->format('c');
+        $lastDateExchangeTime = date('c', time());
 
         $prevDateExchangeTime = 0;
         if( $recNum > 0 ){
