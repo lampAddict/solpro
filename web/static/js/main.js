@@ -107,7 +107,7 @@ $( document ).ready(function(){
         $('#routesTable').show();
     });
 
-    $('#appbundle_transport_type').change(function (e) {
+    $('#appbundle_transport_type').change(function(e){
         $(e.currentTarget).addClass('black');
     });
 
@@ -197,6 +197,10 @@ $( document ).ready(function(){
                 //if auction has been ended
                 //else{
                     //sendLotAuctionEndRequest($this);
+
+                    //disable do bid button
+                    $this.parent().siblings('.lotDoBid').find('.doBid').attr('disabled', 'disabled');
+
                     lotAuctionEndQuery.push( $this );
                 //}
             }
@@ -265,6 +269,13 @@ $( document ).ready(function(){
 
                         //set current lot price in route full information window
                         $('#lpi_' + $lcp.attr('id')).html(response.price);
+                        //update time left timer
+                        $tlt = $this.parent().parent().siblings('.lotTimeLeftTimer').find('.lotTimeLeft');
+                        if( response.prolongation > 0 ){
+                            var _d = new Date((parseInt($tlt.attr('data-ts')) + response.prolongation + 3*60*60)*1000).toISOString().replace(/\..+/g,'').replace(/-/g,'/').replace(/T/g,' ');
+                            //'Y/m/d H:i:s'
+                            $tlt.countdown( _d );
+                        }
                     }
                     else{
                         location.reload();

@@ -76,9 +76,11 @@ class AuctionController extends Controller
                         $bet->setValue( intval($request->request->get('appbundle_bet')['value']) );
                         $lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );
 
+                        $prolongation = 0;
                         //auction prolongation if bet was made during last minute
                         if( $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60 - time() < 2*60 ){
-                            $lot->setDuration( $lot->getDuration() + 2 );
+                            $prolongation = $lot->getDuration() + 2;//minutes
+                            $lot->setDuration( $prolongation );
                         }
                         
                         $em->persist($bet);
@@ -102,13 +104,12 @@ class AuctionController extends Controller
                         $forms[ $lot->getId() ] = $form->createView();
 
                         $em->flush();
-
-                        return new JsonResponse(
-                                                [    'result'=>true
+                        
+                        return new JsonResponse([    'result'=>true
                                                     ,'price'=>$lot->getPrice() . ''
                                                     ,'bet'=>($lot->getPrice() - $lot->getRouteId()->getTradeStep())
-                                                ]
-                        );
+                                                    ,'prolongation'=>$prolongation*60//seconds
+                        ]);
                     }
 
                     return new JsonResponse(['result'=>false]);
