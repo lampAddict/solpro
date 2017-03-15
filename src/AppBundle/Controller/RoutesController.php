@@ -74,7 +74,9 @@ class RoutesController extends Controller
         $em = $this->getDoctrine()->getManager();
         /* @var $route \AppBundle\Entity\Route */
         $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'user_id'=>$this->getUser()->getId()]);
-        if( $route ){
+        if(    $route
+            && in_array($route->getStatus(), ['1. Создан', '3. Утвержден', '4. В комплектации'])
+        ){
             /* @var $driver \AppBundle\Entity\Driver */
             $driver = $em->getRepository('AppBundle:Driver')->findOneBy(['id'=>intval($request->request->get('driver')), 'user_id'=>$this->getUser()->getId()]);
             if( $driver ){
@@ -111,10 +113,16 @@ class RoutesController extends Controller
         $em = $this->getDoctrine()->getManager();
         /* @var $route \AppBundle\Entity\Route */
         $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'user_id'=>$this->getUser()->getId()]);
-        if( $route ){
+        if(    $route 
+            && in_array($route->getStatus(), ['1. Создан', '3. Утвержден', '4. В комплектации'])
+        ){
+
             $route->setDriverId(null);
             $route->setVehicleId(null);
+            $route->setUpdatedAt( new \DateTime(date('c', time())) );
+
             $em->flush();
+
             return new JsonResponse(['result'=>true]);
         }
 
