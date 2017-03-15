@@ -87,7 +87,7 @@
                         <th>Вес (плт)</th>
                         <th class="txtAlignCenter">Комментарий</th>
                         <th>До конца торгов</th>
-                        <th>Текущая цена лота, &#8381;</th>
+                        <th>Цена лота, &#8381;</th>
                         <th class="txtAlignCenter">Ставка</th>
                     </tr>
                 </thead>
@@ -124,7 +124,7 @@
 
                             <td class="lotDoBid" align="center">
                                 {% if lot.getStartDate.timestamp > date().timestamp %}
-                                    Начало в {{ lot.getStartDate.timestamp | date('H:i:s d.m.Y') }}
+                                    Начало в {{ lot.getStartDate.timestamp | date('H:i d.m.Y') }}
                                 {% else %}
                                     {{ form_start(forms[lot.getId]) }}
                                         {{ form_widget(forms[lot.getId]) }}

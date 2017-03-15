@@ -81,9 +81,13 @@ class RoutesController extends Controller
                 /* @var $vehicle \AppBundle\Entity\Transport */
                 $vehicle = $em->getRepository('AppBundle:Transport')->findOneBy(['id'=>intval($request->request->get('vehicle')), 'user_id'=>$this->getUser()->getId()]);
                 if( $vehicle ){
+
                     $route->setDriverId($driver);
                     $route->setVehicleId($vehicle);
+                    $route->setUpdatedAt( new \DateTime(date('c', time())) );
+
                     $driver->setUpdatedAt( new \DateTime(date('c', time())) );
+
                     $em->flush();
                     return new JsonResponse(['result'=>true]);
                 }
