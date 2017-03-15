@@ -14,7 +14,7 @@ class ExportDataCommand extends ContainerAwareCommand
     {
         $this
             // the name of the command (the part after "app/console")
-            ->setName('exportdata')
+            ->setName('data:export')
 
             // the short description shown while running "php app/console list"
             ->setDescription('Export data to 1C.')

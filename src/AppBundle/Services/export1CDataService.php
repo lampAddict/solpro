@@ -16,10 +16,7 @@ class export1CDataService
     }
 
     public function exportData($sendNum, $recNum){
-
-        //$q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.$recNum.' ORDER BY id DESC LIMIT 1');
-        //$q->execute();
-        //$r = $q->fetchAll();
+        
         $lastDateExchangeTime = date('c', time());
 
         $prevDateExchangeTime = 0;

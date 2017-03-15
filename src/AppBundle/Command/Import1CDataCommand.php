@@ -20,7 +20,7 @@ class Import1CDataCommand extends ContainerAwareCommand
     {
         $this
             // the name of the command (the part after "app/console")
-            ->setName('import1cdata')
+            ->setName('data:import')
 
             // the short description shown while running "php app/console list"
             ->setDescription('Import data from 1C.')

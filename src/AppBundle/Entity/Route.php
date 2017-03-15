@@ -134,6 +134,11 @@ class Route
     protected $lot_id;
 
     /**
+     * @ORM\Column(type="datetimetz")
+     */
+    protected $updated_at;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -690,5 +695,29 @@ class Route
     public function getVehicleId()
     {
         return $this->vehicle_id;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Route
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
     }
 }

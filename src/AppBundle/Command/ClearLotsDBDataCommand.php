@@ -12,7 +12,7 @@ class ClearLotsDBDataCommand extends ContainerAwareCommand
     {
         $this
             // the name of the command (the part after "app/console")
-            ->setName('clearlotsdbdata')
+            ->setName('data:clear')
 
             // the short description shown while running "php app/console list"
             ->setDescription('Clear lot prices data from db.')

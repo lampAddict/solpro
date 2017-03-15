@@ -11,7 +11,7 @@ class Download1CDataCommand extends Command
     {
         $this
             // the name of the command (the part after "app/console")
-            ->setName('download1cdata')
+            ->setName('data:download')
 
             // the short description shown while running "php app/console list"
             ->setDescription('Download data from 1C.')
