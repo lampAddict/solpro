@@ -146,9 +146,12 @@ class import1CDataService{
                 $_route = $this->em->getRepository('AppBundle:Route')->findOneBy(['id1C'=>$route['id']]);
                 if( !is_null($_route) ){
 
+                    /* @var $routeStatusUpdate \AppBundle\Entity\RefRouteStatus */
+                    $routeStatusUpdate = $this->em->getRepository('AppBundle:RefRouteStatus')->findOneBy(['id1C'=>$route['statusId']]);
+
                     //update route status
-                    if( $_route->getStatus() != $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] ){
-                        $_route->setStatus($data['ref']['routeStatuse'][ $route['statusId'] ]['name'] );
+                    if( $_route->getStatus() != $routeStatusUpdate->getName() ){
+                        $_route->setStatus( $routeStatusUpdate->getName() );
                         $_route->setUpdatedAt( new \DateTime(date('c', time())) );
                         $this->em->flush();
                     }
