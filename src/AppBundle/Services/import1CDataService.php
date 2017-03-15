@@ -218,6 +218,7 @@ class import1CDataService{
                 $_route->setComment( $route['comment'] );
                 $_route->setDriverId( null );
                 $_route->setVehicleId( null );
+                $_route->setUpdatedAt( new \DateTime(date('c', time())) );
 
                 $this->em->persist($_route);
                 $this->em->flush();
