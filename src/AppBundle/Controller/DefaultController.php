@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DefaultController extends Controller
 {
@@ -76,5 +77,29 @@ class DefaultController extends Controller
             ,'routes_no_driver'=>$rnd
             ,'routes_sum'=>$rnc
         ));
+    }
+
+
+    /**
+     * @Route("/timezone", name="timezone")
+     */
+    public function timezoneAction(Request $request){
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        /* @var $user \AppBundle\Entity\User */
+        $user = $this->getUser();
+        $offset = intval($request->request->get('offset'));
+        $tz = ['3'=>'Europe/Moscow', '4'=>'Europe/Samara'];
+        $user->setTimezone( (isset($tz[$offset]) ? $tz[$offset] : 'UTC') );
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($user);
+        $em->flush();
+
+        return new JsonResponse(['result'=>true]);
     }
 }

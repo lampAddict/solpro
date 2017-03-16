@@ -9,6 +9,22 @@ function showMenuItems() {
 
 $( document ).ready(function(){
 
+    //determine user timezone
+    $.ajax({
+        method: 'POST',
+        url:    'timezone',
+        data: {
+            offset: -( new Date().getTimezoneOffset() / 60 )
+        }
+    })
+    .done(
+        function( response ){
+            if( response.result ){
+                location.reload();
+            }
+        }
+    );
+
     $('#filter').click(function(e){
         var _filterBlock = $('#filterBlock');
         if( _filterBlock.is(':visible') ){

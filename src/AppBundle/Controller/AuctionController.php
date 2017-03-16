@@ -171,6 +171,7 @@ class AuctionController extends Controller
             ,'forms' => $forms
             ,'bets' => $_bets
             ,'filters'=> $_filters
+            ,'tz'=>$this->getUser()->getTimezone()
         ));
     }
 

@@ -42,11 +42,17 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Bet", mappedBy="user_id")
      */
     protected $bet;
-    
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $timezone;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
+        $this->roles = array('ROLE_USER');
     }
 
     /**

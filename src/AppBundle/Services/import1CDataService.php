@@ -191,7 +191,11 @@ class import1CDataService{
                 $routeVehicleType = isset($data['ref']['vehicleType'][ $route['vehicleTypeId'] ]) ? $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name']: '';
 
                 $_route->setId1C( $route['id'] );
-                $_route->setLoadDate( new \DateTime($route['loadDate']) );
+
+                $loadDate = new \DateTime($route['loadDate']);
+                //$loadDate->setTimezone( new \DateTimeZone('UTC') );
+                $_route->setLoadDate( $loadDate );
+
                 $_route->setRouteDirectAssign( $route['routeType'] );
                 $_route->setCode( $route['code'] );
                 $_route->setName( $route['name'] );
@@ -281,7 +285,11 @@ class import1CDataService{
                 $_lot->setId1C( $lot['id'] );
                 $_lot->setStatusId1c( $lot['statusID'] );
                 $_lot->setDuration( $lot['duration'] );
-                $_lot->setStartDate( new \DateTime($lot['startDate']) );
+
+                $startDate = new \DateTime($lot['startDate']);
+                $startDate->setTimezone( new \DateTimeZone('UTC') );
+                $_lot->setStartDate( $startDate );
+
                 $_lot->setCreatedAt( new \DateTime(date('c', time())) );
                 $_lot->setAuctionStatus(1);//lot is in auction state
 

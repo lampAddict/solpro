@@ -42,7 +42,12 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="Bet", mappedBy="user_id")
      */
     protected $bet;
-    
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $timezone;
+
     public function __construct()
     {
         parent::__construct();
@@ -180,5 +185,29 @@ class User extends BaseUser
     public function getBet()
     {
         return $this->bet;
+    }
+
+    /**
+     * Set timezone
+     *
+     * @param string $timezone
+     *
+     * @return User
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    /**
+     * Get timezone
+     *
+     * @return string
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
     }
 }
