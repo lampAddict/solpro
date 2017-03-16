@@ -91,15 +91,21 @@ class DefaultController extends Controller
 
         /* @var $user \AppBundle\Entity\User */
         $user = $this->getUser();
+        
         $offset = intval($request->request->get('offset'));
         $tz = ['3'=>'Europe/Moscow', '4'=>'Europe/Samara'];
-        $user->setTimezone( (isset($tz[$offset]) ? $tz[$offset] : 'UTC') );
+        $tzValue = isset($tz[$offset]) ? $tz[$offset] : 'UTC';
+        if( $tzValue != $user->getTimezone() ){
+            $user->setTimezone( $tzValue );
 
-        $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
 
-        $em->persist($user);
-        $em->flush();
+            $em->persist($user);
+            $em->flush();
 
-        return new JsonResponse(['result'=>true]);
+            return new JsonResponse(['result'=>true]);
+        }
+
+        return new JsonResponse(['result'=>false]);
     }
 }
