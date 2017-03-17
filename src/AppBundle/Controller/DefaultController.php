@@ -93,7 +93,7 @@ class DefaultController extends Controller
         $user = $this->getUser();
         
         $offset = intval($request->request->get('offset'));
-        $tz = ['3'=>'Europe/Moscow', '4'=>'Europe/Samara'];
+        $tz = ['3'=>'Europe/Moscow', '4'=>'Europe/Samara', '5'=>'Asia/Yekaterinburg', '7'=>'Asia/Novosibirsk'];
         $tzValue = isset($tz[$offset]) ? $tz[$offset] : 'UTC';
         if( $tzValue != $user->getTimezone() ){
             $user->setTimezone( $tzValue );

@@ -118,13 +118,13 @@
                             <td align="right">{{ lot.getRouteId.getCargoWeight }} ({{ lot.getRouteId.getCargoCount }})</td>
                             <td class="lotComment">{{ lot.getRouteId.getComment }}</td>
 
-                            <td class="lotTimeLeftTimer">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}<span class="lotTimeLeft" data-ts="{{ lot.getStartDate.timestamp }}">{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s', tz) }}</span>{% elseif lot.getStartDate.timestamp > date().timestamp %}{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
+                            <td class="lotTimeLeftTimer">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}<span class="lotTimeLeft" data-ts="{% if tz == 'Europe/Moscow' %}{% set tzts = 3*60*60 %}{% elseif tz == 'Europe/Samara' %}{% set tzts = 4*60*60 %}{% else %}{% set tzts = 0 %}{% endif %}{{ (lot.getStartDate.timestamp + tzts) }}">{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s', tz) }}</span>{% elseif lot.getStartDate.timestamp > date().timestamp %}{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
 
                             <td id="{{ lot.getId }}" class="{% if lot.getId in bets|keys and app.user.id == bets[ lot.getId ]['owner'] %}{{'myBet '}}{% elseif lot.getId in bets|keys and app.user.id in bets[ lot.getId ]['history'] and app.user.id != bets[ lot.getId ]['owner'] %}{{'notMyBet '}}{% endif %}lotCurrentPrice" align="right">{{ lot.getPrice }}</td>
 
                             <td class="lotDoBid" align="center">
                                 {% if lot.getStartDate.timestamp > date().timestamp %}
-                                    Начало в {{ lot.getStartDate.timestamp | date('H:i d.m.Y') }}
+                                    Начало в {{ lot.getStartDate.timestamp | date('H:i d.m.Y', tz) }}
                                 {% else %}
                                     {{ form_start(forms[lot.getId]) }}
                                         {{ form_widget(forms[lot.getId]) }}
