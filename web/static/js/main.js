@@ -25,6 +25,7 @@ $( document ).ready(function(){
         }
     );
 
+    //show/hide filters panel
     $('#filter').click(function(e){
         var _filterBlock = $('#filterBlock');
         if( _filterBlock.is(':visible') ){
@@ -285,12 +286,14 @@ $( document ).ready(function(){
 
                         //set current lot price in route full information window
                         $('#lpi_' + $lcp.attr('id')).html(response.price);
+                        
                         //update time left timer
                         $tlt = $this.parent().parent().siblings('.lotTimeLeftTimer').find('.lotTimeLeft');
-                        if( response.prolongation > 0 ){
-                            var _d = new Date((parseInt($tlt.attr('data-ts')) + response.prolongation + 3*60*60)*1000).toISOString().replace(/\..+/g,'').replace(/-/g,'/').replace(/T/g,' ');
+                        if(    response.prolongation
+                            && response.prolongation > 0
+                        ){
                             //'Y/m/d H:i:s'
-                            $tlt.countdown( _d );
+                            $tlt.countdown( new Date((parseInt($tlt.attr('data-ts')) + response.prolongation)*1000).toISOString().replace(/\..+/g,'').replace(/-/g,'/').replace(/T/g,' ') );
                         }
                     }
                     else{
