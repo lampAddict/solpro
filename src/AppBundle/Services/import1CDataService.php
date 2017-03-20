@@ -61,7 +61,7 @@ class import1CDataService{
             $data_loaded->setDateExchange( new \DateTime(date('c', time())) );
             $this->em->flush();
             //skip data if it was loaded in earlier messages
-            return false;
+            //return false;
         }
 
         //import lot status references
@@ -291,6 +291,7 @@ class import1CDataService{
                 $_lot->setStartDate( $startDate );
 
                 $_lot->setCreatedAt( new \DateTime(date('c', time())) );
+                $_lot->setUpdatedAt( new \DateTime(date('c', time())) );
                 $_lot->setAuctionStatus(1);//lot is in auction state
 
                 if( isset($routeDbIds[ $lot['routeId'] ]) ){

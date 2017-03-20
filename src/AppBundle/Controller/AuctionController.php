@@ -36,13 +36,24 @@ class AuctionController extends Controller
 
         $forms = [];
         if( !empty($lots) ){
+            /* @var $lot \AppBundle\Entity\Lot */
             foreach( $lots as $lot ){
 
+                /* @var $bet \AppBundle\Entity\Bet */
                 $bet = new Bet();
                 $bet->setLotId($lot->getId());
                 
                 $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
                 $forms[ $lot->getId() ] = $form->createView();
+
+                //update lot status if it has begun trading
+                if(     $lot->getStatusId1c() == '175d0f31-a9ca-45ba-835e-bae500c8c35c' // "подготовка"
+                    &&  $lot->getStartDate()->getTimestamp() >= time()
+                ){
+                    $lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0'); //"торги"
+                    $lot->setUpdatedAt( new \DateTime(date('c', time())) );
+                    $em->flush();
+                }
 
                 //do `place bet` request processing
                 $form->handleRequest($request);
@@ -84,7 +95,7 @@ class AuctionController extends Controller
                         }
                         
                         $em->persist($bet);
-                        $em->persist($lot);
+                        //$em->persist($lot);
                         
                         //update cache lot information
                         if( $redis->exists('lcp_'.$lot->getId()) === 0 ){

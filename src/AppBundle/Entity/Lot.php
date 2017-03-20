@@ -64,6 +64,11 @@ class Lot
      */
     protected $auctionStatus;
 
+    /**
+     * @ORM\Column(type="datetimetz")
+     */
+    protected $updated_at;
+
     public function __toString() {
         return (string)$this->id;
     }
@@ -324,5 +329,29 @@ class Lot
     public function getStatusId1c()
     {
         return $this->statusId1c;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Lot
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
     }
 }
