@@ -35,17 +35,20 @@ class export1CDataService
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'
             .'<messageFromPortal sendNumber="'.($recNum + 1).'" recNumber="'.$sendNum.'" messageCreationTime="'.$current_date->format('c').'">';
 
-        $auction_end_lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auctionStatus'=>0]);
-        if( !empty($auction_end_lots) ){
+        //lot's data
+        $q = $this->em->getConnection()->prepare("SELECT id1c, status_id1c FROM lot WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
+        $q->execute();
+        $lotsArr = $q->fetchAll();
+        if( !empty($lotsArr) ){
 
             echo "Compose lots data\n";
 
             $lots = '<lots>';
-            foreach( $auction_end_lots as $lot ){
+            foreach( $lotsArr as $lot ){
                 /* @var $lot \AppBundle\Entity\Lot */
                 $lots .= '<lot>'
-                            .'<id>'.$lot->getId1C().'</id>'
-                            .'<statusId>'.$lot->getStatusId1c().'</statusId>'
+                            .'<id>'.$lot['id1c'].'</id>'
+                            .'<statusId>'.$lot['status_id1c'].'</statusId>'
                         .'</lot>';
             }
             $lots .= '</lots>';
