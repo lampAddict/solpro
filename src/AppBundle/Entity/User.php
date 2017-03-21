@@ -48,6 +48,11 @@ class User extends BaseUser
      */
     protected $timezone;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $carrierId1C;
+
     public function __construct()
     {
         parent::__construct();
@@ -209,5 +214,29 @@ class User extends BaseUser
     public function getTimezone()
     {
         return $this->timezone;
+    }
+
+    /**
+     * Set carrierId1C
+     *
+     * @param string $carrierId1C
+     *
+     * @return User
+     */
+    public function setCarrierId1C($carrierId1C)
+    {
+        $this->carrierId1C = $carrierId1C;
+
+        return $this;
+    }
+
+    /**
+     * Get carrierId1C
+     *
+     * @return string
+     */
+    public function getCarrierId1C()
+    {
+        return $this->carrierId1C;
     }
 }

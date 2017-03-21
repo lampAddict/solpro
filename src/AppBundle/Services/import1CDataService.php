@@ -127,6 +127,7 @@ class import1CDataService{
                         ->setUsername($v['login'])
                         ->setEmail($v['email'])
                         ->setPlainPassword($v['password'])
+                        ->setCarrierId1C($v['carrierId'])
                         ->setEnabled(true)
                     ;
                     $this->em->persist($user);
