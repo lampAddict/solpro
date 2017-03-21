@@ -52,6 +52,7 @@ class TransportController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $transport->setUserId($this->getUser());
+            $transport->setUpdatedAt(  new \DateTime(date('c', time()))  );
             $em->persist($transport);
             $em->flush($transport);
 
@@ -97,6 +98,9 @@ class TransportController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            
+            $transport->setUpdatedAt( new \DateTime(date('c', time())) );
+            
             $this->getDoctrine()->getManager()->flush();
 
             //return $this->redirectToRoute('transport_edit', array('id' => $transport->getId()));

@@ -90,6 +90,8 @@ class RoutesController extends Controller
 
                     $driver->setUpdatedAt( new \DateTime(date('c', time())) );
 
+                    $vehicle->setUpdatedAt( new \DateTime(date('c', time())) );
+
                     $em->flush();
                     return new JsonResponse(['result'=>true]);
                 }

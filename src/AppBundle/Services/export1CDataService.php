@@ -45,7 +45,6 @@ class export1CDataService
 
             $lots = '<lots>';
             foreach( $lotsArr as $lot ){
-                /* @var $lot \AppBundle\Entity\Lot */
                 $lots .= '<lot>'
                             .'<id>'.$lot['id1c'].'</id>'
                             .'<statusId>'.$lot['status_id1c'].'</statusId>'
@@ -66,25 +65,32 @@ class export1CDataService
 
             echo "Compose routes data\n";
 
-            //compose routes prices data
             $routesIds = [];
+            $usersIds = [];
             foreach( $routesArr as $route ){
-                /* @var $route \AppBundle\Entity\Route */
+
                 $routesIds[] = $route['id'];
+
+                if( !is_null($route['user_id']) )
+                    $usersIds[] = $route['user_id'];
             }
 
+            //compose routes prices data
             $routesPrices = [];
             $lotsPrices = $this->em->getRepository('AppBundle:Lot')->findBy(['routeId'=>$routesIds]);
             foreach( $lotsPrices as $lot ){
                 /* @var $lot \AppBundle\Entity\Lot */
                 $routesPrices[ $lot->getRouteId()->getId() ] = $lot->getPrice();
             }
-            
-            $user1cIds = [];
-            $refCarrierUsers = $this->em->getRepository('AppBundle:RefCarrierUser')->findAll();
-            foreach( $refCarrierUsers as $refCarrierUser ){
-                /* @var $refCarrierUser \AppBundle\Entity\RefCarrierUser */
-                $user1cIds[ $refCarrierUser->getLogin() ] = $refCarrierUser->getId1C();
+
+            //compose carrier users data
+            $carrierUser1CIds = [];
+            if( !empty($usersIds) ){
+                $users = $this->em->getRepository('AppBundle:User')->findBy(['id'=>$usersIds]);
+                foreach( $users as $user ){
+                    /* @var $user \AppBundle\Entity\User */
+                    $carrierUser1CIds[ $user->getId() ] = $user->getCarrierId1C();
+                }
             }
 
             //compose routes data
@@ -93,9 +99,10 @@ class export1CDataService
                 /* @var $route \AppBundle\Entity\Route */
                 $routes .= ' <route>'
                                 .'<id>'.$route['id1c'].'</id>'
-                                .'<carrierId>'.(is_null($route['user_id']) ? '' : (isset($user1cIds[ $route->getUserId()->getUsername() ]) ? $user1cIds[ $route->getUserId()->getUsername() ] : '')).'</carrierId>'
+                                .'<carrierId>'.(is_null($route['user_id']) ? '' : (isset($carrierUser1CIds[ $route['user_id'] ]) ? $carrierUser1CIds[ $route['user_id'] ] : '')).'</carrierId>'
                                 .'<tradeCost>'.$routesPrices[ $route['id'] ].'</tradeCost>'
                                 .( !is_null($route['driver_id']) ? '<driverId>'.$route['driver_id'].'</driverId>' : '' )
+                                .( !is_null($route['vehicle_id']) ? '<vehicleId>'.$route['vehicle_id'].'</vehicleId>' : '' )
                             .'</route>';
             }
             $routes .= '</routes>';
@@ -137,6 +144,29 @@ class export1CDataService
             $data_added = true;
         }
 
+
+        //vehicle's data
+        $q = $this->em->getConnection()->prepare("SELECT id, name, reg_num, trailer_reg_num FROM transport WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
+        $q->execute();
+        $vehicleArr = $q->fetchAll();
+        if( !empty($vehicleArr) ) {
+            echo "Vehicles data composition\n";
+
+            $vehicles = '<vehicles>';
+            foreach( $vehicleArr as $vehicle ){
+                $vehicles .= ' <vehicle>'
+                                .'<id>'.$vehicle['id'].'</id>'
+                                .'<mark>'.$vehicle['name'].'</mark>'
+                                .'<registrationNumber>'.$vehicle['reg_num'].'</registrationNumber>'
+                                .'<truckRegistrationNumber>'.(!is_null($vehicle['trailer_reg_num']) ? $vehicle['trailer_reg_num'] : '').'</truckRegistrationNumber>'
+                            .'</vehicle>';
+            }
+            $vehicles .= '</vehicles>';
+
+            $xml .= $vehicles;
+
+            $data_added = true;
+        }
         $xml .= '</messageFromPortal>';
         
         if( $data_added ){

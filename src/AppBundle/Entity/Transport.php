@@ -58,6 +58,11 @@ class Transport
      * @ORM\OneToMany(targetEntity="Route", mappedBy="vehicle_id")
      */
     protected $route_id;
+    
+    /**
+     * @ORM\Column(type="datetimetz")
+     */
+    protected $updated_at;
 
     public function __toString() {
         return $this->name;
@@ -296,5 +301,29 @@ class Transport
     public function getRouteId()
     {
         return $this->route_id;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Transport
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
     }
 }
