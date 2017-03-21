@@ -64,7 +64,7 @@ class export1CDataService
         }
 
         //routes's data
-        $q = $this->em->getConnection()->prepare("SELECT id, id1c, user_id, driver_id, vehicle_id FROM route WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
+        $q = $this->em->getConnection()->prepare("SELECT id, id1c, user_id, driver_id, vehicle_id, trade_cost FROM route WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
         $q->execute();
         $routesArr = $q->fetchAll();
         if( !empty($routesArr) ){
@@ -102,11 +102,10 @@ class export1CDataService
             //compose routes data
             $routes = '<routes>';
             foreach( $routesArr as $route ){
-                /* @var $route \AppBundle\Entity\Route */
                 $routes .= ' <route>'
                                 .'<id>'.$route['id1c'].'</id>'
                                 .'<carrierId>'.(is_null($route['user_id']) ? '' : (isset($carrierUser1CIds[ $route['user_id'] ]) ? $carrierUser1CIds[ $route['user_id'] ] : '')).'</carrierId>'
-                                .'<tradeCost>'.$routesPrices[ $route['id'] ].'</tradeCost>'
+                                .'<tradeCost>'.( isset($routesPrices[ $route['id'] ]) ? $routesPrices[ $route['id'] ] : $route['trade_cost']).'</tradeCost>'
                                 .( !is_null($route['driver_id']) ? '<driverId>'.$route['driver_id'].'</driverId>' : '' )
                                 .( !is_null($route['vehicle_id']) ? '<vehicleId>'.$route['vehicle_id'].'</vehicleId>' : '' )
                             .'</route>';
