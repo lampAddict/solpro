@@ -24,7 +24,13 @@ class export1CDataService
             $q = $this->em->getConnection()->prepare('SELECT id, date_exchange FROM exchange WHERE send_num = '.($recNum - 1).' ORDER BY id ASC LIMIT 1');
             $q->execute();
             $r = $q->fetchAll();
-            $prevDateExchangeTime = $r[0]['date_exchange'];
+            if( empty($r) ){
+                $prevDateExchangeTime = new \DateTime(date('c', time() - 365*24*60*60));
+                $prevDateExchangeTime = $prevDateExchangeTime->format('c');
+            }
+            else{
+                $prevDateExchangeTime = $r[0]['date_exchange'];
+            }
         }
         
         echo "Exchange table checked\n";
