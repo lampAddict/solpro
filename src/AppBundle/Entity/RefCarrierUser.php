@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="refCarrierUser",indexes={@ORM\Index(name="searchBy1Cid", columns={"id1c"})})
+ * @ORM\Table(name="refcarrieruser",indexes={@ORM\Index(name="searchBy1Cid", columns={"id1c"})})
  */
 class RefCarrierUser
 {

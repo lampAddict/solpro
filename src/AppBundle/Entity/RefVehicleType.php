@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="refVehicleType",indexes={@ORM\Index(name="searchBy1Cid", columns={"id1c"})})
+ * @ORM\Table(name="refvehicletype",indexes={@ORM\Index(name="searchBy1Cid", columns={"id1c"})})
  */
 class RefVehicleType
 {

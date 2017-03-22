@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="refPassport")
+ * @ORM\Table(name="refpassport")
  */
 class RefPassport
 {
