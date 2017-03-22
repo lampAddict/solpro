@@ -9,22 +9,24 @@ function showMenuItems() {
 
 $( document ).ready(function(){
 
-    //determine user timezone
-    $.ajax({
-        method: 'POST',
-        url:    'timezone',
-        data: {
-            offset: -( new Date().getTimezoneOffset() / 60 )
-        }
-    })
-    .done(
-        function( response ){
-            if( response.result ){
-                location.reload();
+    if( window.location.pathname.replace(/\//g,'') == 'auction' ){
+        //determine user timezone
+        $.ajax({
+            method: 'POST',
+            url:    'timezone',
+            data: {
+                offset: -( new Date().getTimezoneOffset() / 60 )
             }
-        }
-    );
-
+        })
+            .done(
+                function( response ){
+                    if( response.result ){
+                        location.reload();
+                    }
+                }
+            );
+    }
+    
     //show/hide filters panel
     $('#filter').click(function(e){
         var _filterBlock = $('#filterBlock');
@@ -343,8 +345,21 @@ $( document ).ready(function(){
                 console.log(data);
                 var _uid = $('#auctionPageContainer').attr('data-user');
                 if( !jQuery.isEmptyObject(data.lots) ){
-                    var $lotsPrices = $('.lotCurrentPrice'), lotPricesTableCount = $lotsPrices.length, lotPricesDataCount = Object.keys(data.lots).length;
+                    var $lotsPrices = $('.lotCurrentPrice'),
+                        lotPricesTableCount = $lotsPrices.length,
+                        lotPricesDataCount = Object.keys(data.lots).length,
+                        savedNumLotsPrices = $('body').data('numLotsPrices'),
+                        pageReload = false;
 
+                    if( savedNumLotsPrices == 'undefined' ){
+                        $('body').data('numLotsPrices', lotPricesDataCount);
+                    }
+                    else{
+                        if( lotPricesDataCount != parseInt(savedNumLotsPrices) ){
+                            pageReload = true;
+                        }
+                    }
+                    
                     if( lotPricesTableCount != lotPricesDataCount ){
                         //check if some lots should be removed already
                         if( lotPricesTableCount > lotPricesDataCount ){
@@ -364,7 +379,11 @@ $( document ).ready(function(){
                             }
                         }
                         //reload page if need to show new lot prices data
-                        else if( lotPricesTableCount > 0 && lotPricesDataCount > 0 && lotPricesTableCount < lotPricesDataCount ){
+                        else if(    lotPricesTableCount > 0
+                                 && lotPricesDataCount > 0
+                                 && lotPricesTableCount < lotPricesDataCount
+                                 && pageReload
+                        ){
                             location.reload();
                         }
                     }

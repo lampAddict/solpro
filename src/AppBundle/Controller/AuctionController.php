@@ -25,26 +25,70 @@ class AuctionController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $lots = $em
+        //get user filter settings
+        $_filters = [];
+        $filters = $em
+            ->getRepository('AppBundle:Filter')
+            ->createQueryBuilder('f')
+            ->where('f.uid = '.$this->getUser()->getId())
+            ->andWhere('f.type = 0')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+
+        $where = 'l.auctionStatus = 1';
+        if( !empty($filters) ){
+            
+            $_filters = json_decode($filters[0]->getParams());
+
+            if(    $_filters->status_active
+                && $_filters->status_active == 1
+            ){
+                $where .= ' AND l.startDate <= '.time().' AND l.startDate + l.duration*60 > '.time();
+            }
+
+            if(    $_filters->status_planned
+                && $_filters->status_planned == 1
+            ){
+                if( $where != 'l.auctionStatus = 1' ){
+                    $where = 'l.auctionStatus = 1';
+                }
+                else{
+                    $where .= ' AND l.startDate > '.time();
+                }
+            }
+        }
+
+        $_lots = $em
             ->getRepository('AppBundle:Lot')
             ->createQueryBuilder('l')
             ->leftJoin('l.routeId', 'r')
-            ->where('l.auctionStatus = 1')
+            ->where($where)
             ->orderBy('l.startDate')
             ->getQuery()
             ->getResult();
 
-        $forms = [];
-        if( !empty($lots) ){
+        $_regionsFrom = [];
+        $_regionsTo = [];
+        $_forms = [];
+        if( !empty($_lots) ){
             /* @var $lot \AppBundle\Entity\Lot */
-            foreach( $lots as $lot ){
+            foreach( $_lots as $lot ){
 
+                if( !isset($_regionsFrom[ $lot->getRouteId()->getRegionFrom() ]) ){
+                    $_regionsFrom[$lot->getRouteId()->getRegionFrom()] = 1;
+                }
+
+                if( !isset($_regionsTo[ $lot->getRouteId()->getRegionTo() ]) ){
+                    $_regionsTo[$lot->getRouteId()->getRegionTo()] = 1;
+                }
+                
                 /* @var $bet \AppBundle\Entity\Bet */
                 $bet = new Bet();
                 $bet->setLotId($lot->getId());
                 
                 $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
-                $forms[ $lot->getId() ] = $form->createView();
+                $_forms[ $lot->getId() ] = $form->createView();
 
                 //update lot status if it has begun trading
                 if(     $lot->getStatusId1c() == '175d0f31-a9ca-45ba-835e-bae500c8c35c' // "подготовка"
@@ -112,7 +156,7 @@ class AuctionController extends Controller
                         }
 
                         $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
-                        $forms[ $lot->getId() ] = $form->createView();
+                        $_forms[ $lot->getId() ] = $form->createView();
 
                         $em->flush();
                         
@@ -129,7 +173,7 @@ class AuctionController extends Controller
             }
         }
         else{
-            $lots = [];
+            $_lots = [];
         }
 
         //get bets history and current lot owner
@@ -159,30 +203,13 @@ class AuctionController extends Controller
             }
         }
 
-
-        //get user filter settings
-        $_filters = [];
-        $filters = $em
-            ->getRepository('AppBundle:Filter')
-            ->createQueryBuilder('f')
-            ->where('f.uid = '.$this->getUser()->getId())
-            ->andWhere('f.type = 0')
-            ->getQuery()
-            ->getResult();
-
-        if( !empty($filters) ){
-            foreach( $filters as $filter ){
-                /* @var $filter \AppBundle\Entity\Filter */
-                $_filters = json_decode($filter->getParams());
-            }
-        }
-
         return $this->render('auctionPage.html.twig', array(
-             'lots' => $lots
-            ,'forms' => $forms
+             'lots' => $_lots
+            ,'forms' => $_forms
             ,'bets' => $_bets
-            ,'filters'=> $_filters
-            ,'tz'=>($this->getUser()->getTimezone() != '' ? $this->getUser()->getTimezone() : 'UTC')
+            ,'filters' => $_filters
+            ,'tz' => ($this->getUser()->getTimezone() != '' ? $this->getUser()->getTimezone() : 'UTC')
+            ,'regions' => ['from'=>array_keys($_regionsFrom), 'to'=>array_keys($_regionsTo)]
         ));
     }
 
@@ -216,7 +243,7 @@ class AuctionController extends Controller
         }
 
         $filter->setParams(json_encode($request->request->get('params')));
-        $em->persist($filter);
+        //$em->persist($filter);
         $em->flush();
         
         return new JsonResponse(['result'=>true]);
