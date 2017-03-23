@@ -11,6 +11,93 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AuctionController extends Controller
 {
+
+    /**
+     * Composer filter condition for auction page based on user preferences
+     *
+     * @param array $filters array which contains json encoded user preferences
+     * @return string $where composed condition
+     */
+    private function makeFilterCondition( $filters ){
+        $where = 'l.auctionStatus = 1';
+        if( !empty($filters) ){
+
+            $_filters = json_decode($filters[0]->getParams());
+
+            if(    $_filters->status_active
+                && $_filters->status_active == 1
+            ){
+                $where .= ' AND l.startDate <= CURRENT_TIMESTAMP() AND l.startDate + l.duration*60 > CURRENT_TIMESTAMP()';
+            }
+
+            if(    $_filters->status_planned
+                && $_filters->status_planned == 1
+            ){
+                if( $where != 'l.auctionStatus = 1' ){
+                    $where = 'l.auctionStatus = 1';
+                }
+                else{
+                    $where .= ' AND l.startDate > '.time();
+                }
+            }
+
+            if(    $_filters->region_from
+                && $_filters->region_from != ''
+            ){
+                $where .= ' AND r.regionFrom = \''.$_filters->region_from.'\'';
+            }
+
+            if(    $_filters->region_to
+                && $_filters->region_to != ''
+            ){
+                $where .= ' AND r.regionTo = \''.$_filters->region_to.'\'';
+            }
+        }
+
+        return $where;
+    }
+
+    /**
+     * Get list of sender and delivery regions
+     *
+     * @return array
+     */
+    private function getSenderDeliveryRegionsLists(){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $_regionsFrom = [];
+        $_regionsTo = [];
+        //determine delivery and sender regions
+        $_lots = $em
+            ->getRepository('AppBundle:Lot')
+            ->createQueryBuilder('l')
+            ->leftJoin('l.routeId', 'r')
+            ->where('l.auctionStatus = 1')
+            ->orderBy('l.startDate')
+            ->getQuery()
+            ->getResult();
+        if( !empty($_lots) ){
+            /* @var $lot \AppBundle\Entity\Lot */
+            foreach( $_lots as $lot ) {
+
+                //fill regions data array
+                if (!isset($_regionsFrom[$lot->getRouteId()->getRegionFrom()])) {
+                    $_regionsFrom[$lot->getRouteId()->getRegionFrom()] = 1;
+                }
+
+                if (!isset($_regionsTo[$lot->getRouteId()->getRegionTo()])) {
+                    $_regionsTo[$lot->getRouteId()->getRegionTo()] = 1;
+                }
+            }
+
+            ksort($_regionsFrom);
+            ksort($_regionsTo);
+        }
+
+        return ['from'=>array_keys($_regionsFrom), 'to'=>array_keys($_regionsTo)];
+    }
+
     /**
      * @Route("/auction", name="auction")
      */
@@ -25,8 +112,9 @@ class AuctionController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        //get user filter settings
+        //get user filter preferences
         $_filters = [];
+
         $filters = $em
             ->getRepository('AppBundle:Filter')
             ->createQueryBuilder('f')
@@ -36,28 +124,11 @@ class AuctionController extends Controller
             ->getQuery()
             ->getResult();
 
-        $where = 'l.auctionStatus = 1';
         if( !empty($filters) ){
-            
             $_filters = json_decode($filters[0]->getParams());
-
-            if(    $_filters->status_active
-                && $_filters->status_active == 1
-            ){
-                $where .= ' AND l.startDate <= '.time().' AND l.startDate + l.duration*60 > '.time();
-            }
-
-            if(    $_filters->status_planned
-                && $_filters->status_planned == 1
-            ){
-                if( $where != 'l.auctionStatus = 1' ){
-                    $where = 'l.auctionStatus = 1';
-                }
-                else{
-                    $where .= ' AND l.startDate > '.time();
-                }
-            }
         }
+
+        $where = $this->makeFilterCondition( $filters );
 
         $_lots = $em
             ->getRepository('AppBundle:Lot')
@@ -68,21 +139,19 @@ class AuctionController extends Controller
             ->getQuery()
             ->getResult();
 
-        $_regionsFrom = [];
-        $_regionsTo = [];
+        $_routes = [];
+        $_orders = [];
         $_forms = [];
         if( !empty($_lots) ){
             /* @var $lot \AppBundle\Entity\Lot */
             foreach( $_lots as $lot ){
-
-                if( !isset($_regionsFrom[ $lot->getRouteId()->getRegionFrom() ]) ){
-                    $_regionsFrom[$lot->getRouteId()->getRegionFrom()] = 1;
-                }
-
-                if( !isset($_regionsTo[ $lot->getRouteId()->getRegionTo() ]) ){
-                    $_regionsTo[$lot->getRouteId()->getRegionTo()] = 1;
-                }
                 
+                //fill routes data array
+                $_routes[ $lot->getRouteId()->getId() ] = $lot->getRouteId();
+                
+                //fill orders data array
+                $_orders[ $lot->getRouteId()->getId() ] = $lot->getRouteId()->getOrders();
+
                 /* @var $bet \AppBundle\Entity\Bet */
                 $bet = new Bet();
                 $bet->setLotId($lot->getId());
@@ -205,11 +274,13 @@ class AuctionController extends Controller
 
         return $this->render('auctionPage.html.twig', array(
              'lots' => $_lots
+            ,'routes' => $_routes
+            ,'orders' => $_orders
             ,'forms' => $_forms
             ,'bets' => $_bets
             ,'filters' => $_filters
             ,'tz' => ($this->getUser()->getTimezone() != '' ? $this->getUser()->getTimezone() : 'UTC')
-            ,'regions' => ['from'=>array_keys($_regionsFrom), 'to'=>array_keys($_regionsTo)]
+            ,'regions' => $this->getSenderDeliveryRegionsLists()
         ));
     }
 

@@ -9,7 +9,7 @@ function showMenuItems() {
 
 $( document ).ready(function(){
 
-    if( window.location.pathname.replace(/\//g,'') == 'auction' ){
+    if( window.location.pathname.replace(/\//g,'') == 'auction' ){ //solprosolportalwebapp_dev.phpauction
         //determine user timezone
         $.ajax({
             method: 'POST',
@@ -351,7 +351,7 @@ $( document ).ready(function(){
                         savedNumLotsPrices = $('body').data('numLotsPrices'),
                         pageReload = false;
 
-                    if( savedNumLotsPrices == 'undefined' ){
+                    if( savedNumLotsPrices == undefined ){
                         $('body').data('numLotsPrices', lotPricesDataCount);
                     }
                     else{
@@ -435,9 +435,17 @@ $( document ).ready(function(){
     //set auction filters
     $('.btnSetAuctionFilter').click(function(e){
         $.ajax({
-            method: 'POST',
-            url: 'auctionSetFilter',
-            data: {type: 0, params: {'status_active':($('#lotFilterTradeActive').is(':checked')?1:0), 'status_planned':($('#lotFilterPlanned').is(':checked')?1:0)} }
+             method: 'POST'
+            ,url: 'auctionSetFilter'
+            ,data: {
+                type: 0,
+                params: {
+                     'status_active' : ($('#lotFilterTradeActive').is(':checked')?1:0)
+                    ,'status_planned' : ($('#lotFilterPlanned').is(':checked')?1:0)
+                    ,'region_from' : $('#lotFilterDirFrom').val()
+                    ,'region_to' : $('#lotFilterDirTo').val()
+                }
+            }
         })
         .done(function( response ){
             if( response.result ){

@@ -6,7 +6,6 @@
 
 {% block body %}
     <div id="auctionPageContainer" data-user="{{ app.user.id }}">
-
         <div id="lotFilter">
             <div class="half">
                 <div><a id="filter">Показать фильтры</a></div>
@@ -31,17 +30,19 @@
                                     <div>
                                         <span>Откуда</span>
                                         <select id="lotFilterDirFrom">
-                                            <option selected="selected">&mdash;</option>
-                                            <option>Саратов</option>
-                                            <option>Аткарск</option>
+                                            <option selected="selected" value="">&mdash;</option>
+                                            {% for region in regions['from'] %}
+                                                <option {% if filters|length > 0 and filters.region_from == region %}selected="selected"{% endif %} value="{{ region }}">{{ region }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div>
                                         <span>Куда</span>
                                         <select id="lotFilterDirTo">
-                                            <option selected="selected">&mdash;</option>
-                                            <option>Павловский Посад</option>
-                                            <option>Тула</option>
+                                            <option selected="selected" value="">&mdash;</option>
+                                            {% for region in regions['to'] %}
+                                                <option {% if filters|length > 0 and filters.region_to == region %}selected="selected"{% endif %} value="{{ region }}">{{ region }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </td>
@@ -112,12 +113,12 @@
                         {% endif %}
                         {% if showLot %}
                         <tr id="lot-{{ lot.getId }}">
-                            <td align="center"><a class="showLotRouteInfo">{{ lot.getRouteId.getCode }}</a></td>
-                            <td class="lotDirection">{{ lot.getRouteId.getRegionFrom }} &xrarr;<br />{{ lot.getRouteId.getRegionTo }}</td>
-                            <td class="lotGetInTime">{{ lot.getRouteId.getLoadDate|date('d.m.Y H:i') }}</td>
-                            <td class="lotVehicleType">{{ lot.getRouteId.getVehicleType }}<br />{{ lot.getRouteId.getVehiclePayload }}</td>
-                            <td align="right">{{ lot.getRouteId.getCargoWeight }} ({{ lot.getRouteId.getCargoCount }})</td>
-                            <td class="lotComment">{{ lot.getRouteId.getComment }}</td>
+                            <td align="center"><a class="showLotRouteInfo">{{ routes[ lot.getRouteId.getId ].getCode }}</a></td>
+                            <td class="lotDirection">{{ routes[ lot.getRouteId.getId ].getRegionFrom }} &xrarr;<br />{{ routes[ lot.getRouteId.getId ].getRegionTo }}</td>
+                            <td class="lotGetInTime">{{ routes[ lot.getRouteId.getId ].getLoadDate|date('d.m.Y H:i') }}</td>
+                            <td class="lotVehicleType">{{ routes[ lot.getRouteId.getId ].getVehicleType }}<br />{{ routes[ lot.getRouteId.getId ].getVehiclePayload }}</td>
+                            <td align="right">{{ routes[ lot.getRouteId.getId ].getCargoWeight }} ({{ routes[ lot.getRouteId.getId ].getCargoCount }})</td>
+                            <td class="lotComment">{{ routes[ lot.getRouteId.getId ].getComment }}</td>
 
                             <td class="lotTimeLeftTimer">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}<span class="lotTimeLeft" data-ts="{% if tz == 'Europe/Moscow' %}{% set tzts = 3*60*60 %}{% elseif tz == 'Europe/Samara' %}{% set tzts = 4*60*60 %}{% elseif tz == 'Asia/Yekaterinburg' %}{% set tzts = 5*60*60 %}{% elseif tz == 'Asia/Novosibirsk' %}{% set tzts = 7*60*60 %}{% else %}{% set tzts = 0 %}{% endif %}{{ (lot.getStartDate.timestamp + tzts) }}">{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s', tz) }}</span>{% elseif lot.getStartDate.timestamp > date().timestamp %}{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
 
@@ -129,7 +130,7 @@
                                 {% else %}
                                     {{ form_start(forms[lot.getId]) }}
                                         {{ form_widget(forms[lot.getId]) }}
-                                        <input class="btn btn-default doBid" type="button" data-tradeStep="{{ lot.getRouteId.getTradeStep }}" value="Ставка &#8681;" />
+                                        <input class="btn btn-default doBid" type="button" data-tradeStep="{{ routes[ lot.getRouteId.getId ].getTradeStep }}" value="Ставка &#8681;" />
                                     {{ form_end(forms[lot.getId]) }}
                                 {% endif %}
                             </td>
@@ -138,31 +139,31 @@
                             <td colspan="9" class="hiddenRow">
                                 <div class="dnone lotInfoWindow">
                                     <div class="routeNumber">
-                                        Рейс №: <span id="routeNumber">{{ lot.getRouteId.getCode }}</span>
+                                        Рейс №: <span id="routeNumber">{{ routes[ lot.getRouteId.getId ].getCode }}</span>
                                     </div>
                                     <div class="routeStatus">
-                                        Статус: <span id="routeStatus">{{ lot.getRouteId.getStatus }}</span>
+                                        Статус: <span id="routeStatus">{{ routes[ lot.getRouteId.getId ].getStatus }}</span>
                                     </div>
                                     <div class="routeInfoTable">
                                         <table cellspacing="0" cellpadding="0">
                                             <tbody>
                                             <tr>
-                                                <td>Дата загрузки:</td><td>{{ lot.getRouteId.getLoadDate|date('d.m.Y H:i') }}</td>
+                                                <td>Дата загрузки:</td><td>{{ routes[ lot.getRouteId.getId ].getLoadDate|date('d.m.Y H:i') }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Пункт отгрузки:</td><td>{{ lot.getRouteId.getRegionFrom }}</td>
+                                                <td>Пункт отгрузки:</td><td>{{ routes[ lot.getRouteId.getId ].getRegionFrom }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Регион доставки:</td><td>{{ lot.getRouteId.getRegionTo }}</td>
+                                                <td>Регион доставки:</td><td>{{ routes[ lot.getRouteId.getId ].getRegionTo }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Вид ТС:</td><td>{{ lot.getRouteId.getVehiclePayload }} {{ lot.getRouteId.getVehicleType }}</td>
+                                                <td>Вид ТС:</td><td>{{ routes[ lot.getRouteId.getId ].getVehiclePayload }} {{ routes[ lot.getRouteId.getId ].getVehicleType }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Тариф:</td><td id="lpi_{{ lot.getId }}">{{ lot.getPrice }} &#8381;</td>
                                             </tr>
                                             <tr>
-                                                <td>Комментарий:</td><td>{{ lot.getRouteId.getComment }}</td>
+                                                <td>Комментарий:</td><td>{{ routes[ lot.getRouteId.getId ].getComment }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -185,7 +186,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {% for order in lot.getRouteId.getOrders %}
+                                            {% for order in orders[ lot.getRouteId.getId ] %}
                                                 <tr>
                                                     <td>{{ order.getCode }}</td>
                                                     <td>{{ order.getConsignee }}</td>
@@ -200,9 +201,9 @@
                                             {% endfor %}
                                             </tbody>
                                         </table>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> {{ lot.getRouteId.getOrders|length }}</span></div>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> {{ lot.getRouteId.getCargoWeight }} кг</span></div>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> {{ lot.getRouteId.getCargoCount }}</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> {{ orders[ lot.getRouteId.getId ]|length }}</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> {{ routes[ lot.getRouteId.getId ].getCargoWeight }} кг</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> {{ routes[ lot.getRouteId.getId ].getCargoCount }}</span></div>
                                     </div>
                                     <div style="float:right; padding-bottom: 10px;"><a class="btn btn-default btnCloseRouteInfo">Вернуться к списку</a></div>
                                 </div>
