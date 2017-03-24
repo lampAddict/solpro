@@ -46,25 +46,25 @@
                                         </select>
                                     </div>
                                 </td>
-                                <td class="lotFilterVehicleType">
-                                    <div><span>Реф</span><input type="checkbox" id="lotFilterVTRef"></div>
-                                    <div><span>Тент</span><input type="checkbox" id="lotFilterVTTen"></div>
-                                    <div><span>Изотерм</span><input type="checkbox" id="lotFilterVTIso"></div>
-                                    <div><span>Цистерна</span><input type="checkbox" id="lotFilterVTCis"></div>
+                                <td id="lotFilterVehicleTypes" class="lotFilterVehicleType">
+                                    {% for vtype in vtypes %}
+                                        <div><span>{{ vtype.getName }}</span><input {% if filters|length > 0 and vtype.getName in filters.vehicle_types %}checked="checked"{% endif %}value="{{ vtype.getName }}" type="checkbox"></div>
+                                    {% endfor %}
                                 </td>
                                 <td class="lotFilterGetInTime">
                                     <div>
                                         <span>С</span>
-                                        <input type="datetime-local" id="lotFilterTimeFrom">
+                                        <input type="text" id="lotFilterTimeFrom" {% if filters|length > 0 and filters.load_date_from != '' %}value="{{ filters.load_date_from }}"{% endif %}>
                                     </div>
                                     <div>
                                         <span>По</span>
-                                        <input type="datetime-local" id="lotFilterTimeTo">
+                                        <input type="text" id="lotFilterTimeTo" {% if filters|length > 0 and filters.load_date_to != '' %}value="{{ filters.load_date_to }}"{% endif %}>
                                     </div>
                                 </td>
                                 <td class="lotFilterBids">
-                                    <div><span>Ставку делал</span><input type="checkbox" id="lotFilterDoBid"></div>
-                                    <div><span>Ставку не делал</span><input type="checkbox" id="lotFilterDontBid"></div>
+                                    <div><span>Все</span><input type="radio" name="lotFilterBid" id="lotFilterAllBids"></div>
+                                    <div><span>Моя ставка</span><input type="radio" name="lotFilterBid" id="lotFilterMyBid"></div>
+                                    <div><span>Моя ставка перебита</span><input type="radio" name="lotFilterBid" id="lotFilterNotMyBid"></div>
                                 </td>
                             </tr>
                         </tbody>
@@ -94,28 +94,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% set showLot = true %}
                     {% for lot in lots %}
-                        {% if filters|length > 0 %}
-                            {% if filters.status_active %}
-                                {% if lot.getStartDate.timestamp > date().timestamp or (lot.getStartDate.timestamp + lot.getDuration*60) < date().timestamp%}
-                                    {% set showLot = false %}
-                                {% endif %}
-                            {% endif %}
-                            {% if filters.status_planned %}
-                                {% if lot.getStartDate.timestamp < date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp%}
-                                    {% set showLot = false %}
-                                {% endif %}
-                            {% endif %}
-                            {% if filters.status_active and filters.status_planned %}
-                                {% set showLot = true %}
-                            {% endif %}
-                        {% endif %}
-                        {% if showLot %}
                         <tr id="lot-{{ lot.getId }}">
                             <td align="center"><a class="showLotRouteInfo">{{ routes[ lot.getRouteId.getId ].getCode }}</a></td>
                             <td class="lotDirection">{{ routes[ lot.getRouteId.getId ].getRegionFrom }} &xrarr;<br />{{ routes[ lot.getRouteId.getId ].getRegionTo }}</td>
-                            <td class="lotGetInTime">{{ routes[ lot.getRouteId.getId ].getLoadDate|date('d.m.Y H:i') }}</td>
+                            <td class="lotGetInTime">{{ routes[ lot.getRouteId.getId ].getLoadDate|date('H:i d.m.Y') }}</td>
                             <td class="lotVehicleType">{{ routes[ lot.getRouteId.getId ].getVehicleType }}<br />{{ routes[ lot.getRouteId.getId ].getVehiclePayload }}</td>
                             <td align="right">{{ routes[ lot.getRouteId.getId ].getCargoWeight }} ({{ routes[ lot.getRouteId.getId ].getCargoCount }})</td>
                             <td class="lotComment">{{ routes[ lot.getRouteId.getId ].getComment }}</td>
@@ -209,8 +192,6 @@
                                 </div>
                             </td>
                         </tr>
-                        {% endif %}
-                        {% set showLot = true %}
                     {% endfor %}
                 </tbody>
             </table>

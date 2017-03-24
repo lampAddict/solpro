@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\Date;
 
 class AuctionController extends Controller
 {
@@ -27,7 +28,7 @@ class AuctionController extends Controller
             if(    $_filters->status_active
                 && $_filters->status_active == 1
             ){
-                $where .= ' AND l.startDate <= CURRENT_TIMESTAMP() AND l.startDate + l.duration*60 > CURRENT_TIMESTAMP()';
+                $where .= ' AND l.startDate <= CURRENT_TIMESTAMP()';// AND l.startDate + l.duration*60 > CURRENT_TIMESTAMP()';
             }
 
             if(    $_filters->status_planned
@@ -51,6 +52,30 @@ class AuctionController extends Controller
                 && $_filters->region_to != ''
             ){
                 $where .= ' AND r.regionTo = \''.$_filters->region_to.'\'';
+            }
+
+            if(    $_filters->vehicle_types
+                && is_array($_filters->vehicle_types)
+            ){
+                $where .= ' AND r.vehicleType IN (\''.join('\',\'', $_filters->vehicle_types).'\')';
+            }
+
+            if(    $_filters->load_date_from
+                && $_filters->load_date_from != ''
+            ){
+                $utz = $this->getUser()->getTimezone();
+                $tz = new \DateTimeZone(($utz == '' ? 'UTC' : $utz));
+                $date_from = \DateTime::createFromFormat('H:i d.m.Y', $_filters->load_date_from, $tz);
+                $where .= ' AND r.loadDate >= \''.($date_from->format('Y-m-d H:i:s')).'\'';
+            }
+
+            if(    $_filters->load_date_to
+                && $_filters->load_date_to != ''
+            ){
+                $utz = $this->getUser()->getTimezone();
+                $tz = new \DateTimeZone(($utz == '' ? 'UTC' : $utz));
+                $date_from = \DateTime::createFromFormat('H:i d.m.Y', $_filters->load_date_to, $tz);
+                $where .= ' AND r.loadDate <= \''.($date_from->format('Y-m-d H:i:s')).'\'';
             }
         }
 
@@ -98,6 +123,11 @@ class AuctionController extends Controller
         return ['from'=>array_keys($_regionsFrom), 'to'=>array_keys($_regionsTo)];
     }
 
+    private function getPossibleVehicleTypes(){
+        $em = $this->getDoctrine()->getManager();
+        return $em->getRepository('AppBundle:RefVehicleType')->findAll();
+    }
+    
     /**
      * @Route("/auction", name="auction")
      */
@@ -281,6 +311,7 @@ class AuctionController extends Controller
             ,'filters' => $_filters
             ,'tz' => ($this->getUser()->getTimezone() != '' ? $this->getUser()->getTimezone() : 'UTC')
             ,'regions' => $this->getSenderDeliveryRegionsLists()
+            ,'vtypes' => $this->getPossibleVehicleTypes()
         ));
     }
 
@@ -314,7 +345,7 @@ class AuctionController extends Controller
         }
 
         $filter->setParams(json_encode($request->request->get('params')));
-        //$em->persist($filter);
+        $em->persist($filter);
         $em->flush();
         
         return new JsonResponse(['result'=>true]);

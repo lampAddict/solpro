@@ -47,6 +47,8 @@ $( document ).ready(function(){
         $vehicleSelect.chosen({no_results_text: "Ничего не найдено"});
     }
 
+    /* Various masked input */
+
     //masked input for driver add/edit window
     $driverPhone = $('#appbundle_driver_phone');
     if( $driverPhone ){
@@ -59,9 +61,9 @@ $( document ).ready(function(){
         $driverLicense.mask("~~ ~~ 999999");
     }
 
-    $driverBithDate = $('#appbundle_driver_passport_date_issue');
-    if( $driverBithDate ){
-        $driverBithDate.mask("99.99.9999");
+    $driverBirthDate = $('#appbundle_driver_passport_date_issue');
+    if( $driverBirthDate ){
+        $driverBirthDate.mask("99.99.9999");
     }
 
     //masked input for vehicle add/edit window
@@ -75,6 +77,16 @@ $( document ).ready(function(){
     if( $vehicleTrailerRegNum ){
         $.mask.definitions['~'] = '[авекмнорстухАВЕКМНОРСТУХ]';//А, В, Е, К, М, Н, О, Р, С, Т, У, Х
         $vehicleTrailerRegNum.mask("~~9999 99?9");
+    }
+
+    $lotFilterTimeFrom = $('#lotFilterTimeFrom');
+    if( $lotFilterTimeFrom ){
+        $lotFilterTimeFrom.mask("99:99 99.99.9999");
+    }
+
+    $lotFilterTimeTo = $('#lotFilterTimeTo');
+    if( $lotFilterTimeTo ){
+        $lotFilterTimeTo.mask("99:99 99.99.9999");
     }
 
     $('#auctionTable .showLotRouteInfo').click(function(e){
@@ -434,6 +446,13 @@ $( document ).ready(function(){
 
     //set auction filters
     $('.btnSetAuctionFilter').click(function(e){
+
+        var vt = [];
+        $.each( $('#lotFilterVehicleTypes input'), function(i, el){
+            if( $(el).is(':checked') )
+                vt.push($( el ).attr('value'));
+        });
+
         $.ajax({
              method: 'POST'
             ,url: 'auctionSetFilter'
@@ -444,6 +463,9 @@ $( document ).ready(function(){
                     ,'status_planned' : ($('#lotFilterPlanned').is(':checked')?1:0)
                     ,'region_from' : $('#lotFilterDirFrom').val()
                     ,'region_to' : $('#lotFilterDirTo').val()
+                    ,'vehicle_types' : (vt.length > 0 ? vt : '')
+                    ,'load_date_from': $('#lotFilterTimeFrom').val()
+                    ,'load_date_to': $('#lotFilterTimeTo').val()
                 }
             }
         })
