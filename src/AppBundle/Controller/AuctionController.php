@@ -38,7 +38,7 @@ class AuctionController extends Controller
                     $where = 'l.auctionStatus = 1';
                 }
                 else{
-                    $where .= ' AND l.startDate > '.time();
+                    $where .= ' AND l.startDate > CURRENT_TIMESTAMP()';
                 }
             }
 

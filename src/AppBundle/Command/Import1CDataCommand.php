@@ -41,12 +41,15 @@ class Import1CDataCommand extends ContainerAwareCommand
             if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
             if( ftp_get($conn_id, 'data/data.xml', 'MessageFrom1C.xml', FTP_BINARY) ){
                 $output->writeln('XML file downloaded successfully');
-                //ftp_delete($conn_id, 'MessageFrom1C.xml');
+                ftp_delete($conn_id, 'MessageFrom1C.xml');
             }
             ftp_close($conn_id);
         }
         $output->writeln('Import data started..');
 
+        //if data file wasn't successfully downloaded
+        if( !file_exists('data/data.xml') )return;
+        
         //Prepare data
         $data = new Crawler();
         $data->addXmlContent(file_get_contents('data/data.xml'));

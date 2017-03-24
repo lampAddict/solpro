@@ -61,7 +61,7 @@ class import1CDataService{
             $data_loaded->setDateExchange( new \DateTime(date('c', time())) );
             $this->em->flush();
             //skip data if it was loaded in earlier messages
-            //return false;
+            return false;
         }
 
         //import lot status references
