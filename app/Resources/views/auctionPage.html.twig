@@ -62,9 +62,9 @@
                                     </div>
                                 </td>
                                 <td class="lotFilterBids">
-                                    <div><span>Все</span><input type="radio" name="lotFilterBid" id="lotFilterAllBids"></div>
-                                    <div><span>Моя ставка</span><input type="radio" name="lotFilterBid" id="lotFilterMyBid"></div>
-                                    <div><span>Моя ставка перебита</span><input type="radio" name="lotFilterBid" id="lotFilterNotMyBid"></div>
+                                    <div><span>Все</span><input type="radio" name="lotFilterBid" id="lotFilterAllBids" value="0" {% if filters|length > 0 and filters.bet == 0 %}checked="checked"{% endif %}></div>
+                                    <div><span>Моя ставка</span><input type="radio" name="lotFilterBid" id="lotFilterMyBid" value="1" {% if filters|length > 0 and filters.bet == 1 %}checked="checked"{% endif %}></div>
+                                    <div><span>Моя ставка перебита</span><input type="radio" name="lotFilterBid" id="lotFilterNotMyBid" value="2" {% if filters|length > 0 and filters.bet == 2 %}checked="checked"{% endif %}></div>
                                 </td>
                             </tr>
                         </tbody>

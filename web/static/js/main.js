@@ -447,10 +447,16 @@ $( document ).ready(function(){
     //set auction filters
     $('.btnSetAuctionFilter').click(function(e){
 
-        var vt = [];
+        var vt = [];//vehicle types
         $.each( $('#lotFilterVehicleTypes input'), function(i, el){
             if( $(el).is(':checked') )
                 vt.push($( el ).attr('value'));
+        });
+
+        var bt = -1;//bet
+        $.each( $('input[name="lotFilterBid"]'), function(i, el){
+            if( $(el).is(':checked') )
+                bt = $( el ).val();
         });
 
         $.ajax({
@@ -466,6 +472,7 @@ $( document ).ready(function(){
                     ,'vehicle_types' : (vt.length > 0 ? vt : '')
                     ,'load_date_from': $('#lotFilterTimeFrom').val()
                     ,'load_date_to': $('#lotFilterTimeTo').val()
+                    ,'bet' : bt
                 }
             }
         })

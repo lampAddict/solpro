@@ -28,7 +28,7 @@ class AuctionController extends Controller
             if(    $_filters->status_active
                 && $_filters->status_active == 1
             ){
-                $where .= ' AND l.startDate <= CURRENT_TIMESTAMP()';// AND l.startDate + l.duration*60 > CURRENT_TIMESTAMP()';
+                $where .= ' AND l.startDate < CURRENT_TIMESTAMP()';// AND l.startDate + l.duration*60 > CURRENT_TIMESTAMP()';
             }
 
             if(    $_filters->status_planned
@@ -76,6 +76,37 @@ class AuctionController extends Controller
                 $tz = new \DateTimeZone(($utz == '' ? 'UTC' : $utz));
                 $date_from = \DateTime::createFromFormat('H:i d.m.Y', $_filters->load_date_to, $tz);
                 $where .= ' AND r.loadDate <= \''.($date_from->format('Y-m-d H:i:s')).'\'';
+            }
+
+            if(    $_filters->bet
+                && intval($_filters->bet) > 0
+            ){
+                $em = $this->getDoctrine()->getManager();
+
+                //get bets history and current lot owner
+                $sql = 'SELECT b.user_id AS uid, b.lot_id, min(b.value) AS bet, l.price as price FROM bet b LEFT JOIN lot l ON b.lot_id = l.id WHERE b.user_id = '.$this->getUser()->getId().' GROUP BY b.user_id, b.lot_id';
+                $stmt = $em->getConnection()->prepare($sql);
+                $stmt->execute();
+                $bets = $stmt->fetchAll();
+
+                $lotIds = [];
+                if( !empty($bets) ){
+                    foreach( $bets as $bet ){
+                        if(    intval($_filters->bet) == 1 //my bet
+                            && $bet['price'] == $bet['bet']
+                        ){
+                            array_push($lotIds, $bet['lot_id']);
+                        }
+
+                        if(    intval($_filters->bet) == 2 //my bet is higher
+                            && $bet['price'] < $bet['bet']
+                        ){
+                            array_push($lotIds, $bet['lot_id']);
+                        }
+                    }
+                    $where .= ' AND l.id IN ('.join(',', $lotIds).')';
+                }
+
             }
         }
 
