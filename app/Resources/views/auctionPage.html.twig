@@ -131,7 +131,7 @@
                                         <table cellspacing="0" cellpadding="0">
                                             <tbody>
                                             <tr>
-                                                <td>Дата загрузки:</td><td>{{ routes[ lot.getRouteId.getId ].getLoadDate|date('d.m.Y H:i') }}</td>
+                                                <td>Дата загрузки:</td><td>{{ routes[ lot.getRouteId.getId ].getLoadDate|date('H:i d.m.Y') }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Пункт отгрузки:</td><td>{{ routes[ lot.getRouteId.getId ].getRegionFrom }}</td>
@@ -160,12 +160,11 @@
                                                     <td>№ Заказа</td>
                                                     <td>Контрагент</td>
                                                     <td>Адрес доставки</td>
-                                                    <td>Плановая дата доставки</td>
+                                                    <td>Дата доставки</td>
                                                     <td>Вес кг, объём плт</td>
                                                     <td>Категория продукции</td>
                                                     <td>Спец. условия погрузки</td>
                                                     <td>Спец. условия выгрузки</td>
-                                                    <td>Ответственный</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -174,12 +173,11 @@
                                                     <td>{{ order.getCode }}</td>
                                                     <td>{{ order.getConsignee }}</td>
                                                     <td>{{ order.getUnloadAddress }}</td>
-                                                    <td>{{ order.getDate|date('d.m.Y H:i') }}</td>
+                                                    <td>{{ order.getDate|date('H:i d.m.Y') }}</td>
                                                     <td>{{ order.getWeight }} ({{  order.getCountNum }})</td>
                                                     <td></td>
                                                     <td>{{ order.getLoadSpecialConditions }}</td>
                                                     <td>{{ order.getUnloadSpecialConditions }}</td>
-                                                    <td>{{ order.getManager }}</td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
