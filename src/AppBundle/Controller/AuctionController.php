@@ -28,7 +28,7 @@ class AuctionController extends Controller
             if(    $_filters->status_active
                 && $_filters->status_active == 1
             ){
-                $where .= ' AND l.startDate < CURRENT_TIMESTAMP()';// AND l.startDate + l.duration*60 > CURRENT_TIMESTAMP()';
+                $where .= ' AND l.startDate <= CURRENT_TIMESTAMP()';// AND l.startDate + l.duration*60 > CURRENT_TIMESTAMP()';
             }
 
             if(    $_filters->status_planned

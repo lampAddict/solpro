@@ -288,6 +288,7 @@ class import1CDataService{
                 $_lot->setDuration( $lot['duration'] );
 
                 $startDate = new \DateTime($lot['startDate']);
+                $startDate->sub(new \DateInterval('PT3H'));//subtract 3 hours from start date, 'cause it must be UTC and by default here comes Europe/Moscow time
                 $startDate->setTimezone( new \DateTimeZone('UTC') );
                 $_lot->setStartDate( $startDate );
 
