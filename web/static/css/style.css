@@ -350,7 +350,7 @@ ul.topnav li.icon {display: none;}
     padding: 3px 7px;
 }
 
-.lotFilterStatus{
+.lotFilterStatus, .routeFilterStatus{
     width: 135px;
 }
 
@@ -405,7 +405,7 @@ ul.topnav li.icon {display: none;}
     width: 130px;
 }
 
-.lotFilterStatus input, .lotFilterDirection select, .lotFilterGetInTime input, .lotFilterVehicleType input, .lotFilterBids input, .routeFilterDirection select, .routeFilterGetInTime input, .routeFilterDriver input, .routeFilterVehicle input, .vehicleFilterType input{
+.lotFilterStatus input, .lotFilterDirection select, .lotFilterGetInTime input, .lotFilterVehicleType input, .lotFilterBids input, .routeFilterStatus input, .routeFilterDirection select, .routeFilterGetInTime input, .routeFilterDriver input, .routeFilterVehicle input, .vehicleFilterType input{
     float: right;
     clear: both;
 }
@@ -779,7 +779,7 @@ tr.zeroHeight{
     margin-top: 10px;
 }
 
-.btnSetAuctionFilter, .btnUnsetAuctionFilter{
+.btnSetAuctionFilter, .btnUnsetAuctionFilter, .btnSetRouteFilter, .btnUnsetRouteFilter{
     float: right;
     margin-top: 10px;
     padding: 2px 4px !important;

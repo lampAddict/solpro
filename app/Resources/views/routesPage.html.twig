@@ -22,53 +22,58 @@
                         <tbody>
                             <tr>
                                 <td class="routeFilterStatus">
-                                    <select id="routeFilterStatus">
-                                        <option selected="selected">&mdash;</option>
-                                        <option>Подтвержден</option>
-                                        <option>Отгружен</option>
-                                    </select>
+                                    <span>Активные</span><input type="checkbox" id="routeFilterActive" {% if filters|length > 0 and filters.status_active %}checked="checked"{% endif %}>
+                                    <span>Планируемые</span><input type="checkbox" id="routeFilterPlanned" {% if filters|length > 0 and filters.status_planned %}checked="checked"{% endif %}>
                                 </td>
                                 <td class="routeFilterDirection">
                                     <div>
                                         <span>Откуда</span>
                                         <select id="routeFilterDirFrom">
-                                            <option selected="selected">&mdash;</option>
-                                            <option>Саратов</option>
-                                            <option>Аткарск</option>
+                                            <option selected="selected" value="">&mdash;</option>
+                                            {% for region in regions['from'] %}
+                                                <option {% if filters|length > 0 and filters.region_from == region %}selected="selected"{% endif %} value="{{ region }}">{{ region }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div>
                                         <span>Куда</span>
                                         <select id="routeFilterDirTo">
-                                            <option selected="selected">&mdash;</option>
-                                            <option>Казань</option>
-                                            <option>Тула</option>
+                                            <option selected="selected" value="">&mdash;</option>
+                                            {% for region in regions['to'] %}
+                                                <option {% if filters|length > 0 and filters.region_to == region %}selected="selected"{% endif %} value="{{ region }}">{{ region }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </td>
                                 <td class="routeFilterGetInTime">
                                     <div>
                                         <span>С</span>
-                                        <input type="datetime-local" id="routeFilterTimeFrom">
+                                        <input type="text" id="routeFilterTimeFrom" {% if filters|length > 0 and filters.load_date_from != '' %}value="{{ filters.load_date_from }}"{% endif %}>
                                     </div>
                                     <div>
                                         <span>По</span>
-                                        <input type="datetime-local" id="routeFilterTimeTo">
+                                        <input type="text" id="routeFilterTimeTo" {% if filters|length > 0 and filters.load_date_to != '' %}value="{{ filters.load_date_to }}"{% endif %}>
                                     </div>
                                 </td>
                                 <td class="routeFilterDriver">
                                     <div>
                                         <span>Назначен</span>
-                                        <input type="checkbox" id="routeFilterDriverSet">
+                                        <input type="radio" name="driverAssigned" value="1" id="routeFilterDriverSet">
                                     </div>
                                     <div>
                                         <span>Неназначен</span>
-                                        <input type="checkbox" id="routeFilterDriverNotSet">
+                                        <input type="radio" name="driverAssigned" value="0" id="routeFilterDriverNotSet">
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <div style="float: right">
+                        <a class="btn btn-default btnSetRouteFilter">Сохранить</a>
+                    </div>
+                    <div style="float: left">
+                        <a class="btn btn-danger btnUnsetRouteFilter" filter_type="1">Сбросить фильтры</a>
+                    </div>
                 </div>
             </div>
         </div>

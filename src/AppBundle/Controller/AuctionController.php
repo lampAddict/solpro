@@ -159,6 +159,11 @@ class AuctionController extends Controller
         return ['from'=>array_keys($_regionsFrom), 'to'=>array_keys($_regionsTo)];
     }
 
+    /**
+     * Get stored vehicle types
+     * 
+     * @return array
+     */
     private function getPossibleVehicleTypes(){
         $em = $this->getDoctrine()->getManager();
         return $em->getRepository('AppBundle:RefVehicleType')->findAll();
@@ -178,14 +183,14 @@ class AuctionController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        //get user filter preferences
+        //get user auction filter preferences
         $_filters = [];
 
         $filters = $em
             ->getRepository('AppBundle:Filter')
             ->createQueryBuilder('f')
             ->where('f.uid = '.$this->getUser()->getId())
-            ->andWhere('f.type = 0')
+            ->andWhere('f.type = 0')//auction filter type
             ->setMaxResults(1)
             ->getQuery()
             ->getResult();
@@ -352,7 +357,7 @@ class AuctionController extends Controller
     }
 
     /**
-     * @Route("/auctionSetFilter", name="setFilter")
+     * @Route("/setFilter", name="setFilter")
      */
     public function auctionSetFilter(Request $request){
         //Check if user authenticated
@@ -388,7 +393,7 @@ class AuctionController extends Controller
     }
 
     /**
-     * @Route("/auctionUnsetFilter", name="unSetFilter")
+     * @Route("/unsetFilter", name="unSetFilter")
      */
     public function auctionUnsetFilter(Request $request){
         //Check if user authenticated
@@ -402,7 +407,7 @@ class AuctionController extends Controller
             ->getRepository('AppBundle:Filter')
             ->createQueryBuilder('f')
             ->where('f.uid = '.$this->getUser()->getId())
-            ->andWhere('f.type = 0')
+            ->andWhere('f.type = '.intval($request->request->get('type')))
             ->getQuery()
             ->getResult();
 

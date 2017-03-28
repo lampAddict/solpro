@@ -10,6 +10,110 @@ use Symfony\Component\HttpFoundation\Request;
 class RoutesController extends Controller
 {
     /**
+     * Composer filter condition for auction page based on user preferences
+     *
+     * @param array $filters array which contains json encoded user preferences
+     * @return string $where composed condition
+     */
+    private function makeFilterCondition( $filters ){
+        $where = 'r.user_id = '.$this->getUser()->getId();
+        if( !empty($filters) ){
+
+            $_filters = json_decode($filters[0]->getParams());
+
+            if(    $_filters->status_active
+                && $_filters->status_active == 1
+            ){
+                $where .= '';
+            }
+
+            if(    $_filters->status_planned
+                && $_filters->status_planned == 1
+            ){
+                if( $where != '' ){
+                    $where = '';
+                }
+                else{
+                    $where .= '';
+                }
+            }
+
+            if(    $_filters->region_from
+                && $_filters->region_from != ''
+            ){
+                $where .= ' AND r.regionFrom = \''.$_filters->region_from.'\'';
+            }
+
+            if(    $_filters->region_to
+                && $_filters->region_to != ''
+            ){
+                $where .= ' AND r.regionTo = \''.$_filters->region_to.'\'';
+            }
+
+            if(    $_filters->load_date_from
+                && $_filters->load_date_from != ''
+            ){
+                $utz = $this->getUser()->getTimezone();
+                $tz = new \DateTimeZone(($utz == '' ? 'UTC' : $utz));
+                $date_from = \DateTime::createFromFormat('H:i d.m.Y', $_filters->load_date_from, $tz);
+                $where .= ' AND r.loadDate >= \''.($date_from->format('Y-m-d H:i:s')).'\'';
+            }
+
+            if(    $_filters->load_date_to
+                && $_filters->load_date_to != ''
+            ){
+                $utz = $this->getUser()->getTimezone();
+                $tz = new \DateTimeZone(($utz == '' ? 'UTC' : $utz));
+                $date_from = \DateTime::createFromFormat('H:i d.m.Y', $_filters->load_date_to, $tz);
+                $where .= ' AND r.loadDate <= \''.($date_from->format('Y-m-d H:i:s')).'\'';
+            }
+
+            
+        }
+
+        return $where;
+    }
+
+    /**
+     * Get list of sender and delivery regions
+     *
+     * @return array
+     */
+    private function getSenderDeliveryRegionsLists(){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $_regionsFrom = [];
+        $_regionsTo = [];
+        //determine delivery and sender regions
+        $_routes = $em
+            ->getRepository('AppBundle:Route')
+            ->createQueryBuilder('r')
+            ->where('r.user_id = '.$this->getUser()->getId())
+            ->getQuery()
+            ->getResult();
+        if( !empty($_routes) ){
+            /* @var $_route \AppBundle\Entity\Route */
+            foreach( $_routes as $_route ) {
+
+                //fill regions data array
+                if (!isset($_regionsFrom[$_route->getRegionFrom()])) {
+                    $_regionsFrom[$_route->getRegionFrom()] = 1;
+                }
+
+                if (!isset($_regionsTo[$_route->getRegionTo()])) {
+                    $_regionsTo[$_route->getRegionTo()] = 1;
+                }
+            }
+
+            ksort($_regionsFrom);
+            ksort($_regionsTo);
+        }
+
+        return ['from'=>array_keys($_regionsFrom), 'to'=>array_keys($_regionsTo)];
+    }
+
+    /**
      * @Route("/routes", name="routes")
      */
     public function indexAction(Request $request)
@@ -20,6 +124,24 @@ class RoutesController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
+
+        //get user routes filter preferences
+        $filters = [];
+
+        $_filters = $em
+            ->getRepository('AppBundle:Filter')
+            ->createQueryBuilder('f')
+            ->where('f.uid = '.$this->getUser()->getId())
+            ->andWhere('f.type = 1')//routes filter type
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+
+        if( !empty($_filters) ){
+            $filters = json_decode($_filters[0]->getParams());
+        }
+
+        $where = $this->makeFilterCondition( $filters );
 
         $routes = $em
             ->getRepository('AppBundle:Route')
@@ -36,7 +158,8 @@ class RoutesController extends Controller
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'r.vehicle_id = t.id'
             )
-            ->where('r.user_id = '.$this->getUser()->getId())
+            ->where( $where )
+            ->orderBy('r.loadDate', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -58,6 +181,8 @@ class RoutesController extends Controller
              'routes' => $routes
             ,'drivers' => $drivers
             ,'vehicles' => $vehicles
+            ,'filters' => $filters
+            ,'regions' => $this->getSenderDeliveryRegionsLists()
         ));
     }
 

@@ -79,6 +79,7 @@ $( document ).ready(function(){
         $vehicleTrailerRegNum.mask("~~9999 99?9");
     }
 
+    //masked input for filters on auction and routes pages
     $lotFilterTimeFrom = $('#lotFilterTimeFrom');
     if( $lotFilterTimeFrom ){
         $lotFilterTimeFrom.mask("99:99 99.99.9999");
@@ -89,6 +90,16 @@ $( document ).ready(function(){
         $lotFilterTimeTo.mask("99:99 99.99.9999");
     }
 
+    $routeFilterTimeFrom = $('#routeFilterTimeFrom');
+    if( $routeFilterTimeFrom ){
+        $routeFilterTimeFrom.mask("99:99 99.99.9999");
+    }
+
+    $routeFilterTimeTo = $('#routeFilterTimeTo');
+    if( $routeFilterTimeTo ){
+        $routeFilterTimeTo.mask("99:99 99.99.9999");
+    }
+    
     $('#auctionTable .showLotRouteInfo').click(function(e){
         var $routeInfo = $(this).parent().parent().next().find('.lotInfoWindow');
         if( $routeInfo.is(':visible') ){
@@ -461,9 +472,9 @@ $( document ).ready(function(){
 
         $.ajax({
              method: 'POST'
-            ,url: 'auctionSetFilter'
+            ,url: 'setFilter'
             ,data: {
-                type: 0,
+                type: 0,//auction type filter
                 params: {
                      'status_active' : ($('#lotFilterTradeActive').is(':checked')?1:0)
                     ,'status_planned' : ($('#lotFilterPlanned').is(':checked')?1:0)
@@ -482,16 +493,35 @@ $( document ).ready(function(){
             }
         })
         .fail(function( response ){
-            console.log('FAIL');
+            console.log('FAIL set auction filter');
             console.log(response);
         });
     });
 
-    //unset auction filters
-    $('.btnUnsetAuctionFilter').click(function(e){
+    //set route filters
+    $('.btnSetRouteFilter').click(function(e){
+        
+        var da = -1;//driver assigned
+        $.each( $('input[name="driverAssigned"]'), function(i, el){
+            if( $(el).is(':checked') )
+                da = $( el ).val();
+        });
+
         $.ajax({
-            method: 'POST',
-            url: 'auctionUnsetFilter'
+            method: 'POST'
+            ,url: 'setFilter'
+            ,data: {
+                type: 1,//route type filter
+                params: {
+                     'status_active' : ($('#routeFilterActive').is(':checked')?1:0)
+                    ,'status_planned' : ($('#routeFilterPlanned').is(':checked')?1:0)
+                    ,'region_from' : $('#routeFilterDirFrom').val()
+                    ,'region_to' : $('#routeFilterDirTo').val()
+                    ,'load_date_from': $('#routeFilterTimeFrom').val()
+                    ,'load_date_to': $('#routeFilterTimeTo').val()
+                    ,'driver_assigned' : da
+                }
+            }
         })
         .done(function( response ){
             if( response.result ){
@@ -499,7 +529,27 @@ $( document ).ready(function(){
             }
         })
         .fail(function( response ){
-            console.log('FAIL');
+            console.log('FAIL set route filter');
+            console.log(response);
+        });
+    });
+
+    //unset filters
+    $('.btnUnsetAuctionFilter,.btnUnsetRouteFilter').click(function(e){
+        $.ajax({
+            method: 'POST',
+            url: 'unsetFilter',
+            data: {
+                type: $(e.currentTarget).attr('filter_type')
+            }
+        })
+        .done(function( response ){
+            if( response.result ){
+                location.reload();
+            }
+        })
+        .fail(function( response ){
+            console.log('FAIL unset auction filter');
             console.log(response);
         });
     });
