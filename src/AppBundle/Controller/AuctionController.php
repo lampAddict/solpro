@@ -104,7 +104,8 @@ class AuctionController extends Controller
                             array_push($lotIds, $bet['lot_id']);
                         }
                     }
-                    $where .= ' AND l.id IN ('.join(',', $lotIds).')';
+                    if( !empty($lotIds) )
+                        $where .= ' AND l.id IN ('.join(',', $lotIds).')';
                 }
 
             }

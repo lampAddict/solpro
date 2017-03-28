@@ -334,6 +334,10 @@ ul.topnav li.icon {display: none;}
     margin-top: 5px;
 }
 
+#lotFilter table tbody tr{
+    width: 100%;
+}
+
 #lotFilter table tr th, #routesFilter table tr th, #driversFilter table tr th, #vehicleFilter table tr th, .routeInfo table tr th{
     border-bottom: 1px solid dimgrey;
     padding: 5px;
@@ -351,7 +355,7 @@ ul.topnav li.icon {display: none;}
 }
 
 .lotFilterDirection, .routeFilterDirection{
-    width: 220px;
+    width: 35%;/*220px;*/
 }
 
 .lotFilterDirection div, .routeFilterDirection div{
