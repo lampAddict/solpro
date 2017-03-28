@@ -104,11 +104,15 @@ class AuctionController extends Controller
                             array_push($lotIds, $bet['lot_id']);
                         }
                     }
-                    if( !empty($lotIds) )
+                    if( !empty($lotIds) ){
                         $where .= ' AND l.id IN ('.join(',', $lotIds).')';
+                    }
+                    else{
+                        $where .= ' AND 1<>1';
+                    }
                 }
-
             }
+
         }
 
         return $where;
