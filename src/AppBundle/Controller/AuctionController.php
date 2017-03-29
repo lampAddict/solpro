@@ -111,6 +111,9 @@ class AuctionController extends Controller
                         $where .= ' AND 1<>1';
                     }
                 }
+                else{
+                    $where .= ' AND 1<>1';
+                }
             }
 
         }
