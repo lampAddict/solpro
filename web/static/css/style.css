@@ -78,7 +78,7 @@ ul.topnav li.icon {display: none;}
     margin-left: 10px;
 }
 
-#content{
+#mainContent{
     width: 1000px;
     margin: 0 auto;
 }
@@ -118,13 +118,13 @@ ul.topnav li.icon {display: none;}
         margin-left: 0px;
     }
 
-    #content{
+    #mainContent{
         width: 900px;
     }
 }
 
 @media screen and (max-width: 450px) {
-    #content{
+    #mainContent{
         width: 470px;
     }
 }
@@ -383,8 +383,9 @@ ul.topnav li.icon {display: none;}
 }
 
 .topMenuSearch img{
-    padding-top: 8px;
-    float: left;
+    padding: 10px 0 0 5px;
+    float: right;
+    cursor: pointer;
 }
 
 .topMenuSearch input[type="text"] {
@@ -817,4 +818,20 @@ tr.zeroHeight{
 
 #appbundle_driver .driverLicense{
     margin: 0 10px 10px 0px;
+}
+
+td.found{
+    background-color: #b6d8c3;
+}
+
+.skipSearchResults{
+    width: 1430px;
+    margin: 0 auto;
+}
+#skipSearchResults{
+    float: left;
+    padding: 15px 0 0px 15px;
+    text-decoration: underline;
+    color: #337ab7;
+    cursor: pointer;
 }

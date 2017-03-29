@@ -68,10 +68,8 @@ class RoutesController extends Controller
                 $where .= ' AND r.loadDate <= \''.($date_from->format('Y-m-d H:i:s')).'\'';
             }
 
-            if(    $_filters->driver_assigned
-                && $_filters->driver_assigned >= 0
-            ){
-                if( $_filters->driver_assigned ){
+            if( $_filters->driver_assigned ){
+                if( $_filters->driver_assigned == 1 ){
                     $where .= ' AND r.driver_id IS NOT NULL';
                 }
                 else{

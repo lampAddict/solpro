@@ -70,8 +70,10 @@
     {% endblock %}
 </div>
 
+<div id="content">
+    <div class="skipSearchResults dnone"><div id="skipSearchResults">Убрать результаты поиска</div></div>
 {% block body %}
-    <div id="content">
+    <div id="mainContent">
         <div class="lotsInfo">
             <div class="lotsInfoTitle">Общая информация по лотам</div>
             <div class="lotsList">
@@ -103,7 +105,6 @@
                 </ul>
             </div>
         </div>
-
         <div class="userRoutesInfo">
             <div class="lotsInfoTitle">Информация по вашим рейсам</div>
             <div class="lotsList">
@@ -125,6 +126,7 @@
         </div>
     </div>
 {% endblock %}
+</div>
 
 {% block javascripts %}
     <script src="{{ asset('/static/js/fontAwesome.js') }}"></script>

@@ -501,7 +501,7 @@ $( document ).ready(function(){
     //set route filters
     $('.btnSetRouteFilter').click(function(e){
         
-        var da = -1;//driver assigned
+        var da = 0;//driver assigned
         $.each( $('input[name="driverAssigned"]'), function(i, el){
             if( $(el).is(':checked') )
                 da = $( el ).val();
@@ -552,5 +552,47 @@ $( document ).ready(function(){
             console.log('FAIL unset auction filter');
             console.log(response);
         });
+    });
+
+    //skip search results routine
+    $('#skipSearchResults').click(function(e){
+        location.reload();
+    });
+
+    //search routine
+    $('#doSearch').click(function(e){
+        var searchThis = $('#searchThis').val(),
+            $data = $('.data-content'),
+            hideTr = true,
+            found = 0;
+
+        $.each( $data.find('tr.data-search'), function(i, tr){
+            $.each( $(tr).find('td'), function(j, td){
+                //check if current data table row has something similar to what user is searching for
+                if( $(td).text().indexOf(searchThis) >= 0 ){
+                    $(td).addClass('found');
+                    hideTr = false;
+                    found++;
+                }
+                else{
+                    if( $(td).hasClass('found') ){
+                        $(td).removeClass('found');
+                    }
+                }
+            });
+            if( hideTr ){
+                $(tr).hide();
+            }
+            hideTr = true;
+        });
+        
+        if( found > 0 ){
+            $('#filter').hide();
+            $('#filterBlock').hide();
+
+            $('tr.zeroHeight').hide();
+
+            $('.skipSearchResults').removeClass('dnone');
+        }
     });
 });
