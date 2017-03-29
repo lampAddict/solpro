@@ -23,7 +23,7 @@
                             <tr>
                                 <td class="routeFilterStatus">
                                     <span>Активные</span><input type="checkbox" id="routeFilterActive" {% if filters|length > 0 and filters.status_active %}checked="checked"{% endif %}>
-                                    <span>Планируемые</span><input type="checkbox" id="routeFilterPlanned" {% if filters|length > 0 and filters.status_planned %}checked="checked"{% endif %}>
+                                    <span>Завершенные</span><input type="checkbox" id="routeFilterPlanned" {% if filters|length > 0 and filters.status_planned %}checked="checked"{% endif %}>
                                 </td>
                                 <td class="routeFilterDirection">
                                     <div>
@@ -58,11 +58,11 @@
                                 <td class="routeFilterDriver">
                                     <div>
                                         <span>Назначен</span>
-                                        <input type="radio" name="driverAssigned" value="1" id="routeFilterDriverSet">
+                                        <input type="radio" name="driverAssigned" value="1" id="routeFilterDriverSet" {% if filters|length > 0 and filters.driver_assigned == 1 %}checked="checked"{% endif %}>
                                     </div>
                                     <div>
                                         <span>Неназначен</span>
-                                        <input type="radio" name="driverAssigned" value="0" id="routeFilterDriverNotSet">
+                                        <input type="radio" name="driverAssigned" value="0" id="routeFilterDriverNotSet" {% if filters|length > 0 and filters.driver_assigned == 0 %}checked="checked"{% endif %}>
                                     </div>
                                 </td>
                             </tr>

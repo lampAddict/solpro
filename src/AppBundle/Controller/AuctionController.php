@@ -16,14 +16,13 @@ class AuctionController extends Controller
     /**
      * Composer filter condition for auction page based on user preferences
      *
-     * @param array $filters array which contains json encoded user preferences
+     * @param array $_filters array which contains json encoded user preferences
      * @return string $where composed condition
      */
-    private function makeFilterCondition( $filters ){
+    private function makeFilterCondition( $_filters ){
         $where = 'l.auctionStatus = 1';
+        $filters = (array)$_filters;
         if( !empty($filters) ){
-
-            $_filters = json_decode($filters[0]->getParams());
 
             if(    $_filters->status_active
                 && $_filters->status_active == 1
@@ -202,7 +201,7 @@ class AuctionController extends Controller
             $_filters = json_decode($filters[0]->getParams());
         }
 
-        $where = $this->makeFilterCondition( $filters );
+        $where = $this->makeFilterCondition( $_filters );
 
         $_lots = $em
             ->getRepository('AppBundle:Lot')

@@ -12,29 +12,29 @@ class RoutesController extends Controller
     /**
      * Composer filter condition for auction page based on user preferences
      *
-     * @param array $filters array which contains json encoded user preferences
+     * @param object $_filters array which contains json encoded user preferences
      * @return string $where composed condition
      */
-    private function makeFilterCondition( $filters ){
+    private function makeFilterCondition( $_filters ){
         $where = 'r.user_id = '.$this->getUser()->getId();
-        if( !empty($filters) ){
 
-            $_filters = json_decode($filters[0]->getParams());
+        $filters = (array) $_filters;
+        if( !empty($filters) ){
 
             if(    $_filters->status_active
                 && $_filters->status_active == 1
             ){
-                $where .= '';
+                $where .= ' AND (r.status != \'0. Аннулирован\' AND r.status != \'Закрыт\')';
             }
 
             if(    $_filters->status_planned
                 && $_filters->status_planned == 1
             ){
-                if( $where != '' ){
-                    $where = '';
+                if( $where != 'r.user_id = '.$this->getUser()->getId() ){
+                    $where = 'r.user_id = '.$this->getUser()->getId();
                 }
                 else{
-                    $where .= '';
+                    $where .= ' AND (r.status = \'0. Аннулирован\' OR r.status = \'Закрыт\')';
                 }
             }
 
@@ -68,7 +68,16 @@ class RoutesController extends Controller
                 $where .= ' AND r.loadDate <= \''.($date_from->format('Y-m-d H:i:s')).'\'';
             }
 
-            
+            if(    $_filters->driver_assigned
+                && $_filters->driver_assigned >= 0
+            ){
+                if( $_filters->driver_assigned ){
+                    $where .= ' AND r.driver_id IS NOT NULL';
+                }
+                else{
+                    $where .= ' AND r.driver_id IS NULL';
+                }
+            }
         }
 
         return $where;
