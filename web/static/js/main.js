@@ -534,8 +534,33 @@ $( document ).ready(function(){
         });
     });
 
+    //set driver filters
+    $('.btnSetDriverFilter').click(function(e){
+
+        $.ajax({
+            method: 'POST'
+            ,url: 'setFilter'
+            ,data: {
+                type: 2,//driver type filter
+                params: {
+                     'status_active' : ($('#driverFilterActive').is(':checked')?1:0)
+                    ,'status_inactive' : ($('#driverFilterInactive').is(':checked')?1:0)
+                }
+            }
+        })
+        .done(function( response ){
+            if( response.result ){
+                location.reload();
+            }
+        })
+        .fail(function( response ){
+            console.log('FAIL set driver filter');
+            console.log(response);
+        });
+    });
+
     //unset filters
-    $('.btnUnsetAuctionFilter,.btnUnsetRouteFilter').click(function(e){
+    $('.btnUnsetAuctionFilter,.btnUnsetRouteFilter,.btnUnsetDriverFilter').click(function(e){
         $.ajax({
             method: 'POST',
             url: 'unsetFilter',

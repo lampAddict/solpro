@@ -350,7 +350,7 @@ ul.topnav li.icon {display: none;}
     padding: 3px 7px;
 }
 
-.lotFilterStatus, .routeFilterStatus{
+.lotFilterStatus, .routeFilterStatus, .driversFilterStatus{
     width: 135px;
 }
 
@@ -406,7 +406,7 @@ ul.topnav li.icon {display: none;}
     width: 130px;
 }
 
-.lotFilterStatus input, .lotFilterDirection select, .lotFilterGetInTime input, .lotFilterVehicleType input, .lotFilterBids input, .routeFilterStatus input, .routeFilterDirection select, .routeFilterGetInTime input, .routeFilterDriver input, .routeFilterVehicle input, .vehicleFilterType input{
+.lotFilterStatus input, .lotFilterDirection select, .lotFilterGetInTime input, .lotFilterVehicleType input, .lotFilterBids input, .routeFilterStatus input, .routeFilterDirection select, .routeFilterGetInTime input, .routeFilterDriver input, .routeFilterVehicle input, .vehicleFilterType input, .driversFilterStatus input{
     float: right;
     clear: both;
 }
@@ -780,7 +780,7 @@ tr.zeroHeight{
     margin-top: 10px;
 }
 
-.btnSetAuctionFilter, .btnUnsetAuctionFilter, .btnSetRouteFilter, .btnUnsetRouteFilter{
+.btnSetAuctionFilter, .btnUnsetAuctionFilter, .btnSetRouteFilter, .btnUnsetRouteFilter, .btnSetDriverFilter, .btnUnsetDriverFilter{
     float: right;
     margin-top: 10px;
     padding: 2px 4px !important;

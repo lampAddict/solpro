@@ -361,7 +361,7 @@ class AuctionController extends Controller
     /**
      * @Route("/setFilter", name="setFilter")
      */
-    public function auctionSetFilter(Request $request){
+    public function setFilterAction(Request $request){
         //Check if user authenticated
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
@@ -395,9 +395,9 @@ class AuctionController extends Controller
     }
 
     /**
-     * @Route("/unsetFilter", name="unSetFilter")
+     * @Route("/unsetFilter", name="unsetFilter")
      */
-    public function auctionUnsetFilter(Request $request){
+    public function unsetFilterAction(Request $request){
         //Check if user authenticated
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();

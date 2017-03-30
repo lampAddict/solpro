@@ -3,11 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Driver;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Entity\Filter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Driver controller.
@@ -16,6 +18,38 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class DriverController extends Controller
 {
+    /**
+     * Composer filter condition for auction page based on user preferences
+     *
+     * @param array $_filters array which contains json encoded user preferences
+     * @return string $where composed condition
+     */
+    private function makeFilterCondition( $_filters ){
+        $where = 'd.user_id = '.$this->getUser()->getId();
+        $filters = (array)$_filters;
+        if( !empty($filters) ){
+
+            if(    $_filters->status_active
+                && $_filters->status_active == 1
+            ){
+                $where .= ' AND d.status = 1';
+            }
+
+            if(    $_filters->status_inactive
+                && $_filters->status_inactive == 1
+            ){
+                if( $where != 'd.user_id = '.$this->getUser()->getId() ){
+                    $where = 'd.user_id = '.$this->getUser()->getId();
+                }
+                else{
+                    $where .= ' AND d.status = 0';
+                }
+            }
+        }
+
+        return $where;
+    }
+
     /**
      * Lists all driver entities.
      *
@@ -28,19 +62,58 @@ class DriverController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        //get user's drivers filter preferences
+        $_filters = [];
+
+        $filters = $em
+            ->getRepository('AppBundle:Filter')
+            ->createQueryBuilder('f')
+            ->where('f.uid = '.$this->getUser()->getId())
+            ->andWhere('f.type = 2')//driver filter type
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+
+        if( !empty($filters) ){
+            $_filters = json_decode($filters[0]->getParams());
+        }
+
+        $where = $this->makeFilterCondition( $_filters );
+
         $drivers = $em
                     ->getRepository('AppBundle:Driver')
                     ->createQueryBuilder('d')
-                    ->where('d.user_id = '.$this->getUser()->getId())
+                    ->where($where)
                     ->getQuery()
                     ->getResult()
         ;
 
         return $this->render('driver/index.html.twig', array(
             'drivers' => $drivers,
+            'filters' => $_filters
         ));
     }
 
+    /**
+     * Set users drivers filter
+     *
+     * @Route("/setFilter", name="set_filter")
+     * @Method("POST")
+     */
+    public function setFilterAction(Request $request){
+        return $this->forward('AppBundle:Auction:setFilter');
+    }
+    
+    /**
+     * Set users drivers filter
+     *
+     * @Route("/unsetFilter", name="unset_filter")
+     * @Method("POST")
+     */
+    public function unsetFilterAction(Request $request){
+        return $this->forward('AppBundle:Auction:unsetFilter');
+    }
+    
     /**
      * Creates a new driver entity.
      *
