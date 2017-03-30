@@ -22,22 +22,23 @@
                     <tbody>
                     <tr>
                         <td class="vehicleFilterStatus">
-                            <select id="vehicleFilterStatus">
-                                <option selected="selected">&mdash;</option>
-                                <option>Активен</option>
-                                <option>Сломан</option>
-                                <option>Прикреплён</option>
-                            </select>
+                            <span>Активные</span><input type="checkbox" id="vehicleFilterActive" {% if filters|length > 0 and filters.status_active %}checked="checked"{% endif %}>
+                            <span>Неактивен</span><input type="checkbox" id="vehicleFilterPlanned" {% if filters|length > 0 and filters.status_inactive %}checked="checked"{% endif %}>
                         </td>
-                        <td class="vehicleFilterType">
-                            <div><span>Реф</span><input type="checkbox" id="lotFilterVTRef"></div>
-                            <div><span>Тент</span><input type="checkbox" id="lotFilterVTTen"></div>
-                            <div><span>Изотерм</span><input type="checkbox" id="lotFilterVTIso"></div>
-                            <div><span>Цистерна</span><input type="checkbox" id="lotFilterVTCis"></div>
+                        <td id="vehicleFilterTypes" class="vehicleFilterType">
+                            {% for vtype in vtypes %}
+                                <div><span>{{ vtype.getName }}</span><input {% if filters|length > 0 and vtype.getName in filters.vehicle_types %}checked="checked"{% endif %}value="{{ vtype.getName }}" type="checkbox"></div>
+                            {% endfor %}
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <div style="float: right">
+                    <a class="btn btn-default btnSetTransportFilter">Сохранить</a>
+                </div>
+                <div style="float: left">
+                    <a class="btn btn-danger btnUnsetTransportFilter" filter_type="0">Сбросить фильтры</a>
+                </div>
             </div>
         </div>
         <div id="vehicleTable">
@@ -66,12 +67,7 @@
                             {% if transport.status == 0 %}Неактивен{% endif %}
                         </td>
                         <td><a href="{{ path('transport_show', { 'id': transport.id }) }}">{{ transport.name }}</a></td>
-                        <td>
-                            {% if transport.type == 0 %}Реф{% endif %}
-                            {% if transport.type == 1 %}Тент{% endif %}
-                            {% if transport.type == 2 %}Изотерм{% endif %}
-                            {% if transport.type == 3 %}Цистерна{% endif %}
-                        </td>
+                        <td>{{ transport.type }}</td>
                         <td align="right">{{ transport.payload }}</td>
                         <td align="center">{{ transport.regNum }}</td>
                         <td align="center">{{ transport.trailerRegNum }}</td>

@@ -534,7 +534,7 @@ $( document ).ready(function(){
         });
     });
 
-    //set driver filters
+    //set drivers list filters
     $('.btnSetDriverFilter').click(function(e){
 
         $.ajax({
@@ -559,6 +559,38 @@ $( document ).ready(function(){
         });
     });
 
+    //set vehicles list filters
+    $('.btnSetTransportFilter').click(function(e){
+
+        var vt = [];//vehicle types
+        $.each( $('#lotFilterVehicleTypes input'), function(i, el){
+            if( $(el).is(':checked') )
+                vt.push($( el ).attr('value'));
+        });
+        
+        $.ajax({
+            method: 'POST'
+            ,url: 'setFilter'
+            ,data: {
+                type: 3,//vehicle type filter
+                params: {
+                     'status_active' : ($('#vehicleFilterActive').is(':checked')?1:0)
+                    ,'status_inactive' : ($('#vehicleFilterPlanned').is(':checked')?1:0)
+                    ,'vehicle_types' : (vt.length > 0 ? vt : '')
+                }
+            }
+        })
+        .done(function( response ){
+            if( response.result ){
+                location.reload();
+            }
+        })
+        .fail(function( response ){
+            console.log('FAIL set vehicle filter');
+            console.log(response);
+        });
+    });
+    
     //unset filters
     $('.btnUnsetAuctionFilter,.btnUnsetRouteFilter,.btnUnsetDriverFilter').click(function(e){
         $.ajax({

@@ -3,11 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Transport;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Transport controller.
@@ -16,6 +16,54 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class TransportController extends Controller
 {
+    /**
+     * Composer filter condition for auction page based on user preferences
+     *
+     * @param array $_filters array which contains json encoded user preferences
+     * @return string $where composed condition
+     */
+    private function makeFilterCondition( $_filters ){
+        $where = 't.user_id = '.$this->getUser()->getId();
+        $filters = (array)$_filters;
+        if( !empty($filters) ){
+
+            if(    $_filters->status_active
+                && $_filters->status_active == 1
+            ){
+                $where .= ' AND t.status = 1';
+            }
+
+            if(    $_filters->status_inactive
+                && $_filters->status_inactive == 1
+            ){
+                if( $where != 't.user_id = '.$this->getUser()->getId() ){
+                    $where = 't.user_id = '.$this->getUser()->getId();
+                }
+                else{
+                    $where .= ' AND t.status = 0';
+                }
+            }
+
+            if(    $_filters->vehicle_types
+                && is_array($_filters->vehicle_types)
+            ){
+                $where .= ' AND t.type IN (\''.join('\',\'', $_filters->vehicle_types).'\')';
+            }
+        }
+
+        return $where;
+    }
+
+    /**
+     * Get stored vehicle types
+     *
+     * @return array
+     */
+    private function getPossibleVehicleTypes(){
+        $em = $this->getDoctrine()->getManager();
+        return $em->getRepository('AppBundle:RefVehicleType')->findAll();
+    }
+
     /**
      * Lists all transport entities.
      *
@@ -27,11 +75,36 @@ class TransportController extends Controller
         $this->checkUserAuthentication();
 
         $em = $this->getDoctrine()->getManager();
+        //get user auction filter preferences
+        $_filters = [];
 
-        $transports = $em->getRepository('AppBundle:Transport')->findBy(['user_id'=>$this->getUser()->getId()],['id'=>'DESC']);
+        $filters = $em
+            ->getRepository('AppBundle:Filter')
+            ->createQueryBuilder('f')
+            ->where('f.uid = '.$this->getUser()->getId())
+            ->andWhere('f.type = 3')//vehicle filter type
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+
+        if( !empty($filters) ){
+            $_filters = json_decode($filters[0]->getParams());
+        }
+
+        $where = $this->makeFilterCondition( $_filters );
+
+        $transports = $em
+            ->getRepository('AppBundle:Transport')
+            ->createQueryBuilder('t')
+            ->where($where)
+            ->getQuery()
+            ->getResult();
+            //->findBy(['user_id'=>$this->getUser()->getId()],['id'=>'DESC']);
         
         return $this->render('transport/index.html.twig', array(
-            'transports' => $transports,
+             'transports' => $transports
+            ,'filters' => $_filters
+            ,'vtypes' => $this->getPossibleVehicleTypes()
         ));
     }
 
@@ -203,5 +276,25 @@ class TransportController extends Controller
     private function doChecks($transport){
         $this->checkUserAuthentication();
         $this->checkUserOwner($transport);
+    }
+
+    /**
+     * Set users drivers filter
+     *
+     * @Route("/setFilter", name="set_filter")
+     * @Method("POST")
+     */
+    public function setFilterAction(Request $request){
+        return $this->forward('AppBundle:Auction:setFilter');
+    }
+
+    /**
+     * Set users drivers filter
+     *
+     * @Route("/unsetFilter", name="unset_filter")
+     * @Method("POST")
+     */
+    public function unsetFilterAction(Request $request){
+        return $this->forward('AppBundle:Auction:unsetFilter');
     }
 }
