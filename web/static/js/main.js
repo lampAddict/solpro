@@ -563,7 +563,7 @@ $( document ).ready(function(){
     $('.btnSetTransportFilter').click(function(e){
 
         var vt = [];//vehicle types
-        $.each( $('#lotFilterVehicleTypes input'), function(i, el){
+        $.each( $('#vehicleFilterTypes input'), function(i, el){
             if( $(el).is(':checked') )
                 vt.push($( el ).attr('value'));
         });

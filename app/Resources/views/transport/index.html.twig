@@ -27,7 +27,7 @@
                         </td>
                         <td id="vehicleFilterTypes" class="vehicleFilterType">
                             {% for vtype in vtypes %}
-                                <div><span>{{ vtype.getName }}</span><input {% if filters|length > 0 and vtype.getName in filters.vehicle_types %}checked="checked"{% endif %}value="{{ vtype.getName }}" type="checkbox"></div>
+                                <div><span>{{ vtype.getName }}</span><input {% if filters|length > 0 and vtype.getId in filters.vehicle_types %}checked="checked"{% endif %}value="{{ vtype.getId }}" type="checkbox"></div>
                             {% endfor %}
                         </td>
                     </tr>
@@ -67,10 +67,10 @@
                             {% if transport.status == 0 %}Неактивен{% endif %}
                         </td>
                         <td><a href="{{ path('transport_show', { 'id': transport.id }) }}">{{ transport.name }}</a></td>
-                        <td>{{ transport.type }}</td>
+                        <td>{{ transport.name }}</td>
                         <td align="right">{{ transport.payload }}</td>
-                        <td align="center">{{ transport.regNum }}</td>
-                        <td align="center">{{ transport.trailerRegNum }}</td>
+                        <td align="center">{{ transport.reg_num }}</td>
+                        <td align="center">{{ transport.trailer_reg_num }}</td>
                         <td>
                             <a class="btn btn-default changeVehicleInfo customtooltip" href="{{ path('transport_edit', { 'id': transport.id }) }}"><i class="fa fa-pencil"></i><span class="tooltiptext">Изменить</span></a>
                             <a class="btn btn-danger deleteVehicle customtooltip" href="{{ path('transport_confirmDelete', { 'id': transport.id }) }}"><i class="fa fa-trash-o"></i><span class="tooltiptext">Удалить</span></a>

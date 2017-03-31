@@ -2,8 +2,10 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TransportType extends AbstractType
@@ -32,15 +34,18 @@ class TransportType extends AbstractType
                         ])
                 ->add(
                          'type'
-                        ,'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
+                        ,EntityType::class
                         ,[
-                             'label'=>'Тип кузова'
-                            ,'choices'=>[
-                                             'Реф'
-                                            ,'Тент'
-                                            ,'Изотерм'
-                                            ,'Цистерна'
-                            ]
+                             'class' => 'AppBundle:RefVehicleType'
+                            ,'query_builder' => function (EntityRepository $er){
+                                return $er->createQueryBuilder('vt')
+                                    //->where('t.status = 1 AND t.user_id = '.$user->getId())
+                                    //->andWhere('t.driver_id IS NULL') //show only free to bind vehicles
+                                    ->orderBy('vt.id', 'DESC')
+                                    ;
+                            }
+                            ,'choice_label' => function($transport){return $transport->getName();}
+                            ,'choice_value' => 'id'
                         ])
                 ->add(
                          'payload'

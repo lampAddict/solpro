@@ -75,7 +75,7 @@ class TransportController extends Controller
         $this->checkUserAuthentication();
 
         $em = $this->getDoctrine()->getManager();
-        //get user auction filter preferences
+        //get user's vehicle filter preferences
         $_filters = [];
 
         $filters = $em
@@ -93,13 +93,10 @@ class TransportController extends Controller
 
         $where = $this->makeFilterCondition( $_filters );
 
-        $transports = $em
-            ->getRepository('AppBundle:Transport')
-            ->createQueryBuilder('t')
-            ->where($where)
-            ->getQuery()
-            ->getResult();
-            //->findBy(['user_id'=>$this->getUser()->getId()],['id'=>'DESC']);
+        $sql = 'SELECT t.*, rvt.name FROM transport t LEFT JOIN refvehicletype rvt ON rvt.id = t.type WHERE '.$where.'ORDER BY t.id DESC';
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $transports = $stmt->fetchAll();
         
         return $this->render('transport/index.html.twig', array(
              'transports' => $transports
