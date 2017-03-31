@@ -93,7 +93,7 @@ class TransportController extends Controller
 
         $where = $this->makeFilterCondition( $_filters );
 
-        $sql = 'SELECT t.*, rvt.name FROM transport t LEFT JOIN refvehicletype rvt ON rvt.id = t.type WHERE '.$where.'ORDER BY t.id DESC';
+        $sql = 'SELECT t.*, rvt.name, rvct.name as pname FROM transport t LEFT JOIN refvehicletype rvt ON rvt.id = t.type LEFT JOIN refvehiclecarryingtype rvct ON rvct.id = t.payload WHERE '.$where.'ORDER BY t.id DESC';
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $transports = $stmt->fetchAll();

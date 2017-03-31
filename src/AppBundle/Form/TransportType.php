@@ -39,19 +39,26 @@ class TransportType extends AbstractType
                              'class' => 'AppBundle:RefVehicleType'
                             ,'query_builder' => function (EntityRepository $er){
                                 return $er->createQueryBuilder('vt')
-                                    //->where('t.status = 1 AND t.user_id = '.$user->getId())
-                                    //->andWhere('t.driver_id IS NULL') //show only free to bind vehicles
                                     ->orderBy('vt.id', 'DESC')
                                     ;
                             }
-                            ,'choice_label' => function($transport){return $transport->getName();}
+                            ,'choice_label' => function($type){return $type->getName();}
                             ,'choice_value' => 'id'
+                            ,'label'=>'Тип кузова'
                         ])
                 ->add(
                          'payload'
-                        ,'Symfony\Component\Form\Extension\Core\Type\TextType'
+                        ,EntityType::class
                         ,[
-                             'label'=>'Грузоподъёмность, т'
+                             'class' => 'AppBundle:RefVehicleCarryingType'
+                            ,'query_builder' => function (EntityRepository $er){
+                                return $er->createQueryBuilder('vct')
+                                    ->orderBy('vct.id', 'DESC')
+                                    ;
+                            }
+                            ,'choice_label' => function($vct){return $vct->getName();}
+                            ,'choice_value' => 'id'
+                            ,'label'=>'Грузоподъёмность, т'
                         ])
                 ->add(
                          'regNum'
