@@ -20,43 +20,43 @@ class AuctionController extends Controller
      * @return string $where composed condition
      */
     private function makeFilterCondition( $_filters ){
-        $where = 'l.auctionStatus = 1';
+        $where = 'l.auction_status = 1';
         $filters = (array)$_filters;
         if( !empty($filters) ){
 
             if(    $_filters->status_active
                 && $_filters->status_active == 1
             ){
-                $where .= ' AND l.startDate <= CURRENT_TIMESTAMP()';// AND l.startDate + l.duration*60 > CURRENT_TIMESTAMP()';
+                $where .= ' AND l.start_date <= CURRENT_TIMESTAMP()';// AND l.start_date + l.duration*60 > CURRENT_TIMESTAMP()';
             }
 
             if(    $_filters->status_planned
                 && $_filters->status_planned == 1
             ){
-                if( $where != 'l.auctionStatus = 1' ){
-                    $where = 'l.auctionStatus = 1';
+                if( $where != 'l.auction_status = 1' ){
+                    $where = 'l.auction_status = 1';
                 }
                 else{
-                    $where .= ' AND l.startDate > CURRENT_TIMESTAMP()';
+                    $where .= ' AND l.start_date > CURRENT_TIMESTAMP()';
                 }
             }
 
             if(    $_filters->region_from
                 && $_filters->region_from != ''
             ){
-                $where .= ' AND r.regionFrom = \''.$_filters->region_from.'\'';
+                $where .= ' AND r.region_from = \''.$_filters->region_from.'\'';
             }
 
             if(    $_filters->region_to
                 && $_filters->region_to != ''
             ){
-                $where .= ' AND r.regionTo = \''.$_filters->region_to.'\'';
+                $where .= ' AND r.region_to = \''.$_filters->region_to.'\'';
             }
 
             if(    $_filters->vehicle_types
                 && is_array($_filters->vehicle_types)
             ){
-                $where .= ' AND r.vehicleType IN (\''.join('\',\'', $_filters->vehicle_types).'\')';
+                $where .= ' AND r.vehicle_type IN (\''.join('\',\'', $_filters->vehicle_types).'\')';
             }
 
             if(    $_filters->load_date_from
@@ -65,7 +65,7 @@ class AuctionController extends Controller
                 $utz = $this->getUser()->getTimezone();
                 $tz = new \DateTimeZone(($utz == '' ? 'UTC' : $utz));
                 $date_from = \DateTime::createFromFormat('H:i d.m.Y', $_filters->load_date_from, $tz);
-                $where .= ' AND r.loadDate >= \''.($date_from->format('Y-m-d H:i:s')).'\'';
+                $where .= ' AND r.load_date >= \''.($date_from->format('Y-m-d H:i:s')).'\'';
             }
 
             if(    $_filters->load_date_to
@@ -74,7 +74,7 @@ class AuctionController extends Controller
                 $utz = $this->getUser()->getTimezone();
                 $tz = new \DateTimeZone(($utz == '' ? 'UTC' : $utz));
                 $date_from = \DateTime::createFromFormat('H:i d.m.Y', $_filters->load_date_to, $tz);
-                $where .= ' AND r.loadDate <= \''.($date_from->format('Y-m-d H:i:s')).'\'';
+                $where .= ' AND r.load_date <= \''.($date_from->format('Y-m-d H:i:s')).'\'';
             }
 
             if(    $_filters->bet
@@ -203,55 +203,85 @@ class AuctionController extends Controller
 
         $where = $this->makeFilterCondition( $_filters );
 
-        $_lots = $em
-            ->getRepository('AppBundle:Lot')
-            ->createQueryBuilder('l')
-            ->leftJoin('l.routeId', 'r')
-            ->where($where)
-            ->orderBy('l.startDate')
-            ->getQuery()
-            ->getResult();
+        //get lots data
+        $sql = 'SELECT l.* FROM lot l LEFT JOIN route r ON l.route_id = r.id WHERE '.$where.' ORDER BY l.start_date';
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $_lots = $stmt->fetchAll();
+
+        $routesIds = [];
+        if( !empty($_lots) ){
+            foreach( $_lots as $lot ){
+                $routesIds[] = $lot['route_id'];
+            }
+        }
+        else{
+            $_lots = [];
+        }
 
         $_routes = [];
         $_orders = [];
+        //get routes ids
+        if( !empty($routesIds) ){
+            $sql = 'SELECT * FROM route WHERE id IN ('.join(',', $routesIds).')';
+            $stmt = $em->getConnection()->prepare($sql);
+            $stmt->execute();
+            $routesData = $stmt->fetchAll();
+            foreach( $routesData as $routeData ){
+                $routeData['load_date'] = new \DateTime( $routeData['load_date'] );
+                $_routes[ $routeData['id'] ] = $routeData;
+            }
+
+            $sql = 'SELECT * FROM orders WHERE route_id IN (' . join(',', $routesIds).')';
+            $stmt = $em->getConnection()->prepare($sql);
+            $stmt->execute();
+            $ordersData = $stmt->fetchAll();
+            foreach( $ordersData as $orderData ){
+                $orderData['date'] = new \DateTime( $orderData['date'] );
+                if( isset($_orders[ $orderData['route_id'] ]) ){
+                    $_orders[ $orderData['route_id'] ][] = $orderData;
+                }
+                else{
+                    $_orders[ $orderData['route_id'] ] = [ $orderData ];
+                }
+            }
+        }
+
         $_forms = [];
         if( !empty($_lots) ){
-            /* @var $lot \AppBundle\Entity\Lot */
-            foreach( $_lots as $lot ){
-                
-                //fill routes data array
-                $_routes[ $lot->getRouteId()->getId() ] = $lot->getRouteId();
-                
-                //fill orders data array
-                $_orders[ $lot->getRouteId()->getId() ] = $lot->getRouteId()->getOrders();
+            foreach( $_lots as $indx=>$lot ){
 
                 /* @var $bet \AppBundle\Entity\Bet */
                 $bet = new Bet();
-                $bet->setLotId($lot->getId());
+                $bet->setLotId( $lot['id'] );
                 
-                $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
-                $_forms[ $lot->getId() ] = $form->createView();
+                $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot, 'route'=>$_routes[ $lot['route_id'] ]]);
+                $_forms[ $lot['id'] ] = $form->createView();
 
+                $_lots[ $indx ]['start_date']  = new \DateTime( $lot['start_date'] );
+
+                
                 //update lot status if it has begun trading
-                if(     $lot->getStatusId1c() == '175d0f31-a9ca-45ba-835e-bae500c8c35c' // "подготовка"
-                    &&  $lot->getStartDate()->getTimestamp() >= time()
+                if(     $lot['status_id1c'] == '175d0f31-a9ca-45ba-835e-bae500c8c35c' // "подготовка"
+                    &&  $_lots[ $indx ]['start_date']->getTimestamp() >= time()
                 ){
-                    $lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0'); //"торги"
-                    $lot->setUpdatedAt( new \DateTime(date('c', time())) );
-                    $em->flush();
+                    /* @var $__lot \AppBundle\Entity\Lot */
+                    $__lot = $em->getRepository('AppBundle:Lot')->find($lot['id']);
+                    $__lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0'); //"торги"
+                    $__lot->setUpdatedAt( new \DateTime(date('c', time())) );
+                    //$em->flush();
                 }
 
                 //do `place bet` request processing
                 $form->handleRequest($request);
                 if(    $form->isSubmitted()
                     && $form->isValid()
-                    && intval($request->request->get('appbundle_bet')['lot_id']) == $lot->getId()
+                    && intval($request->request->get('appbundle_bet')['lot_id']) == $lot['id']
                 ){
                     
-                    $lot = $em
+                    $_lot = $em
                         ->getRepository('AppBundle:Lot')
                         ->createQueryBuilder('l')
-                        ->leftJoin('l.routeId', 'r')
                         ->where('l.id = '.$request->request->get('appbundle_bet')['lot_id'])
                         ->setMaxResults( 1 )
                         ->getQuery()
@@ -259,52 +289,52 @@ class AuctionController extends Controller
 
                     $bet = new Bet();
 
-                    /* @var $lot \AppBundle\Entity\Lot */
-                    $lot = $lot[0];
+                    /* @var $_lot \AppBundle\Entity\Lot */
+                    $_lot = $_lot[0];
 
-                    $bet->setLotId( $lot->getId() );
+                    $bet->setLotId( $_lot->getId() );
                     $bet->setUserId( $this->getUser() );
                     $bet->setCreatedAt(new \DateTime());
-                    if(    intval($request->request->get('appbundle_bet')['value']) <= $lot->getPrice() - $lot->getRouteId()->getTradeStep()
+                    if(    intval($request->request->get('appbundle_bet')['value']) <= $_lot->getPrice() - $_routes[ $lot['route_id'] ]['trade_step']
                         && intval($request->request->get('appbundle_bet')['value']) > 0
-                        && $lot->getStartDate()->getTimestamp() <= time() //auction has started
-                        && ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) >= time() //auction has not ended yet
+                        && $_lot->getStartDate()->getTimestamp() <= time() //auction has started
+                        && ($_lot->getStartDate()->getTimestamp() + $_lot->getDuration()*60) >= time() //auction has not ended yet
                     ){
                         $bet->setValue( intval($request->request->get('appbundle_bet')['value']) );
-                        $lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );
+                        $_lot->setPrice( intval($request->request->get('appbundle_bet')['value']) );
 
                         $prolongation = 0;
                         //auction prolongation if bet was made during last minute
-                        if( $lot->getStartDate()->getTimestamp() + $lot->getDuration()*60 - time() < 2*60 ){
-                            $prolongation = $lot->getDuration() + 2;//minutes
-                            $lot->setDuration( $prolongation );
+                        if( $_lot->getStartDate()->getTimestamp() + $_lot->getDuration()*60 - time() < 2*60 ){
+                            $prolongation = $_lot->getDuration() + 2;//minutes
+                            $_lot->setDuration( $prolongation );
                         }
                         
                         $em->persist($bet);
                         //$em->persist($lot);
                         
                         //update cache lot information
-                        if( $redis->exists('lcp_'.$lot->getId()) === 0 ){
-                            $redis->set('lcp_'.$lot->getId(), json_encode(['price'=>$lot->getPrice(), 'owner'=>$this->getUser()->getId(), 'history'=>[$this->getUser()->getId()]]));
+                        if( $redis->exists('lcp_'.$_lot->getId()) === 0 ){
+                            $redis->set('lcp_'.$_lot->getId(), json_encode(['price'=>$_lot->getPrice(), 'owner'=>$this->getUser()->getId(), 'history'=>[$this->getUser()->getId()]]));
                         }
                         else{
-                            $lotBetData = json_decode( $redis->get('lcp_'.$lot->getId()) );
+                            $lotBetData = json_decode( $redis->get('lcp_'.$_lot->getId()) );
                             if( !in_array($this->getUser()->getId(), $lotBetData->history) ){
                                 array_push($lotBetData->history, $this->getUser()->getId() . '');
                             }
-                            $lotBetData->price = $lot->getPrice() . '';
+                            $lotBetData->price = $_lot->getPrice() . '';
                             $lotBetData->owner = $this->getUser()->getId() . '';
-                            $redis->set('lcp_'.$lot->getId(), json_encode($lotBetData));
+                            $redis->set('lcp_'.$_lot->getId(), json_encode($lotBetData));
                         }
 
-                        $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$lot]);
-                        $_forms[ $lot->getId() ] = $form->createView();
+                        $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$_lot]);
+                        $_forms[ $_lot->getId() ] = $form->createView();
 
                         $em->flush();
                         
                         return new JsonResponse([    'result'=>true
-                                                    ,'price'=>$lot->getPrice() . ''
-                                                    ,'bet'=>($lot->getPrice() - $lot->getRouteId()->getTradeStep())
+                                                    ,'price'=>$_lot->getPrice() . ''
+                                                    ,'bet'=>($_lot->getPrice() - $_routes[ $lot['route_id'] ]['trade_step'])
                                                     ,'prolongation'=>$prolongation*60//seconds
                         ]);
                     }
@@ -313,9 +343,6 @@ class AuctionController extends Controller
                 }
 
             }
-        }
-        else{
-            $_lots = [];
         }
 
         //get bets history and current lot owner

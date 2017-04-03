@@ -95,26 +95,26 @@
                 </thead>
                 <tbody>
                     {% for lot in lots %}
-                        <tr id="lot-{{ lot.getId }}" class="data-search">
-                            <td align="center"><a class="showLotRouteInfo">{{ routes[ lot.getRouteId.getId ].getCode }}</a></td>
-                            <td class="lotDirection">{{ routes[ lot.getRouteId.getId ].getRegionFrom }} &xrarr;<br />{{ routes[ lot.getRouteId.getId ].getRegionTo }}</td>
-                            <td class="lotGetInTime">{{ routes[ lot.getRouteId.getId ].getLoadDate|date('H:i d.m.Y') }}</td>
-                            <td class="lotVehicleType">{{ routes[ lot.getRouteId.getId ].getVehicleType }}<br />{{ routes[ lot.getRouteId.getId ].getVehiclePayload }}</td>
-                            <td align="right">{{ routes[ lot.getRouteId.getId ].getCargoWeight }} ({{ routes[ lot.getRouteId.getId ].getCargoCount }})</td>
-                            <td class="lotComment">{{ routes[ lot.getRouteId.getId ].getComment }}</td>
+                        <tr id="lot-{{ lot['id'] }}" class="data-search">
+                            <td align="center"><a class="showLotRouteInfo">{{ routes[ lot['route_id'] ]['code'] }}</a></td>
+                            <td class="lotDirection">{{ routes[ lot['route_id'] ]['region_from'] }} &xrarr;<br />{{ routes[ lot['route_id'] ]['region_to'] }}</td>
+                            <td class="lotGetInTime">{{ routes[ lot['route_id'] ]['load_date'] | date('H:i d.m.Y') }}</td>
+                            <td class="lotVehicleType">{{ routes[ lot['route_id'] ]['vehicle_type'] }}<br />{{ routes[ lot['route_id'] ]['vehicle_payload'] }}</td>
+                            <td align="right">{{ routes[ lot['route_id'] ]['cargo_weight'] }} ({{ routes[ lot['route_id'] ]['cargo_count'] }})</td>
+                            <td class="lotComment">{{ routes[ lot['route_id'] ]['comment'] }}</td>
 
-                            <td class="lotTimeLeftTimer">{% if lot.getStartDate.timestamp <= date().timestamp and (lot.getStartDate.timestamp + lot.getDuration*60) > date().timestamp %}<span class="lotTimeLeft" data-ts="{% if tz == 'Europe/Moscow' %}{% set tzts = 3*60*60 %}{% elseif tz == 'Europe/Samara' %}{% set tzts = 4*60*60 %}{% elseif tz == 'Asia/Yekaterinburg' %}{% set tzts = 5*60*60 %}{% elseif tz == 'Asia/Novosibirsk' %}{% set tzts = 7*60*60 %}{% else %}{% set tzts = 0 %}{% endif %}{{ (lot.getStartDate.timestamp + tzts) }}">{{ (lot.getStartDate.timestamp + lot.getDuration*60) | date('Y/m/d H:i:s', tz) }}</span>{% elseif lot.getStartDate.timestamp > date().timestamp %}{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
+                            <td class="lotTimeLeftTimer">{% if lot['start_date'].timestamp <= date().timestamp and (lot['start_date'].timestamp + lot['duration']*60) > date().timestamp %}<span class="lotTimeLeft" data-ts="{% if tz == 'Europe/Moscow' %}{% set tzts = 3*60*60 %}{% elseif tz == 'Europe/Samara' %}{% set tzts = 4*60*60 %}{% elseif tz == 'Asia/Yekaterinburg' %}{% set tzts = 5*60*60 %}{% elseif tz == 'Asia/Novosibirsk' %}{% set tzts = 7*60*60 %}{% else %}{% set tzts = 0 %}{% endif %}{{ (lot['start_date'].timestamp + tzts) }}">{{ (lot['start_date'].timestamp + lot['duration']*60) | date('Y/m/d H:i:s', tz) }}</span>{% elseif lot['start_date'].timestamp > date().timestamp %}{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
 
-                            <td id="{{ lot.getId }}" class="lotCurrentPrice{% if lot.getId in bets|keys and app.user.id == bets[ lot.getId ]['owner'] %}{{' myBet'}}{% elseif lot.getId in bets|keys and app.user.id in bets[ lot.getId ]['history'] and app.user.id != bets[ lot.getId ]['owner'] %}{{' notMyBet'}}{% endif %}" align="right">{{ lot.getPrice }}</td>
+                            <td id="{{ lot['id'] }}" class="lotCurrentPrice{% if lot['id'] in bets|keys and app.user.id == bets[ lot['id'] ]['owner'] %}{{' myBet'}}{% elseif lot['id'] in bets|keys and app.user.id in bets[ lot['id'] ]['history'] and app.user.id != bets[ lot['id'] ]['owner'] %}{{' notMyBet'}}{% endif %}" align="right">{{ lot['price'] }}</td>
 
                             <td class="lotDoBid" align="center">
-                                {% if lot.getStartDate.timestamp > date().timestamp %}
-                                    Начало в {{ lot.getStartDate.timestamp | date('H:i d.m.Y', tz) }}
+                                {% if lot['start_date'].timestamp > date().timestamp %}
+                                    Начало в {{ lot['start_date'].timestamp | date('H:i d.m.Y', tz) }}
                                 {% else %}
-                                    {{ form_start(forms[lot.getId]) }}
-                                        {{ form_widget(forms[lot.getId]) }}
-                                        <input class="btn btn-default doBid" type="button" data-tradeStep="{{ routes[ lot.getRouteId.getId ].getTradeStep }}" value="Ставка &#8681;" />
-                                    {{ form_end(forms[lot.getId]) }}
+                                    {{ form_start(forms[ lot['id'] ]) }}
+                                        {{ form_widget(forms[ lot['id'] ]) }}
+                                        <input class="btn btn-default doBid" type="button" data-tradeStep="{{ routes[ lot['route_id'] ]['trade_step'] }}" value="Ставка &#8681;" />
+                                    {{ form_end(forms[ lot['id'] ]) }}
                                 {% endif %}
                             </td>
                         </tr>
@@ -122,37 +122,38 @@
                             <td colspan="9" class="hiddenRow">
                                 <div class="dnone lotInfoWindow">
                                     <div class="routeNumber">
-                                        Рейс №: <span id="routeNumber">{{ routes[ lot.getRouteId.getId ].getCode }}</span>
+                                        Рейс №: <span id="routeNumber">{{ routes[ lot['route_id'] ]['code'] }}</span>
                                     </div>
                                     <div class="routeStatus">
-                                        Статус: <span id="routeStatus">{{ routes[ lot.getRouteId.getId ].getStatus }}</span>
+                                        Статус: <span id="routeStatus">{{ routes[ lot['route_id'] ]['status'] }}</span>
                                     </div>
                                     <div class="routeInfoTable">
                                         <table cellspacing="0" cellpadding="0">
                                             <tbody>
                                             <tr>
-                                                <td>Дата загрузки:</td><td>{{ routes[ lot.getRouteId.getId ].getLoadDate|date('H:i d.m.Y') }}</td>
+                                                <td>Дата загрузки:</td><td>{{ routes[ lot['route_id'] ]['load_date'] | date('H:i d.m.Y') }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Пункт отгрузки:</td><td>{{ routes[ lot.getRouteId.getId ].getRegionFrom }}</td>
+                                                <td>Пункт отгрузки:</td><td>{{ routes[ lot['route_id'] ]['region_from'] }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Регион доставки:</td><td>{{ routes[ lot.getRouteId.getId ].getRegionTo }}</td>
+                                                <td>Регион доставки:</td><td>{{ routes[ lot['route_id'] ]['region_to'] }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Вид ТС:</td><td>{{ routes[ lot.getRouteId.getId ].getVehiclePayload }} {{ routes[ lot.getRouteId.getId ].getVehicleType }}</td>
+                                                <td>Вид ТС:</td><td>{{ routes[ lot['route_id'] ]['vehicle_payload'] }} {{ routes[ lot['route_id'] ]['vehicle_type'] }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Тариф:</td><td id="lpi_{{ lot.getId }}">{{ lot.getPrice }} &#8381;</td>
+                                                <td>Тариф:</td><td id="lpi_{{ lot['id'] }}">{{ lot['price'] }} &#8381;</td>
                                             </tr>
                                             <tr>
-                                                <td>Комментарий:</td><td>{{ routes[ lot.getRouteId.getId ].getComment }}</td>
+                                                <td>Комментарий:</td><td>{{ routes[ lot['route_id'] ]['comment'] }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
 
                                     <div class="routeInfo">
+                                        {% if lot['route_id'] in orders|keys %}
                                         <span>Информация по заказам:</span>
                                         <table id="routeOrdersTable" cellpadding="0" cellspacing="0" style="border:1px solid gray; border-collapse: collapse">
                                             <thead>
@@ -168,23 +169,24 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {% for order in orders[ lot.getRouteId.getId ] %}
+                                            {% for order in orders[ lot['route_id'] ] %}
                                                 <tr>
-                                                    <td>{{ order.getCode }}</td>
-                                                    <td>{{ order.getConsignee }}</td>
-                                                    <td>{{ order.getUnloadAddress }}</td>
-                                                    <td>{{ order.getDate|date('H:i d.m.Y') }}</td>
-                                                    <td>{{ order.getWeight }} ({{  order.getCountNum }})</td>
+                                                    <td>{{ order['code'] }}</td>
+                                                    <td>{{ order['consignee'] }}</td>
+                                                    <td>{{ order['unload_address'] }}</td>
+                                                    <td>{{ order['date'] | date('H:i d.m.Y') }}</td>
+                                                    <td>{{ order['weight'] }} ({{  order['count_num'] }})</td>
                                                     <td></td>
-                                                    <td>{{ order.getLoadSpecialConditions }}</td>
-                                                    <td>{{ order.getUnloadSpecialConditions }}</td>
+                                                    <td>{{ order['load_special_conditions'] }}</td>
+                                                    <td>{{ order['unload_special_conditions'] }}</td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
                                         </table>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> {{ orders[ lot.getRouteId.getId ]|length }}</span></div>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> {{ routes[ lot.getRouteId.getId ].getCargoWeight }} кг</span></div>
-                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> {{ routes[ lot.getRouteId.getId ].getCargoCount }}</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество точек выгрузки:<span> {{ orders[ lot['route_id'] ] |length }}</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Общий вес брутто:<span> {{ routes[ lot['route_id'] ]['cargo_weight'] }} кг</span></div>
+                                        <div style="font-weight:bold; float: left; margin-right: 10px; margin-top: 10px">Количество паллет:<span> {{ routes[ lot['route_id'] ]['cargo_count'] }}</span></div>
+                                        {% endif %}
                                     </div>
                                     <div style="float:right; padding-bottom: 10px;"><a class="btn btn-default btnCloseRouteInfo">Вернуться к списку</a></div>
                                 </div>
