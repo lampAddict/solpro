@@ -200,6 +200,7 @@ class AuctionController extends Controller
         $stmt->execute();
         $_lots = $stmt->fetchAll();
 
+        //get routes ids
         $routesIds = [];
         if( !empty($_lots) ){
             foreach( $_lots as $lot ){
@@ -212,7 +213,7 @@ class AuctionController extends Controller
 
         $_routes = [];
         $_orders = [];
-        //get routes ids
+        //get routes and orders data
         if( !empty($routesIds) ){
             $sql = 'SELECT * FROM route WHERE id IN ('.join(',', $routesIds).')';
             $stmt = $em->getConnection()->prepare($sql);
