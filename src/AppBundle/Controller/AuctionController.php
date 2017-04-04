@@ -131,27 +131,18 @@ class AuctionController extends Controller
 
         $_regionsFrom = [];
         $_regionsTo = [];
+
         //determine delivery and sender regions
-        $_lots = $em
-            ->getRepository('AppBundle:Lot')
-            ->createQueryBuilder('l')
-            ->leftJoin('l.routeId', 'r')
-            ->where('l.auctionStatus = 1')
-            ->orderBy('l.startDate')
-            ->getQuery()
-            ->getResult();
+        $sql = 'SELECT DISTINCT r.region_from, r.region_to FROM lot l LEFT JOIN route r ON l.route_id = r.id WHERE l.auction_status = 1';
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $_lots = $stmt->fetchAll();
+
         if( !empty($_lots) ){
-            /* @var $lot \AppBundle\Entity\Lot */
-            foreach( $_lots as $lot ) {
-
+            foreach( $_lots as $lot ){
                 //fill regions data array
-                if (!isset($_regionsFrom[$lot->getRouteId()->getRegionFrom()])) {
-                    $_regionsFrom[$lot->getRouteId()->getRegionFrom()] = 1;
-                }
-
-                if (!isset($_regionsTo[$lot->getRouteId()->getRegionTo()])) {
-                    $_regionsTo[$lot->getRouteId()->getRegionTo()] = 1;
-                }
+                $_regionsFrom[ $lot['region_from'] ] = 1;
+                $_regionsTo[ $lot['region_to'] ] = 1;
             }
 
             ksort($_regionsFrom);
@@ -260,7 +251,6 @@ class AuctionController extends Controller
 
                 $_lots[ $indx ]['start_date']  = new \DateTime( $lot['start_date'] );
 
-                
                 //update lot status if it has begun trading
                 if(     $lot['status_id1c'] == '175d0f31-a9ca-45ba-835e-bae500c8c35c' // "подготовка"
                     &&  $_lots[ $indx ]['start_date']->getTimestamp() >= time()
@@ -269,7 +259,7 @@ class AuctionController extends Controller
                     $__lot = $em->getRepository('AppBundle:Lot')->find($lot['id']);
                     $__lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0'); //"торги"
                     $__lot->setUpdatedAt( new \DateTime(date('c', time())) );
-                    //$em->flush();
+                    $em->flush();
                 }
 
                 //do `place bet` request processing
@@ -291,7 +281,6 @@ class AuctionController extends Controller
 
                     /* @var $_lot \AppBundle\Entity\Lot */
                     $_lot = $_lot[0];
-
                     $bet->setLotId( $_lot->getId() );
                     $bet->setUserId( $this->getUser() );
                     $bet->setCreatedAt(new \DateTime());
