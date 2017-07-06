@@ -592,7 +592,7 @@ $( document ).ready(function(){
     });
     
     //unset filters
-    $('.btnUnsetAuctionFilter,.btnUnsetRouteFilter,.btnUnsetDriverFilter').click(function(e){
+    $('.btnUnsetAuctionFilter,.btnUnsetRouteFilter,.btnUnsetDriverFilter,.btnUnsetTransportFilter').click(function(e){
         $.ajax({
             method: 'POST',
             url: 'unsetFilter',
