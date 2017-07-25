@@ -9,8 +9,12 @@ services:
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
     app.import1cdata:
         class: AppBundle\Services\import1CDataService
-        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager" ]
+        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default" ]
 
     app.export1cdata:
         class: AppBundle\Services\export1CDataService
         arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager" ]
+
+    app.closeauction:
+            class: AppBundle\Services\closeAuctionService
+            arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default" ]

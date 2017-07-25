@@ -20,10 +20,12 @@ class import1CDataService{
 
     protected $em;
     protected $um;
+    protected $redis;
 
-    public function __construct($entityManager, $userManager){
-        $this->em = $entityManager;
-        $this->um = $userManager;
+    public function __construct($entityManager, $userManager, $redisManager){
+        $this->em    = $entityManager;
+        $this->um    = $userManager;
+        $this->redis = $redisManager;
     }
     
     private function importReferences($entityName, $refsData, $fields=['id', 'name']){
@@ -274,6 +276,11 @@ class import1CDataService{
 
         if( !empty($data['lots']) ){
 
+            $currentIdsStr = '';
+            if( $this->redis->isset('lcp') ){
+                $currentIdsStr = $this->redis->get('lcp');
+            }
+
             foreach( $data['lots'] as $lot ){
 
                 if(    !is_null($this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id']]))
@@ -296,6 +303,8 @@ class import1CDataService{
                 $_lot->setUpdatedAt( new \DateTime(date('c', time())) );
                 $_lot->setAuctionStatus(1);//lot is in auction state
 
+                $addLotToCache = true;
+
                 if( isset($routeDbIds[ $lot['routeId'] ]) ){
                     $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
                     $_lot->setRouteId( $route );
@@ -303,12 +312,24 @@ class import1CDataService{
 
                     if( $route->getUserId() ){
                         $_lot->setAuctionStatus(0);
+                        $addLotToCache = false;
                     }
+                }
+
+                if( $addLotToCache ){
+                    $this->redis->set( 'laet_' . $_lot->getId(), $startDate->getTimestamp() + $lot['duration'] * 60 );
+                    $this->redis->set( 'lcp_' . $_lot->getId(),  $_lot->getPrice() );
+
+                    $currentIdsStr .= ($currentIdsStr == '' ? $_lot->getId() : ','.$_lot->getId());
+                    $this->redis->set( 'lcp', $currentIdsStr);
                 }
 
                 $this->em->persist($_lot);
                 $this->em->flush();
             }
+
+            if( $currentIdsStr != '' )
+                $this->redis->expire('lcp', 600);
 
             echo "Lots imported\n";
         }

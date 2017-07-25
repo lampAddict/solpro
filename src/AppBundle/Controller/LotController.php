@@ -112,55 +112,61 @@ class LotController extends Controller
 
         //check auction end time
         if( time() >= ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) ){
+
+            $closeAuctionService = $this->container->get('app.closeauction');
+            if( $closeAuctionService->closeAuctionService() )
+                return new JsonResponse(['result'=>true]);
+
             //delete lot price from redis
 
             //lcp - lot current price
-            if( $redis->exists('lcp_'.$lid) ){
-                $redis->del('lcp_'.$lid);
+//            if( $redis->exists('lcp_'.$lid) ){
+//                $redis->del('lcp_'.$lid);
+//
+//                //delete lot id from redis
+//                $l_ids = $redis->get('lcp');
+//                if( $l_ids ){
+//                    $l_ids = explode(',', $l_ids);
+//                    foreach( $l_ids as $indx=>$l_id ){
+//                        if( $l_id == $lid ){
+//                            unset($l_ids[$indx]);
+//                            break;
+//                        }
+//                    }
+//                    $redis->set('lcp', join(',',$l_ids));
+//                    $redis->expire('lcp', 600);
+//                }
+//            }
 
-                //delete lot id from redis
-                $l_ids = $redis->get('lcp');
-                if( $l_ids ){
-                    $l_ids = explode(',', $l_ids);
-                    foreach( $l_ids as $indx=>$l_id ){
-                        if( $l_id == $lid ){
-                            unset($l_ids[$indx]);
-                            break;
-                        }
-                    }
-                    $redis->set('lcp', join(',',$l_ids));
-                    $redis->expire('lcp', 600);
-                }
-            }
+//            //get lot off the auction
+//            $lot->setAuctionStatus(0);
+//
+//            //lot has been traded unsuccessfully
+//            $lot->setStatusId1c('a9649dc5-266e-4084-8498-e89c351533ea');
+//
+//            //get bets history and current lot owner
+//            $sql = "SELECT b.value AS bet, b.user_id AS uid FROM bet b WHERE b.lot_id = $lid ORDER BY b.value ASC LIMIT 1";
+//            $stmt = $em->getConnection()->prepare($sql);
+//            $stmt->execute();
+//            $bet = $stmt->fetchAll();
+//
+//            //assign route to winner
+//            if( !empty($bet) ){
+//                /* @var $route \AppBundle\Entity\Route */
+//                $route = $lot->getRouteId();
+//                $route->setUserId($em->getRepository('AppBundle:User')->find($bet[0]['uid']));
+//                $em->persist($route);
+//
+//                //lot has been traded successfully
+//                $lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
+//            }
 
-            //get lot off the auction
-            $lot->setAuctionStatus(0);
+            //$em->flush();
 
-            //lot has been traded unsuccessfully
-            $lot->setStatusId1c('a9649dc5-266e-4084-8498-e89c351533ea');
+            //$redis->set('lae_'.$lid, 1);
+            //$redis->expire('lae_'.$lid, 120);
 
-            //get bets history and current lot owner
-            $sql = "SELECT b.value AS bet, b.user_id AS uid FROM bet b WHERE b.lot_id = $lid ORDER BY b.value ASC LIMIT 1";
-            $stmt = $em->getConnection()->prepare($sql);
-            $stmt->execute();
-            $bet = $stmt->fetchAll();
-
-            //assign route to winner
-            if( !empty($bet) ){
-                /* @var $route \AppBundle\Entity\Route */
-                $route = $lot->getRouteId();
-                $route->setUserId($em->getRepository('AppBundle:User')->find($bet[0]['uid']));
-                $em->persist($route);
-
-                //lot has been traded successfully
-                $lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
-            }
-
-            $em->flush();
-
-            $redis->set('lae_'.$lid, 1);
-            $redis->expire('lae_'.$lid, 120);
-            return new JsonResponse(['result'=>true]);
+            //return new JsonResponse(['result'=>true]);
         }
 
         return new JsonResponse(['result'=>false]);

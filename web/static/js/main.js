@@ -360,18 +360,20 @@ $( document ).ready(function(){
 
     //update lots prices routine
     var updateLotPrices = function(){
-        if( window.location.pathname.replace(/\//g,'') == 'auction' ){ //solprosolportalwebapp_dev.phpauction
+        if( window.location.pathname.replace(/\//g,'') == 'auction' ){ //solprowebapp_dev.phpauction //auction
             $.ajax({
                 url: 'lotsPrices',
                 cache: false
             }).done(function( data ){
                 console.log(data);
                 var _uid = $('#auctionPageContainer').attr('data-user');
+
+                var $lotsPrices = $('.lotCurrentPrice'),
+                    lotPricesTableCount = $lotsPrices.length,
+                    savedNumLotsPrices = $('body').data('numLotsPrices');
+
                 if( !jQuery.isEmptyObject(data.lots) ){
-                    var $lotsPrices = $('.lotCurrentPrice'),
-                        lotPricesTableCount = $lotsPrices.length,
-                        lotPricesDataCount = Object.keys(data.lots).length,
-                        savedNumLotsPrices = $('body').data('numLotsPrices'),
+                    var lotPricesDataCount = Object.keys(data.lots).length,
                         pageReload = false;
 
                     if( savedNumLotsPrices == undefined ){
@@ -443,11 +445,19 @@ $( document ).ready(function(){
                                     $(this).siblings('.lotDoBid').find('input#appbundle_bet_value').val('');
                                 }
 
-                                //full lot information window
+                                //fill lot information window
                                 $('#lpi_' + _id).html(data.lots[ _id ].price + ' &#8381;');
                             }
                         }
                     });
+                }
+                //if there is no data about lots prices present in server answer but we have saved info about it - reload page
+                else if(
+                           data.lots === false
+                        && lotPricesTableCount > 0
+                        && savedNumLotsPrices > 0
+                ){
+                    location.reload();
                 }
             });
         }

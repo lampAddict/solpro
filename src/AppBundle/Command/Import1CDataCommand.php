@@ -191,8 +191,12 @@ class Import1CDataCommand extends ContainerAwareCommand
             //Do import
             $import1CDataManager = $this->getContainer()->get('app.import1cdata');
             if( $import1CDataManager->import1CData($data) ){
-                //clear cached lots data
-                $this->getContainer()->get('snc_redis.default')->flushall();
+                //clear all cached lots data
+                //$this->getContainer()->get('snc_redis.default')->flushall();
+
+                //clear cached lots current prices data
+                //$this->getContainer()->get('snc_redis.default')->del("lcp");
+
                 rename('data/data.xml', 'data/data_imported/data_'.date('H_i_s__d_m_Y', time()).'.xml');
             }
             else{
