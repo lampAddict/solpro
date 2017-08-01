@@ -51,6 +51,7 @@ class closeAuctionService
      * Close auction routine
      *
      * @param $lot \AppBundle\Entity\Lot
+     * @return boolean true if all ran smoothly
      */
     public function closeAuction($lot){
         //delete lot price from redis
@@ -94,15 +95,20 @@ class closeAuctionService
             /* @var $route \AppBundle\Entity\Route */
             $route = $lot->getRouteId();
             $route->setUserId($this->em->getRepository('AppBundle:User')->find($bet[0]['uid']));
+            $route->setUpdatedAt( new \DateTime(date('c', time())) );
             $this->em->persist($route);
 
             //lot has been traded successfully
             $lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
         }
 
+        $lot->setUpdatedAt( new \DateTime(date('c', time())) );
+
         $this->em->flush();
 
         $this->redis->set('lae_'.$lid, 1);
         $this->redis->expire('lae_'.$lid, 120);
+
+        return true;
     }
 }
