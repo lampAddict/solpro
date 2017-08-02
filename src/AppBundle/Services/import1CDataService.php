@@ -277,7 +277,7 @@ class import1CDataService{
         if( !empty($data['lots']) ){
 
             $currentIdsStr = '';
-            if( $this->redis->isset('lcp') ){
+            if( $this->redis->exists('lcp') ){
                 $currentIdsStr = $this->redis->get('lcp');
             }
 
