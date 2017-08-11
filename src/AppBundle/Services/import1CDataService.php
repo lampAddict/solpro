@@ -323,7 +323,7 @@ class import1CDataService{
                     $currentIdsStr .= ($currentIdsStr == '' ? $_lot->getId() : ','.$_lot->getId());
                     $this->redis->set( 'lcp', $currentIdsStr);
 
-                    echo "Lots data added to cache\n";
+                    echo "laet_" . $_lot->getId() . " " . $_lot->getStartDate()->getTimestamp()  . " " .  ($_lot->getDuration() * 60) . "\n";
                 }
 
                 $this->em->persist($_lot);
