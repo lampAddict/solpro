@@ -316,6 +316,9 @@ class import1CDataService{
                     }
                 }
 
+                $this->em->persist($_lot);
+                $this->em->flush();
+
                 if( $addLotToCache ){
                     $this->redis->set( 'laet_' . $_lot->getId(), $_lot->getStartDate()->getTimestamp() + $_lot->getDuration() * 60 );
                     $this->redis->set( 'lcp_' . $_lot->getId(),  $_lot->getPrice() );
@@ -325,9 +328,6 @@ class import1CDataService{
 
                     echo "laet_" . $_lot->getId() . " " . $_lot->getStartDate()->getTimestamp()  . " " .  ($_lot->getDuration() * 60) . "\n";
                 }
-
-                $this->em->persist($_lot);
-                $this->em->flush();
             }
 
             if( $currentIdsStr != '' )
