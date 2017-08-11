@@ -32,11 +32,13 @@ class closeAuctionService
                     $lot = $this->em->getRepository('AppBundle:Lot')->findOneBy(['id'=>$lid, 'auctionStatus'=>1]);
                     if( !$lot )return false;
 
-                    //do close auction routine
-                    $this->closeAuction($lot);
-
-                    //delete redis lot auction end time key
-                    $this->redis->del('laet_'.$lid);
+                    if( time() >= ($lot->getStartDate()->getTimestamp() + $lot->getDuration()*60) ){
+                        //do close auction routine
+                        if( $this->closeAuction($lot) ){
+                            //delete redis lot auction end time key
+                            $this->redis->del('laet_'.$lid);
+                        }
+                    }
                 }
             }
         }

@@ -317,11 +317,13 @@ class import1CDataService{
                 }
 
                 if( $addLotToCache ){
-                    $this->redis->set( 'laet_' . $_lot->getId(), $startDate->getTimestamp() + $lot['duration'] * 60 );
+                    $this->redis->set( 'laet_' . $_lot->getId(), $_lot->getStartDate()->getTimestamp() + $_lot->getDuration() * 60 );
                     $this->redis->set( 'lcp_' . $_lot->getId(),  $_lot->getPrice() );
 
                     $currentIdsStr .= ($currentIdsStr == '' ? $_lot->getId() : ','.$_lot->getId());
                     $this->redis->set( 'lcp', $currentIdsStr);
+
+                    echo "Lots data added to cache\n";
                 }
 
                 $this->em->persist($_lot);
