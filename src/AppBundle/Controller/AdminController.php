@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class AdminController extends Controller
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/adminka", name="adminka")
      */
     public function indexAction(Request $request)
     {
