@@ -22,7 +22,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //get lots data
-        $sql = 'SELECT l.*, u.user_name FROM lot l LEFT JOIN bet b ON b.lot_id = l.id LEFT JOIN fos_user u ON b.user_id = u.id WHERE l.auction_status = 1 AND l.price = b.value ORDER BY l.start_date';
+        $sql = 'SELECT l.*, u.username FROM lot l LEFT JOIN bet b ON b.lot_id = l.id LEFT JOIN fos_user u ON b.user_id = u.id WHERE l.auction_status = 1 AND l.price = b.value ORDER BY l.start_date';
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $_lots = $stmt->fetchAll();
