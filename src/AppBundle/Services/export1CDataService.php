@@ -121,6 +121,7 @@ class export1CDataService
         $q = $this->em->getConnection()->prepare("SELECT id, fio, passport_type, passport_series, passport_number, passport_date_issue, passport_issued_by FROM driver WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
         $q->execute();
         $driversArr = $q->fetchAll();
+        $drivers = '';
         if( !empty($driversArr) ){
             echo "Drivers data composition\n";
 
@@ -144,10 +145,6 @@ class export1CDataService
                             .'</driver>';
             }
             $drivers .= '</drivers>';
-
-            $xml .= $drivers;
-
-            $data_added = true;
         }
 
 
@@ -155,6 +152,7 @@ class export1CDataService
         $q = $this->em->getConnection()->prepare("SELECT id, name, reg_num, trailer_reg_num FROM transport WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
         $q->execute();
         $vehicleArr = $q->fetchAll();
+        $vehicles = '';
         if( !empty($vehicleArr) ) {
             echo "Vehicles data composition\n";
 
@@ -168,11 +166,16 @@ class export1CDataService
                             .'</vehicle>';
             }
             $vehicles .= '</vehicles>';
+        }
 
+        if( $vehicles != '' || $drivers != '' ){
+            $xml .= '<references>';
+            $xml .= $drivers;
             $xml .= $vehicles;
-
+            $xml .= '</references>';
             $data_added = true;
         }
+
         $xml .= '</messageFromPortal>';
         
         if( $data_added ){
