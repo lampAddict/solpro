@@ -22,7 +22,7 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //get lots data
-        $sql = 'SELECT l.*, u.username FROM lot l LEFT JOIN bet b ON b.lot_id = l.id LEFT JOIN fos_user u ON b.user_id = u.id WHERE l.auction_status = 1 AND l.price = b.value ORDER BY l.start_date';
+        $sql = 'SELECT l.*, u.username as user_name FROM lot l LEFT JOIN bet b ON b.lot_id = l.id LEFT JOIN fos_user u ON b.user_id = u.id WHERE l.auction_status = 1 AND l.price >= IFNULL(b.value, 0) GROUP BY l.id ORDER BY l.start_date';
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $_lots = $stmt->fetchAll();
@@ -30,7 +30,8 @@ class AdminController extends Controller
         //get routes ids
         $routesIds = [];
         if( !empty($_lots) ){
-            foreach( $_lots as $lot ){
+            foreach( $_lots as $indx=>$lot ){
+                $_lots[ $indx ]['start_date']  = new \DateTime( $lot['start_date'] );
                 $routesIds[] = $lot['route_id'];
             }
         }
@@ -55,6 +56,7 @@ class AdminController extends Controller
         return $this->render('adminPage.html.twig', array(
              'lots' => $_lots
             ,'routes' => $_routes
+            ,'tz' => ($this->getUser()->getTimezone() != '' ? $this->getUser()->getTimezone() : 'UTC')
         ));
     }
 }

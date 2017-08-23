@@ -321,7 +321,8 @@ class import1CDataService{
 
                 if( $addLotToCache ){
                     $this->redis->set( 'laet_' . $_lot->getId(), $_lot->getStartDate()->getTimestamp() + $_lot->getDuration() * 60 );
-                    $this->redis->set( 'lcp_' . $_lot->getId(),  $_lot->getPrice() );
+
+                    $this->redis->set( 'lcp_' . $_lot->getId(),  json_encode([ 'price'=>$_lot->getPrice(), 'owner'=>0, 'history'=>[], 'bet'=>0 ]) );
 
                     $currentIdsStr .= ($currentIdsStr == '' ? $_lot->getId() : ','.$_lot->getId());
                     $this->redis->set( 'lcp', $currentIdsStr);
