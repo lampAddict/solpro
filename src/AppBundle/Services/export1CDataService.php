@@ -118,7 +118,7 @@ class export1CDataService
         }
 
         //driver's data
-        $q = $this->em->getConnection()->prepare("SELECT id, passport_type, passport_series, passport_number, passport_date_issue, passport_issued_by FROM driver WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
+        $q = $this->em->getConnection()->prepare("SELECT id, fio, passport_type, passport_series, passport_number, passport_date_issue, passport_issued_by FROM driver WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
         $q->execute();
         $driversArr = $q->fetchAll();
         if( !empty($driversArr) ){
@@ -135,6 +135,7 @@ class export1CDataService
             foreach( $driversArr as $driver ){
                 $drivers .= ' <driver>'
                                 .'<id>'.$driver['id'].'</id>'
+                                .'<name>'.$driver['fio'].'</name>'
                                 .'<docIDType>'.$docTypes[ $driver['passport_type'] ].'</docIDType>'
                                 .'<series>'.$driver['passport_series'].'</series>'
                                 .'<number>'.$driver['passport_number'].'</number>'
