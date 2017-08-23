@@ -19,8 +19,42 @@ class AdminController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('adminPage.html.twig', array(
+        $em = $this->getDoctrine()->getManager();
 
+        //get lots data
+        $sql = 'SELECT l.*, u.user_name FROM lot l LEFT JOIN bet b ON b.lot_id = l.id LEFT JOIN fos_user u ON b.user_id = u.id WHERE l.auction_status = 1 AND l.price = b.value ORDER BY l.start_date';
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $_lots = $stmt->fetchAll();
+
+        //get routes ids
+        $routesIds = [];
+        if( !empty($_lots) ){
+            foreach( $_lots as $lot ){
+                $routesIds[] = $lot['route_id'];
+            }
+        }
+        else{
+            $_lots = [];
+        }
+
+        $_routes = [];
+
+        //get routes data
+        if( !empty($routesIds) ){
+            $sql = 'SELECT * FROM route WHERE id IN ('.join(',', $routesIds).')';
+            $stmt = $em->getConnection()->prepare($sql);
+            $stmt->execute();
+            $routesData = $stmt->fetchAll();
+            foreach( $routesData as $routeData ){
+                $routeData['load_date'] = new \DateTime( $routeData['load_date'] );
+                $_routes[ $routeData['id'] ] = $routeData;
+            }
+        }
+
+        return $this->render('adminPage.html.twig', array(
+             'lots' => $_lots
+            ,'routes' => $_routes
         ));
     }
 }

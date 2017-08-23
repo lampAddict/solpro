@@ -1,5 +1,55 @@
 {% extends 'base.html.twig' %}
 
+{% block topMenu %}
+    <ul class="topnav" id="menu">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="loggedUser">
+                Здравствуйте, {{ app.user.username }} <a href="{{ logout_path('main') }}">Выход</a>
+            </li>
+        {% endif %}
+
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="showMenuItems()"><i class="fa fa-bars"></i></a>
+        </li>
+    </ul>
+{% endblock %}
+
 {% block body %}
-ADMIN PAGE
+    <div id="auctionPageContainer" data-user="{{ app.user.id }}">
+        <div id="auctionTable">
+            <table cellpadding="0" cellspacing="0" class="data-content">
+                <thead>
+                <tr>
+                    <th>№ Рейса</th>
+                    <th class="txtAlignCenter">Направление</th>
+                    <th>До конца торгов</th>
+                    <th>Цена лота, &#8381;</th>
+                    <th>Чья ставка</th>
+                    <th class="txtAlignCenter">История ставок</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for lot in lots %}
+                    <tr id="lot-{{ lot['id'] }}" class="data-search">
+                        <td align="center"><a class="showLotRouteInfo">{{ routes[ lot['route_id'] ]['code'] }}</a></td>
+                        <td class="lotDirection">{{ routes[ lot['route_id'] ]['region_from'] }} &xrarr;<br />{{ routes[ lot['route_id'] ]['region_to'] }}</td>
+
+                        <td class="lotTimeLeftTimer">{% if lot['start_date'].timestamp <= date().timestamp and (lot['start_date'].timestamp + lot['duration']*60) > date().timestamp %}<span class="lotTimeLeft" data-ts="{% if tz == 'Europe/Moscow' %}{% set tzts = 3*60*60 %}{% elseif tz == 'Europe/Samara' %}{% set tzts = 4*60*60 %}{% elseif tz == 'Asia/Yekaterinburg' %}{% set tzts = 5*60*60 %}{% elseif tz == 'Asia/Novosibirsk' %}{% set tzts = 7*60*60 %}{% else %}{% set tzts = 0 %}{% endif %}{{ (lot['start_date'].timestamp + tzts) }}">{{ (lot['start_date'].timestamp + lot['duration']*60) | date('Y/m/d H:i:s', tz) }}</span>{% elseif lot['start_date'].timestamp > date().timestamp %}{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
+
+                        <td id="{{ lot['id'] }}" class="lotCurrentPrice" align="right">{{ lot['price'] }}</td>
+
+                        <td>{{ lot['user_name'] }}</td>
+                        <td class="lotDoBid" align="center">
+                            {% if lot['start_date'].timestamp > date().timestamp %}
+                                Начало в {{ lot['start_date'].timestamp | date('H:i d.m.Y', tz) }}
+                            {% else %}
+                                <input class="btn btn-default" type="button" value="Посмотреть ставки" />
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
