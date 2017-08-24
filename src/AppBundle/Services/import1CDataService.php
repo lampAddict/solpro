@@ -280,6 +280,7 @@ class import1CDataService{
             if( $this->redis->exists('lcp') ){
                 $currentIdsStr = $this->redis->get('lcp');
             }
+            $l = strlen($currentIdsStr);
 
             foreach( $data['lots'] as $lot ){
 
@@ -325,14 +326,16 @@ class import1CDataService{
                     $this->redis->set( 'lcp_' . $_lot->getId(),  json_encode([ 'price'=>$_lot->getPrice(), 'owner'=>0, 'history'=>[], 'bet'=>0 ]) );
 
                     $currentIdsStr .= ($currentIdsStr == '' ? $_lot->getId() : ','.$_lot->getId());
-                    $this->redis->set( 'lcp', $currentIdsStr);
+
 
                     echo "laet_" . $_lot->getId() . " " . $_lot->getStartDate()->getTimestamp()  . " " .  ($_lot->getDuration() * 60) . "\n";
                 }
             }
 
-            if( $currentIdsStr != '' )
+            if( strlen($currentIdsStr) > $l ){
+                $this->redis->set( 'lcp', $currentIdsStr);
                 $this->redis->expire('lcp', 600);
+            }
 
             echo "Lots imported\n";
         }
