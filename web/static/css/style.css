@@ -310,6 +310,10 @@ ul.topnav li.icon {display: none;}
     width: 210px;
 }
 
+.lotViewBids{
+    width: 170px;
+}
+
 .dnone{
     display: none;
 }

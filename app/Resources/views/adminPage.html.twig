@@ -43,7 +43,7 @@
                         <td id="{{ lot['id'] }}" class="lotCurrentPrice" align="right">{{ lot['price'] }}</td>
 
                         <td align="right">{{ lot['user_name'] }}</td>
-                        <td class="lotDoBid" align="center">
+                        <td class="lotViewBids" align="center">
                             {% if lot['start_date'].timestamp > date().timestamp %}
                                 Начало в {{ lot['start_date'].timestamp | date('H:i d.m.Y', tz) }}
                             {% else %}
