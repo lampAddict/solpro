@@ -149,7 +149,7 @@ class export1CDataService
 
 
         //vehicle's data
-        $q = $this->em->getConnection()->prepare("SELECT id, name, reg_num, trailer_reg_num FROM transport WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
+        $q = $this->em->getConnection()->prepare("SELECT t.id, t.name, t.reg_num, t.trailer_reg_num, rftype.id1c FROM transport as t LEFT JOIN refvehicletype as rftype ON t.type = rftype.id WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
         $q->execute();
         $vehicleArr = $q->fetchAll();
         $vehicles = '';
@@ -163,6 +163,7 @@ class export1CDataService
                                 .'<mark>'.$vehicle['name'].'</mark>'
                                 .'<registrationNumber>'.$vehicle['reg_num'].'</registrationNumber>'
                                 .'<truckRegistrationNumber>'.(!is_null($vehicle['trailer_reg_num']) ? $vehicle['trailer_reg_num'] : '').'</truckRegistrationNumber>'
+                                .'<type>'.$vehicle['id1c'].'</type>'
                             .'</vehicle>';
             }
             $vehicles .= '</vehicles>';
