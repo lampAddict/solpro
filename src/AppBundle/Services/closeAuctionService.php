@@ -21,7 +21,12 @@ class closeAuctionService
 
         //check if lots current prices are stored in redis
         $lids = $this->redis->get('lcp');
-        if( $lids ){
+
+        if( !$lids ){
+            $lids = $this->checkRunningAuctions();
+        }
+
+        if( $lids !== false ){
             //get lots end time from redis
             $lids = explode(',', $lids);
             foreach( $lids as $lid ){
@@ -47,6 +52,32 @@ class closeAuctionService
         }
 
         return true;
+    }
+
+    /**
+     * Reinitiates redis value for lcp key
+     *
+     * @return bool|string
+     */
+    protected function checkRunningAuctions(){
+        $lots = $this->em->getRepository('AppBundle:Lot')->findBy(['auctionStatus'=>1]);
+        /* @var $lot \AppBundle\Entity\Lot */
+        $ids = '';
+        foreach ($lots as $lot){
+            if( !is_null($this->redis->get('lcp_'.$lot->getId())) ){
+                $ids .= $lot->getId().',';
+            }
+        }
+
+        $ids = rtrim($ids,',');
+        if( $ids != '' ){
+            $this->redis->set('lcp', $ids);
+            $this->redis->expire('lcp', 600);
+
+            return $ids;
+        }
+
+        return false;
     }
 
     /**
