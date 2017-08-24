@@ -19,7 +19,7 @@
 
 {% block body %}
 
-    <div id="auctionPageContainer" data-user="{{ app.user.id }}">
+    <div id="adminPageContainer" data-user="{{ app.user.id }}">
         <div id="auctionTable">
             <table cellpadding="0" cellspacing="0" class="data-content">
                 <thead>
@@ -35,7 +35,7 @@
                 <tbody>
                 {% for lot in lots %}
                     <tr id="lot-{{ lot['id'] }}" class="data-search">
-                        <td align="center"><a class="showLotRouteInfo">{{ routes[ lot['route_id'] ]['code'] }}</a></td>
+                        <td align="center">{{ routes[ lot['route_id'] ]['code'] }}</td>
                         <td class="lotDirection">{{ routes[ lot['route_id'] ]['region_from'] }} &xrarr;<br />{{ routes[ lot['route_id'] ]['region_to'] }}</td>
 
                         <td class="lotTimeLeftTimer">{% if lot['start_date'].timestamp <= date().timestamp and (lot['start_date'].timestamp + lot['duration']*60) > date().timestamp %}<span class="lotTimeLeft" data-ts="{% if tz == 'Europe/Moscow' %}{% set tzts = 3*60*60 %}{% elseif tz == 'Europe/Samara' %}{% set tzts = 4*60*60 %}{% elseif tz == 'Asia/Yekaterinburg' %}{% set tzts = 5*60*60 %}{% elseif tz == 'Asia/Novosibirsk' %}{% set tzts = 7*60*60 %}{% else %}{% set tzts = 0 %}{% endif %}{{ (lot['start_date'].timestamp + tzts) }}">{{ (lot['start_date'].timestamp + lot['duration']*60) | date('Y/m/d H:i:s', tz) }}</span>{% elseif lot['start_date'].timestamp > date().timestamp %}{% else %}<span class="lotTimeLeft">0</span>{% endif %}</td>
@@ -47,7 +47,7 @@
                             {% if lot['start_date'].timestamp > date().timestamp %}
                                 Начало в {{ lot['start_date'].timestamp | date('H:i d.m.Y', tz) }}
                             {% else %}
-                                <input class="btn btn-default" type="button" value="Посмотреть ставки" />
+                                <a href="lot/{{ lot['id'] }}">Посмотреть ставки</a>
                             {% endif %}
                         </td>
                     </tr>

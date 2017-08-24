@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block topMenu %}
+    <ul class="topnav" id="menu">
+        <li>
+            <a href="/">Главная</a>
+        </li>
+
+        <li>
+            <a href="{{ url("admin") }}">Админка</a>
+        </li>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="loggedUser">
+                Здравствуйте, {{ app.user.username }} <a href="{{ logout_path('main') }}">Выход</a>
+            </li>
+        {% endif %}
+
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="showMenuItems()"><i class="fa fa-bars"></i></a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <div id="adminLotPageContainer" data-user="{{ app.user.id }}">
+        <div id="auctionTable">
+            <table cellpadding="0" cellspacing="0" class="data-content">
+                <thead>
+                <tr>
+                    <th>Кто поставил</th>
+                    <th>Цена лота, &#8381;</th>
+                    <th>Время</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for bid in bids %}
+                    <tr>
+                        <td align="right">{{ bid['user_name'] }}</td>
+                        <td align="right">{{ bid['value'] }}</td>
+                        <td align="right">{{ bid['created_at'].timestamp | date('H:i:s d.m.Y', tz) }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

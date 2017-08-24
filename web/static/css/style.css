@@ -492,6 +492,16 @@ ul.chosen-choices{
     margin: 0 auto;
 }
 
+#adminLotPageContainer{
+    width: 600px;
+    margin: 0 auto;
+}
+
+#adminPageContainer{
+    width: 1000px;
+    margin: 0 auto;
+}
+
 .changeVehicleInfo, .deleteVehicle, .changeDriverInfo, .deleteDriver{
     padding: 3px 8px !important;
     margin-left: 10px;
