@@ -111,6 +111,7 @@ class closeAuctionService
             }
         }
 
+
         //get lot off the auction
         $lot->setAuctionStatus(0);
 
