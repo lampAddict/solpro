@@ -58,7 +58,7 @@ class AdminController extends Controller
             $routesData = $stmt->fetchAll();
             foreach( $routesData as $routeData ){
                 $routeData['load_date'] = new \DateTime( $routeData['load_date'] );
-                $_routes[ $routeData['id'] ] = $routeData;
+                $_routes[ $routeData['lot_id'] ] = $routeData;
             }
         }
 
