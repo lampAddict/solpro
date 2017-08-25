@@ -64,7 +64,7 @@ class export1CDataService
         }
 
         //routes's data
-        $q = $this->em->getConnection()->prepare("SELECT r.id, r.id1c, r.user_id, r.driver_id, r.vehicle_id, r.trade_cost, l.price FROM route r LEFT JOIN lot l on r.lot_id = l.id WHERE r.lot_id IS NOT NULL AND updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
+        $q = $this->em->getConnection()->prepare("SELECT r.id, r.id1c, r.user_id, r.driver_id, r.vehicle_id, r.trade_cost, l.price FROM route r LEFT JOIN lot l on r.lot_id = l.id WHERE r.lot_id IS NOT NULL AND r.updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
         $q->execute();
         $routesArr = $q->fetchAll();
         if( !empty($routesArr) ){
