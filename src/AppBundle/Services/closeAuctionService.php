@@ -126,7 +126,7 @@ class closeAuctionService
         //assign route to winner
         if( !empty($bet) ){
             /* @var $route \AppBundle\Entity\Route */
-            $route = $lot->getRouteId();
+            $route = $this->em->getRepository('AppBundle:Route')->findBy(['lot_id'=>$lid]);
             $route->setUserId($this->em->getRepository('AppBundle:User')->find($bet[0]['uid']));
             $route->setUpdatedAt( new \DateTime(date('c', time())) );
             $this->em->persist($route);
