@@ -303,6 +303,11 @@ class import1CDataService{
                         }
                         continue;
                     }
+                    else{
+                        if( strpos($lotStatus->getName(), 'Отменен') !== false ){
+                            continue;
+                        }
+                    }
                 }
 
                 /* @var $_lot \AppBundle\Entity\Lot */
