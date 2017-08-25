@@ -64,18 +64,18 @@ class export1CDataService
         }
 
         //routes's data
-        $q = $this->em->getConnection()->prepare("SELECT id, id1c, user_id, driver_id, vehicle_id, trade_cost FROM route WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
+        $q = $this->em->getConnection()->prepare("SELECT id, id1c, user_id, driver_id, vehicle_id, trade_cost, lot_id FROM route WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
         $q->execute();
         $routesArr = $q->fetchAll();
         if( !empty($routesArr) ){
 
             echo "Compose routes data\n";
 
-            $routesIds = [];
+            $lotIds = [];
             $usersIds = [];
             foreach( $routesArr as $route ){
 
-                $routesIds[] = $route['id'];
+                $lotIds[] = $route['lot_id'];
 
                 if( !is_null($route['user_id']) )
                     $usersIds[] = $route['user_id'];
@@ -83,7 +83,7 @@ class export1CDataService
 
             //compose routes prices data
             $routesPrices = [];
-            $lotsPrices = $this->em->getRepository('AppBundle:Lot')->findBy(['routeId'=>$routesIds]);
+            $lotsPrices = $this->em->getRepository('AppBundle:Lot')->findBy(['id'=>$lotIds]);
             foreach( $lotsPrices as $lot ){
                 /* @var $lot \AppBundle\Entity\Lot */
                 $routesPrices[ $lot->getRouteId()->getId() ] = $lot->getPrice();

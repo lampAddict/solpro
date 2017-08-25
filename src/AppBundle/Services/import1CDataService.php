@@ -324,12 +324,13 @@ class import1CDataService{
                 $_lot->setCreatedAt( new \DateTime(date('c', time())) );
                 $_lot->setUpdatedAt( new \DateTime(date('c', time())) );
                 $_lot->setAuctionStatus(1);//lot is in auction state
+                $_lot->setRejectionReason('');
 
                 $addLotToCache = true;
 
                 if( isset($routeDbIds[ $lot['routeId'] ]) ){
                     $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
-                    $_lot->setRouteId( $route );
+                    //$_lot->setRouteId( $route );
                     $_lot->setPrice( $routeDbIds[ $lot['routeId'] ]['startPrice'] );
 
                     if( $route->getUserId() ){
@@ -340,6 +341,13 @@ class import1CDataService{
 
                 $this->em->persist($_lot);
                 $this->em->flush();
+
+                if( isset($routeDbIds[ $lot['routeId'] ]) ){
+                    $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
+                    $route->setLotId( $_lot );
+                    $this->em->persist($route);
+                    $this->em->flush();
+                }
 
                 if( $addLotToCache ){
                     $this->redis->set( 'laet_' . $_lot->getId(), $_lot->getStartDate()->getTimestamp() + $_lot->getDuration() * 60 );

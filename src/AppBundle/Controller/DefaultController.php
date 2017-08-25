@@ -21,20 +21,16 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $lots = $em
-            ->getRepository('AppBundle:Lot')
-            ->createQueryBuilder('l')
-            ->leftJoin('l.routeId', 'r')
-            ->where('l.auctionStatus = 1')
-            ->getQuery()
-            ->getResult();
+        $sql = "SELECT l.*, r.region_from, r.region_to FROM lot l LEFT JOIN route r ON l.id = r.lot_id WHERE l.auction_status = 1";
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $lots = $stmt->fetchAll();
 
         $_lots = [];
         $plannedLotsNum = $activeLotsNum = 0;
-        /* @var $lot \AppBundle\Entity\Lot */
         foreach ($lots as $lot){
-            if( $lot->getStartDate()->getTimestamp() <= time() ){
-                $k = $lot->getRouteId()->getRegionFrom().' - '.$lot->getRouteId()->getRegionTo();
+            if( strtotime($lot['start_date']) <= time() ){
+                $k = $lot['region_from'].' - '.$lot['region_to'];
                 if( !isset($_lots[$k]) ){
                     $_lots[ $k ] = 1;
                 }
