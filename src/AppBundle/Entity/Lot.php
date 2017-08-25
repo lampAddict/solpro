@@ -68,6 +68,11 @@ class Lot
      */
     protected $updated_at;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $rejectionReason;
+
     public function __toString() {
         return (string)$this->id;
     }
@@ -352,5 +357,53 @@ class Lot
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    /**
+     * Set rejectionReason
+     *
+     * @param string $rejectionReason
+     *
+     * @return Lot
+     */
+    public function setRejectionReason($rejectionReason)
+    {
+        $this->rejectionReason = $rejectionReason;
+
+        return $this;
+    }
+
+    /**
+     * Get rejectionReason
+     *
+     * @return string
+     */
+    public function getRejectionReason()
+    {
+        return $this->rejectionReason;
+    }
+
+    /**
+     * Add routeId
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     *
+     * @return Lot
+     */
+    public function addRouteId(\AppBundle\Entity\Route $routeId)
+    {
+        $this->routeId[] = $routeId;
+
+        return $this;
+    }
+
+    /**
+     * Remove routeId
+     *
+     * @param \AppBundle\Entity\Route $routeId
+     */
+    public function removeRouteId(\AppBundle\Entity\Route $routeId)
+    {
+        $this->routeId->removeElement($routeId);
     }
 }
