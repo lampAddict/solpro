@@ -33,7 +33,7 @@ class export1CDataService
             }
         }
 
-        echo "prevDateExchangeTime $prevDateExchangeTime \n";
+        echo "prevDateExchangeTime $prevDateExchangeTime $lastDateExchangeTime \n";
         echo "Exchange table checked\n";
 
         $data_added = false;
