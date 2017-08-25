@@ -38,7 +38,7 @@ class Lot
 
     /**
      * One Lot has Many Route.
-     * @ORM\OneToMany(targetEntity="Route", mappedBy="$lot_id")
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="lot_id")
      */
     protected $routeId;
 

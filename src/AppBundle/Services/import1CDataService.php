@@ -161,6 +161,7 @@ class import1CDataService{
 
                     continue;
                 }
+
                 /* @var $_route \AppBundle\Entity\Route */
                 $_route = new Route();
 
@@ -189,6 +190,14 @@ class import1CDataService{
                 }
 
                 $routeStatus      = isset($data['ref']['routeStatuse'][ $route['statusId'] ]) ? $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] : '';
+                if( $routeStatus == '' ){
+                    /* @var $routeStatusUpdate \AppBundle\Entity\RefRouteStatus */
+                    $routeStatusUpdate = $this->em->getRepository('AppBundle:RefRouteStatus')->findOneBy(['id1C'=>$route['statusId']]);
+                    if( $routeStatusUpdate ){
+                        $_route->setStatus( $routeStatusUpdate->getName() );
+                    }
+                }
+
                 $routeRegionFrom  = isset($data['ref']['region'][ $route['loadRegionId'] ]) ? $data['ref']['region'][ $route['loadRegionId'] ]['name'] : '';
                 $routeRegionTo    = isset($data['ref']['region'][ $route['unloadRegionId'] ]) ? $data['ref']['region'][ $route['unloadRegionId'] ]['name'] : '';
                 $routeVehicleType = isset($data['ref']['vehicleType'][ $route['vehicleTypeId'] ]) ? $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name']: '';
@@ -202,7 +211,7 @@ class import1CDataService{
                 $_route->setRouteDirectAssign( $route['routeType'] );
                 $_route->setCode( $route['code'] );
                 $_route->setName( $route['name'] );
-                $_route->setStatus( $routeStatus );
+
                 $_route->setRegionFrom( $routeRegionFrom );
                 $_route->setRegionTo( $routeRegionTo );
                 $_route->setVehicleType( $routeVehicleType );
