@@ -111,7 +111,6 @@ class closeAuctionService
             }
         }
 
-
         //get lot off the auction
         $lot->setAuctionStatus(0);
 
@@ -128,6 +127,7 @@ class closeAuctionService
         if( !empty($bet) ){
             /* @var $route \AppBundle\Entity\Route */
             $route = $this->em->getRepository('AppBundle:Route')->findBy(['lot_id'=>$lid]);
+            $route = $route[0];
             $route->setUserId($this->em->getRepository('AppBundle:User')->find($bet[0]['uid']));
             $route->setUpdatedAt( new \DateTime(date('c', time())) );
             $this->em->persist($route);
