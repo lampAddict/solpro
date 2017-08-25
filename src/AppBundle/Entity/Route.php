@@ -126,10 +126,11 @@ class Route
      */
     protected $vehicle_id;
     
-    //one route - one lot
+    //many route - one lot
     /**
-     * One Route has One Lot.
-     * @ORM\OneToOne(targetEntity="Lot", mappedBy="routeId")
+     * Many Routes have One Lot.
+     * @ORM\ManyToOne(targetEntity="Lot", inversedBy="$routeId")
+     * @ORM\JoinColumn(name="lot_id", referencedColumnName="id")
      */
     protected $lot_id;
 

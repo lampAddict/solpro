@@ -37,9 +37,8 @@ class Lot
     protected $duration;
 
     /**
-     * One Lot has One Route.
-     * @ORM\OneToOne(targetEntity="Route", inversedBy="lot_id")
-     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     * One Lot has Many Route.
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="$lot_id")
      */
     protected $routeId;
 
