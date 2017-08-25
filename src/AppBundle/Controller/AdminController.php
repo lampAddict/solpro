@@ -41,7 +41,7 @@ class AdminController extends Controller
         if( !empty($_lots) ){
             foreach( $_lots as $indx=>$lot ){
                 $_lots[ $indx ]['start_date']  = new \DateTime( $lot['start_date'] );
-                $routesIds[] = $lot['route_id'];
+                $routesIds[] = $lot['id'];
             }
         }
         else{
@@ -52,7 +52,7 @@ class AdminController extends Controller
 
         //get routes data
         if( !empty($routesIds) ){
-            $sql = 'SELECT * FROM route WHERE id IN ('.join(',', $routesIds).')';
+            $sql = 'SELECT * FROM route WHERE lot_id IN ('.join(',', $routesIds).')';
             $stmt = $em->getConnection()->prepare($sql);
             $stmt->execute();
             $routesData = $stmt->fetchAll();
