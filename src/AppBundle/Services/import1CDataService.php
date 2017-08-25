@@ -284,11 +284,27 @@ class import1CDataService{
 
             foreach( $data['lots'] as $lot ){
 
-                if(    !is_null($this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id']]))
-                    || !isset($routeDbIds[ $lot['routeId'] ])
+                //if there is no route for lot then skip this lot
+                if( !isset($routeDbIds[ $lot['routeId'] ] )
                 ){
                     continue;
                 }
+
+                //if got info about lot in auction state - update it's status
+                /* @var $auctionLot \AppBundle\Entity\Lot */
+                $auctionLot = $this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id']]);
+                $lotStatus = $this->em->getRepository('AppBundle:RefLotStatus')->findOneBy(['id1C'=>$lot['statusID']]);
+                /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
+                if( $lotStatus ){
+                    if( $auctionLot ){
+                        $auctionLot->setStatusId1c( $lot['statusID'] );
+                        if( strpos($lotStatus->getName(), 'Отменен') !== false ){
+                            $auctionLot->setRejectionReason( $lot['rejectionReason'] );
+                        }
+                        continue;
+                    }
+                }
+
                 /* @var $_lot \AppBundle\Entity\Lot */
                 $_lot = new Lot();
                 $_lot->setId1C( $lot['id'] );
