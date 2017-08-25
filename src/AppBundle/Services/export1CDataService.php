@@ -33,7 +33,7 @@ class export1CDataService
             }
         }
 
-        echo "prevDateExchangeTime " . date('Y-m-d h:i:s', $prevDateExchangeTime) . "\n";
+        echo "prevDateExchangeTime $prevDateExchangeTime \n";
         echo "Exchange table checked\n";
 
         $data_added = false;
