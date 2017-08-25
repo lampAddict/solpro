@@ -64,29 +64,17 @@ class export1CDataService
         }
 
         //routes's data
-        $q = $this->em->getConnection()->prepare("SELECT id, id1c, user_id, driver_id, vehicle_id, trade_cost, lot_id FROM route WHERE updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
+        $q = $this->em->getConnection()->prepare("SELECT r.id, r.id1c, r.user_id, r.driver_id, r.vehicle_id, r.trade_cost, l.price FROM route LEFT JOIN lot l on r.lot_id = l.id WHERE r.lot_id IS NOT NULL AND updated_at BETWEEN '".$prevDateExchangeTime."' AND '".$lastDateExchangeTime."'");
         $q->execute();
         $routesArr = $q->fetchAll();
         if( !empty($routesArr) ){
 
             echo "Compose routes data\n";
 
-            $lotIds = [];
             $usersIds = [];
             foreach( $routesArr as $route ){
-
-                $lotIds[] = $route['lot_id'];
-
                 if( !is_null($route['user_id']) )
                     $usersIds[] = $route['user_id'];
-            }
-
-            //compose routes prices data
-            $routesPrices = [];
-            $lotsPrices = $this->em->getRepository('AppBundle:Lot')->findBy(['id'=>$lotIds]);
-            foreach( $lotsPrices as $lot ){
-                /* @var $lot \AppBundle\Entity\Lot */
-                $routesPrices[ $lot->getRouteId()->getId() ] = $lot->getPrice();
             }
 
             //compose carrier users data
@@ -105,7 +93,7 @@ class export1CDataService
                 $routes .= ' <route>'
                                 .'<id>'.$route['id1c'].'</id>'
                                 .'<carrierId>'.(is_null($route['user_id']) ? '' : (isset($carrierUser1CIds[ $route['user_id'] ]) ? $carrierUser1CIds[ $route['user_id'] ] : '')).'</carrierId>'
-                                .'<tradeCost>'.( isset($routesPrices[ $route['id'] ]) ? $routesPrices[ $route['id'] ] : $route['trade_cost']).'</tradeCost>'
+                                .'<tradeCost>'.( intval($route['price']) > 0 ? $route['price'] : $route['trade_cost']).'</tradeCost>'
                                 .( !is_null($route['driver_id']) ? '<driverId>'.$route['driver_id'].'</driverId>' : '' )
                                 .( !is_null($route['vehicle_id']) ? '<vehicleId>'.$route['vehicle_id'].'</vehicleId>' : '' )
                             .'</route>';
