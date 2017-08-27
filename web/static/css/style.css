@@ -203,6 +203,18 @@ ul.topnav li.icon {display: none;}
     width: 188px;
 }
 
+#vehicleTable table tr td:nth-child(3){
+    width: 180px;
+}
+
+#vehicleTable table tr td:nth-child(5){
+    width: 90px;
+}
+
+#vehicleTable table tr td:nth-child(6){
+    width: 90px;
+}
+
 #driverShowTable{
     margin: 15px;
 }
@@ -478,7 +490,7 @@ ul.chosen-choices{
 }
 
 #transportPageContainer{
-    width: 800px;
+    width: 890px;
     margin: 0 auto;
 }
 
