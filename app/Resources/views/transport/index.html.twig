@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+    {{ dump(transports) }}
     <div id="transportPageContainer">
         <div id="vehicleFilter">
             <div style="width:770px; float:left">
@@ -67,7 +68,7 @@
                             {% if transport.status == 0 %}Неактивен{% endif %}
                         </td>
                         <td><a href="{{ path('transport_show', { 'id': transport.id }) }}">{{ transport.name }}</a></td>
-                        <td>{{ transport.name }}</td>
+                        <td>{{ transport.tname }}</td>
                         <td align="right">{{ transport.pname }}</td>
                         <td align="center">{{ transport.reg_num }}</td>
                         <td align="center">{{ transport.trailer_reg_num }}</td>
