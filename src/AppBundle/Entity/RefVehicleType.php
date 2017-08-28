@@ -28,6 +28,12 @@ class RefVehicleType
     protected $name;
 
     /**
+     * One RefVehicleType has Many Transport vehicles.
+     * @ORM\OneToMany(targetEntity="Transport", mappedBy="type")
+     */
+    protected $transport;
+
+    /**
      * Get id
      *
      * @return integer
@@ -85,7 +91,45 @@ class RefVehicleType
         return $this->name;
     }
 
-    public function __toString(){
-        return '' . $this->id;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->transport = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add transport
+     *
+     * @param \AppBundle\Entity\Transport $transport
+     *
+     * @return RefVehicleType
+     */
+    public function addTransport(\AppBundle\Entity\Transport $transport)
+    {
+        $this->transport[] = $transport;
+
+        return $this;
+    }
+
+    /**
+     * Remove transport
+     *
+     * @param \AppBundle\Entity\Transport $transport
+     */
+    public function removeTransport(\AppBundle\Entity\Transport $transport)
+    {
+        $this->transport->removeElement($transport);
+    }
+
+    /**
+     * Get transport
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTransport()
+    {
+        return $this->transport;
     }
 }

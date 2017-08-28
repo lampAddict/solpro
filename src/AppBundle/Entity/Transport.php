@@ -23,12 +23,14 @@ class Transport
     protected $name;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\ManyToOne(targetEntity="RefVehicleType", inversedBy="transport")
+     * @ORM\JoinColumn(name="type", referencedColumnName="id")
      */
     protected $type;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\ManyToOne(targetEntity="RefVehicleCarryingType", inversedBy="transport")
+     * @ORM\JoinColumn(name="payload", referencedColumnName="id")
      */
     protected $payload;
 
