@@ -861,3 +861,15 @@ td.found{
     color: #337ab7;
     cursor: pointer;
 }
+
+#errorPageContainer{
+    width: 800px;
+    margin: 0 auto;
+}
+.errorMessage{
+    margin-top: 250px;
+    font-size: 18px;
+}
+#errorPageContainer a.btn{
+    margin-top: 50px;
+}
