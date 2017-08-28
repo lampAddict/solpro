@@ -325,7 +325,9 @@ class import1CDataService{
                 /* @var $_lot \AppBundle\Entity\Lot */
                 $_lot = new Lot();
                 $_lot->setId1C( $lot['id'] );
-                $_lot->setStatusId1c( $lot['statusID'] );
+
+                //выставляем статус ТОРГИ
+                $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');//$lot['statusID']
                 $_lot->setDuration( $lot['duration'] );
 
                 $startDate = new \DateTime($lot['startDate']);
