@@ -148,8 +148,18 @@ class TransportController extends Controller
 
         $deleteForm = $this->createDeleteForm($transport);
 
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * $transport already has all data needed except `type` and `payload` fields.. not sure why
+         */
+        $sql = 'SELECT t.id, t.status, t.name, t.reg_num as regNum, t.trailer_reg_num as trailerRegNum, rvt.name as tname, rvct.name as pname FROM transport t LEFT JOIN refvehicletype rvt ON rvt.id = t.type LEFT JOIN refvehiclecarryingtype rvct ON rvct.id = t.payload WHERE t.id="'. $transport->getId().'"';
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $transports = $stmt->fetchAll();
+
         return $this->render('transport/show.html.twig', array(
-            'transport' => $transport,
+            'transport' => $transports[0],
             'delete_form' => $deleteForm->createView(),
         ));
     }

@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {{ dump(transport) }}
 <div id="transportPageContainer">
     <div id="vehicleTable">
         <table cellspacing="0" cellpadding="0">
@@ -16,14 +17,11 @@
             </tr>
             <tr>
                 <th>Тип</th>
-                <td>{% if transport.type == 0 %}Реф{% endif %}
-                    {% if transport.type == 1 %}Тент{% endif %}
-                    {% if transport.type == 2 %}Изотерм{% endif %}
-                    {% if transport.type == 3 %}Цистерна{% endif %}</td>
+                <td>{{ transport.tname }}</td>
             </tr>
             <tr>
                 <th>Грузоподъёмность, т</th>
-                <td>{{ transport.payload }}</td>
+                <td>{{ transport.pname }}</td>
             </tr>
             <tr>
                 <th>Гос. номер</th>
