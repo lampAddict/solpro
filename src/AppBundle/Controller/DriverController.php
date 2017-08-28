@@ -129,7 +129,7 @@ class DriverController extends Controller
         $form = $this->createForm('AppBundle\Form\DriverType', $driver);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if( $form->isSubmitted() && $form->isValid() ){
             $em = $this->getDoctrine()->getManager();
 
             $driver->setUserId($this->getUser());
@@ -204,8 +204,26 @@ class DriverController extends Controller
         $form = $this->createDeleteForm($driver);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if( $form->isSubmitted() && $form->isValid() ){
             $em = $this->getDoctrine()->getManager();
+
+            $sql = 'SELECT r.name FROM route r WHERE driver_id = "'.$driver->getId().'"';
+            $stmt = $em->getConnection()->prepare($sql);
+            $stmt->execute();
+            $r = $stmt->fetchAll();
+            if( !empty($r) ){
+                $rIds = '';
+                foreach($r as $_r){
+                    $rIds .= $_r['name'].', ';
+                }
+                $rIds = rtrim($rIds,', ');
+                return $this->render('errorPage.html.twig', array(
+                    'msg' => 'Водитель привязан к рейс'.(count($r)>0?'ам':'у').' '.$rIds,
+                    'redirectTo' => 'driver',
+                    'redirectToCaption' => 'Вернуться к списку водителей'
+                ));
+            }
+
             $em->remove($driver);
             $em->flush($driver);
         }

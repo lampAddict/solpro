@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block topMenu %}
+    <ul class="topnav" id="menu">
+        <li>
+            <a href="/">Главная</a>
+        </li>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="loggedUser">
+                Здравствуйте, {{ app.user.username }} <a href="{{ logout_path('main') }}">Выход</a>
+            </li>
+        {% endif %}
+
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="showMenuItems()"><i class="fa fa-bars"></i></a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div id="errorPageContainer">
+        <div class="errorMessage">
+            {{ msg }}
+        </div>
+        <a class="btn btn-default" href="{{ path(redirectTo) }}">{{ redirectToCaption }}</a>
+    </div>
+{% endblock %}
