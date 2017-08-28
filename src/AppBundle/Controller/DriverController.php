@@ -218,7 +218,7 @@ class DriverController extends Controller
                 }
                 $rIds = rtrim($rIds,', ');
                 return $this->render('errorPage.html.twig', array(
-                    'msg' => 'Водитель привязан к рейс'.(count($r)>1?'ам':'у').' '.$rIds,
+                    'msg' => 'Удалить водителя нельзя, водитель привязан к рейс'.(count($r)>1?'ам':'у').' '.$rIds.'.',
                     'redirectTo' => 'driver',
                     'redirectToCaption' => 'Вернуться к списку водителей'
                 ));
