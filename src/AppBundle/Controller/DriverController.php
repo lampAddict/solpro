@@ -214,7 +214,7 @@ class DriverController extends Controller
             if( !empty($r) ){
                 $rIds = '';
                 foreach($r as $_r){
-                    $rIds .= '<b>'.$_r['name'].'</b>, ';
+                    $rIds .= '"'.$_r['name'].'", ';
                 }
                 $rIds = rtrim($rIds,', ');
                 return $this->render('errorPage.html.twig', array(
