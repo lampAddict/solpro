@@ -189,13 +189,16 @@ class import1CDataService{
                     $_route->setCarrier( '' );
                 }
 
-                $routeStatus      = isset($data['ref']['routeStatuse'][ $route['statusId'] ]) ? $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] : '';
+                $routeStatus = isset($data['ref']['routeStatuse'][ $route['statusId'] ]) ? $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] : '';
                 if( $routeStatus == '' ){
                     /* @var $routeStatusUpdate \AppBundle\Entity\RefRouteStatus */
                     $routeStatusUpdate = $this->em->getRepository('AppBundle:RefRouteStatus')->findOneBy(['id1C'=>$route['statusId']]);
                     if( $routeStatusUpdate ){
                         $_route->setStatus( $routeStatusUpdate->getName() );
                     }
+                }
+                else{
+                    $_route->setStatus( $routeStatus );
                 }
 
                 $routeRegionFrom  = isset($data['ref']['region'][ $route['loadRegionId'] ]) ? $data['ref']['region'][ $route['loadRegionId'] ]['name'] : '';
