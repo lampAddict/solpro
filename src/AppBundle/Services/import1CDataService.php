@@ -326,7 +326,7 @@ class import1CDataService{
                 $_lot = new Lot();
                 $_lot->setId1C( $lot['id'] );
 
-                //выставляем статус ТОРГИ
+                //выставляем статус лота ТОРГИ
                 $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');//$lot['statusID']
                 $_lot->setDuration( $lot['duration'] );
 
