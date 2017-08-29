@@ -117,6 +117,10 @@ class closeAuctionService
         //lot has been traded unsuccessfully
         $lot->setStatusId1c('a9649dc5-266e-4084-8498-e89c351533ea');
 
+        /* @var $route \AppBundle\Entity\Route */
+        $route = $this->em->getRepository('AppBundle:Route')->findBy(['lot_id'=>$lid]);
+        $route = $route[0];
+
         //get bets history and current lot owner
         $sql = "SELECT b.value AS bet, b.user_id AS uid FROM bet b WHERE b.lot_id = $lid ORDER BY b.value ASC LIMIT 1";
         $stmt = $this->em->getConnection()->prepare($sql);
@@ -125,10 +129,6 @@ class closeAuctionService
 
         //assign route to winner
         if( !empty($bet) ){
-            /* @var $route \AppBundle\Entity\Route */
-            $route = $this->em->getRepository('AppBundle:Route')->findBy(['lot_id'=>$lid]);
-            $route = $route[0];
-
             /* @var $user \AppBundle\Entity\User */
             $user = $this->em->getRepository('AppBundle:User')->find($bet[0]['uid']);
             $route->setUserId($user);
@@ -139,6 +139,9 @@ class closeAuctionService
 
             //lot has been traded successfully
             $lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
+        }
+        else{
+            $this->em()->remove($route);
         }
 
         $lot->setUpdatedAt( new \DateTime(date('c', time())) );
