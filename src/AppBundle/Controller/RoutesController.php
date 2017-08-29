@@ -16,7 +16,7 @@ class RoutesController extends Controller
      * @return string $where composed condition
      */
     private function makeFilterCondition( $_filters ){
-        $where = 'r.user_id = '.$this->getUser()->getId();
+        $where = 'r.carrier = '.$this->getUser()->getCarrierId1C();
 
         $filters = (array) $_filters;
         if( !empty($filters) ){
