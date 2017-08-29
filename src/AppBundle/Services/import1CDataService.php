@@ -165,20 +165,20 @@ class import1CDataService{
                 /* @var $_route \AppBundle\Entity\Route */
                 $_route = new Route();
 
-                $user = null;
-                if(    intval($route['routeType']) == 0
-                    && $route['carrierId'] != ''
-                ){
-                    foreach( $data['ref']['carrierUser'] as $cu ){
-                        if( $cu['carrierId'] == $route['carrierId'] ){
-                            $user = $this->em->getRepository('AppBundle:User')->findOneBy(['username'=>$cu['login']]);
-                            break;
-                        }
-                    }
-                }
-
-                if( !is_null($user) )
-                    $_route->setUserId( $user );
+//                $user = null;
+//                if(    intval($route['routeType']) == 0
+//                    && $route['carrierId'] != ''
+//                ){
+//                    foreach( $data['ref']['carrierUser'] as $cu ){
+//                        if( $cu['carrierId'] == $route['carrierId'] ){
+//                            $user = $this->em->getRepository('AppBundle:User')->findOneBy(['username'=>$cu['login']]);
+//                            break;
+//                        }
+//                    }
+//                }
+//
+//                if( !is_null($user) )
+//                    $_route->setUserId( $user );
 
                 if(    isset($route['carrierId'])
                     && $route['carrierId'] != ''
