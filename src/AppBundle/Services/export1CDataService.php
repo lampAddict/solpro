@@ -141,7 +141,7 @@ class export1CDataService
                                 .'<docIDType>'.$docTypes[ $driver['passport_type'] ].'</docIDType>'
                                 .'<series>'.$driver['passport_series'].'</series>'
                                 .'<number>'.$driver['passport_number'].'</number>'
-                                .'<date>'.$driver['passport_date_issue'].'</date>'
+                                .'<date>'.preg_replace("/([\d]{2})\.([\d]{2})\.([\d]{4})/","$3$2$1", $driver['passport_date_issue']).'</date>'
                                 .'<issuedBy>'.$driver['passport_issued_by'].'</issuedBy>'
                             .'</driver>';
             }
