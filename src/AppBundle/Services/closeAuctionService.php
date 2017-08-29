@@ -128,7 +128,12 @@ class closeAuctionService
             /* @var $route \AppBundle\Entity\Route */
             $route = $this->em->getRepository('AppBundle:Route')->findBy(['lot_id'=>$lid]);
             $route = $route[0];
-            $route->setUserId($this->em->getRepository('AppBundle:User')->find($bet[0]['uid']));
+
+            /* @var $user \AppBundle\Entity\User */
+            $user = $this->em->getRepository('AppBundle:User')->find($bet[0]['uid']);
+            $route->setUserId($user);
+            $route->setCarrier($user->getCarrierId1C());//1C carrier id
+
             $route->setUpdatedAt( new \DateTime(date('c', time())) );
             $this->em->persist($route);
 
