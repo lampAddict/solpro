@@ -304,7 +304,7 @@ class import1CDataService{
 
                 //if got info about lot in auction state - update it's status
                 /* @var $auctionLot \AppBundle\Entity\Lot */
-                $auctionLot = $this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id'], 'auction_status'=>1]);
+                $auctionLot = $this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id'], 'auctionStatus'=>1]);
                 $lotStatus = $this->em->getRepository('AppBundle:RefLotStatus')->findOneBy(['id1C'=>$lot['statusID']]);
                 /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
                 if( $lotStatus ){
