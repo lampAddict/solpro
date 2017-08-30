@@ -122,17 +122,24 @@ class import1CDataService{
 
             //create user profiles
             foreach( $data['ref']['carrierUser'] as $k=>$v ){
-                $usr_exist = $this->em->getRepository('AppBundle:User')->findOneBy(['username'=>$v['login']]);
-                if( is_null($usr_exist) ){
+                /* @var $usr \AppBundle\Entity\User */
+                $usr = $this->em->getRepository('AppBundle:User')->findOneBy(['username'=>$v['login']]);
+                if( is_null($usr) ){
                     $user = $this->um->createUser();
                     $user
                         ->setUsername($v['login'])
                         ->setEmail($v['email'])
                         ->setPlainPassword($v['password'])
                         ->setCarrierId1C($v['carrierId'])
-                        ->setEnabled(true)
+                        ->setEnabled($v['access'])
                     ;
                     $this->em->persist($user);
+                }
+                else{
+                    $usr->setEmail($v['email'])
+                        ->setPlainPassword($v['password'])
+                        ->setCarrierId1C($v['carrierId'])
+                        ->setEnabled($v['access']);
                 }
             }
 
