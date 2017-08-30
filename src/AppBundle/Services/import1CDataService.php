@@ -147,23 +147,9 @@ class import1CDataService{
             foreach( $data['routes'] as $route ){
                 /* @var $_route \AppBundle\Entity\Route */
                 $_route = $this->em->getRepository('AppBundle:Route')->findOneBy(['id1C'=>$route['id']]);
-                if( !is_null($_route) ){
-
-                    /* @var $routeStatusUpdate \AppBundle\Entity\RefRouteStatus */
-                    $routeStatusUpdate = $this->em->getRepository('AppBundle:RefRouteStatus')->findOneBy(['id1C'=>$route['statusId']]);
-
-                    //update route status
-                    if( $_route->getStatus() != $routeStatusUpdate->getName() ){
-                        $_route->setStatus( $routeStatusUpdate->getName() );
-                        $_route->setUpdatedAt( new \DateTime(date('c', time())) );
-                        $this->em->flush();
-                    }
-
-                    continue;
+                if( is_null($_route) ){
+                    $_route = new Route();
                 }
-
-                /* @var $_route \AppBundle\Entity\Route */
-                $_route = new Route();
 
 //                $user = null;
 //                if(    intval($route['routeType']) == 0
@@ -180,66 +166,130 @@ class import1CDataService{
 //                if( !is_null($user) )
 //                    $_route->setUserId( $user );
 
+                //direct route assignment
                 if(    isset($route['carrierId'])
                     && $route['carrierId'] != ''
                 ){
-                    $_route->setCarrier( $data['ref']['carrier'][ $route['carrierId'] ]['name'] );
+                    $_route->setCarrier( $route['carrierId'] );//$data['ref']['carrier'][ $route['carrierId'] ]['name']
                 }
                 else{
                     $_route->setCarrier( '' );
                 }
 
-                $routeStatus = isset($data['ref']['routeStatuse'][ $route['statusId'] ]) ? $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] : '';
-                if( $routeStatus == '' ){
-                    /* @var $routeStatusUpdate \AppBundle\Entity\RefRouteStatus */
-                    $routeStatusUpdate = $this->em->getRepository('AppBundle:RefRouteStatus')->findOneBy(['id1C'=>$route['statusId']]);
-                    if( $routeStatusUpdate ){
-                        $_route->setStatus( $routeStatusUpdate->getName() );
+                //set route status
+                if( isset($route['statusId']) ){
+                    $routeStatus = isset($data['ref']['routeStatuse'][ $route['statusId'] ]) ? $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] : '';
+                    if( $routeStatus == '' ){
+                        /* @var $routeStatusUpdate \AppBundle\Entity\RefRouteStatus */
+                        $routeStatusUpdate = $this->em->getRepository('AppBundle:RefRouteStatus')->findOneBy(['id1C'=>$route['statusId']]);
+                        if( $routeStatusUpdate ){
+                            $_route->setStatus( $routeStatusUpdate->getName() );
+                        }
+                    }
+                    else{
+                        $_route->setStatus( $routeStatus );
                     }
                 }
-                else{
-                    $_route->setStatus( $routeStatus );
-                }
 
-                $routeRegionFrom  = isset($data['ref']['region'][ $route['loadRegionId'] ]) ? $data['ref']['region'][ $route['loadRegionId'] ]['name'] : '';
-                $routeRegionTo    = isset($data['ref']['region'][ $route['unloadRegionId'] ]) ? $data['ref']['region'][ $route['unloadRegionId'] ]['name'] : '';
-                $routeVehicleType = isset($data['ref']['vehicleType'][ $route['vehicleTypeId'] ]) ? $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name']: '';
-
+                //set route 1C id
                 $_route->setId1C( $route['id'] );
 
-                $loadDate = new \DateTime($route['loadDate']);
                 //$loadDate->setTimezone( new \DateTimeZone('UTC') );
-                $_route->setLoadDate( $loadDate );
-
-                $_route->setRouteDirectAssign( $route['routeType'] );
-                $_route->setCode( $route['code'] );
-                $_route->setName( $route['name'] );
-
-                $_route->setRegionFrom( $routeRegionFrom );
-                $_route->setRegionTo( $routeRegionTo );
-                $_route->setVehicleType( $routeVehicleType );
-
-                if(    isset($route['vehicleCarringId'])
-                    && $route['vehicleCarringId'] != ''
-                    && !is_null($data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'])
-                ){
-                    $_route->setVehiclePayload( $data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'] );
+                //set route load date
+                if( isset($route['loadDate']) ){
+                    $loadDate = new \DateTime($route['loadDate']);
+                    $_route->setLoadDate( $loadDate );
                 }
-                else{
-                    $_route->setVehiclePayload(' ');
+
+                //set route type
+                if( isset($route['routeType']) ){
+                    $_route->setRouteDirectAssign( $route['routeType'] );
+                }
+
+                //set route code
+                if( isset($route['code']) ){
+                    $_route->setCode( $route['code'] );
+                }
+
+                //set route name
+                if( isset($route['name']) ){
+                    $_route->setName( $route['name'] );
+                }
+
+                //set route region_from
+                if( isset($route['loadRegionId']) ){
+                    $routeRegionFrom = isset($data['ref']['region'][ $route['loadRegionId'] ]) ? $data['ref']['region'][ $route['loadRegionId'] ]['name'] : '';
+                    $_route->setRegionFrom( $routeRegionFrom );
+                }
+
+                //set route region_to
+                if( isset($route['unloadRegionId']) ){
+                    $routeRegionTo = isset($data['ref']['region'][ $route['unloadRegionId'] ]) ? $data['ref']['region'][ $route['unloadRegionId'] ]['name'] : '';
+                    $_route->setRegionTo( $routeRegionTo );
+                }
+
+                //set route vehicle type
+                if( isset($route['vehicleTypeId']) ){
+                    $routeVehicleType = isset($data['ref']['vehicleType'][ $route['vehicleTypeId'] ]) ? $data['ref']['vehicleType'][ $route['vehicleTypeId'] ]['name']: '';
+                    $_route->setVehicleType( $routeVehicleType );
+                }
+
+                //set route vehicle carrying id
+                if( isset($route['vehicleCarringId']) ){
+                    if(
+                            $route['vehicleCarringId'] != ''
+                        && !is_null($data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'])
+                    ){
+                        $_route->setVehiclePayload( $data['ref']['vehicleCarringType'][ $route['vehicleCarringId'] ]['name'] );
+                    }
+                    else{
+                        $_route->setVehiclePayload(' ');
+                    }
                 }
 
                 $_route->setVehicleRegNumber( '' );
-                $_route->setTradeCost( $route['tradeCost'] );
-                $_route->setTradeStep( $route['tradeStep'] );
-                $_route->setCargoCount( $route['cargoCount'] );
-                $_route->setCargoWeight( $route['cargoWeight'] );
-                $_route->setComment( $route['comment'] );
-                $_route->setDriverId( null );
-                $_route->setVehicleId( null );
+
+                //set route trade cost
+                if( isset($route['tradeCost']) ){
+                    $_route->setTradeCost( $route['tradeCost'] );
+                }
+
+                //set route trade step
+                if( isset($route['tradeStep']) ){
+                    $_route->setTradeStep( $route['tradeStep'] );
+                }
+
+                //set route cargo count
+                if( isset($route['cargoCount']) ){
+                    $_route->setCargoCount( $route['cargoCount'] );
+                }
+
+                //set route cargo weight
+                if( isset($route['cargoWeight']) ){
+                    $_route->setCargoWeight( $route['cargoWeight'] );
+                }
+
+                //set route comment
+                if( isset($route['comment']) ){
+                    $_route->setComment( $route['comment'] );
+                }
+
+                //set route default driver id
+                if( is_null($_route->getDriverId()) ){
+                    $_route->setDriverId( null );
+                }
+
+                //set route default vehicle id
+                if( is_null($_route->getVehicleId()) ){
+                    $_route->setVehicleId( null );
+                }
+
                 $_route->setUpdatedAt( new \DateTime(date('c', time())) );
 
-                $this->em->persist($_route);
+                if( is_null($_route->getId()) ){
+                    $this->em->persist($_route);
+                }
+
                 $this->em->flush();
 
                 $routeDbIds[ $route['id'] ] = ['routeId'=>$_route, 'startPrice'=>$route['tradeCost']];
@@ -249,11 +299,12 @@ class import1CDataService{
                 ){
                     foreach( $route['orders'] as $order ){
 
-                        if( !is_null($this->em->getRepository('AppBundle:Order')->findOneBy(['id1C'=>$order['id']])) ){
-                            continue;
-                        }
                         /* @var $_order \AppBundle\Entity\Order */
-                        $_order = new Order();
+                        $_order = $this->em->getRepository('AppBundle:Order')->findOneBy(['id1C'=>$order['id']]);
+                        if( is_null($_order) ){
+                            $_order = new Order();
+                        }
+
                         $_order->setRouteId( $_route );
                         $_order->setId1C( $order['id'] );
                         $_order->setCode( $order['code'] );
@@ -277,7 +328,10 @@ class import1CDataService{
 
                         $_order->setComment( $order['comment'] );
 
-                        $this->em->persist($_order);
+                        if( is_null($_order->getId()) ){
+                            $this->em->persist($_order);
+                        }
+
                         $this->em->flush();
                     }
                 }
@@ -296,37 +350,36 @@ class import1CDataService{
 
             foreach( $data['lots'] as $lot ){
 
-                //if there is no route for lot then skip this lot
-                if( !isset($routeDbIds[ $lot['routeId'] ] )
-                ){
+                //if lot has no routes then skip this lot
+                if( !isset($routeDbIds[ $lot['routeId'] ]) ){
                     continue;
                 }
 
-                //if got info about lot in auction state - update it's status
-                /* @var $auctionLot \AppBundle\Entity\Lot */
-                $auctionLot = $this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id'], 'auctionStatus'=>1]);
+                /* @var $_lot \AppBundle\Entity\Lot */
+                $_lot = $this->em->getRepository('AppBundle:Lot')->findOneBy(['id1C'=>$lot['id']]);
+                if( is_null($_lot) ){
+                    $_lot = new Lot();
+                }
+
                 $lotStatus = $this->em->getRepository('AppBundle:RefLotStatus')->findOneBy(['id1C'=>$lot['statusID']]);
                 /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
                 if( $lotStatus ){
-                    if( $auctionLot ){
-                        $auctionLot->setStatusId1c( $lot['statusID'] );
+                    //if lot already exists
+                    if( !is_null($_lot->getId()) ){
+                        //set lot status
                         if( strpos($lotStatus->getName(), 'Отменен') !== false ){
-                            $auctionLot->setRejectionReason( $lot['rejectionReason'] );
+                            $_lot->setRejectionReason( $lot['rejectionReason'] );
+                            $_lot->setAuctionStatus(2);//lot declined
                         }
+
+                        $_lot->setStatusId1c( $lotStatus->getId1C() );
                         continue;
-                    }
-                    else{
-                        if( strpos($lotStatus->getName(), 'Отменен') !== false ){
-                            continue;
-                        }
                     }
                 }
 
-                /* @var $_lot \AppBundle\Entity\Lot */
-                $_lot = new Lot();
                 $_lot->setId1C( $lot['id'] );
 
-                //выставляем статус лота ТОРГИ
+                //set lot status AUCTION
                 $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');//$lot['statusID']
                 $_lot->setDuration( $lot['duration'] );
 
@@ -343,17 +396,22 @@ class import1CDataService{
                 $addLotToCache = true;
 
                 if( isset($routeDbIds[ $lot['routeId'] ]) ){
+                    /* @var $route \AppBundle\Entity\Route */
                     $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
-                    //$_lot->setRouteId( $route );
+
                     $_lot->setPrice( $routeDbIds[ $lot['routeId'] ]['startPrice'] );
 
-                    if( $route->getUserId() ){
+                    //if route assigned directly no need to do auction
+                    if( $route->getCarrier() != '' ){
                         $_lot->setAuctionStatus(0);
                         $addLotToCache = false;
                     }
                 }
 
-                $this->em->persist($_lot);
+                if( is_null($_lot->getId()) ){
+                    $this->em->persist($_lot);
+                }
+
                 $this->em->flush();
 
                 if( isset($routeDbIds[ $lot['routeId'] ]) ){
@@ -369,7 +427,6 @@ class import1CDataService{
                     $this->redis->set( 'lcp_' . $_lot->getId(),  json_encode([ 'price'=>$_lot->getPrice(), 'owner'=>0, 'history'=>[], 'bet'=>0 ]) );
 
                     $currentIdsStr .= ($currentIdsStr == '' ? $_lot->getId() : ','.$_lot->getId());
-
 
                     echo "laet_" . $_lot->getId() . " " . $_lot->getStartDate()->getTimestamp()  . " " .  ($_lot->getDuration() * 60) . "\n";
                 }
