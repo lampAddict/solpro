@@ -141,7 +141,7 @@ class closeAuctionService
             $lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
         }
         else{
-            $this->em()->remove($route);
+            //$this->em()->remove($route);
         }
 
         $lot->setUpdatedAt( new \DateTime(date('c', time())) );
