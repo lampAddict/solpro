@@ -131,7 +131,7 @@ class import1CDataService{
                         ->setEmail($v['email'])
                         ->setPlainPassword($v['password'])
                         ->setCarrierId1C($v['carrierId'])
-                        ->setEnabled($v['access'])
+                        ->setEnabled(($v['access'] == 'true'?1:0))
                     ;
                     $this->em->persist($user);
                 }
@@ -139,7 +139,7 @@ class import1CDataService{
                     $usr->setEmail($v['email'])
                         ->setPlainPassword($v['password'])
                         ->setCarrierId1C($v['carrierId'])
-                        ->setEnabled($v['access']);
+                        ->setEnabled(($v['access'] == 'true'?1:0));
                 }
             }
 
