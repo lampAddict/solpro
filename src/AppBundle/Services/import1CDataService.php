@@ -378,14 +378,22 @@ class import1CDataService{
                             $_lot->setRejectionReason( $lot['rejectionReason'] );
                             $_lot->setAuctionStatus(2);//lot declined
                         }
-
-                        //update lot status
-                        $_lot->setStatusId1c( $lotStatus->getId1C() );
+                        elseif( strpos($lotStatus->getName(), 'Подготовка') !== false ){
+                            //set lot status AUCTION
+                            $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');
+                            //lot is in auction state
+                            $_lot->setAuctionStatus(1);
+                        }
+                        else{
+                            //update lot status
+                            $_lot->setStatusId1c( $lotStatus->getId1C() );
+                        }
                     }
                     else{
                         //set lot status AUCTION
-                        $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');//$lot['statusID']
-                        $_lot->setAuctionStatus(1);//lot is in auction state
+                        $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');
+                        //lot is in auction state
+                        $_lot->setAuctionStatus(1);
                         $_lot->setRejectionReason('');
                     }
                 }
