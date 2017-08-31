@@ -226,6 +226,24 @@ class TransportController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $sql = 'SELECT r.name FROM route r WHERE vehicle_id = "'.$transport->getId().'"';
+            $stmt = $em->getConnection()->prepare($sql);
+            $stmt->execute();
+            $r = $stmt->fetchAll();
+            if( !empty($r) ){
+                $rIds = '';
+                foreach($r as $_r){
+                    $rIds .= '"'.$_r['name'].'", ';
+                }
+                $rIds = rtrim($rIds,', ');
+                return $this->render('errorPage.html.twig', array(
+                    'msg' => 'Удалить машину нельзя, машина привязана к рейс'.(count($r)>1?'ам':'у').' '.$rIds.'.',
+                    'redirectTo' => 'transport',
+                    'redirectToCaption' => 'Вернуться к списку ТС'
+                ));
+            }
+
             $em->remove($transport);
             $em->flush($transport);
         }
