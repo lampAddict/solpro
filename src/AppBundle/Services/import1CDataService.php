@@ -379,15 +379,18 @@ class import1CDataService{
                             $_lot->setAuctionStatus(2);//lot declined
                         }
 
+                        //update lot status
                         $_lot->setStatusId1c( $lotStatus->getId1C() );
-                        continue;
+                    }
+                    else{
+                        //set lot status AUCTION
+                        $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');//$lot['statusID']
+                        $_lot->setAuctionStatus(1);//lot is in auction state
+                        $_lot->setRejectionReason('');
                     }
                 }
 
                 $_lot->setId1C( $lot['id'] );
-
-                //set lot status AUCTION
-                $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');//$lot['statusID']
                 $_lot->setDuration( $lot['duration'] );
 
                 $startDate = new \DateTime($lot['startDate']);
@@ -397,8 +400,6 @@ class import1CDataService{
 
                 $_lot->setCreatedAt( new \DateTime(date('c', time())) );
                 $_lot->setUpdatedAt( new \DateTime(date('c', time())) );
-                $_lot->setAuctionStatus(1);//lot is in auction state
-                $_lot->setRejectionReason('');
 
                 $addLotToCache = true;
 
