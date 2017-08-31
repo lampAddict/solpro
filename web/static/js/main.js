@@ -420,15 +420,15 @@ $( document ).ready(function(){
                             && data.lots[ _id ] !== undefined
                         ){
                             if( _uid == data.lots[ _id ].owner ){
+                                $(this).removeClass('notMyBet');
                                 if( !$(this).hasClass('myBet') ){
-                                    $(this).removeClass('notMyBet');
                                     $(this).addClass('myBet');
                                 }
                             }
                             else{
                                 if( data.lots[ _id ].history.indexOf(_uid) >= 0 ){
+                                    $(this).removeClass('myBet');
                                     if( !$(this).hasClass('notMyBet') ){
-                                        $(this).removeClass('myBet');
                                         $(this).addClass('notMyBet');
                                     }
                                 }
