@@ -3,8 +3,13 @@
 {% block body %}
     <div id="errorPageContainer">
         <div class="errorMessage">
-            {{ msg }}
+            {{ msg }}<br />
+            {% for rn in routes_names %}
+                {{ rn }}<br />
+            {% endfor %}
         </div>
+    </div>
+    <div style="width:174px; margin:0 auto; padding-top:50px;">
         <a class="btn btn-default" href="{{ path(redirectTo) }}">{{ redirectToCaption }}</a>
     </div>
 {% endblock %}

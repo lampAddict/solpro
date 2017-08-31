@@ -212,13 +212,13 @@ class DriverController extends Controller
             $stmt->execute();
             $r = $stmt->fetchAll();
             if( !empty($r) ){
-                $rIds = '';
+                $rIds = [];
                 foreach($r as $_r){
-                    $rIds .= '"'.$_r['name'].'", ';
+                    $rIds[] = $_r['name'];
                 }
-                $rIds = rtrim($rIds,', ');
                 return $this->render('errorPage.html.twig', array(
-                    'msg' => 'Удалить водителя нельзя, водитель привязан к рейс'.(count($r)>1?'ам':'у').' '.$rIds.'.',
+                    'msg' => 'Удалить водителя нельзя, водитель привязан к рейс'.(count($r)>1?'ам':'у').':',
+                    'routes_names' => $rIds,
                     'redirectTo' => 'driver',
                     'redirectToCaption' => 'Вернуться к списку водителей'
                 ));

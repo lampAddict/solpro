@@ -232,13 +232,13 @@ class TransportController extends Controller
             $stmt->execute();
             $r = $stmt->fetchAll();
             if( !empty($r) ){
-                $rIds = '';
+                $rIds = [];
                 foreach($r as $_r){
-                    $rIds .= '"'.$_r['name'].'", ';
+                    $rIds[] = $_r['name'];
                 }
-                $rIds = rtrim($rIds,', ');
                 return $this->render('errorPage.html.twig', array(
-                    'msg' => 'Удалить машину нельзя, машина привязана к рейс'.(count($r)>1?'ам':'у').' '.$rIds.'.',
+                    'msg' => 'Удалить машину нельзя, машина привязана к рейс'.(count($r)>1?'ам':'у').':',
+                    'routes_names' => $rIds,
                     'redirectTo' => 'transport',
                     'redirectToCaption' => 'Вернуться к списку ТС'
                 ));
