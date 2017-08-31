@@ -420,13 +420,16 @@ $( document ).ready(function(){
                             && data.lots[ _id ] !== undefined
                         ){
                             if( _uid == data.lots[ _id ].owner ){
-                                if( !$(this).hasClass('myBet') )
-                                    $(this).removeClass('notMyBet').addClass('myBet');
+                                if( !$(this).hasClass('myBet') ){
+                                    $(this).removeClass('notMyBet');
+                                    $(this).addClass('myBet');
+                                }
                             }
                             else{
                                 if( data.lots[ _id ].history.indexOf(_uid) >= 0 ){
                                     if( !$(this).hasClass('notMyBet') ){
-                                        $(this).removeClass('myBet').addClass('notMyBet');
+                                        $(this).removeClass('myBet');
+                                        $(this).addClass('notMyBet');
                                     }
                                 }
                             }
