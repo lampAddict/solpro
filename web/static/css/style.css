@@ -867,6 +867,8 @@ td.found{
     margin: 0 auto;
 }
 .errorMessage{
-    margin-top: 250px;
+    padding-top: 250px;
     font-size: 18px;
+    width: 455px;
+    margin: 0 auto;
 }
