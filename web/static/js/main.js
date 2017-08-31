@@ -660,6 +660,11 @@ $( document ).ready(function(){
             $('tr.zeroHeight').hide();
 
             $('.skipSearchResults').removeClass('dnone');
+
+            //if we are on routes page add additional class to `skip search results` link
+            if( $('#routesPageContainer') ){
+                $('.skipSearchResults').addClass('skipSearchResultsRoutesPage');
+            }
         }
     });
 });

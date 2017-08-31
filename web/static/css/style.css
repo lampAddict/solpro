@@ -862,6 +862,10 @@ td.found{
     cursor: pointer;
 }
 
+.skipSearchResultsRoutesPage{
+    padding-left: 115px;
+}
+
 #errorPageContainer{
     width: 800px;
     margin: 0 auto;
