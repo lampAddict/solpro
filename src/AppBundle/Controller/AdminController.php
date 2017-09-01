@@ -86,7 +86,7 @@ class AdminController extends Controller
         }
 
 
-        return $this->render('adminUsersPage.html.twig', array(
+        return $this->render('admin/adminUsersPage.html.twig', array(
             'users' => $_users
         ));
     }
