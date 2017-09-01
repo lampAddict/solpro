@@ -5,6 +5,9 @@
         <li>
             <a href="/">Главная</a>
         </li>
+        <li>
+            <a class="active">Админка</a>
+        </li>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="loggedUser">
                 Здравствуйте, {{ app.user.username }} <a href="{{ logout_path('main') }}">Выход</a>

@@ -47,9 +47,47 @@ class AdminController extends Controller
             $_lots = [];
         }
 
-        return $this->render('adminPage.html.twig', array(
+        return $this->render('admin/adminPage.html.twig', array(
              'lots' => $_lots
             ,'tz' => ($this->getUser()->getTimezone() != '' ? $this->getUser()->getTimezone() : 'UTC')
+        ));
+    }
+
+    /**
+     * Lists all site users
+     *
+     * @Route("/users", name="users")
+     * @Method("GET")
+     */
+    public function showUsersAction(){
+
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em
+            ->getRepository('AppBundle:User')
+            ->createQueryBuilder('u')
+            ->getQuery()
+            ->getResult();
+
+        $_users = [];
+        foreach ($users as $user){
+            /* @var $user \AppBundle\Entity\User */
+            $_users[] = [
+                             'id'=>$user->getId()
+                            ,'login'=>$user->getEmail()
+                            ,'name'=>$user->getUsername()
+                            ,'roles'=>$user->getRoles()
+                    ];
+        }
+
+
+        return $this->render('adminUsersPage.html.twig', array(
+            'users' => $_users
         ));
     }
 
@@ -75,7 +113,7 @@ class AdminController extends Controller
             }
         }
 
-        return $this->render('adminLotPage.html.twig', array(
+        return $this->render('admin/adminLotPage.html.twig', array(
              'bids'=>$_bids
             ,'tz' => ($this->getUser()->getTimezone() != '' ? $this->getUser()->getTimezone() : 'UTC')
         ));

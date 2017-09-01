@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block topMenu %}
+    <ul class="topnav" id="menu">
+        <li>
+            <a href="/">Главная</a>
+        </li>
+        <li>
+            <a href="{{ url("admin") }}">Админка</a>
+        </li>
+        <li>
+            <a class="active">Пользователи</a>
+        </li>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="loggedUser">
+                Здравствуйте, {{ app.user.username }} <a href="{{ logout_path('main') }}">Выход</a>
+            </li>
+        {% endif %}
+
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="showMenuItems()"><i class="fa fa-bars"></i></a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+
+    <div id="adminLotPageContainer" data-user="{{ app.user.id }}">
+        <div id="auctionTable">
+            <table cellpadding="0" cellspacing="0" class="data-content">
+                <thead>
+                <tr>
+                    <th>Пользователь</th>
+                    <th>e-mail</th>
+                    <th>Доступ</th>
+                    <th>Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td align="center">{{ user['name'] }}</td>
+                        <td align="center">{{ user['login'] }}</td>
+                        <td align="right">{{ user['roles'] }}</td>
+                        <td align="right"><a class="btn btn-default">Выставить</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

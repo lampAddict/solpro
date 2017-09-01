@@ -5,9 +5,11 @@
         <li>
             <a href="/">Главная</a>
         </li>
-
         <li>
             <a href="{{ url("admin") }}">Админка</a>
+        </li>
+        <li>
+            <a href="{{ url("users") }}">Пользователи</a>
         </li>
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
