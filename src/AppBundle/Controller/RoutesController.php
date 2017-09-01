@@ -130,6 +130,8 @@ class RoutesController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $this->denyAccessUnlessGranted('ROLE_ROUTES');
+
         $em = $this->getDoctrine()->getManager();
 
         //get user routes filter preferences
@@ -203,6 +205,8 @@ class RoutesController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $this->denyAccessUnlessGranted('ROLE_ROUTES');
+
         $em = $this->getDoctrine()->getManager();
         /* @var $route \AppBundle\Entity\Route */
         $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'user_id'=>$this->getUser()->getId()]);
@@ -243,6 +247,8 @@ class RoutesController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
+
+        $this->denyAccessUnlessGranted('ROLE_ROUTES');
 
         $em = $this->getDoctrine()->getManager();
         /* @var $route \AppBundle\Entity\Route */

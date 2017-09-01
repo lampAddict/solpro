@@ -172,6 +172,8 @@ class AuctionController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $this->denyAccessUnlessGranted('ROLE_AUCTION');
+
         $redis = $this->container->get('snc_redis.default');
 
         $em = $this->getDoctrine()->getManager();
@@ -384,6 +386,8 @@ class AuctionController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $this->denyAccessUnlessGranted('ROLE_AUCTION');
+
         $em = $this->getDoctrine()->getManager();
 
         $filter = $em
@@ -419,6 +423,8 @@ class AuctionController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
+
+        $this->denyAccessUnlessGranted('ROLE_AUCTION');
 
         $em = $this->getDoctrine()->getManager();
 

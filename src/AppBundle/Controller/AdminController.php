@@ -28,6 +28,8 @@ class AdminController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $em = $this->getDoctrine()->getManager();
 
         //get lots data
@@ -66,6 +68,8 @@ class AdminController extends Controller
             throw $this->createAccessDeniedException();
         }
 
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $em = $this->getDoctrine()->getManager();
 
         $users = $em
@@ -82,14 +86,107 @@ class AdminController extends Controller
                             ,'login'=>$user->getEmail()
                             ,'name'=>$user->getUsername()
                             ,'roles'=>$user->getRoles()
-                    ];
+                            ,'active'=>($user->isEnabled()?1:0)
+            ];
         }
 
+        $_roles = $this->container->getParameter('security.role_hierarchy.roles');
 
         return $this->render('admin/adminUsersPage.html.twig', array(
-            'users' => $_users
+             'users' => $_users
+            ,'roles' => $_roles['ROLE_ADMIN']
+            ,'captionRoles' => ['ROLE_ADMIN'=>'Администратор', 'ROLE_USER'=>'Пользователь', 'ROLE_AUCTION'=>'Торги', 'ROLE_ROUTES'=>'Рейсы', ''=>'']
         ));
     }
+
+
+    /**
+     * Set/unset user roles.
+     *
+     * @Route("/setUserRole", name="setUserRole")
+     * @Method("POST")
+     */
+    public function setUserRoleAction(Request $request){
+
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em
+            ->getRepository('AppBundle:User')
+            ->createQueryBuilder('u')
+            ->where('u.id = :uid')
+            ->setParameter('uid', intval($request->request->get('uid')))
+            ->getQuery()
+            ->getResult();
+
+        $err = '';
+
+        if( !empty($user) ){
+            $user = $user[0];
+            $addRole = $request->request->get('addRole');
+            $removeRole = $request->request->get('removeRole');
+            /* @var $user \AppBundle\Entity\User */
+            $updateUser = false;
+
+            $roles = [ 'ROLE_USER', 'ROLE_AUCTION', 'ROLE_ROUTES' ];
+            if(
+                   $addRole != ''
+                && in_array($addRole, $roles)
+            ){
+                if( !$user->hasRole($addRole) ){
+                    $user->addRole($addRole);
+                    $updateUser = true;
+                }
+                else{
+                    $err .= "Пользователю уже назначена эта роль.\n";
+                }
+            }
+
+            if(
+                   $removeRole != ''
+                && in_array($removeRole, $roles)
+            ){
+                if( $user->hasRole($removeRole) ){
+                    $user->removeRole($removeRole);
+                    $updateUser = true;
+                }
+                else{
+                    $err .= "У пользователя нет запрашиваемой на удаление роли.\n";
+                }
+            }
+
+            if( $updateUser ){
+                $userManager = $this->container->get('fos_user.user_manager');
+                $userManager->updateUser($user);
+                $em->flush();
+
+                return new JsonResponse(['result'=>true, 'msg'=>$err]);
+            }
+
+        }
+        else{
+            return new JsonResponse(['result'=>false, 'msg'=>'Пользователь не найден.']);
+        }
+
+        return new JsonResponse(['result'=>false, 'msg'=>$err]);
+    }
+
+    /**
+     * Block/unblock user profile depends on its current state
+     *
+     * @Route("/setUserBlock", name="setUserBlock")
+     * @Method("POST")
+     */
+    public function setUserBlockAction(Request $request){
+        return new JsonResponse(['result'=>true]);
+    }
+
 
     /**
      * Finds and displays all lot bids.
@@ -99,6 +196,13 @@ class AdminController extends Controller
      */
     public function showLotBidsAction($id)
     {
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $em = $this->getDoctrine()->getManager();
         $_bids = [];
         //get lots data

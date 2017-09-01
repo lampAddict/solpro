@@ -25,7 +25,6 @@
 {% endblock %}
 
 {% block body %}
-
     <div id="adminLotPageContainer" data-user="{{ app.user.id }}">
         <div id="auctionTable">
             <table cellpadding="0" cellspacing="0" class="data-content">
@@ -33,8 +32,11 @@
                 <tr>
                     <th>Пользователь</th>
                     <th>e-mail</th>
-                    <th>Доступ</th>
+                    <th>Роли</th>
+                    <th>Назначить</th>
+                    <th>Снять</th>
                     <th>Действие</th>
+                    <th>Блокировка</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,8 +44,29 @@
                     <tr>
                         <td align="center">{{ user['name'] }}</td>
                         <td align="center">{{ user['login'] }}</td>
-                        <td align="right">{{ user['roles'] }}</td>
-                        <td align="right"><a class="btn btn-default">Выставить</a></td>
+                        <td align="center" class="roles-{{ user['id'] }}">
+                            {% for role in user['roles'] %}
+                                <span class="userRole">{{ captionRoles[ role ] }}</span>
+                            {% endfor %}
+                        </td>
+                        <td align="right">
+                            <select id="addRole">
+                                <option selected="selected"></option>
+                                {% for role in roles %}
+                                    <option value="{{ role }}">{{ captionRoles[ role ] }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td align="right">
+                            <select id="removeRole">
+                                <option selected="selected"></option>
+                                {% for role in roles %}
+                                    <option value="{{ role }}">{{ captionRoles[ role ] }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td align="center"><a class="btn btn-default setUserRole" user-data="{{ user['id'] }}">Применить</a></td>
+                        <td align="center"><a class="btn btn-default setUserBlock" user-data="{{ user['id'] }}">{% if user['active'] %}За{% else %}Раз{% endif %}блокировать</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

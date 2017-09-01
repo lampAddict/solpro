@@ -876,3 +876,8 @@ td.found{
     width: 455px;
     margin: 0 auto;
 }
+.userRole{
+    display: block;
+    float: left;
+    width: 150px;
+}
