@@ -125,14 +125,6 @@ class Route
      * @ORM\JoinColumn(name="vehicle_id", referencedColumnName="id")
      */
     protected $vehicle_id;
-    
-    //many route - one lot
-    /**
-     * Many Routes have One Lot.
-     * @ORM\ManyToOne(targetEntity="Lot", inversedBy="routeId")
-     * @ORM\JoinColumn(name="lot_id", referencedColumnName="id")
-     */
-    protected $lot_id;
 
     /**
      * @ORM\Column(type="datetimetz")
@@ -625,29 +617,6 @@ class Route
     public function getUserId()
     {
         return $this->user_id;
-    }
-    
-    /**
-     * Set lot_id
-     *
-     * @param \AppBundle\Entity\Lot $lotId
-     * @return Route
-     */
-    public function setLotId(\AppBundle\Entity\Lot $lotId = null)
-    {
-        $this->lot_id = $lotId;
-
-        return $this;
-    }
-
-    /**
-     * Get lot_id
-     *
-     * @return \AppBundle\Entity\Lot 
-     */
-    public function getLotId()
-    {
-        return $this->lot_id;
     }
 
     /**

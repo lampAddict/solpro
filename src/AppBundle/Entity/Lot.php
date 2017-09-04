@@ -37,12 +37,6 @@ class Lot
     protected $duration;
 
     /**
-     * One Lot has Many Route.
-     * @ORM\OneToMany(targetEntity="Route", mappedBy="lot_id")
-     */
-    protected $routeId;
-
-    /**
      * @ORM\Column(type="integer")
      */
     protected $price;
@@ -72,6 +66,15 @@ class Lot
      * @ORM\Column(type="string")
      */
     protected $rejectionReason;
+
+    //many lots - one route
+    /**
+     * Many Lots have One Route.
+     * @ORM\ManyToOne(targetEntity="Route")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     */
+    protected $route_id;
+
 
     public function __toString() {
         return (string)$this->id;
@@ -131,52 +134,6 @@ class Lot
     public function getDuration()
     {
         return $this->duration;
-    }
-
-    /**
-     * Set prolong
-     *
-     * @param integer $prolong
-     * @return Lot
-     */
-    public function setProlong($prolong)
-    {
-        $this->prolong = $prolong;
-
-        return $this;
-    }
-
-    /**
-     * Get prolong
-     *
-     * @return integer 
-     */
-    public function getProlong()
-    {
-        return $this->prolong;
-    }
-
-    /**
-     * Set routeId
-     *
-     * @param integer $routeId
-     * @return Lot
-     */
-    public function setRouteId($routeId)
-    {
-        $this->routeId = $routeId;
-
-        return $this;
-    }
-
-    /**
-     * Get routeId
-     *
-     * @return integer 
-     */
-    public function getRouteId()
-    {
-        return $this->routeId;
     }
 
     /**
