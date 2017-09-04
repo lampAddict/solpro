@@ -205,10 +205,12 @@ class AdminController extends Controller
         if( !empty($user) ){
             /* @var $user \AppBundle\Entity\User */
             $user = $user[0];
-            $user->setEnabled(!$user->isEnabled());
-            $em->flush();
+            if( $user->hasRole('ROLE_ADMIN') === false ){
+                $user->setEnabled(!$user->isEnabled());
+                $em->flush();
 
-            return new JsonResponse(['result'=>true]);
+                return new JsonResponse(['result'=>true]);
+            }
         }
 
         return new JsonResponse(['result'=>false]);
