@@ -881,3 +881,8 @@ td.found{
     float: left;
     width: 150px;
 }
+
+.userBlockHeader{
+    width:145px;
+    display: block;
+}

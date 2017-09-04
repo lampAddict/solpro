@@ -694,16 +694,17 @@ $( document ).ready(function(){
     });
 
     $('.btn.setUserBlock').click(function(e){
+        $this = $(e.currentTarget);
         $.ajax({
             method: 'POST',
             url: 'setUserBlock',
             data: {
-                uid: $(e.currentTarget).attr('user-data')
+                uid: $this.attr('user-data')
             }
         })
         .done(function( response ){
             if( response.result ){
-
+                $this.text($this.text() == 'Разблокировать' ? 'Заблокировать' : 'Разблокировать');
             }
         })
         .fail(function( response ){

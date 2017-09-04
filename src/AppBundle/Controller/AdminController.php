@@ -118,12 +118,12 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $em
-            ->getRepository('AppBundle:User')
-            ->createQueryBuilder('u')
-            ->where('u.id = :uid')
-            ->setParameter('uid', intval($request->request->get('uid')))
-            ->getQuery()
-            ->getResult();
+                ->getRepository('AppBundle:User')
+                ->createQueryBuilder('u')
+                ->where('u.id = :uid')
+                ->setParameter('uid', intval($request->request->get('uid')))
+                ->getQuery()
+                ->getResult();
 
         $err = '';
 
@@ -184,7 +184,34 @@ class AdminController extends Controller
      * @Method("POST")
      */
     public function setUserBlockAction(Request $request){
-        return new JsonResponse(['result'=>true]);
+
+        //Check if user authenticated
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em
+                ->getRepository('AppBundle:User')
+                ->createQueryBuilder('u')
+                ->where('u.id = :uid')
+                ->setParameter('uid', intval($request->request->get('uid')))
+                ->getQuery()
+                ->getResult();
+
+        if( !empty($user) ){
+            /* @var $user \AppBundle\Entity\User */
+            $user = $user[0];
+            $user->setEnabled(!$user->isEnabled());
+            $em->flush();
+
+            return new JsonResponse(['result'=>true]);
+        }
+
+        return new JsonResponse(['result'=>false]);
     }
 
 
