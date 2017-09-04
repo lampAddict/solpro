@@ -390,11 +390,18 @@ class import1CDataService{
                         }
                     }
                     else{
+                        //set lot status
+                        if( strpos($lotStatus->getName(), 'Отменен') !== false ){
+                            $_lot->setRejectionReason( $lot['rejectionReason'] );
+                            $_lot->setAuctionStatus(2);//lot declined
+                        }
                         //set lot status AUCTION
-                        $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');
-                        //lot is in auction state
-                        $_lot->setAuctionStatus(1);
-                        $_lot->setRejectionReason('');
+                        else{
+                            $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');
+                            //lot is in auction state
+                            $_lot->setAuctionStatus(1);
+                            $_lot->setRejectionReason('');
+                        }
                     }
                 }
 
