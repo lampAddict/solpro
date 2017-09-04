@@ -377,6 +377,7 @@ class import1CDataService{
                         if( strpos($lotStatus->getName(), 'Отменен') !== false ){
                             $_lot->setRejectionReason( $lot['rejectionReason'] );
                             $_lot->setAuctionStatus(2);//lot declined
+                            $_lot->setStatusId1c( $lotStatus->getId1C() );
                         }
                         elseif( strpos($lotStatus->getName(), 'Подготовка') !== false ){
                             //set lot status AUCTION
@@ -394,6 +395,7 @@ class import1CDataService{
                         if( strpos($lotStatus->getName(), 'Отменен') !== false ){
                             $_lot->setRejectionReason( $lot['rejectionReason'] );
                             $_lot->setAuctionStatus(2);//lot declined
+                            $_lot->setStatusId1c( $lotStatus->getId1C() );
                         }
                         //set lot status AUCTION
                         else{
