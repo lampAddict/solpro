@@ -197,7 +197,7 @@ class AuctionController extends Controller
         $where = $this->makeFilterCondition( $_filters );
 
         //get lots data
-        $sql = 'SELECT l.*, r.id as route_id FROM lot l LEFT JOIN route r ON l.id = r.lot_id WHERE r.lot_id IS NOT NULL AND '.$where.' ORDER BY l.start_date DESC';
+        $sql = 'SELECT l.*, r.id as route_id FROM lot l LEFT JOIN route r ON l.route_id = r.id WHERE l.route_id IS NOT NULL AND '.$where.' ORDER BY l.start_date DESC';
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $_lots = $stmt->fetchAll();
