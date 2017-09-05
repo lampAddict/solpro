@@ -101,7 +101,7 @@
                             <td class="routeGetInTime">{{ route.getLoadDate|date('d.m.Y H:i') }}</td>
                             <td class="routeVehicleType">{{ route.getVehicleType }}<br />{{ route.getVehiclePayload }}</td>
                             <td align="right">{{ route.getCargoWeight }} ({{ route.getCargoCount }})</td>
-                            <td align="right">{{ route.getLotId.getPrice }}</td>
+                            <td align="right">{% if prices[route.getId] is defined %}{{ prices[route.getId] }}{% else %}0{% endif %}</td>
                             <td class="routeAssignedDriver" align="center">{% if route.getDriverId is not null %}{{ route.getDriverId.getFio }}{% endif %}</td>
                             <td class="routeAttachedVehicle" align="right">{% if route.getVehicleId is not null %}{{ route.getVehicleId.getName }}&nbsp;&nbsp;{{ route.getVehicleId.getRegNum }}{% endif %}</td>
                         </tr>
@@ -130,7 +130,7 @@
                                                 <td>Вид ТС:</td><td>{{ route.getVehiclePayload }} {{ route.getVehicleType }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Тариф:</td><td>{{ route.getLotId.getPrice }} &#8381;</td>
+                                                <td>Тариф:</td><td>{% if prices[route.getId] is defined %}{{ prices[route.getId] }}{% else %}0{% endif %} &#8381;</td>
                                             </tr>
                                             <tr>
                                                 <td>Комментарий:</td><td>{{ route.getComment }}</td>

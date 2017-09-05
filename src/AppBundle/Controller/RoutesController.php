@@ -186,12 +186,24 @@ class RoutesController extends Controller
             ->getQuery()
             ->getResult();
 
+
+        $sql = 'SELECT r.id, l.price FROM route r LEFT JOIN lot l ON r.id = l.route_id WHERE '.$where;
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $prices = $stmt->fetchAll();
+        $route_price = [];
+        foreach ($prices as $price){
+            $route_price[ $price['id'] ] = $price['price'];
+        }
+
+
         return $this->render('routesPage.html.twig', array(
              'routes' => $routes
             ,'drivers' => $drivers
             ,'vehicles' => $vehicles
             ,'filters' => $filters
             ,'regions' => $this->getSenderDeliveryRegionsLists()
+            ,'prices' => $route_price
         ));
     }
 
