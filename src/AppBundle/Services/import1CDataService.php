@@ -425,7 +425,7 @@ class import1CDataService{
                     $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
 
                     $_lot->setPrice( $routeDbIds[ $lot['routeId'] ]['startPrice'] );
-                    $_lot->addRouteId($route);
+                    $_lot->setRouteId($route);
 
                     //if route assigned directly no need to do auction
                     if( $route->getCarrier() != '' ){

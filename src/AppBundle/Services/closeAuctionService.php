@@ -118,7 +118,7 @@ class closeAuctionService
         $lot->setStatusId1c('a9649dc5-266e-4084-8498-e89c351533ea');
 
         /* @var $route \AppBundle\Entity\Route */
-        $route = $this->em->getRepository('AppBundle:Route')->findBy(['lot_id'=>$lid]);
+        $route = $this->em->getRepository('AppBundle:Route')->findBy(['id'=>$lot->getRouteId()]);
         $route = $route[0];
 
         //get bets history and current lot owner

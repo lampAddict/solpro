@@ -35,7 +35,7 @@ class LotController extends Controller
             //read lot prices from db
             $em = $this->getDoctrine()->getManager();
             //TODO simplify query
-            $sql = "SELECT l.id, l.price AS price, b.bet, b.uid FROM lot l LEFT JOIN (SELECT b1.lot_id AS lot_id, min(b1.value) AS bet, b1.user_id AS uid FROM bet b1 GROUP BY b1.user_id, b1.lot_id)b ON l.id = b.lot_id LEFT JOIN route r ON r.lot_id = l.id WHERE l.auction_status = 1 AND r.carrier = ''";//AND l.start_date <= NOW()
+            $sql = "SELECT l.id, l.price AS price, b.bet, b.uid FROM lot l LEFT JOIN (SELECT b1.lot_id AS lot_id, min(b1.value) AS bet, b1.user_id AS uid FROM bet b1 GROUP BY b1.user_id, b1.lot_id)b ON l.id = b.lot_id LEFT JOIN route r ON r.id = l.route_id WHERE l.auction_status = 1 AND r.carrier = ''";//AND l.start_date <= NOW()
             $stmt = $em->getConnection()->prepare($sql);
             $stmt->execute();
             $lots = $stmt->fetchAll();

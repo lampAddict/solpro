@@ -21,7 +21,7 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $sql = "SELECT l.*, r.region_from, r.region_to FROM lot l LEFT JOIN route r ON l.id = r.lot_id WHERE l.auction_status = 1";
+        $sql = "SELECT l.*, r.region_from, r.region_to FROM lot l LEFT JOIN route r ON r.id = l.route_id WHERE l.auction_status = 1";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $lots = $stmt->fetchAll();
