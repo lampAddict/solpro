@@ -127,12 +127,6 @@ class Route
     protected $vehicle_id;
 
     /**
-     * One Route has Many Lots.
-     * @ORM\OneToMany(targetEntity="Lot", mappedBy="route_id")
-     */
-    protected $lot_id;
-
-    /**
      * @ORM\Column(type="datetimetz")
      */
     protected $updated_at;
@@ -672,39 +666,5 @@ class Route
     public function getUpdatedAt()
     {
         return $this->updated_at;
-    }
-
-    /**
-     * Add lotId
-     *
-     * @param \AppBundle\Entity\Lot $lotId
-     *
-     * @return Route
-     */
-    public function addLotId(\AppBundle\Entity\Lot $lotId)
-    {
-        $this->lot_id[] = $lotId;
-
-        return $this;
-    }
-
-    /**
-     * Remove lotId
-     *
-     * @param \AppBundle\Entity\Lot $lotId
-     */
-    public function removeLotId(\AppBundle\Entity\Lot $lotId)
-    {
-        $this->lot_id->removeElement($lotId);
-    }
-
-    /**
-     * Get lotId
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLotId()
-    {
-        return $this->lot_id;
     }
 }

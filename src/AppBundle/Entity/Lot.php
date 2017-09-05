@@ -70,7 +70,7 @@ class Lot
     //many lots - one route
     /**
      * Many Lots have One Route.
-     * @ORM\ManyToOne(targetEntity="Route", inversedBy="lot_id")
+     * @ORM\ManyToOne(targetEntity="Route")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
     protected $route_id;
@@ -338,30 +338,6 @@ class Lot
     public function getRejectionReason()
     {
         return $this->rejectionReason;
-    }
-
-    /**
-     * Add routeId
-     *
-     * @param \AppBundle\Entity\Route $routeId
-     *
-     * @return Lot
-     */
-    public function addRouteId(\AppBundle\Entity\Route $routeId)
-    {
-        $this->routeId[] = $routeId;
-
-        return $this;
-    }
-
-    /**
-     * Remove routeId
-     *
-     * @param \AppBundle\Entity\Route $routeId
-     */
-    public function removeRouteId(\AppBundle\Entity\Route $routeId)
-    {
-        $this->routeId->removeElement($routeId);
     }
 
     /**
