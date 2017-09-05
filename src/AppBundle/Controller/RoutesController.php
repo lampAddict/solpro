@@ -264,7 +264,7 @@ class RoutesController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         /* @var $route \AppBundle\Entity\Route */
-        $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'user_id'=>$this->getUser()->getId()]);
+        $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'carrier'=>$this->getUser()->getCarrierId1C()]);
         if(    $route 
             && in_array($route->getStatus(), ['1. Создан', '3. Утвержден', '4. В комплектации'])
         ){
