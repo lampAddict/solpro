@@ -28,9 +28,9 @@ class ClearLotsDBDataCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $em->createQuery('delete from AppBundle\Entity\Bet b where b.id > 0')->execute();
         $em->createQuery('delete from AppBundle\Entity\Order o where o.id > 0')->execute();
-        $em->createQuery('delete from AppBundle\Entity\Route r where r.id > 0')->execute();
         $em->createQuery('delete from AppBundle\Entity\Lot l where l.id > 0')->execute();
-
+        $em->createQuery('delete from AppBundle\Entity\Route r where r.id > 0')->execute();
+        
         $output->writeln('Lots data removed from db.');
 
         $this->getContainer()->get('snc_redis.default')->flushall();
