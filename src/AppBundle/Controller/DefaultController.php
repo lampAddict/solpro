@@ -52,7 +52,7 @@ class DefaultController extends Controller
 
         $uid = $this->getUser()->getId();
         //get routes without assigned driver 
-        $sql = "SELECT r.id, r.driver_id FROM route r WHERE r.user_id = $uid";
+        $sql = 'SELECT r.id, r.driver_id FROM route r WHERE r.carrier = "'.$this->getUser()->getCarrierId1C().'"';
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $rn = $stmt->fetchAll();
