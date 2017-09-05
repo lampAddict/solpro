@@ -430,6 +430,8 @@ class import1CDataService{
                     //if route assigned directly no need to do auction
                     if( $route->getCarrier() != '' ){
                         $_lot->setAuctionStatus(0);
+                        //set lot status AUCTION DONE
+                        $_lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
                         $addLotToCache = false;
                     }
                 }
