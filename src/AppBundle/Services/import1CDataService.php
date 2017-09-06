@@ -184,13 +184,15 @@ class import1CDataService{
                 }
 
                 //set route status
+                $routeStatus = '';
                 if( isset($route['statusId']) ){
                     $routeStatus = isset($data['ref']['routeStatuse'][ $route['statusId'] ]) ? $data['ref']['routeStatuse'][ $route['statusId'] ]['name'] : '';
                     if( $routeStatus == '' ){
                         /* @var $routeStatusUpdate \AppBundle\Entity\RefRouteStatus */
                         $routeStatusUpdate = $this->em->getRepository('AppBundle:RefRouteStatus')->findOneBy(['id1C'=>$route['statusId']]);
                         if( $routeStatusUpdate ){
-                            $_route->setStatus( $routeStatusUpdate->getName() );
+                            $routeStatus = $routeStatusUpdate->getName();
+                            $_route->setStatus( $routeStatus );
                         }
                     }
                     else{
