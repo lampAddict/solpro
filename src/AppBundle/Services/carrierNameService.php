@@ -32,7 +32,7 @@ class carrierNameService
             $stmt->execute();
             $carrierName = $stmt->fetchAll();
 
-            return (is_array($carrierName) ? $carrierName[0]['name'] : '');
+            return (!empty($carrierName) ? $carrierName[0]['name'] : '');
         }
 
         return '';
