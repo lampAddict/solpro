@@ -130,7 +130,7 @@
                                                 <td>Вид ТС:</td><td>{{ route.getVehiclePayload }} {{ route.getVehicleType }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Тариф:</td><td>{% if prices[route.getId] is defined %}{{ prices[route.getId] }}{% else %}0{% endif %} &#8381;</td>
+                                                <td>Тариф:</td><td>{% if prices[ route.getId ] is defined %}{{ prices[route.getId] }}{% else %}0{% endif %} &#8381;</td>
                                             </tr>
                                             <tr>
                                                 <td>Комментарий:</td><td>{{ route.getComment }}</td>
@@ -161,26 +161,32 @@
                                             </div>
                                         {% endif %}
                                         <div class="routeDriverHeader">Назначить водителя и машину:</div>
-                                        <div class="routeAddDriverWindow">
-                                            <div class="routeAddDriverSelect">
-                                                <select id="routeAddDriverSelect">
-                                                    <option selected="selected">Выберите водителя</option>
-                                                    {% for driver in drivers %}
-                                                        <option value="{{ driver.getId }}">{{ driver.getFio }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                        {% if canAttachDriver[ route.getId ] is defined %}
+                                            <div class="routeAddDriverWindow">
+                                                <div class="routeAddDriverSelect">
+                                                    <select id="routeAddDriverSelect">
+                                                        <option selected="selected">Выберите водителя</option>
+                                                        {% for driver in drivers %}
+                                                            <option value="{{ driver.getId }}">{{ driver.getFio }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="routeAddVehicleSelect">
+                                                    <select id="routeAddVehicleSelect">
+                                                        <option selected="selected">Выберите машину</option>
+                                                        {% for vehicle in vehicles %}
+                                                            <option value="{{ vehicle.getId }}">{{ vehicle.getName }} {{ vehicle.getRegNum }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <input class="btn btn-success" type="button" value="Сохранить" />
+                                                <a class="btn btn-default" style="float:right" href="{{ path('routes') }}">Отменить</a>
                                             </div>
-                                            <div class="routeAddVehicleSelect">
-                                                <select id="routeAddVehicleSelect">
-                                                    <option selected="selected">Выберите машину</option>
-                                                    {% for vehicle in vehicles %}
-                                                        <option value="{{ vehicle.getId }}">{{ vehicle.getName }} {{ vehicle.getRegNum }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                        {% else %}
+                                            <div class="routeAddDriverWindow">
+                                                Статус лота запрещает назначение водителя и машины в рейс.
                                             </div>
-                                            <input class="btn btn-success" type="button" value="Сохранить" />
-                                            <a class="btn btn-default" style="float:right" href="{{ path('routes') }}">Отменить</a>
-                                        </div>
+                                        {% endif %}
                                     </div>
 
                                     <div class="routeInfo">

@@ -187,15 +187,23 @@ class RoutesController extends Controller
             ->getResult();
 
 
-        $sql = 'SELECT r.id, l.price FROM route r LEFT JOIN lot l ON r.id = l.route_id WHERE '.$where;
+        $sql = "SELECT r.id, l.price FROM route r LEFT JOIN lot l ON r.id = l.route_id WHERE $where";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
-        $prices = $stmt->fetchAll();
+        $_routes = $stmt->fetchAll();
         $route_price = [];
-        foreach ($prices as $price){
-            $route_price[ $price['id'] ] = $price['price'];
+        foreach ($_routes as $_route){
+            $route_price[ $_route['id'] ] = $_route['price'];
         }
 
+        $sql = "SELECT r.id FROM route r LEFT JOIN lot l ON r.id = l.route_id WHERE $where AND l.status_id1c IN ('175d0f31-a9ca-45ba-835e-bae500c8c35c', 'e9bb1413-3642-49ad-8599-6df140a01ac0', 'c2399918-8f2f-4a4f-bb0b-170a4079472a')";
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $_routes = $stmt->fetchAll();
+        $routesCanAttachDriver = [];
+        foreach ($_routes as $_route){
+            $routesCanAttachDriver[ $_route['id'] ] = 1;
+        }
 
         return $this->render('routesPage.html.twig', array(
              'routes' => $routes
@@ -204,6 +212,7 @@ class RoutesController extends Controller
             ,'filters' => $filters
             ,'regions' => $this->getSenderDeliveryRegionsLists()
             ,'prices' => $route_price
+            ,'canAttachDriver' => $routesCanAttachDriver
         ));
     }
 
