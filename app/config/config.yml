@@ -35,6 +35,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      carrier_name: '@app.carriername'
 
 # Doctrine Configuration
 doctrine:

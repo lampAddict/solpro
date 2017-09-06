@@ -18,3 +18,7 @@ services:
     app.closeauction:
             class: AppBundle\Services\closeAuctionService
             arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default" ]
+
+    app.carriername:
+            class: AppBundle\Services\carrierNameService
+            arguments: [ "@doctrine.orm.entity_manager", "@security.token_storage" ]
