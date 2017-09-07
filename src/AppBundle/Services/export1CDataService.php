@@ -48,7 +48,7 @@ class export1CDataService
         echo "prevDateExchangeTime $prevDateExchangeTime $lastDateExchangeTime \n";
         echo "Exchange table checked\n";
 
-        $data_added = false;
+        $data_added = true;
         
         $current_date = new \DateTime(date('c', time()));
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'
