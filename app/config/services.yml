@@ -14,7 +14,7 @@ services:
 
     app.import1cdata:
         class: AppBundle\Services\import1CDataService
-        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default", "@reflotstatus" ]
+        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default", "@app.reflotstatus" ]
 
     app.export1cdata:
         class: AppBundle\Services\export1CDataService
@@ -22,7 +22,7 @@ services:
 
     app.closeauction:
         class: AppBundle\Services\closeAuctionService
-        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default", "@reflotstatus" ]
+        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default", "@app.reflotstatus" ]
 
     app.carriername:
         class: AppBundle\Services\carrierNameService
