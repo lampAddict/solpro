@@ -10,6 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RefLotStatus
 {
+    const AUCTION = 1;
+    const AUCTION_FAILED = 2;
+    const AUCTION_SUCCEED = 3;
+    const AUCTION_DECLINED = 4;
+    const AUCTION_PREPARED = 5;
+    const AUCTION_CLOSED = 6;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -26,6 +33,13 @@ class RefLotStatus
      * @ORM\Column(type="string", length=150)
      */
     protected $name;
+
+    /**
+     * Predefined id
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $pid;
 
     /**
      * Get id
@@ -83,5 +97,29 @@ class RefLotStatus
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set pid
+     *
+     * @param integer $pid
+     *
+     * @return RefLotStatus
+     */
+    public function setPid($pid)
+    {
+        $this->pid = $pid;
+
+        return $this;
+    }
+
+    /**
+     * Get pid
+     *
+     * @return integer
+     */
+    public function getPid()
+    {
+        return $this->pid;
     }
 }

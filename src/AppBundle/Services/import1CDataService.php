@@ -21,11 +21,13 @@ class import1CDataService{
     protected $em;
     protected $um;
     protected $redis;
+    protected $rlss;
 
-    public function __construct($entityManager, $userManager, $redisManager){
+    public function __construct($entityManager, $userManager, $redisManager, $refLotStatusService){
         $this->em    = $entityManager;
         $this->um    = $userManager;
         $this->redis = $redisManager;
+        $this->rlss  = $refLotStatusService;
     }
     
     private function importReferences($entityName, $refsData, $fields=['id', 'name']){
@@ -68,8 +70,82 @@ class import1CDataService{
 
         //import lot status references
         if( !empty($data['ref']['lotStatus']) ){
-            $this->importReferences('RefLotStatus', $data['ref']['lotStatus']);
-            $this->em->flush();
+
+            $rlsArr = $this->em->getRepository('AppBundle:RefLotStatus')->findAll();
+            $rlsData = [];
+            /* @var $rls \AppBundle\Entity\RefLotStatus */
+            foreach ($rlsArr as $rls){
+                $rlsData[ $rls->getPid() ] = $rls;
+            }
+
+            foreach( $data['ref']['lotStatus'] as $k=>$v ){
+
+                if( strpos($v['name'], 'Подготовка') !== false ){
+                    /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
+                    $lotStatus = $rlsData[ RefLotStatus::AUCTION_PREPARED ];
+                    $lotStatus->setName($v['name']);
+                    $lotStatus->setId1C($v['id']);
+
+                    $this->em->persist($lotStatus);
+                    $this->em->flush();
+                    continue;
+                }
+
+                if( strpos($v['name'], 'Торги') !== false ){
+                    /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
+                    $lotStatus = $rlsData[ RefLotStatus::AUCTION ];
+                    $lotStatus->setName($v['name']);
+                    $lotStatus->setId1C($v['id']);
+
+                    $this->em->persist($lotStatus);
+                    $this->em->flush();
+                    continue;
+                }
+
+                if( strpos($v['name'], 'Расторгован') !== false ){
+                    /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
+                    $lotStatus = $rlsData[ RefLotStatus::AUCTION_SUCCEED ];
+                    $lotStatus->setName($v['name']);
+                    $lotStatus->setId1C($v['id']);
+
+                    $this->em->persist($lotStatus);
+                    $this->em->flush();
+                    continue;
+                }
+
+                if( strpos($v['name'], 'Нерасторгован') !== false ){
+                    /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
+                    $lotStatus = $rlsData[ RefLotStatus::AUCTION_FAILED ];
+                    $lotStatus->setName($v['name']);
+                    $lotStatus->setId1C($v['id']);
+
+                    $this->em->persist($lotStatus);
+                    $this->em->flush();
+                    continue;
+                }
+
+                if( strpos($v['name'], 'Завершен') !== false ){
+                    /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
+                    $lotStatus = $rlsData[ RefLotStatus::AUCTION_CLOSED ];
+                    $lotStatus->setName($v['name']);
+                    $lotStatus->setId1C($v['id']);
+
+                    $this->em->persist($lotStatus);
+                    $this->em->flush();
+                    continue;
+                }
+
+                if( strpos($v['name'], 'Отменен') !== false ){
+                    /* @var $lotStatus \AppBundle\Entity\RefLotStatus */
+                    $lotStatus = $rlsData[ RefLotStatus::AUCTION_DECLINED ];
+                    $lotStatus->setName($v['name']);
+                    $lotStatus->setId1C($v['id']);
+
+                    $this->em->persist($lotStatus);
+                    $this->em->flush();
+                    continue;
+                }
+            }
         }
 
         //import route status  references
@@ -351,6 +427,8 @@ class import1CDataService{
 
         if( !empty($data['lots']) ){
 
+            $routeStatusByPid = $this->rlss->getLotStatuses();
+
             $currentIdsStr = '';
             if( $this->redis->exists('lcp') ){
                 $currentIdsStr = $this->redis->get('lcp');
@@ -383,7 +461,7 @@ class import1CDataService{
                         }
                         elseif( strpos($lotStatus->getName(), 'Подготовка') !== false ){
                             //set lot status AUCTION
-                            $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');
+                            $_lot->setStatusId1c($routeStatusByPid[ RefLotStatus::AUCTION ]);
                             //lot is in auction state
                             $_lot->setAuctionStatus(1);
                         }
@@ -401,7 +479,7 @@ class import1CDataService{
                         }
                         //set lot status AUCTION
                         else{
-                            $_lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0');
+                            $_lot->setStatusId1c($routeStatusByPid[ RefLotStatus::AUCTION ]);
                             //lot is in auction state
                             $_lot->setAuctionStatus(1);
                             $_lot->setRejectionReason('');
@@ -432,8 +510,8 @@ class import1CDataService{
                     //if route assigned directly no need to do auction
                     if( $route->getCarrier() != '' ){
                         $_lot->setAuctionStatus(0);
-                        //set lot status AUCTION DONE
-                        $_lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
+                        //set lot status AUCTION SUCCEED
+                        $_lot->setStatusId1c($routeStatusByPid[ RefLotStatus::AUCTION_SUCCEED ]);
                         $addLotToCache = false;
                     }
                 }

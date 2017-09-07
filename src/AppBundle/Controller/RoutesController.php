@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\RefLotStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -196,7 +197,7 @@ class RoutesController extends Controller
             $route_price[ $_route['id'] ] = $_route['price'];
         }
 
-        $sql = "SELECT r.id FROM route r LEFT JOIN lot l ON r.id = l.route_id WHERE $where AND l.status_id1c IN ('175d0f31-a9ca-45ba-835e-bae500c8c35c', 'e9bb1413-3642-49ad-8599-6df140a01ac0', 'c2399918-8f2f-4a4f-bb0b-170a4079472a')";
+        $sql = "SELECT r.id FROM route r LEFT JOIN lot l ON r.id = l.route_id LEFT JOIN reflotstatus rls ON rls.id1c = l.status_id1c WHERE $where AND rls.pid IN ('".RefLotStatus::AUCTION_PREPARED."', '".RefLotStatus::AUCTION."', '".RefLotStatus::AUCTION_SUCCEED."')";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $_routes = $stmt->fetchAll();

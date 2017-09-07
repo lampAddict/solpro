@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Bet;
 use AppBundle\Entity\Filter;
+use AppBundle\Entity\RefLotStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -253,17 +254,6 @@ class AuctionController extends Controller
                 $_forms[ $lot['id'] ] = $form->createView();
 
                 $_lots[ $indx ]['start_date']  = new \DateTime( $lot['start_date'] );
-
-                //update lot status if it has begun trading
-                if(     $lot['status_id1c'] == '175d0f31-a9ca-45ba-835e-bae500c8c35c' // "подготовка"
-                    &&  $_lots[ $indx ]['start_date']->getTimestamp() >= time()
-                ){
-                    /* @var $__lot \AppBundle\Entity\Lot */
-                    $__lot = $em->getRepository('AppBundle:Lot')->find($lot['id']);
-                    $__lot->setStatusId1c('e9bb1413-3642-49ad-8599-6df140a01ac0'); //"торги"
-                    $__lot->setUpdatedAt( new \DateTime(date('c', time())) );
-                    $em->flush();
-                }
 
                 //do `place bet` request processing
                 $form->handleRequest($request);

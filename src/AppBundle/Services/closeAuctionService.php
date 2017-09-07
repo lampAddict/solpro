@@ -3,18 +3,21 @@
 namespace AppBundle\Services;
 
 use AppBundle\Controller;
+use AppBundle\Entity\RefLotStatus;
 
 class closeAuctionService
 {
     protected $em;
     protected $um;
     protected $redis;
+    protected $rlss;
 
-    public function __construct($entityManager, $userManager, $redisManager)
+    public function __construct($entityManager, $userManager, $redisManager, $refLotStatusService)
     {
         $this->em    = $entityManager;
         $this->um    = $userManager;
         $this->redis = $redisManager;
+        $this->rlss  = $refLotStatusService;
     }
 
     public function closeAuctionService(){
@@ -114,8 +117,11 @@ class closeAuctionService
         //get lot off the auction
         $lot->setAuctionStatus(0);
 
+        //get lot statuses
+        $routeStatusByPid = $this->rlss->getLotStatuses();
+
         //lot has been traded unsuccessfully
-        $lot->setStatusId1c('a9649dc5-266e-4084-8498-e89c351533ea');
+        $lot->setStatusId1c($routeStatusByPid[ RefLotStatus::AUCTION_FAILED ]);
 
         /* @var $route \AppBundle\Entity\Route */
         $route = $this->em->getRepository('AppBundle:Route')->findBy(['id'=>$lot->getRouteId()]);
@@ -138,7 +144,7 @@ class closeAuctionService
             $this->em->persist($route);
 
             //lot has been traded successfully
-            $lot->setStatusId1c('c2399918-8f2f-4a4f-bb0b-170a4079472a');
+            $lot->setStatusId1c($routeStatusByPid[ RefLotStatus::AUCTION_SUCCEED ]);
         }
         else{
             //$this->em()->remove($route);

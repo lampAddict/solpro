@@ -7,18 +7,25 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    app.reflotstatus:
+        class: AppBundle\Services\refLotStatusService
+        arguments: [ "@doctrine.orm.entity_manager" ]
+
     app.import1cdata:
         class: AppBundle\Services\import1CDataService
-        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default" ]
+        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default", "@reflotstatus" ]
 
     app.export1cdata:
         class: AppBundle\Services\export1CDataService
         arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager" ]
 
     app.closeauction:
-            class: AppBundle\Services\closeAuctionService
-            arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default" ]
+        class: AppBundle\Services\closeAuctionService
+        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager", "@snc_redis.default", "@reflotstatus" ]
 
     app.carriername:
-            class: AppBundle\Services\carrierNameService
-            arguments: [ "@doctrine.orm.entity_manager", "@security.token_storage" ]
+        class: AppBundle\Services\carrierNameService
+        arguments: [ "@doctrine.orm.entity_manager", "@security.token_storage" ]
+
+
