@@ -233,7 +233,7 @@ class RoutesController extends Controller
         /* @var $route \AppBundle\Entity\Route */
         $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'carrier'=>$this->getUser()->getCarrierId1C()]);
         if( $route ){
-            $possibleStatuses = ['Создан', 'Утвержден', 'В комплектации', 'Распределен'];
+            $possibleStatuses = ['Создан', 'Подтвержден', 'В комплектации', 'Распределен'];
 
             $canAttach = false;
             foreach ($possibleStatuses as $ps){
@@ -286,7 +286,7 @@ class RoutesController extends Controller
         $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'carrier'=>$this->getUser()->getCarrierId1C()]);
         if( $route ){
             //TODO wrap code below in function
-            $possibleStatuses = ['Создан', 'Утвержден', 'В комплектации', 'Распределен'];
+            $possibleStatuses = ['Создан', 'Подтвержден', 'В комплектации', 'Распределен'];
 
             $canAttach = false;
             foreach ($possibleStatuses as $ps){
