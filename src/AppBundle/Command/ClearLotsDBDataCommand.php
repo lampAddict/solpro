@@ -31,9 +31,9 @@ class ClearLotsDBDataCommand extends ContainerAwareCommand
         $em->createQuery('delete from AppBundle\Entity\Bet b where b.id > 0')->execute();
         $em->createQuery('delete from AppBundle\Entity\Order o where o.id > 0')->execute();
         $em->createQuery('delete from AppBundle\Entity\Lot l where l.id > 0')->execute();
+        $em->createQuery('delete from AppBundle\Entity\Route r where r.id > 0')->execute();
         $em->createQuery('delete from AppBundle\Entity\Transport t where t.id > 0')->execute();
         $em->createQuery('delete from AppBundle\Entity\Driver d where d.id > 0')->execute();
-        $em->createQuery('delete from AppBundle\Entity\Route r where r.id > 0')->execute();
         $em->createQuery('delete from AppBundle\Entity\Exchange e where e.id > 0')->execute();
         $em->createQuery('delete from AppBundle\Entity\Filter f where f.id > 0')->execute();
 

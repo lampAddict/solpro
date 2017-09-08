@@ -284,9 +284,18 @@ class RoutesController extends Controller
         $em = $this->getDoctrine()->getManager();
         /* @var $route \AppBundle\Entity\Route */
         $route = $em->getRepository('AppBundle:Route')->findOneBy(['id'=>intval($request->request->get('route')), 'carrier'=>$this->getUser()->getCarrierId1C()]);
-        if(    $route 
-            && in_array($route->getStatus(), ['1. Создан', '3. Утвержден', '4. В комплектации'])
-        ){
+        if( $route ){
+            //TODO wrap code below in function
+            $possibleStatuses = ['Создан', 'Утвержден', 'В комплектации', 'Распределен'];
+
+            $canAttach = false;
+            foreach ($possibleStatuses as $ps){
+                if( strpos($route->getStatus(), $ps) !== false ){
+                    $canAttach = true;
+                }
+            }
+
+            if( !$canAttach )return new JsonResponse(['result'=>false]);
 
             $route->setDriverId(null);
             $route->setVehicleId(null);
