@@ -362,7 +362,7 @@ $( document ).ready(function(){
     var updateLotTimers = function(){
         if (window.location.pathname.replace(/\//g, '') == 'auction') { //solprowebapp_dev.phpauction //auction
             $.ajax({
-                url: 'lotsPrices',
+                url: 'lotsTimers',
                 cache: false
             }).done(function( data ){
                 console.log(data);
