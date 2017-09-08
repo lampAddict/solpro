@@ -120,4 +120,20 @@ class LotController extends Controller
 
         return new JsonResponse(['result'=>false]);
     }
+
+    /**
+     * @Route("/lotsTimers", name="lotsTimers")
+     */
+    public function lotsTimersAction(Request $request)
+    {
+        $lotsTimers = [];
+        $redis = $this->container->get('snc_redis.default');
+        if( $redis->exists('lcp') ){
+            $lids = explode(',', $redis->get('lcp'));
+            foreach ($lids as $lid){
+                $lotsTimers[ $lid ] = $redis->get('laet_'.$lid);
+            }
+        }
+        return new JsonResponse(['lotsTimers'=>$lotsTimers]);
+    }
 }

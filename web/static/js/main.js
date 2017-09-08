@@ -359,6 +359,20 @@ $( document ).ready(function(){
     });
 
     //update lots prices routine
+    var updateLotTimers = function(){
+        if (window.location.pathname.replace(/\//g, '') == 'auction') { //solprowebapp_dev.phpauction //auction
+            $.ajax({
+                url: 'lotsPrices',
+                cache: false
+            }).done(function( data ){
+                console.log(data);
+            });
+        }
+    };
+
+    setInterval( updateLotTimers, 4000 );
+
+    //update lots prices routine
     var updateLotPrices = function(){
         if( window.location.pathname.replace(/\//g,'') == 'auction' ){ //solprowebapp_dev.phpauction //auction
             $.ajax({
