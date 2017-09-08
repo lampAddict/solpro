@@ -235,6 +235,17 @@ class RoutesController extends Controller
         if(    $route
             && in_array($route->getStatus(), ['1. Создан', '3. Утвержден', '4. В комплектации'])
         ){
+            $possibleStatuses = ['Создан', 'Утвержден', 'В комплектации', 'Распределен'];
+
+            $canAttach = false;
+            foreach ($possibleStatuses as $ps){
+                if( strpos($route->getStatus(), $ps) !== false ){
+                    $canAttach = true;
+                }
+            }
+
+            if( !$canAttach )return new JsonResponse(['result'=>false]);
+
             /* @var $driver \AppBundle\Entity\Driver */
             $driver = $em->getRepository('AppBundle:Driver')->findOneBy(['id'=>intval($request->request->get('driver')), 'user_id'=>$this->getUser()->getId()]);
             if( $driver ){
