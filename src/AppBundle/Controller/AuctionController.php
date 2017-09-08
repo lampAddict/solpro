@@ -308,6 +308,8 @@ class AuctionController extends Controller
                             $lotBetData->owner = $this->getUser()->getId() . '';
                             $redis->set('lcp_'.$_lot->getId(), json_encode($lotBetData));
                         }
+                        //update cache lot end time information
+                        $redis->set( 'laet_' . $_lot->getId(), $_lot->getStartDate()->getTimestamp() + $_lot->getDuration() * 60 );
 
                         $form = $this->createForm('AppBundle\Form\BetType', $bet, ['lot'=>$_lot]);
                         $_forms[ $_lot->getId() ] = $form->createView();
