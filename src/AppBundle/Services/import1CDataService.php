@@ -256,7 +256,9 @@ class import1CDataService{
                     $_route->setCarrier( $route['carrierId'] );//$data['ref']['carrier'][ $route['carrierId'] ]['name']
                 }
                 else{
-                    //$_route->setCarrier( '' );
+
+                    if( is_null($_route->getCarrier()) )
+                        $_route->setCarrier( '' );
                 }
 
                 //set route status
