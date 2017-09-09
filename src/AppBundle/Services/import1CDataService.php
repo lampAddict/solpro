@@ -511,10 +511,13 @@ class import1CDataService{
 
                     //if route assigned directly no need to do auction
                     if( $route->getCarrier() != '' ){
-                        $_lot->setAuctionStatus(0);
-                        //set lot status AUCTION SUCCEED
-                        $_lot->setStatusId1c($routeStatusByPid[ RefLotStatus::AUCTION_SUCCEED ]);
-                        $addLotToCache = false;
+                        //if lot is not in `declined` status
+                        if( $_lot->getAuctionStatus() != 2 ){
+                            $_lot->setAuctionStatus(0);
+                            //set lot status AUCTION SUCCEED
+                            $_lot->setStatusId1c($routeStatusByPid[ RefLotStatus::AUCTION_SUCCEED ]);
+                            $addLotToCache = false;
+                        }
                     }
                 }
 
