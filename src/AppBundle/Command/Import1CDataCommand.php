@@ -229,6 +229,9 @@ class Import1CDataCommand extends ContainerAwareCommand
             if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
 
             $files = ftp_rawlist($conn_id, 'ftp_1c');
+
+            var_dump($files);
+
             if(
                    !empty($files)
                 && in_array('messageFromPortal.xml', $files)
