@@ -229,15 +229,13 @@ class Import1CDataCommand extends ContainerAwareCommand
             if( !ftp_login($conn_id, 'ftp_1c', 'cURz46mGDs') )die("Couldn't login to ftp server");
 
             $files = ftp_rawlist($conn_id, '');
-
-            var_dump($files);
-
-            if(
-                   !empty($files)
-                && in_array('messageFromPortal.xml', $files)
-            ){
-                $output->writeln('messageFromPortal.xml already exists, wait till it will be loaded by 1C');
-                return;
+            if( !empty($files) ){
+                foreach( $files as $file ){
+                    if( strpos($file, 'messageFromPortal.xml') !== false ){
+                        $output->writeln('messageFromPortal.xml already exists, wait till it will be loaded by 1C');
+                        return;
+                    }
+                }
             }
 
             if( ftp_put($conn_id, 'messageFromPortal.xml', 'data/messageFromPortal.xml', FTP_BINARY) ){
