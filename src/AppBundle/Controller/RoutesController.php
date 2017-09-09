@@ -193,17 +193,23 @@ class RoutesController extends Controller
         $stmt->execute();
         $_routes = $stmt->fetchAll();
         $route_price = [];
-        foreach ($_routes as $_route){
+        foreach( $_routes as $_route ){
             $route_price[ $_route['id'] ] = $_route['price'];
         }
 
-        $sql = "SELECT r.id FROM route r LEFT JOIN lot l ON r.id = l.route_id LEFT JOIN reflotstatus rls ON rls.id1c = l.status_id1c WHERE $where AND rls.pid IN ('".RefLotStatus::AUCTION_PREPARED."', '".RefLotStatus::AUCTION."', '".RefLotStatus::AUCTION_SUCCEED."')";
+        $sql = "SELECT r.id, rls.pid FROM route r LEFT JOIN lot l ON r.id = l.route_id LEFT JOIN reflotstatus rls ON rls.id1c = l.status_id1c WHERE $where AND rls.pid IN ('".RefLotStatus::AUCTION_PREPARED."', '".RefLotStatus::AUCTION."', '".RefLotStatus::AUCTION_SUCCEED."', '".RefLotStatus::AUCTION_DECLINED."')";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $_routes = $stmt->fetchAll();
+        $routesDeclined = [];
         $routesCanAttachDriver = [];
-        foreach ($_routes as $_route){
-            $routesCanAttachDriver[ $_route['id'] ] = 1;
+        foreach( $_routes as $_route ){
+            if( $_route['pid'] == RefLotStatus::AUCTION_DECLINED ){
+                $routesDeclined[ $_route['id'] ] = 1;
+            }
+            else{
+                $routesCanAttachDriver[ $_route['id'] ] = 1;
+            }
         }
 
         return $this->render('routesPage.html.twig', array(
@@ -214,6 +220,7 @@ class RoutesController extends Controller
             ,'regions' => $this->getSenderDeliveryRegionsLists()
             ,'prices' => $route_price
             ,'canAttachDriver' => $routesCanAttachDriver
+            ,'routesDeclined' => $routesDeclined
         ));
     }
 
