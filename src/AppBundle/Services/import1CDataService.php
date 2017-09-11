@@ -461,7 +461,7 @@ class import1CDataService{
                             //stop auction routine
                             //if lot is in `auction` state
                             $lotAuctionStatus = $_lot->getAuctionStatus();
-                            if( $lotAuctionStatus >=0 && $lotAuctionStatus <= 1 ){
+                            if( $lotAuctionStatus == 0 || $lotAuctionStatus == 1 ){
                                 $_lot->setDuration(0);
                                 $this->redis->set( 'laet_' . $_lot->getId(), $_lot->getStartDate()->getTimestamp() );
 
