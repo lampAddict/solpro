@@ -187,6 +187,12 @@
                                                 Статус лота запрещает назначение водителя и машины в рейс.
                                             </div>
                                         {% endif %}
+                                        {% if routesDeclined[ route.getId ] is defined %}
+                                            <div class="routeAddDriverWindow">
+                                                Причина отмены лота:<br />
+                                                {{ routesDeclined[ route.getId ] }}
+                                            </div>
+                                        {% endif %}
                                     </div>
 
                                     <div class="routeInfo">

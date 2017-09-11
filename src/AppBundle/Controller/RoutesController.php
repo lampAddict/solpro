@@ -197,7 +197,7 @@ class RoutesController extends Controller
             $route_price[ $_route['id'] ] = $_route['price'];
         }
 
-        $sql = "SELECT r.id, rls.pid FROM route r LEFT JOIN lot l ON r.id = l.route_id LEFT JOIN reflotstatus rls ON rls.id1c = l.status_id1c WHERE $where AND rls.pid IN ('".RefLotStatus::AUCTION_PREPARED."', '".RefLotStatus::AUCTION."', '".RefLotStatus::AUCTION_SUCCEED."', '".RefLotStatus::AUCTION_DECLINED."')";
+        $sql = "SELECT r.id, r.rejection_reason, rls.pid FROM route r LEFT JOIN lot l ON r.id = l.route_id LEFT JOIN reflotstatus rls ON rls.id1c = l.status_id1c WHERE $where AND rls.pid IN ('".RefLotStatus::AUCTION_PREPARED."', '".RefLotStatus::AUCTION."', '".RefLotStatus::AUCTION_SUCCEED."', '".RefLotStatus::AUCTION_DECLINED."')";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $_routes = $stmt->fetchAll();
@@ -205,7 +205,7 @@ class RoutesController extends Controller
         $routesCanAttachDriver = [];
         foreach( $_routes as $_route ){
             if( $_route['pid'] == RefLotStatus::AUCTION_DECLINED ){
-                $routesDeclined[ $_route['id'] ] = 1;
+                $routesDeclined[ $_route['id'] ] = $_route['rejection_reason'];
             }
             else{
                 $routesCanAttachDriver[ $_route['id'] ] = 1;
