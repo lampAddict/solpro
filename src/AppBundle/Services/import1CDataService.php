@@ -455,11 +455,34 @@ class import1CDataService{
                 if( $lotStatus ){
                     //if lot already exists
                     if( !is_null($_lot->getId()) ){
-                        //set lot status
+                        //lot set `decline` status routine
                         if( strpos($lotStatus->getName(), 'Отменен') !== false ){
-                            $_lot->setRejectionReason( $lot['rejectionReason'] );
-                            $_lot->setAuctionStatus(2);//lot declined
-                            $_lot->setStatusId1c( $lotStatus->getId1C() );
+
+                            //stop auction routine
+                            //if lot is in `auction` state
+                            $lotAuctionStatus = $_lot->getAuctionStatus();
+                            if( $lotAuctionStatus >=0 && $lotAuctionStatus <= 1 ){
+                                $_lot->setDuration(0);
+                                $this->redis->set( 'laet_' . $_lot->getId(), $_lot->getStartDate()->getTimestamp() );
+
+                                //delete all bets
+                                $this->em->createQuery("delete from AppBundle\Entity\Bet b where b.lot_id = '" . $_lot->getId() . "'")->execute();
+
+                                //delete route owner
+                                if( isset($routeDbIds[ $lot['routeId'] ]) ){
+                                    /* @var $route \AppBundle\Entity\Route */
+                                    $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
+                                    //$route->setCarrier( '' );
+                                    $route->setUserId( null );
+                                }
+
+                                $_lot->setRejectionReason( $lot['rejectionReason'] );
+                                $_lot->setAuctionStatus(2);//lot declined
+                                $_lot->setStatusId1c( $lotStatus->getId1C() );
+
+                                $this->em->flush();
+                                continue;
+                            }
                         }
                         elseif( strpos($lotStatus->getName(), 'Подготовка') !== false ){
                             //set lot status AUCTION
@@ -511,8 +534,8 @@ class import1CDataService{
 
                     //if route assigned directly no need to do auction
                     if( $route->getCarrier() != '' ){
-                        //if lot is not in `declined` status
-                        if( $_lot->getAuctionStatus() != 2 ){
+                        //if lot is in `auction` state
+                        if( $_lot->getAuctionStatus() == 1 ){
                             $_lot->setAuctionStatus(0);
                             //set lot status AUCTION SUCCEED
                             $_lot->setStatusId1c($routeStatusByPid[ RefLotStatus::AUCTION_SUCCEED ]);
