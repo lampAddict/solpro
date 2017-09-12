@@ -153,6 +153,23 @@ $( document ).ready(function(){
         $(e.currentTarget).addClass('black');
     });
 
+    //check driver's birthday
+    $('form[name="appbundle_driver"] input.btn.btn-success').click(function(e){
+        var  $driversPassportDayIssue = $('#appbundle_driver_passport_date_issue')
+            ,dParts = $driversPassportDayIssue.val().split('.')
+        ;
+        if(
+               Date.parse(dParts[1] + '.' + dParts[0] + '.' + dParts[2])
+            && parseInt(dParts[2]) >= 1900
+        ){
+            //Date is correct
+        } else {
+            //Date is incorrect
+            alert('Ошибка в дате выдачи документа удостоверяющего личность.');
+            $driversPassportDayIssue.val('');
+        }
+    });
+
     //submit attach driver to route data
     $('.routeAddDriverWindow input[type="button"]').click(function(e){
         //Don't send request if none of the drivers selected
