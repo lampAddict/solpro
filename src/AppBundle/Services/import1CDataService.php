@@ -201,6 +201,7 @@ class import1CDataService{
                 /* @var $usr \AppBundle\Entity\User */
                 $usr = $this->em->getRepository('AppBundle:User')->findOneBy(['username'=>$v['login']]);
                 if( is_null($usr) ){
+                    /* @var $user \AppBundle\Entity\User */
                     $user = $this->um->createUser();
                     $user
                         ->setUsername($v['login'])
@@ -208,6 +209,8 @@ class import1CDataService{
                         ->setPlainPassword($v['password'])
                         ->setCarrierId1C($v['carrierId'])
                         ->setEnabled(($v['access'] == 'true'?1:0))
+                        ->addRole('ROLE_AUCTION')
+                        ->addRole('ROLE_ROUTES')
                     ;
                     $this->em->persist($user);
                 }
