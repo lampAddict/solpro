@@ -887,6 +887,9 @@ td.found{
     display: block;
 }
 
-.userBlockBtnWrapper{
-    height: 62px;
+.userRolesTbl{
+    border: none  !important;
+}
+.userRolesTbl td{
+    border: none  !important;
 }

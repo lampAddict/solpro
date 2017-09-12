@@ -45,9 +45,15 @@
                         <td align="center">{{ user['name'] }}</td>
                         <td align="center">{{ user['login'] }}</td>
                         <td align="center" class="roles-{{ user['id'] }}">
-                            {% for role in user['roles'] %}
-                                <span class="userRole">{{ captionRoles[ role ] }}</span>
-                            {% endfor %}
+                            {% if user['roles'] is not empty %}
+                                <table cellpadding="0" cellspacing="0" class="userRolesTbl">
+                                {% for role in user['roles'] %}
+                                    <tr>
+                                        <td>{{ captionRoles[ role ] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </table>
+                            {% endif %}
                         </td>
                         <td align="right">
                             <select id="addRole">
@@ -66,10 +72,8 @@
                             </select>
                         </td>
                         <td align="center"><a class="btn btn-default setUserRole" user-data="{{ user['id'] }}">Применить</a></td>
-                        <td align="center" class="userBlockHeader">
-                            <span class="userBlockBtnWrapper">
-                                <a class="btn btn-default setUserBlock" user-data="{{ user['id'] }}">{% if user['active'] %}За{% else %}Раз{% endif %}блокировать</a>
-                            </span>
+                        <td align="center">
+                            <a class="btn btn-default setUserBlock" user-data="{{ user['id'] }}">{% if user['active'] %}За{% else %}Раз{% endif %}блокировать</a>
                         </td>
                     </tr>
                 {% endfor %}
