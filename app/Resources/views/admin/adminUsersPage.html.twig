@@ -66,7 +66,11 @@
                             </select>
                         </td>
                         <td align="center"><a class="btn btn-default setUserRole" user-data="{{ user['id'] }}">Применить</a></td>
-                        <td align="center" class="userBlockHeader"><a class="btn btn-default setUserBlock" user-data="{{ user['id'] }}">{% if user['active'] %}За{% else %}Раз{% endif %}блокировать</a></td>
+                        <td align="center" class="userBlockHeader">
+                            <span class="userBlockBtnWrapper">
+                                <a class="btn btn-default setUserBlock" user-data="{{ user['id'] }}">{% if user['active'] %}За{% else %}Раз{% endif %}блокировать</a>
+                            </span>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

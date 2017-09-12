@@ -886,3 +886,7 @@ td.found{
     width:145px;
     display: block;
 }
+
+.userBlockBtnWrapper{
+    height: 62px;
+}
