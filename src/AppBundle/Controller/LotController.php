@@ -127,13 +127,21 @@ class LotController extends Controller
     public function lotsTimersAction(Request $request)
     {
         $lotsTimers = [];
+
         $redis = $this->container->get('snc_redis.default');
         if( $redis->exists('lcp') ){
-            $lids = explode(',', $redis->get('lcp'));
-            foreach ($lids as $lid){
-                $lotsTimers[ $lid ] = $redis->get('laet_'.$lid);
+
+            $em = $this->getDoctrine()->getManager();
+            $sql = "SELECT l.id, l.duration FROM lot l WHERE l.id IN( ".$redis->get('lcp')." )";
+            $stmt = $em->getConnection()->prepare($sql);
+            $stmt->execute();
+            $lots = $stmt->fetchAll();
+
+            foreach( $lots as $lot ){
+                $lotsTimers[ $lot['id'] ] = $lot['duration'] * 60;
             }
         }
+
         return new JsonResponse(['lotsTimers'=>$lotsTimers]);
     }
 }

@@ -375,14 +375,31 @@ $( document ).ready(function(){
         });
     });
 
-    //update lots prices routine
+    //update lots timers routine
     var updateLotTimers = function(){
-        if (window.location.pathname.replace(/\//g, '') == 'auction') { //solprowebapp_dev.phpauction //auction
+        if( window.location.pathname.replace(/\//g, '') == 'auction' ){ //solprowebapp_dev.phpauction //auction
             $.ajax({
                 url: 'lotsTimers',
                 cache: false
             }).done(function( data ){
                 console.log(data);
+                if( data.lotsTimers ){
+
+                    var  $lotsTimers = $('.lotTimeLeft')
+                        ,lotId = 0
+                        ,lotDu = 0;
+                    $lotsTimers.each(function(){
+                        lotId = parseInt($(this).parent().parent().attr('id').replace('lot-',''));
+                        lotDu = parseInt($(this).attr('data-du'));
+                        if(    data.lotsTimers[ lotId ] > lotDu
+                            && lotDu > 0
+                        ){
+                            //'Y/m/d H:i:s'
+                            $(this).countdown( new Date((parseInt($(this).attr('data-ts')) + data.lotsTimers[ lotId ])*1000).toISOString().replace(/\..+/g,'').replace(/-/g,'/').replace(/T/g,' ') );
+                            $(this).attr('data-du', data.lotsTimers[ lotId ]);
+                        }
+                    });
+                }
             });
         }
     };
