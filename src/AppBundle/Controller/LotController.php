@@ -129,7 +129,11 @@ class LotController extends Controller
         $lotsTimers = [];
 
         $redis = $this->container->get('snc_redis.default');
-        if( $redis->exists('lcp') ){
+        if(
+               $redis
+            && $redis->exists('lcp')
+            && $redis->get('lcp') != ""
+        ){
 
             $em = $this->getDoctrine()->getManager();
             $sql = "SELECT l.id, l.duration FROM lot l WHERE l.id IN( ".$redis->get('lcp')." )";
