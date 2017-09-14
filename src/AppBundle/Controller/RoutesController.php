@@ -197,7 +197,7 @@ class RoutesController extends Controller
             $route_price[ $_route['id'] ] = $_route['price'];
         }
 
-        $sql = "SELECT r.id, l.rejection_reason, rls.pid FROM route r LEFT JOIN lot l ON r.id = l.route_id LEFT JOIN reflotstatus rls ON rls.id1c = l.status_id1c WHERE $where AND rls.pid IN ('".RefLotStatus::AUCTION_PREPARED."', '".RefLotStatus::AUCTION."', '".RefLotStatus::AUCTION_SUCCEED."', '".RefLotStatus::AUCTION_DECLINED."')";
+        $sql = "SELECT r.id, ll.rejection_reason, rls.pid FROM route r LEFT JOIN (SELECT * FROM (SELECT * FROM `lot` ORDER BY `updated_at` DESC) l GROUP BY l.`route_id`) ll ON r.id = ll.route_id LEFT JOIN reflotstatus rls ON rls.id1c = ll.status_id1c WHERE rls.pid IN ('".RefLotStatus::AUCTION_PREPARED."', '".RefLotStatus::AUCTION."', '".RefLotStatus::AUCTION_SUCCEED."', '".RefLotStatus::AUCTION_DECLINED."')";
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
         $_routes = $stmt->fetchAll();

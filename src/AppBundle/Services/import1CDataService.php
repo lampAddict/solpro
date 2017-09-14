@@ -477,6 +477,14 @@ class import1CDataService{
                                     $route = $routeDbIds[ $lot['routeId'] ]['routeId'];
                                     //$route->setCarrier( '' );
                                     $route->setUserId( null );
+
+                                    //get route `declined` status
+                                    $sql = "SELECT rrs.name FROM refroutestatus rrs WHERE rrs.name LIKE '%Аннулирован%' LIMIT 1";
+                                    $stmt = $this->em->getConnection()->prepare($sql);
+                                    $stmt->execute();
+                                    $rrs = $stmt->fetchAll();
+
+                                    $route->setStatus( $rrs[0]['name'] );
                                 }
 
                                 $_lot->setRejectionReason( $lot['rejectionReason'] );
